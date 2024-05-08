@@ -1,0 +1,35 @@
+.sign_up_title_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.steps_container {
+  margin-top: 1rem;
+}
+
+.checkbox_container {
+  margin-top: 1rem;
+}
+
+/* SIGN UP BUTTON */
+
+.sign_up_button_container {
+  margin-top: 2rem;
+}
+
+/* CANCEL BUTTON */
+
+.cancel_button_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.cancel_button {
+  height: 33px;
+  border: 1px solid var(--red_FF2B2B);
+  border-radius: 5rem;
+}

@@ -1,0 +1,51 @@
+/* MAIN CONTAINER */
+
+.search_main_container {
+    display: flex;
+    width: 100%;
+    padding: 0 5px;
+    border-radius: 10px;
+    background: var(--black_ffffff0d);
+    border: 0.5px solid var(--gray_50505066);
+    align-items: center;
+    justify-content: center;
+}
+
+/* SEARCH INPUT */
+
+.search_input_continer {
+    margin-bottom: 0;
+}
+
+.search_input {
+    background-color: transparent;
+    border: none;
+}
+
+/* Crlt + K Button */
+
+.shortcut_button_main_container {
+    width: fit-content;
+    padding: 0;
+}
+
+.shortcut_button_container {
+    width: fit-content;
+}
+
+.shortcut_button {
+    background-color: var(--white_ffffff);
+    border-radius: 7px;
+    width: 4.3rem;
+    height: 2rem;
+}
+
+.shortcut_button:hover {
+    background-color: var(--white_ffffff);
+}
+
+.shortcut_button_text {
+    color: var(--black_000000);
+}
+
+/*  */

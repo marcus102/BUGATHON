@@ -1,0 +1,43 @@
+.link_container {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+}
+
+/* LINK 12 */
+
+.link12 {
+  display: flex;
+  text-decoration: none;
+  color: var(--blue_0075FF);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* LINK 16 */
+
+.link16 {
+  display: flex;
+  text-decoration: none;
+  color: var(--blue_0075FF);
+  cursor: pointer;
+}
+
+/* LINK 12 16 */
+
+.underline_link {
+  text-decoration: underline;
+}
+
+.link_container a:hover {
+  color: var(--blue_2a8eff);
+}
+
+.link_container a:active {
+  color: var(--blue_0075FF);
+}
+
+.link_container a:visited {
+  color: var(--purple_c800c8);
+}

@@ -1,0 +1,10 @@
+node_modules
+
+config.env
+images
+profiles
+.vscode
+coverage
+__test__
+userRoutes.test.js
+jest.config.js
