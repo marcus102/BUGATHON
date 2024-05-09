@@ -3,11 +3,12 @@ import React, { createContext, useState } from 'react';
 export const ManagmentSystem = createContext({
   overlay: { open: false, keyId: '', layout: '' },
   overlayHandler: (key, layout) => {},
-  // menuModal: { open: false, keyId: '' },
   currentAuthStatus: '',
   currentAuthStatusHandler: (parameters) => {},
   headerTab: '',
   headerTabHandler: (parameters) => {},
+  theme: '',
+  themeHandler: (parameters) => {},
 });
 
 // function SystemManagmentReducer(state, action) {}
@@ -17,6 +18,11 @@ export default function ManagmentSystemProvider({ children }) {
   const [isOverlayOpen, setIsOverlayOpen] = useState({ open: false, overlay: '' });
   const [authSatus, setAuthStatus] = useState('signIn');
   const [currentHeaderTab, setCurrentHeaderTab] = useState('all');
+  const [systemTheme, setSystemTheme] = useState('dark');
+
+  const themeHandler = (parameters) => {
+    setSystemTheme(parameters);
+  };
 
   const headerTabHandler = (parameters) => {
     setCurrentHeaderTab(parameters);
@@ -42,6 +48,8 @@ export default function ManagmentSystemProvider({ children }) {
     currentAuthStatusHandler: currentAuthStatusHandler,
     headerTab: currentHeaderTab,
     headerTabHandler: headerTabHandler,
+    theme: systemTheme,
+    themeHandler: themeHandler,
   };
 
   return <ManagmentSystem.Provider value={value}>{children}</ManagmentSystem.Provider>;

@@ -3,6 +3,7 @@
 .search_main_container {
     display: flex;
     width: 100%;
+    height: fit-content;
     padding: 0 5px;
     border-radius: 10px;
     background: var(--black_ffffff0d);
@@ -15,10 +16,12 @@
 
 .search_input_continer {
     margin-bottom: 0;
+    height: fit-content; 
 }
 
 .search_input {
     background-color: transparent;
+    height: 35px;
     border: none;
 }
 
@@ -35,9 +38,9 @@
 
 .shortcut_button {
     background-color: var(--white_ffffff);
-    border-radius: 7px;
-    width: 4.3rem;
-    height: 2rem;
+    border-radius: 5px;
+    width: 3.8rem;
+    height: 25px;;
 }
 
 .shortcut_button:hover {

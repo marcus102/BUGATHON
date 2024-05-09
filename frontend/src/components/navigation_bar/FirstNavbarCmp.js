@@ -22,7 +22,9 @@ function FirstNavBar() {
         <Navbar.Brand className={classes.brand_style} as={NavLink} to="/">
           BUGATHON
         </Navbar.Brand>
-        <Navbar.Collapse className="justify-content-center">
+        <Navbar.Collapse
+          className={[classes.navbar_collapse_container].join(' ')}
+        >
           <Nav
             className={classes.nav_link_container}
             activeKey={activeKey}
@@ -79,28 +81,27 @@ function FirstNavBar() {
               </NavLink>
             </Nav.Item>
           </Nav>
+          <Nav className={classes.buttons_container}>
+            <SolidButton
+              buttonMainContainerStyle={classes.auth_button_main_container}
+              buttonContainerStyle={classes.auth_button_container}
+              label="Sign Up"
+              onClick={() => {
+                overlayHandler('auth', 'overlay');
+                currentAuthStatusHandler('signUp');
+              }}
+            />
+            <OutlinedButton
+              buttonMainContainerStyle={classes.auth_button_main_container}
+              buttonContainerStyle={classes.auth_button_container}
+              label="Sign In"
+              onClick={() => {
+                overlayHandler('auth', 'overlay');
+                currentAuthStatusHandler('signIn');
+              }}
+            />
+          </Nav>
         </Navbar.Collapse>
-        <div className={classes.buttons_container}>
-          <SolidButton
-            buttonMainContainerStyle={classes.auth_button_main_container}
-            buttonContainerStyle={classes.auth_button_container}
-            label="Sign Up"
-            onClick={() => {
-              overlayHandler('auth', 'overlay');
-              currentAuthStatusHandler('signUp');
-            }}
-          />
-          <OutlinedButton
-            buttonMainContainerStyle={classes.auth_button_main_container}
-            buttonContainerStyle={classes.auth_button_container}
-            // buttonStyle={classes.auth_button}
-            label="Sign In"
-            onClick={() => {
-              overlayHandler('auth', 'overlay');
-              currentAuthStatusHandler('signIn');
-            }}
-          />
-        </div>
       </Container>
     </Navbar>
   );

@@ -143,10 +143,10 @@ const SORTING_DATA = [
   },
 ];
 
-const DUMMY_DATA_3 = [
-  { id: '1', icon: faSun, desc: 'Light Mode' },
-  { id: '2', icon: faMoon, desc: 'Night Mode' },
-  { id: '3', icon: faDesktop, desc: 'System Mode' },
+const THEME_DATA = [
+  { id: '1', icon: faSun, active: 'light' },
+  { id: '2', icon: faMoon, active: 'dark' },
+  { id: '3', icon: faDesktop, active: 'system' },
 ];
 
 const HEADER_BUTTON = [
@@ -209,7 +209,8 @@ const HEADER_BUTTON = [
 ];
 
 function HomeWindow({ homeWindowMainContainerStyle }) {
-  const { headerTab, headerTabHandler, overlay, overlayHandler } = useContext(ManagmentSystem);
+  const { headerTab, headerTabHandler, overlay, overlayHandler, theme, themeHandler } =
+    useContext(ManagmentSystem);
 
   const [isFiltering, setIsFiltering] = useState(true);
   const [isSideBarOpen, setIsSideBarOpen] = useState(true);
@@ -319,16 +320,16 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
                       children={<Text label14Style={classes.drop_down_text} label14={'Theme'} />}
                     />
                     {isThemeExpanded && (
-                      <>
-                        {DUMMY_DATA_3.map((data) => (
-                          <Radio
-                            radioStyle={classes.radio_button_container}
+                      <div className={[classes.theme_icon_container].join(' ')}>
+                        {THEME_DATA.map((data) => (
+                          <IconButton
                             key={data.id}
                             icon={data.icon}
-                            label={data.desc}
+                            inconButtonStyle={theme === data.active && classes.active_icon_button}
+                            onClick={() => themeHandler(data.active)}
                           />
                         ))}
-                      </>
+                      </div>
                     )}
                   </div>
                   <IconTextButton
@@ -441,7 +442,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
                 />
                 {isThemeExpanded && (
                   <>
-                    {DUMMY_DATA_3.map((data) => (
+                    {THEME_DATA.map((data) => (
                       <Radio
                         radioStyle={classes.radio_button_container}
                         key={data.id}

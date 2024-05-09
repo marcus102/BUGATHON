@@ -118,12 +118,15 @@ export function Radio({
   icon,
   size,
   color,
+  onChange,
 }) {
   return (
     <div className={[classes.radio_main_container, radioMainContainerStyle].join(' ')}>
-      {icon && <Icon iconContainerStyle={classes.icon_container}  icon={icon} size={size} color={color} />}
+      {icon && (
+        <Icon iconContainerStyle={classes.icon_container} icon={icon} size={size} color={color} />
+      )}
       <div className={[classes.radio_container, radioContainerStyle].join(' ')}>
-        <input type="radio" checked={checked} />
+        <input type="radio" name="flexRadioDefault" onChange={onChange} checked={checked} />
         {label && <Text textStyle={classes.text_container} label16={label} />}
       </div>
 

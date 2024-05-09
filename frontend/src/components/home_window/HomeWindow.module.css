@@ -47,15 +47,6 @@
 
 /* FILTERING */
 
-/* .cancel_button_container {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: flex-end;
-  margin-top: 10px;
-  padding: 0 15px;
-} */
-
 .side_bar_filterig_main_container {
   display: flex;
   flex-direction: column;
@@ -140,7 +131,8 @@
 }
 
 .tag_button {
-  height: 30px;
+  height: 25px;
+  border-radius: 5px;
   background-color: var(--black_9696960d);
 }
 
@@ -178,6 +170,21 @@
   justify-content: flex-end;
   flex-direction: row-reverse;
 }
+
+.theme_icon_container {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px 0;
+  margin: 5px 0;
+  gap: 5px;
+}
+
+.active_icon_button {
+flex-direction: row-reverse;
+  border-radius: 5px;
+  background-color: var(--black_ffffff0d);
+}
+
 
 .logout_container {
   min-width: 100%;

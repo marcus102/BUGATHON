@@ -55,8 +55,6 @@ function SecondNavbar() {
         </div>
       </div>
 
-      {/* <Modal show={showMenu} onHide={handleMenuToggle} className={classes.modal}>
-        <Modal.Body className={classes.modal_body}> */}
       <MenuModal keyId={'menu_navber'}>
         <IconTextButton
           inconTextButtonStyle={classes.icon_button}
@@ -71,12 +69,6 @@ function SecondNavbar() {
         />
         <IconTextButton inconTextButtonStyle={classes.icon_button} icon={faAdjust} label="Adjust" />
       </MenuModal>
-
-      {/* <Button variant="secondary" onClick={handleMenuToggle}>
-            Close
-          </Button>
-        </Modal.Body>
-      </Modal> */}
     </div>
   );
 }
