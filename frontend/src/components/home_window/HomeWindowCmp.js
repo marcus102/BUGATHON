@@ -24,6 +24,7 @@ import {
 import Text from '../../utils/TextSection';
 import HomeCard from '../card_view/HomeCardView';
 import { Overlay } from '../../utils/OverlaySection';
+import ToolTip from '../../utils/toolTipSection';
 
 const DUMMY_DATA = [
   {
@@ -501,7 +502,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
             ))}
           </div>
           <div className={[classes.header_results_container].join(' ')}>
-            <Text label14={'Result: 10.000.000 Posts'} />
+            <ToolTip children={<Text label14={'Result: 10.000.000 Posts'} />} tooltipMessage={'message to the text deddeddfdffffffffffffffffffffffff'}/>
             <IconButton
               inconButtonStyle={classes.info_icon_button}
               colorOnMouseUp={Colors.red_FF2B2B}
@@ -511,7 +512,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
           </div>
         </div>
 
-        <div className={[classes.list_second_container, ''].join(' ')}>
+        <div className={[classes.list_second_container].join(' ')}>
           {DUMMY_DATA.map((data) => (
             <HomeCard key={data.id} postTitle={data.title} postDescription={data.description} />
           ))}

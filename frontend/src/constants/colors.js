@@ -1,5 +1,5 @@
 const Colors = {
-  black_: '#000000',
+  black_000000: '#000000',
   blue_0075FF:'#0075FF',
   blue_57a3fb:'#57a3fb',
   transparentBlack_: '#0000001a',
@@ -22,6 +22,7 @@ const Colors = {
   red_FF2B2B: '#ff2b2b',
   red_ff3c3c: '#ff3c3c',
   darkPurple_: '#9b029b',
+  purple_9a4d9a: '#9a4d9a',
   transparentColor_: '#ffffff00',
   pink_: '#fe8c8c',
   lightPink_: '#feeded',

@@ -8,19 +8,23 @@
 /* LINK 12 */
 
 .link12 {
-  /* display: flex; */
   text-decoration: none;
-  color: var(--blue_0075FF);
   font-size: 12px;
+  cursor: pointer;
+}
+
+/* LINK 14 */
+
+.link14 {
+  text-decoration: none;
+  font-size: 14px;
   cursor: pointer;
 }
 
 /* LINK 16 */
 
 .link16 {
-  /* display: flex; */
   text-decoration: none;
-  color: var(--blue_0075FF);
   cursor: pointer;
 }
 
@@ -30,11 +34,23 @@
   text-decoration: underline;
 }
 
-.link_container a:hover {
+/* .link_container a:hover {
   color: var(--blue_2a8eff);
 }
 
 .link_container a:active {
+  color: var(--blue_0075FF);
+} */
+
+.link_default_color {
+  color: var(--blue_0075FF);
+}
+
+.link_default_color:hover {
+  color: var(--blue_0075FF);
+}
+
+.link_default_color:active {
   color: var(--blue_0075FF);
 }
 

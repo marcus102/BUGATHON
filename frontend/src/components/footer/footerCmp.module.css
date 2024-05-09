@@ -13,18 +13,32 @@
   width: 100%;
 }
 
+.footer_header_container {
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.footer_header {
+    color: var(--white_ffffff);
+}
+
 .footer_links_container {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
   align-items: center;
   justify-content: center;
-  gap: 15px;
+  gap: 20px;
 }
 
 .footer_link {
   color: var(--white_ffffff);
+  transition: color 0.3s ease;
 }
+
+.footer_link:hover {
+    color: var(--white_afafaf);
+  }
 
 .footer_icon_button_container {
   display: flex;
