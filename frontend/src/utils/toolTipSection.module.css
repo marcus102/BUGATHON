@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   position: relative;
-  display: inline-block;
+
 }
 
 .tool_tip_child {
@@ -21,6 +21,8 @@
   border-radius: 5px;
   z-index: 1;
   transition: visibility 0s, opacity 1s ease-in-out;
+  min-width: 4.5rem;
+  max-width: 6rem;
 }
 
 .tool_tip_container:hover .tool_tip {

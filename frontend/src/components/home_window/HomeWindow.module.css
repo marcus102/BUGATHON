@@ -1,6 +1,6 @@
 .home_window_main_container {
   display: flex;
-  margin: 10px 10px;
+  margin: 10px 20px;
 }
 
 /* SIDE BAR (RELEASES - FILTERING - SETTINGS) */
@@ -14,6 +14,7 @@
   height: 100vh;
   overflow-y: auto;
 }
+
 /* RELEASES */
 
 .add_button_main_container {

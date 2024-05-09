@@ -228,9 +228,11 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
 
   return (
     <div className={[classes.home_window_main_container, homeWindowMainContainerStyle].join(' ')}>
+      {/* SIDE BAR */}
+
       {isSideBarOpen && (
-        <div className="d-none d-xl-block col-lg-2">
-          <div className={[classes.home_window_side_bar_main_container].join(' ')}>
+        <>
+          <div className={["d-none d-xl-flex col-lg-2", classes.home_window_side_bar_main_container].join(' ')}>
             <OutlinedButton
               buttonMainContainerStyle={classes.add_button_main_container}
               buttonContainerStyle={classes.add_button_container}
@@ -345,8 +347,10 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
               )}
             </div>
           </div>
-        </div>
+        </>
       )}
+
+      {/* OVERLAY */}
 
       <Overlay
         keyId={'side_bar'}
@@ -467,15 +471,23 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
         </div>
       </Overlay>
 
+      {/* LIST */}
+
       <div className={[classes.home_window_list_main_container].join(' ')}>
         <div className={[classes.list_header_container].join(' ')}>
-          <IconButton
-            inconButtonStyle={'d-none d-xl-block col-lg-2'}
-            onClick={() => {
-              setIsSideBarOpen(!isSideBarOpen);
-            }}
-            icon={isSideBarOpen ? faChevronLeft : faChevronRight}
+          <ToolTip
+            children={
+              <IconButton
+                inconButtonStyle={'d-none d-xl-block col-lg-2'}
+                onClick={() => {
+                  setIsSideBarOpen(!isSideBarOpen);
+                }}
+                icon={isSideBarOpen ? faChevronLeft : faChevronRight}
+              />
+            }
+            tooltipMessage={isSideBarOpen ? 'Close sidebar' : 'Open sidebar'}
           />
+
           <IconButton
             inconButtonStyle={'d-block d-xl-none col-lg-2'}
             onClick={() => {
@@ -502,12 +514,20 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
             ))}
           </div>
           <div className={[classes.header_results_container].join(' ')}>
-            <ToolTip children={<Text label14={'Result: 10.000.000 Posts'} />} tooltipMessage={'message to the text deddeddfdffffffffffffffffffffffff'}/>
-            <IconButton
-              inconButtonStyle={classes.info_icon_button}
-              colorOnMouseUp={Colors.red_FF2B2B}
-              colorOnMouseDown={Colors.red_ff3c3c}
-              icon={faQuestion}
+            <ToolTip
+              children={<Text label14={'Result: 10.000.000 Posts'} />}
+              tooltipMessage={'Total posts'}
+            />
+            <ToolTip
+              children={
+                <IconButton
+                  inconButtonStyle={classes.info_icon_button}
+                  colorOnMouseUp={Colors.red_FF2B2B}
+                  colorOnMouseDown={Colors.red_ff3c3c}
+                  icon={faQuestion}
+                />
+              }
+              tooltipMessage={'Help'}
             />
           </div>
         </div>
