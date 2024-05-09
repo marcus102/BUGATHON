@@ -1,0 +1,36 @@
+.footer_main_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.horizontal_line {
+  border: none;
+  height: 2px;
+  background-color: var(--gray_50505066);
+  width: 100%;
+}
+
+.footer_links_container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.footer_link {
+  color: var(--white_ffffff);
+}
+
+.footer_icon_button_container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 15px;
+}

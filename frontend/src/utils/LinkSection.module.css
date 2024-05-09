@@ -8,7 +8,7 @@
 /* LINK 12 */
 
 .link12 {
-  display: flex;
+  /* display: flex; */
   text-decoration: none;
   color: var(--blue_0075FF);
   font-size: 12px;
@@ -18,7 +18,7 @@
 /* LINK 16 */
 
 .link16 {
-  display: flex;
+  /* display: flex; */
   text-decoration: none;
   color: var(--blue_0075FF);
   cursor: pointer;
@@ -38,6 +38,6 @@
   color: var(--blue_0075FF);
 }
 
-.link_container a:visited {
+/* .link_container a:visited {
   color: var(--purple_c800c8);
-}
+} */
