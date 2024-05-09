@@ -86,7 +86,7 @@ function FirstNavBar() {
             buttonContainerStyle={classes.auth_button_container}
             label="Sign Up"
             onClick={() => {
-              overlayHandler('auth');
+              overlayHandler('auth', 'overlay');
               currentAuthStatusHandler('signUp');
             }}
           />
@@ -96,7 +96,7 @@ function FirstNavBar() {
             // buttonStyle={classes.auth_button}
             label="Sign In"
             onClick={() => {
-              overlayHandler('auth');
+              overlayHandler('auth', 'overlay');
               currentAuthStatusHandler('signIn');
             }}
           />

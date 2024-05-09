@@ -1,10 +1,7 @@
 import React from 'react';
-// import classes from './HomePage.module.css';
-import Text from '../utils/TextSection';
 import Authentication from './AuthenticationPage';
 import BroadCast from '../components/broadcast/BroadCastCmp';
 import HomeWindow from '../components/home_window/HomeWindowCmp';
-// import SecondNavbar from '../components/navigation_bar/SecondNavbarCmp';
 
 function Home() {
   return (

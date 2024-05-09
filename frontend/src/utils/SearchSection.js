@@ -1,5 +1,5 @@
 import React from 'react';
-import Colors from '../constants/colors';
+// import Colors from '../constants/colors';
 import classes from './SearchSection.module.css';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { IconButton, SolidButton } from './ButtonSection';

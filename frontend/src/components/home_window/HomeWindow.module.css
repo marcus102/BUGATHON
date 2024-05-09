@@ -47,14 +47,14 @@
 
 /* FILTERING */
 
-.cancel_button_container {
+/* .cancel_button_container {
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: flex-end;
   margin-top: 10px;
   padding: 0 15px;
-}
+} */
 
 .side_bar_filterig_main_container {
   display: flex;

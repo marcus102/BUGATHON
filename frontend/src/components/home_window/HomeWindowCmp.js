@@ -20,7 +20,6 @@ import {
   faChevronDown,
   faFire,
   faAngleRight,
-  faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import Text from '../../utils/TextSection';
 import HomeCard from '../card_view/HomeCardView';
@@ -350,16 +349,6 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
       <Overlay
         keyId={'side_bar'}
         className={[classes.home_window_side_bar_main_container].join(' ')}
-        header={
-          <div className={classes.cancel_button_container}>
-            <IconButton
-              icon={faXmark}
-              onClick={overlayHandler}
-              colorOnMouseUp={Colors.red_FF2B2B}
-              colorOnMouseDown={Colors.red_ff3c3c}
-            />
-          </div>
-        }
       >
         <OutlinedButton
           buttonMainContainerStyle={classes.add_button_main_container}
@@ -488,7 +477,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
           <IconButton
             inconButtonStyle={'d-block d-xl-none col-lg-2'}
             onClick={() => {
-              overlayHandler('side_bar');
+              overlayHandler('side_bar', 'overlay');
             }}
             icon={overlay ? faChevronUp : faChevronDown}
           />

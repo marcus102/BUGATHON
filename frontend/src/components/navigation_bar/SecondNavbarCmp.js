@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
 import Colors from '../../constants/colors';
-import { Modal, Button } from 'react-bootstrap';
+// import { Modal, Button } from 'react-bootstrap';
 import { SolidButton, IconTextButton, IconButton } from '../../utils/ButtonSection';
 import classes from './SecondNavbarCmp.module.css';
 import {
@@ -13,11 +14,12 @@ import {
   faSliders,
 } from '@fortawesome/free-solid-svg-icons';
 import Search from '../../utils/SearchSection';
+import { MenuModal } from '../../utils/OverlaySection';
 
 function SecondNavbar() {
-  const [showMenu, setShowMenu] = useState(false);
-
-  const handleMenuToggle = () => setShowMenu(!showMenu);
+  const { overlayHandler } = useContext(ManagmentSystem);
+  // const [showMenu, setShowMenu] = useState(false);
+  // const handleMenuToggle = () => setShowMenu(!showMenu);
 
   return (
     <div className={classes.nav_main_container}>
@@ -48,35 +50,33 @@ function SecondNavbar() {
           <IconButton
             className={classes.menu_button}
             icon={faEllipsis}
-            onClick={handleMenuToggle}
+            onClick={() => overlayHandler('menu_navber', 'menu')}
           />
         </div>
-        
       </div>
 
-      <Modal show={showMenu} onHide={handleMenuToggle} className={classes.modal}>
-        <Modal.Body className={classes.modal_body}>
-          <IconTextButton
-            inconTextButtonStyle={classes.icon_button}
-            icon={faBug}
-            label="Critical Bug"
-          />
-          <IconTextButton inconTextButtonStyle={classes.icon_button} icon={faInbox} label="Inbox" />
-          <IconTextButton
-            inconTextButtonStyle={classes.icon_button}
-            icon={faBell}
-            label="Notifications"
-          />
-          <IconTextButton
-            inconTextButtonStyle={classes.icon_button}
-            icon={faAdjust}
-            label="Adjust"
-          />
-          <Button variant="secondary" onClick={handleMenuToggle}>
+      {/* <Modal show={showMenu} onHide={handleMenuToggle} className={classes.modal}>
+        <Modal.Body className={classes.modal_body}> */}
+      <MenuModal keyId={'menu_navber'}>
+        <IconTextButton
+          inconTextButtonStyle={classes.icon_button}
+          icon={faBug}
+          label="Critical Bug"
+        />
+        <IconTextButton inconTextButtonStyle={classes.icon_button} icon={faInbox} label="Inbox" />
+        <IconTextButton
+          inconTextButtonStyle={classes.icon_button}
+          icon={faBell}
+          label="Notifications"
+        />
+        <IconTextButton inconTextButtonStyle={classes.icon_button} icon={faAdjust} label="Adjust" />
+      </MenuModal>
+
+      {/* <Button variant="secondary" onClick={handleMenuToggle}>
             Close
           </Button>
         </Modal.Body>
-      </Modal>
+      </Modal> */}
     </div>
   );
 }

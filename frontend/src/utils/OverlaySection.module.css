@@ -24,6 +24,15 @@
   background-color: #3a3a3acd;
 }
 
+.overlay_cancel_button_container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 10px;
+  padding: 0 15px;
+}
+
 .overlay_child_container {
   display: flex;
   width: 100%;
@@ -33,3 +42,26 @@
   overflow-y: auto;
   flex-direction: column;
 }
+
+/* MODAL */
+
+.modal {
+  width: fit-content;
+  height: fit-content;
+  margin-top: 7rem;
+  margin-left: 18rem;
+}
+
+.modal_body {
+  background-color: var(--transparent_00000080);
+}
+
+/* .icon_button {
+  max-width: 100%;
+  min-width: 100%;
+  flex-direction: row;
+  gap: 5px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin: 15px 0;
+} */

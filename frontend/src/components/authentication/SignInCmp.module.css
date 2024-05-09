@@ -12,18 +12,3 @@
 .forgot_password_container {
   margin: 10px 0 0 5px;
 }
-
-/* CANCEL BUTTON */
-
-.cancel_button_container{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 10px;
-}
-
-.cancel_button {
-  height: 33px;
-  border: 1px solid var(--red_FF2B2B);
-  border-radius: 5rem;
-}

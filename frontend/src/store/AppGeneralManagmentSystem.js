@@ -1,8 +1,9 @@
 import React, { createContext, useState } from 'react';
 
 export const ManagmentSystem = createContext({
-  overlay: { open: false, overlay: '' },
-  overlayHandler: (parameters) => {},
+  overlay: { open: false, keyId: '', layout: '' },
+  overlayHandler: (key, layout) => {},
+  // menuModal: { open: false, keyId: '' },
   currentAuthStatus: '',
   currentAuthStatusHandler: (parameters) => {},
   headerTab: '',
@@ -25,11 +26,12 @@ export default function ManagmentSystemProvider({ children }) {
     setAuthStatus(parameters);
   };
 
-  const overlayHandler = (parameters) => {
+  const overlayHandler = (keyId, layout) => {
     setIsOverlayOpen((prev) => ({
       ...prev,
-      open: !isOverlayOpen.open,
-      overlay: parameters,
+      open: !prev.open,
+      keyId,
+      layout,
     }));
   };
 

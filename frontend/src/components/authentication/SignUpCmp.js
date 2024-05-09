@@ -3,15 +3,15 @@ import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
 import classes from './SignUpCmp.module.css';
 import Colors from '../../constants/colors';
 import { Input } from '../../utils/InputSection';
-import { SolidButton, IconButton } from '../../utils/ButtonSection';
+import { SolidButton } from '../../utils/ButtonSection';
 import { CheckBox } from '../../utils/InputSection';
 import Text from '../../utils/TextSection';
 import Icon from '../../utils/IconSection';
-import { faCircle, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import Link from '../../utils/LinkSection';
 
 function SignUp() {
-  const { currentAuthStatusHandler, overlayHandler } = useContext(ManagmentSystem);
+  const { currentAuthStatusHandler } = useContext(ManagmentSystem);
   return (
     <form action="">
       <Text textStyle={classes.sign_up_title_container} h1={'Sign Up'} />
@@ -84,15 +84,6 @@ function SignUp() {
         buttonContainerStyle={classes.sign_up_button_container}
         label={'Sign Up'}
       />
-      <div className={classes.cancel_button_container}>
-        <IconButton
-          icon={faXmark}
-          onClick={overlayHandler}
-          colorOnMouseUp={Colors.red_FF2B2B}
-          colorOnMouseDown={Colors.red_ff3c3c}
-          inconButtonStyle={classes.cancel_button}
-        />
-      </div>
     </form>
   );
 }

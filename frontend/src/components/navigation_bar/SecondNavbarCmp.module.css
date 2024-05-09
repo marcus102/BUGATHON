@@ -23,19 +23,6 @@
   gap: 7px;
 }
 
-/* MODAL */
-
-.modal {
-  width: fit-content;
-  height: fit-content;
-  margin-top: 7rem;
-  margin-left: 18rem;
-}
-
-.modal_body {
-  background-color: var(--transparent_00000080);
-}
-
 .icon_button {
   max-width: 100%;
   min-width: 100%;
