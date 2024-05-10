@@ -265,6 +265,30 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
   const [isSettingsExpanded, setIsSettingsExpanded] = useState(true);
   const [isThemeExpanded, setIsThemeExpanded] = useState(true);
 
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const ITEMS_PER_PAGE = 5;
+  const totalPages = Math.ceil(DUMMY_POST_DATA.length / ITEMS_PER_PAGE);
+
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const paginatedData = DUMMY_POST_DATA.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   const CURRENT_DATA = isFiltering ? FILTERING_DATA : SORTING_DATA;
 
   return (
@@ -577,7 +601,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
         </div>
 
         <div className={[classes.list_second_container].join(' ')}>
-          {DUMMY_POST_DATA.map((data) => (
+          {paginatedData.map((data) => (
             <HomeCard key={data.id} postTitle={data.title} postDescription={data.description} />
           ))}
         </div>
@@ -588,15 +612,30 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
             inconTextButtonStyle={classes.previous_pagination_icon_text_container}
             label={'Previous'}
             icon={faChevronLeft}
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1}
           />
-          <ButtonContainer
-            buttonContainerMainContainer={classes.pagination_button_container}
-            children={<Text label12={'1'} />}
-          />
+
+          <div className={classes.pagination_button_main_container}>
+            {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
+              <ButtonContainer
+                key={page}
+                buttonContainerMainContainer={[
+                  classes.pagination_button_container,
+                  page === currentPage ? classes.active_page : '',
+                ].join(' ')}
+                onClick={() => handlePageChange(page)}
+                children={<Text label12={`${page}`} />}
+              />
+            ))}
+          </div>
+
           <IconTextButton
             inconTextButtonStyle={classes.next_pagination_icon_text_container}
             label={'Next'}
             icon={faChevronRight}
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
           />
         </div>
       </div>
