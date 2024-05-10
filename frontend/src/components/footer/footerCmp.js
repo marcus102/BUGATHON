@@ -12,6 +12,7 @@ import {
   faTelegram,
   faTiktok,
 } from '@fortawesome/free-brands-svg-icons';
+import ToolTip from '../../utils/toolTipSection';
 
 const LINK_DATA = [
   { id: '1', link_name: 'About', link: '' },
@@ -29,14 +30,14 @@ const LINK_DATA = [
   { id: '13', link_name: 'Product', link: '' },
 ];
 const ICON_LINK_DATA = [
-  { id: '1', icon: faYoutube, icon_link: '' },
-  { id: '2', icon: faXTwitter, icon_link: '' },
-  { id: '3', icon: faLinkedin, icon_link: '' },
-  { id: '4', icon: faDiscord, icon_link: '' },
-  { id: '5', icon: faInstagram, icon_link: '' },
-  { id: '6', icon: faFacebook, icon_link: '' },
-  { id: '7', icon: faTelegram, icon_link: '' },
-  { id: '8', icon: faTiktok, icon_link: '' },
+  { id: '1', icon: faYoutube, icon_link: '', tool_tip: 'YouTube' },
+  { id: '2', icon: faXTwitter, icon_link: '', tool_tip: 'Twitter' },
+  { id: '3', icon: faLinkedin, icon_link: '', tool_tip: 'Linkedin' },
+  { id: '4', icon: faDiscord, icon_link: '', tool_tip: 'Discord' },
+  { id: '5', icon: faInstagram, icon_link: '', tool_tip: 'Instagram' },
+  { id: '6', icon: faFacebook, icon_link: '', tool_tip: 'Facebook' },
+  { id: '7', icon: faTelegram, icon_link: '', tool_tip: 'Telegram' },
+  { id: '8', icon: faTiktok, icon_link: '', tool_tip: 'Tiktok' },
 ];
 
 function Footer() {
@@ -60,7 +61,10 @@ function Footer() {
       </div>
       <div className={classes.footer_icon_button_container}>
         {ICON_LINK_DATA.map((data) => (
-          <Link key={data.id} icon={data.icon} href={data.icon_link} />
+          <ToolTip
+            children={<Link key={data.id} icon={data.icon} href={data.icon_link} />}
+            tooltipMessage={data.tool_tip}
+          />
         ))}
       </div>
       <Text label12={'© Bugathon 2024 powered by soft all right reserved'} />

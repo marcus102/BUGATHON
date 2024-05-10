@@ -1,6 +1,6 @@
 .home_window_main_container {
   display: flex;
-  margin: 10px 20px;
+  margin: 10px;
 }
 
 /* SIDE BAR (RELEASES - FILTERING - SETTINGS) */
@@ -9,7 +9,7 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-  border-right: 2px solid var(--gray_50505066);
+  border-right: 1px solid var(--gray_50505066);
   margin-right: 5px;
   height: 100vh;
   overflow-y: auto;
@@ -176,13 +176,7 @@ flex-direction: row-reverse;
 }
 
 .logout_container {
-  min-width: 100%;
-  justify-content: flex-start;
   flex-direction: row;
-}
-
-.logout_icon_container {
-  padding: 0 5px 0 0 ;
 }
 
 .logout_text {

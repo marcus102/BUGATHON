@@ -2,7 +2,6 @@
   display: flex;
   flex-wrap: wrap;
   position: relative;
-
 }
 
 .tool_tip_child {
@@ -15,7 +14,7 @@
   position: absolute;
   top: 100%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-70%);
   background-color: var(--black_000000aa);
   padding: 5px;
   border-radius: 5px;

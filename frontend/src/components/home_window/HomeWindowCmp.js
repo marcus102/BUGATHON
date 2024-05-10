@@ -9,7 +9,6 @@ import {
   IconTextButton,
   ButtonContainer,
 } from '../../utils/ButtonSection';
-import { Radio } from '../../utils/InputSection';
 import {
   faChevronLeft,
   faChevronRight,
@@ -384,7 +383,6 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
                 </div>
                 <IconTextButton
                   inconTextButtonStyle={classes.logout_container}
-                  iconContainerStyle={classes.logout_icon_container}
                   icon={faArrowRightFromBracket}
                   colorOnMouseUp={Colors.red_FF2B2B}
                   colorOnMouseDown={Colors.red_ff3c3c}
