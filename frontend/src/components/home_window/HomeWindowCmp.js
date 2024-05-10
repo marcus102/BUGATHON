@@ -2,7 +2,13 @@ import React, { useContext, useState } from 'react';
 import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
 import classes from './HomeWindow.module.css';
 import Colors from '../../constants/colors';
-import { IconButton, SolidButton, OutlinedButton, IconTextButton } from '../../utils/ButtonSection';
+import {
+  IconButton,
+  SolidButton,
+  OutlinedButton,
+  IconTextButton,
+  ButtonContainer,
+} from '../../utils/ButtonSection';
 import { Radio } from '../../utils/InputSection';
 import {
   faChevronLeft,
@@ -26,7 +32,7 @@ import HomeCard from '../card_view/HomeCardView';
 import { Overlay } from '../../utils/OverlaySection';
 import ToolTip from '../../utils/toolTipSection';
 
-const DUMMY_DATA = [
+const DUMMY_POST_DATA = [
   {
     id: '1',
     title: 'Lorem ipsum dolor sit amet.',
@@ -83,6 +89,42 @@ const DUMMY_DATA = [
   },
   {
     id: '10',
+    title: 'Lorem ipsum dolor sit amet.',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+  },
+  {
+    id: '11',
+    title: 'Lorem ipsum dolor sit amet.',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+  },
+  {
+    id: '12',
+    title: 'Lorem ipsum dolor sit amet.',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+  },
+  {
+    id: '13',
+    title: 'Lorem ipsum dolor sit amet.',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+  },
+  {
+    id: '14',
+    title: 'Lorem ipsum dolor sit amet.',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+  },
+  {
+    id: '15',
+    title: 'Lorem ipsum dolor sit amet.',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+  },
+  {
+    id: '16',
     title: 'Lorem ipsum dolor sit amet.',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
@@ -145,9 +187,9 @@ const SORTING_DATA = [
 ];
 
 const THEME_DATA = [
-  { id: '1', icon: faSun, active: 'light' },
-  { id: '2', icon: faMoon, active: 'dark' },
-  { id: '3', icon: faDesktop, active: 'system' },
+  { id: '1', icon: faSun, active: 'light', tool_tip: 'Light Mode' },
+  { id: '2', icon: faMoon, active: 'dark', tool_tip: 'Night Mode' },
+  { id: '3', icon: faDesktop, active: 'system', tool_tip: 'System Mode' },
 ];
 
 const HEADER_BUTTON = [
@@ -231,123 +273,127 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
       {/* SIDE BAR */}
 
       {isSideBarOpen && (
-        <>
-          <div className={["d-none d-xl-flex col-lg-2", classes.home_window_side_bar_main_container].join(' ')}>
-            <OutlinedButton
-              buttonMainContainerStyle={classes.add_button_main_container}
-              buttonContainerStyle={classes.add_button_container}
-              buttonStyle={classes.add_button}
-              icon={faPlus}
-              label={'New'}
-            />
-            <div className={[classes.side_bar_releases_main_container].join(' ')}>
-              <Text h5={'Releases'} />
-              <hr className={classes.releases_horizontal_bar} />
-              <Text p16={'Release 1'} />
-              <Text p16={'Release 2'} />
-            </div>
-
-            <div className={[classes.side_bar_filterig_main_container].join(' ')}>
-              <div className={[classes.filterig_header_container].join(' ')}>
-                <SolidButton
-                  buttonMainContainerStyle={classes.filtering_button_main_container}
-                  buttonContainerStyle={classes.filtering_button_container}
-                  buttonStyle={isFiltering ? classes.active_button : classes.filtering_button}
-                  onClick={() => {
-                    setIsFiltering(true);
-                  }}
-                  label={'Filtering'}
-                />
-                <SolidButton
-                  buttonMainContainerStyle={classes.filtering_button_main_container}
-                  buttonContainerStyle={classes.filtering_button_container}
-                  buttonStyle={!isFiltering ? classes.active_button : classes.filtering_button}
-                  onClick={() => {
-                    setIsFiltering(false);
-                  }}
-                  label={'Sorting'}
-                />
-              </div>
-              <>
-                {CURRENT_DATA.map((data) => (
-                  <div key={data.id} className={[classes.filterig_main_container].join(' ')}>
-                    <IconTextButton
-                      onClick={() => {
-                        setExpand((prev) => ({
-                          ...prev,
-                          [data.id]: !prev[data.id],
-                        }));
-                      }}
-                      inconTextButtonStyle={classes.header_button_container}
-                      icon={expand[data.id] ? faAngleUp : faAngleDown}
-                      children={<Text label14Style={classes.tag_text} label14={data.tag} />}
-                    />
-                    {expand[data.id] && (
-                      <div className={[classes.filterig_container].join(' ')}>
-                        {data.data.map((subData) => (
-                          <SolidButton
-                            key={subData.id}
-                            buttonMainContainerStyle={classes.tag_button_main_container}
-                            buttonContainerStyle={classes.tag_button_container}
-                            buttonStyle={classes.tag_button}
-                            children={
-                              <Text label12Style={classes.filter_tag_text} label12={subData.data} />
-                            }
-                          />
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </>
-            </div>
-
-            <div className={[classes.side_bar_settings_main_container].join(' ')}>
-              <IconTextButton
-                onClick={() => {
-                  setIsSettingsExpanded(!isSettingsExpanded);
-                }}
-                inconTextButtonStyle={classes.setting_drop_down_container}
-                icon={isSettingsExpanded ? faAngleUp : faAngleDown}
-                children={<Text label14Style={classes.drop_down_text} label14={'Settings'} />}
-              />
-              {isSettingsExpanded && (
-                <>
-                  <div className={[classes.settings_container].join(' ')}>
-                    <IconTextButton
-                      onClick={() => {
-                        setIsThemeExpanded(!isThemeExpanded);
-                      }}
-                      inconTextButtonStyle={classes.theme_drop_down_container}
-                      icon={isThemeExpanded ? faAngleUp : faAngleDown}
-                      children={<Text label14Style={classes.drop_down_text} label14={'Theme'} />}
-                    />
-                    {isThemeExpanded && (
-                      <div className={[classes.theme_icon_container].join(' ')}>
-                        {THEME_DATA.map((data) => (
-                          <IconButton
-                            key={data.id}
-                            icon={data.icon}
-                            inconButtonStyle={theme === data.active && classes.active_icon_button}
-                            onClick={() => themeHandler(data.active)}
-                          />
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                  <IconTextButton
-                    inconTextButtonStyle={classes.logout_container}
-                    iconContainerStyle={classes.logout_icon_container}
-                    icon={faArrowRightFromBracket}
-                    colorOnMouseUp={Colors.red_FF2B2B}
-                    colorOnMouseDown={Colors.red_ff3c3c}
-                    children={<Text label14Style={classes.logout_text} label14={'Logout'} />}
-                  />
-                </>
-              )}
-            </div>
+        <div
+          className={[
+            'd-none d-xl-flex col-lg-2',
+            classes.home_window_side_bar_main_container,
+          ].join(' ')}
+        >
+          <OutlinedButton
+            buttonMainContainerStyle={classes.add_button_main_container}
+            buttonStyle={classes.add_button}
+            icon={faPlus}
+            label={'New'}
+          />
+          <div className={[classes.side_bar_releases_main_container].join(' ')}>
+            <Text h5={'Releases'} />
+            <hr className={classes.releases_horizontal_bar} />
+            <Text p16={'Release 1'} />
+            <Text p16={'Release 2'} />
           </div>
-        </>
+
+          <div className={[classes.side_bar_filterig_main_container].join(' ')}>
+            <div className={[classes.filterig_header_container].join(' ')}>
+              <SolidButton
+                buttonMainContainerStyle={classes.filtering_button_main_container}
+                buttonStyle={isFiltering ? classes.active_button : classes.filtering_button}
+                onClick={() => {
+                  setIsFiltering(true);
+                }}
+                label={'Filtering'}
+              />
+              <SolidButton
+                buttonMainContainerStyle={classes.filtering_button_main_container}
+                buttonStyle={!isFiltering ? classes.active_button : classes.filtering_button}
+                onClick={() => {
+                  setIsFiltering(false);
+                }}
+                label={'Sorting'}
+              />
+            </div>
+            <>
+              {CURRENT_DATA.map((data) => (
+                <div key={data.id} className={[classes.filterig_main_container].join(' ')}>
+                  <IconTextButton
+                    onClick={() => {
+                      setExpand((prev) => ({
+                        ...prev,
+                        [data.id]: !prev[data.id],
+                      }));
+                    }}
+                    inconTextButtonStyle={classes.header_button_container}
+                    icon={expand[data.id] ? faAngleUp : faAngleDown}
+                    children={<Text label14Style={classes.tag_text} label14={data.tag} />}
+                  />
+                  {expand[data.id] && (
+                    <div className={[classes.filterig_container].join(' ')}>
+                      {data.data.map((subData) => (
+                        <SolidButton
+                          key={subData.id}
+                          buttonMainContainerStyle={classes.tag_button_main_container}
+                          buttonStyle={classes.tag_button}
+                          children={
+                            <Text label12Style={classes.filter_tag_text} label12={subData.data} />
+                          }
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </>
+          </div>
+
+          <div className={[classes.side_bar_settings_main_container].join(' ')}>
+            <IconTextButton
+              onClick={() => {
+                setIsSettingsExpanded(!isSettingsExpanded);
+              }}
+              inconTextButtonStyle={classes.setting_drop_down_container}
+              icon={isSettingsExpanded ? faAngleUp : faAngleDown}
+              children={<Text label14Style={classes.drop_down_text} label14={'Settings'} />}
+            />
+            {isSettingsExpanded && (
+              <>
+                <div className={[classes.settings_container].join(' ')}>
+                  <IconTextButton
+                    onClick={() => {
+                      setIsThemeExpanded(!isThemeExpanded);
+                    }}
+                    inconTextButtonStyle={classes.theme_drop_down_container}
+                    icon={isThemeExpanded ? faAngleUp : faAngleDown}
+                    children={<Text label14Style={classes.drop_down_text} label14={'Theme'} />}
+                  />
+                  {isThemeExpanded && (
+                    <div className={[classes.theme_icon_container].join(' ')}>
+                      {THEME_DATA.map((data) => (
+                        <ToolTip
+                          children={
+                            <IconButton
+                              key={data.id}
+                              icon={data.icon}
+                              inconButtonStyle={theme === data.active && classes.active_icon_button}
+                              onClick={() => themeHandler(data.active)}
+                            />
+                          }
+                          tooltipMessage={data.tool_tip}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <IconTextButton
+                  inconTextButtonStyle={classes.logout_container}
+                  iconContainerStyle={classes.logout_icon_container}
+                  icon={faArrowRightFromBracket}
+                  colorOnMouseUp={Colors.red_FF2B2B}
+                  colorOnMouseDown={Colors.red_ff3c3c}
+                  children={<Text label14Style={classes.logout_text} label14={'Logout'} />}
+                />
+              </>
+            )}
+          </div>
+        </div>
       )}
 
       {/* OVERLAY */}
@@ -358,7 +404,6 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
       >
         <OutlinedButton
           buttonMainContainerStyle={classes.add_button_main_container}
-          buttonContainerStyle={classes.add_button_container}
           buttonStyle={classes.add_button}
           icon={faPlus}
           label={'New'}
@@ -374,7 +419,6 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
           <div className={[classes.filterig_header_container].join(' ')}>
             <SolidButton
               buttonMainContainerStyle={classes.filtering_button_main_container}
-              buttonContainerStyle={classes.filtering_button_container}
               buttonStyle={isFiltering ? classes.active_button : classes.filtering_button}
               onClick={() => {
                 setIsFiltering(true);
@@ -383,7 +427,6 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
             />
             <SolidButton
               buttonMainContainerStyle={classes.filtering_button_main_container}
-              buttonContainerStyle={classes.filtering_button_container}
               buttonStyle={!isFiltering ? classes.active_button : classes.filtering_button}
               onClick={() => {
                 setIsFiltering(false);
@@ -411,7 +454,6 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
                       <SolidButton
                         key={subData.id}
                         buttonMainContainerStyle={classes.tag_button_main_container}
-                        buttonContainerStyle={classes.tag_button_container}
                         buttonStyle={classes.tag_button}
                         children={
                           <Text label12Style={classes.filter_tag_text} label12={subData.data} />
@@ -446,16 +488,21 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
                   children={<Text label14Style={classes.drop_down_text} label14={'Theme'} />}
                 />
                 {isThemeExpanded && (
-                  <>
+                  <div className={[classes.theme_icon_container].join(' ')}>
                     {THEME_DATA.map((data) => (
-                      <Radio
-                        radioStyle={classes.radio_button_container}
-                        key={data.id}
-                        icon={data.icon}
-                        label={data.desc}
+                      <ToolTip
+                        children={
+                          <IconButton
+                            key={data.id}
+                            icon={data.icon}
+                            inconButtonStyle={theme === data.active && classes.active_icon_button}
+                            onClick={() => themeHandler(data.active)}
+                          />
+                        }
+                        tooltipMessage={data.tool_tip}
                       />
                     ))}
-                  </>
+                  </div>
                 )}
               </div>
               <IconTextButton
@@ -500,7 +547,6 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
               <SolidButton
                 key={data.id}
                 buttonMainContainerStyle={[classes.buttons_main_container, data.style].join(' ')}
-                buttonContainerStyle={classes.buttons_container}
                 buttonStyle={
                   headerTab === data.data ? classes.active_buttons_container : classes.buttons_style
                 }
@@ -533,9 +579,27 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
         </div>
 
         <div className={[classes.list_second_container].join(' ')}>
-          {DUMMY_DATA.map((data) => (
+          {DUMMY_POST_DATA.map((data) => (
             <HomeCard key={data.id} postTitle={data.title} postDescription={data.description} />
           ))}
+        </div>
+
+        <div className={classes.list_pagination_container}>
+          <hr className={classes.horizontal_line} />
+          <IconTextButton
+            inconTextButtonStyle={classes.previous_pagination_icon_text_container}
+            label={'Previous'}
+            icon={faChevronLeft}
+          />
+          <ButtonContainer
+            buttonContainerMainContainer={classes.pagination_button_container}
+            children={<Text label12={'1'} />}
+          />
+          <IconTextButton
+            inconTextButtonStyle={classes.next_pagination_icon_text_container}
+            label={'Next'}
+            icon={faChevronRight}
+          />
         </div>
       </div>
     </div>

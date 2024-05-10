@@ -6,8 +6,8 @@ import Text from './TextSection';
 export function ButtonContainer({ children, buttonContainerMainContainer, onClick }) {
   return (
     <button
-    onClick={onClick}
-      className={[classes.button_container_main_container, buttonContainerMainContainer].join(' ')}
+      onClick={onClick}
+      className={`${classes.button_container_main_container} ${buttonContainerMainContainer}`}
     >
       {children}
     </button>
@@ -19,7 +19,6 @@ export function SolidButton({
   label,
   children,
   buttonMainContainerStyle,
-  buttonContainerStyle,
   buttonStyle,
   buttonTextContainerStyle,
   buttonTextStyle,
@@ -28,24 +27,22 @@ export function SolidButton({
   size,
 }) {
   return (
-    <div className={[classes.solid_button_container, buttonMainContainerStyle].join(' ')}>
-      <div className={[classes.solid_second_button_container, buttonContainerStyle].join(' ')}>
-        <button
-          className={[classes.solid_button, buttonStyle].join(' ')}
-          type="button"
-          onClick={onClick}
-        >
-          {label && (
-            <Text
-              textStyle={buttonTextContainerStyle}
-              label14={label}
-              label14Style={[classes.button_text, buttonTextStyle].join(' ')}
-            />
-          )}
-          {icon && <Icon icon={icon} color={color} size={size} />}
-          {children}
-        </button>
-      </div>
+    <div className={`${classes.solid_button_container} ${buttonMainContainerStyle}`}>
+      <button
+        className={[classes.solid_button, buttonStyle].join(' ')}
+        type="button"
+        onClick={onClick}
+      >
+        {label && (
+          <Text
+            textStyle={buttonTextContainerStyle}
+            label14={label}
+            label14Style={[classes.button_text, buttonTextStyle].join(' ')}
+          />
+        )}
+        {icon && <Icon icon={icon} color={color} size={size} />}
+        {children}
+      </button>
     </div>
   );
 }
@@ -56,7 +53,6 @@ export function OutlinedButton({
   buttonStyle,
   children,
   buttonMainContainerStyle,
-  buttonContainerStyle,
   buttonTextContainerStyle,
   buttonTextStyle,
   icon,
@@ -64,24 +60,22 @@ export function OutlinedButton({
   size,
 }) {
   return (
-    <div className={[classes.outlined_button_container, buttonMainContainerStyle].join(' ')}>
-      <div className={[classes.outlined_second_button_container, buttonContainerStyle].join(' ')}>
-        <button
-          className={[classes.outlined_button, buttonStyle].join(' ')}
-          type="button"
-          onClick={onClick}
-        >
-          {label && (
-            <Text
-              textStyle={buttonTextContainerStyle}
-              label14={label}
-              label14Style={[classes.button_text, buttonTextStyle].join(' ')}
-            />
-          )}
-          {icon && <Icon icon={icon} color={color} size={size} />}
-          {children}
-        </button>
-      </div>
+    <div className={`${classes.outlined_button_container} ${buttonMainContainerStyle}`}>
+      <button
+        className={[classes.outlined_button, buttonStyle].join(' ')}
+        type="button"
+        onClick={onClick}
+      >
+        {label && (
+          <Text
+            textStyle={buttonTextContainerStyle}
+            label14={label}
+            label14Style={[classes.button_text, buttonTextStyle].join(' ')}
+          />
+        )}
+        {icon && <Icon icon={icon} color={color} size={size} />}
+        {children}
+      </button>
     </div>
   );
 }

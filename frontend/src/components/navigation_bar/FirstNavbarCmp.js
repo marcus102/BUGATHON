@@ -12,7 +12,7 @@ function FirstNavBar() {
   const { overlayHandler, currentAuthStatusHandler } = useContext(ManagmentSystem);
 
   return (
-    <Navbar expand="lg">
+    <Navbar expand="lg" className={classes.fixedNavbar}>
       <Container>
         <Navbar.Toggle
           className={classes.toggle}
@@ -108,86 +108,3 @@ function FirstNavBar() {
 }
 
 export default FirstNavBar;
-
-// import React, { useState, useContext } from 'react';
-// import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
-// import classes from './FirstNavbarCmp.module.css';
-// import { Navbar, Nav, Container } from 'react-bootstrap';
-// import { SolidButton, OutlinedButton } from '../../utils/ButtonSection';
-// import { NavLink } from "react-router-dom";
-
-// function FirstNavBar() {
-//   const [showOverlay, setShowOverlay] = useState(false);
-//   const [activeKey, setActiveKey] = useState('#home');
-
-//   const { overlayHandler, currentAuthStatusHandler } = useContext(ManagmentSystem);
-
-//   return (
-//     <Navbar expand="lg">
-//       <Container>
-//         <Navbar.Toggle
-//           className={classes.toggle}
-//           aria-controls="basic-navbar-nav"
-//           onClick={() => setShowOverlay(!showOverlay)}
-//         />
-//         <Navbar.Brand className={classes.brand_style} href="#">
-//           BUGATHON
-//         </Navbar.Brand>
-//         <Navbar.Collapse className="justify-content-center">
-//           <Nav
-//             className={classes.nav_link_container}
-//             activeKey={activeKey}
-//             onSelect={(selectedKey) => {
-//               setActiveKey(selectedKey);
-//             }}
-//           >
-//             <Nav.Link
-//               className={activeKey === '#home' ? 'text-primary' : `${classes.link_style}`}
-//               href="#home"
-//             >
-//               Home
-//             </Nav.Link>
-//             <Nav.Link
-//               className={activeKey === '#chronoBug' ? 'text-primary' : `${classes.link_style}`}
-//               href="#chronoBug"
-//             >
-//               ChronoBug
-//             </Nav.Link>
-//             <Nav.Link
-//               className={activeKey === '#services' ? 'text-primary' : `${classes.link_style}`}
-//               href="#services"
-//             >
-//               Services
-//             </Nav.Link>
-//             <Nav.Link
-//               className={activeKey === '#blog' ? 'text-primary' : `${classes.link_style}`}
-//               href="#blog"
-//             >
-//               Blog
-//             </Nav.Link>
-//           </Nav>
-//         </Navbar.Collapse>
-//         <div className={classes.buttons_container}>
-//           <SolidButton
-//             buttonStyle={classes.button_style}
-//             label={'Sign Up'}
-//             onClick={() => {
-//               overlayHandler();
-//               currentAuthStatusHandler('signUp');
-//             }}
-//           />
-//           <OutlinedButton
-//             buttonStyle={classes.button_style}
-//             label={'Sign In'}
-//             onClick={() => {
-//               overlayHandler();
-//               currentAuthStatusHandler('signIn');
-//             }}
-//           />
-//         </div>
-//       </Container>
-//     </Navbar>
-//   );
-// }
-
-// export default FirstNavBar;

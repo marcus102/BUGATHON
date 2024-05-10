@@ -1,3 +1,12 @@
+.fixedNavbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: #232526;
+}
+
+
 .navbar_collapse_container {
   display: flex;
   flex-wrap: wrap;
