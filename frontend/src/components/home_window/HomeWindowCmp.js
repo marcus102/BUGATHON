@@ -25,10 +25,12 @@ import {
   faChevronDown,
   faFire,
   faAngleRight,
+  faFilter,
+  faArrowUpWideShort,
+  faGear,
 } from '@fortawesome/free-solid-svg-icons';
 import Text from '../../utils/TextSection';
 import HomeCard from '../card_view/HomeCardView';
-import { Overlay } from '../../utils/OverlaySection';
 import ToolTip from '../../utils/toolTipSection';
 
 const DUMMY_POST_DATA = [
@@ -251,8 +253,7 @@ const HEADER_BUTTON = [
 ];
 
 function HomeWindow({ homeWindowMainContainerStyle }) {
-  const { headerTab, headerTabHandler, overlay, overlayHandler, theme, themeHandler } =
-    useContext(ManagmentSystem);
+  const { headerTab, headerTabHandler, theme, themeHandler } = useContext(ManagmentSystem);
 
   const [isFiltering, setIsFiltering] = useState(true);
   const [isSideBarOpen, setIsSideBarOpen] = useState(true);
@@ -294,6 +295,103 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
   return (
     <div className={[classes.home_window_main_container, homeWindowMainContainerStyle].join(' ')}>
       {/* SIDE BAR */}
+
+      <div
+        className={['d-flex d-xl-none', classes.home_window_collapsed_side_bar_main_container].join(
+          ' '
+        )}
+      >
+        <ToolTip
+          toolTipStyle={classes.side_bar_tool_tip_container}
+          children={<IconButton icon={faPlus} />}
+          tooltipMessage={'New'}
+        />
+        <ToolTip
+          toolTipStyle={classes.side_bar_tool_tip_container}
+          children={<IconButton icon={faFilter} />}
+          tooltipMessage={'Filtering'}
+        />
+        <ToolTip
+          toolTipStyle={classes.side_bar_tool_tip_container}
+          children={<IconButton icon={faArrowUpWideShort} />}
+          tooltipMessage={'Sorting'}
+        />
+        {THEME_DATA.map((data) => (
+          <ToolTip
+            toolTipStyle={classes.side_bar_tool_tip_container}
+            children={
+              <IconButton
+                key={data.id}
+                icon={data.icon}
+                inconButtonStyle={theme === data.active && classes.active_icon_button}
+                onClick={() => themeHandler(data.active)}
+              />
+            }
+            tooltipMessage={data.tool_tip}
+          />
+        ))}
+        <ToolTip
+          toolTipStyle={classes.side_bar_tool_tip_container}
+          children={
+            <IconButton
+              colorOnMouseUp={Colors.red_FF2B2B}
+              colorOnMouseDown={Colors.red_ff3c3c}
+              icon={faArrowRightFromBracket}
+            />
+          }
+          tooltipMessage={'Logout'}
+        />
+      </div>
+
+      {!isSideBarOpen && (
+        <div
+          className={[
+            'd-none d-xl-flex',
+            classes.home_window_collapsed_side_bar_main_container,
+          ].join(' ')}
+        >
+          <ToolTip
+            toolTipStyle={classes.side_bar_tool_tip_container}
+            children={<IconButton icon={faPlus} />}
+            tooltipMessage={'New'}
+          />
+          <ToolTip
+            toolTipStyle={classes.side_bar_tool_tip_container}
+            children={<IconButton icon={faFilter} />}
+            tooltipMessage={'Filtering'}
+          />
+          <ToolTip
+            toolTipStyle={classes.side_bar_tool_tip_container}
+            children={<IconButton icon={faArrowUpWideShort} />}
+            tooltipMessage={'Sorting'}
+          />
+          {THEME_DATA.map((data) => (
+            <ToolTip
+              toolTipStyle={classes.side_bar_tool_tip_container}
+              children={
+                <IconButton
+                  key={data.id}
+                  icon={data.icon}
+                  inconButtonStyle={theme === data.active && classes.active_icon_button}
+                  onClick={() => themeHandler(data.active)}
+                />
+              }
+              tooltipMessage={data.tool_tip}
+            />
+          ))}
+          <ToolTip
+            toolTipStyle={classes.side_bar_tool_tip_container}
+            children={
+              <IconButton
+                colorOnMouseUp={Colors.red_FF2B2B}
+                colorOnMouseDown={Colors.red_ff3c3c}
+                icon={faArrowRightFromBracket}
+              />
+            }
+            tooltipMessage={'Logout'}
+          />
+        </div>
+      )}
 
       {isSideBarOpen && (
         <div
@@ -418,128 +516,6 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
         </div>
       )}
 
-      {/* OVERLAY */}
-
-      <Overlay
-        keyId={'side_bar'}
-        className={[classes.home_window_side_bar_main_container].join(' ')}
-      >
-        <OutlinedButton
-          buttonMainContainerStyle={classes.add_button_main_container}
-          buttonStyle={classes.add_button}
-          icon={faPlus}
-          label={'New'}
-        />
-        <div className={[classes.side_bar_releases_main_container].join(' ')}>
-          <Text h5={'Releases'} />
-          <hr className={classes.releases_horizontal_bar} />
-          <Text p16={'Release 1'} />
-          <Text p16={'Release 2'} />
-        </div>
-
-        <div className={[classes.side_bar_filterig_main_container].join(' ')}>
-          <div className={[classes.filterig_header_container].join(' ')}>
-            <SolidButton
-              buttonMainContainerStyle={classes.filtering_button_main_container}
-              buttonStyle={isFiltering ? classes.active_button : classes.filtering_button}
-              onClick={() => {
-                setIsFiltering(true);
-              }}
-              label={'Filtering'}
-            />
-            <SolidButton
-              buttonMainContainerStyle={classes.filtering_button_main_container}
-              buttonStyle={!isFiltering ? classes.active_button : classes.filtering_button}
-              onClick={() => {
-                setIsFiltering(false);
-              }}
-              label={'Sorting'}
-            />
-          </div>
-          <>
-            {CURRENT_DATA.map((data) => (
-              <div key={data.id} className={[classes.filterig_main_container].join(' ')}>
-                <IconTextButton
-                  onClick={() => {
-                    setExpand((prev) => ({
-                      ...prev,
-                      [data.id]: !prev[data.id],
-                    }));
-                  }}
-                  inconTextButtonStyle={classes.header_button_container}
-                  icon={expand[data.id] ? faAngleUp : faAngleDown}
-                  children={<Text label14Style={classes.tag_text} label14={data.tag} />}
-                />
-                {expand[data.id] && (
-                  <div className={[classes.filterig_container].join(' ')}>
-                    {data.data.map((subData) => (
-                      <SolidButton
-                        key={subData.id}
-                        buttonMainContainerStyle={classes.tag_button_main_container}
-                        buttonStyle={classes.tag_button}
-                        children={
-                          <Text label12Style={classes.filter_tag_text} label12={subData.data} />
-                        }
-                      />
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </>
-        </div>
-
-        <div className={[classes.side_bar_settings_main_container].join(' ')}>
-          <IconTextButton
-            onClick={() => {
-              setIsSettingsExpanded(!isSettingsExpanded);
-            }}
-            inconTextButtonStyle={classes.setting_drop_down_container}
-            icon={isSettingsExpanded ? faAngleUp : faAngleDown}
-            children={<Text label14Style={classes.drop_down_text} label14={'Settings'} />}
-          />
-          {isSettingsExpanded && (
-            <>
-              <div className={[classes.settings_container].join(' ')}>
-                <IconTextButton
-                  onClick={() => {
-                    setIsThemeExpanded(!isThemeExpanded);
-                  }}
-                  inconTextButtonStyle={classes.theme_drop_down_container}
-                  icon={isThemeExpanded ? faAngleUp : faAngleDown}
-                  children={<Text label14Style={classes.drop_down_text} label14={'Theme'} />}
-                />
-                {isThemeExpanded && (
-                  <div className={[classes.theme_icon_container].join(' ')}>
-                    {THEME_DATA.map((data) => (
-                      <ToolTip
-                        children={
-                          <IconButton
-                            key={data.id}
-                            icon={data.icon}
-                            inconButtonStyle={theme === data.active && classes.active_icon_button}
-                            onClick={() => themeHandler(data.active)}
-                          />
-                        }
-                        tooltipMessage={data.tool_tip}
-                      />
-                    ))}
-                  </div>
-                )}
-              </div>
-              <IconTextButton
-                inconTextButtonStyle={classes.logout_container}
-                iconContainerStyle={classes.logout_icon_container}
-                icon={faArrowRightFromBracket}
-                colorOnMouseUp={Colors.red_FF2B2B}
-                colorOnMouseDown={Colors.red_ff3c3c}
-                children={<Text label14Style={classes.logout_text} label14={'Logout'} />}
-              />
-            </>
-          )}
-        </div>
-      </Overlay>
-
       {/* LIST */}
 
       <div className={[classes.home_window_list_main_container].join(' ')}>
@@ -557,13 +533,6 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
             tooltipMessage={isSideBarOpen ? 'Close sidebar' : 'Open sidebar'}
           />
 
-          <IconButton
-            inconButtonStyle={'d-block d-xl-none col-lg-2'}
-            onClick={() => {
-              overlayHandler('side_bar', 'overlay');
-            }}
-            icon={overlay ? faChevronUp : faChevronDown}
-          />
           <div className={[classes.header_buttons_container].join(' ')}>
             {HEADER_BUTTON.map((data) => (
               <SolidButton
