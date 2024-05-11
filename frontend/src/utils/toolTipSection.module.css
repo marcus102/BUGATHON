@@ -16,7 +16,7 @@
   left: 50%;
   transform: translateX(-60%);
   background-color: var(--black_000000aa);
-  padding: 5px;
+  padding: 2px 0;
   border-radius: 5px;
   z-index: 1;
   transition: visibility 0s, opacity 1s ease-in-out;
