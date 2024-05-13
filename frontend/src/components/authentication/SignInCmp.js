@@ -16,7 +16,7 @@ function SignIn() {
       <Link linkStyle={classes.forgot_password_container} children12={'forgot password'} />
       <SolidButton
         onClick={() => overlayHandler('auth')}
-        buttonContainerStyle={classes.sign_in_button_container}
+        buttonMainContainerStyle={classes.sign_in_button_container}
         label={'Sign In'}
       />
     </form>

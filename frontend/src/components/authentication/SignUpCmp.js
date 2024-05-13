@@ -81,7 +81,7 @@ function SignUp() {
 
       <SolidButton
         onClick={() => currentAuthStatusHandler('codeConfirm')}
-        buttonContainerStyle={classes.sign_up_button_container}
+        buttonMainContainerStyle={classes.sign_up_button_container}
         label={'Sign Up'}
       />
     </form>

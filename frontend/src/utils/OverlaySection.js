@@ -1,4 +1,4 @@
-import React, { useContext  } from 'react';
+import React, { useContext } from 'react';
 import Colors from '../constants/colors';
 import classes from './OverlaySection.module.css';
 import { ManagmentSystem } from '../store/AppGeneralManagmentSystem';
@@ -49,14 +49,14 @@ export function Overlay({
   );
 }
 
-export function MenuModal({ children, keyId }) {
+export function MenuModal({ modalContainerStyle, children, keyId }) {
   const { overlay, overlayHandler } = useContext(ManagmentSystem);
 
   return (
     <Modal
       show={overlay.open && overlay.keyId === keyId && overlay.layout === 'menu'}
       onHide={() => overlayHandler(null, null)}
-      className={classes.modal}
+      className={`${classes.modal} ${modalContainerStyle}`}
     >
       <Modal.Body className={classes.modal_body}>
         {children}
