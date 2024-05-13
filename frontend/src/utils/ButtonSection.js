@@ -87,6 +87,7 @@ export function IconButton({
   size,
   onClick,
   inconButtonStyle,
+  getPosition,
 }) {
   const [isPressed, setIsPressed] = useState(false);
 
@@ -113,6 +114,7 @@ export function IconTextButton({
   colorOnMouseDown,
   children,
   icon,
+  icon_,
   size,
   onClick,
   inconTextButtonStyle,
@@ -137,12 +139,15 @@ export function IconTextButton({
       {icon && (
         <Icon iconContainerStyle={iconContainerStyle} icon={icon} color={iconColor} size={size} />
       )}
-      {label ? (
+      {label && (
         <Text
           label14={label}
           label14Style={[classes.button_text, inconTextLabel16Style].join(' ')}
         />
-      ) : undefined}
+      )}
+      {icon_ && (
+        <Icon iconContainerStyle={iconContainerStyle} icon={icon_} color={iconColor} size={size} />
+      )}
       {children}
     </button>
   );

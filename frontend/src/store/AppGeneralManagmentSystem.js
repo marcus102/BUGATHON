@@ -9,6 +9,8 @@ export const ManagmentSystem = createContext({
   headerTabHandler: (parameters) => {},
   theme: '',
   themeHandler: (parameters) => {},
+  currentButtonPosition: { top: 0, left: 0 },
+  handleCurrentButtonPosition: () => {},
 });
 
 // function SystemManagmentReducer(state, action) {}
@@ -19,6 +21,15 @@ export default function ManagmentSystemProvider({ children }) {
   const [authSatus, setAuthStatus] = useState('signIn');
   const [currentHeaderTab, setCurrentHeaderTab] = useState('all');
   const [systemTheme, setSystemTheme] = useState('dark');
+  const [buttonPosition, setButtonPosition] = useState({ top: 0, left: 0 });
+
+  const handleCurrentButtonPosition = (parameters) => {
+    setButtonPosition((prev) => ({
+      ...prev,
+      top: parameters.top + window.scrollY,
+      left: parameters.left + window.scrollX,
+    }));
+  };
 
   const themeHandler = (parameters) => {
     setSystemTheme(parameters);
@@ -50,6 +61,8 @@ export default function ManagmentSystemProvider({ children }) {
     headerTabHandler: headerTabHandler,
     theme: systemTheme,
     themeHandler: themeHandler,
+    currentButtonPosition: buttonPosition,
+    handleCurrentButtonPosition: handleCurrentButtonPosition,
   };
 
   return <ManagmentSystem.Provider value={value}>{children}</ManagmentSystem.Provider>;

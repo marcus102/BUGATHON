@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext  } from 'react';
 import Colors from '../constants/colors';
 import classes from './OverlaySection.module.css';
 import { ManagmentSystem } from '../store/AppGeneralManagmentSystem';
@@ -51,6 +51,7 @@ export function Overlay({
 
 export function MenuModal({ children, keyId }) {
   const { overlay, overlayHandler } = useContext(ManagmentSystem);
+
   return (
     <Modal
       show={overlay.open && overlay.keyId === keyId && overlay.layout === 'menu'}

@@ -279,6 +279,12 @@ flex-direction: row-reverse;
   gap: 5px;
 }
 
+.icon_text_button_container {
+  flex-direction: row;
+  max-width: 100%;
+  min-width: 20%;
+  gap: 10px;
+}
 
 /* LIST PAGINATION */
 

@@ -48,8 +48,8 @@
 .modal {
   width: fit-content;
   height: fit-content;
-  margin-top: 7rem;
-  margin-left: 18rem;
+  /* margin-top: 7rem;
+  margin-left: 18rem; */
 }
 
 .modal_body {

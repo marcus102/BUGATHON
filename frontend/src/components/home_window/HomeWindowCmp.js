@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
-import classes from './HomeWindow.module.css';
+import classes from './HomeWindowCmp.module.css';
 import Colors from '../../constants/colors';
 import {
   IconButton,
@@ -21,17 +21,25 @@ import {
   faDesktop,
   faArrowRightFromBracket,
   faAngleDown,
-  faChevronUp,
-  faChevronDown,
   faFire,
   faAngleRight,
   faFilter,
   faArrowUpWideShort,
-  faGear,
+  faComment,
+  faCaretRight,
+  faClipboard,
+  faExclamation,
+  faEyeSlash,
+  faFaceGrinStars,
+  faPen,
+  faShareNodes,
+  faTrashCan,
+  faUsers,
 } from '@fortawesome/free-solid-svg-icons';
 import Text from '../../utils/TextSection';
 import HomeCard from '../card_view/HomeCardView';
 import ToolTip from '../../utils/toolTipSection';
+import { MenuModal } from '../../utils/OverlaySection';
 
 const DUMMY_POST_DATA = [
   {
@@ -250,6 +258,21 @@ const HEADER_BUTTON = [
     data: '',
     style: '',
   },
+];
+
+const CARD_VIEW_OPTION = [
+  { id: '1', text: 'Edit bug report (owner)', icon: faPen, icon_: null },
+  { id: '2', text: 'Edit bug Fix (owner)', icon: faPen, icon_: null },
+  { id: '3', text: 'Edit Reusable Code (owner)', icon: faPen, icon_: null },
+  { id: '4', text: 'Assign bug to', icon: faClipboard, icon_: faCaretRight },
+  { id: '5', text: 'Comment', icon: faComment, icon_: null },
+  { id: '6', text: 'Contributions', icon: faUsers, icon_: faCaretRight },
+  { id: '7', text: 'Share', icon: faShareNodes, icon_: null },
+  { id: '8', text: 'Pin', icon: faThumbTack, icon_: null },
+  { id: '9', text: 'Make a Review', icon: faFaceGrinStars, icon_: null },
+  { id: '10', text: 'I do not want to see this', icon: faEyeSlash, icon_: null },
+  { id: '11', text: 'Delete bug report (owner)', icon: faTrashCan, icon_: null },
+  { id: '12', text: 'Report', icon: faExclamation, icon_: faCaretRight },
 ];
 
 function HomeWindow({ homeWindowMainContainerStyle }) {
@@ -574,6 +597,18 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
             <HomeCard key={data.id} postTitle={data.title} postDescription={data.description} />
           ))}
         </div>
+
+        <MenuModal keyId={'card_view_menu'}>
+          {CARD_VIEW_OPTION.map((data) => (
+            <IconTextButton
+              key={data.id}
+              inconTextButtonStyle={classes.icon_text_button_container}
+              icon={data.icon}
+              label={data.text}
+              icon_={data.icon_}
+            />
+          ))}
+        </MenuModal>
 
         <div className={classes.list_pagination_container}>
           <hr className={classes.horizontal_line} />
