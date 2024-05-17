@@ -110,3 +110,32 @@
   border: none;
   padding: 0px 5px;
 }
+
+/* DROP DOWN */
+
+.drop_down_button_main_container {
+}
+
+.drop_down_button {
+  background-color: transparent;
+  border: none;
+  color: var(--white_ffffff);
+}
+
+.drop_down_button:hover {
+  background-color: transparent;
+  color: var(--white_afafaf);
+}
+
+.drop_down_button:active {
+  background-color: transparent;
+  color: var(--white_ffffff);
+}
+
+.drop_down_list_container {
+  background-color: var(--gray_50505066);
+}
+
+.drop_down_item {
+  color: var(--white_ffffff);
+}

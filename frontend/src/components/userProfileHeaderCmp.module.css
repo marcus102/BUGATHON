@@ -1,0 +1,64 @@
+/* PROFILE */
+
+.header_profile_container {
+  display: flex;
+  width: fit-content;
+  gap: 5px;
+}
+
+.profile_container {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 5px;
+}
+
+.username_button_container {
+  padding: 0;
+  max-width: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.username_label12_style {
+  font-weight: bold;
+  display: flex;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+
+.profession_label10_style {
+  cursor: pointer;
+  width: 59px;
+}
+
+.img_container {
+  width: 30px;
+  height: 30px;
+}
+
+.img {
+  border-radius: 30px;
+}
+
+.follow_button_container {
+  width: fit-content;
+}
+
+.follow_button {
+  flex-direction: row;
+  border: none;
+  background-color: transparent;
+  gap: 0;
+  padding: 0;
+}
+
+.follow_button:hover {
+  border: none;
+  background-color: transparent;
+}
+
+.follow_label12_style {
+  color: var(--green_039000);
+  cursor: pointer;
+}

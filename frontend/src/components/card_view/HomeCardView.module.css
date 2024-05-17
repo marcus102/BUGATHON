@@ -7,7 +7,7 @@
   justify-content: space-between;
 }
 
-/* PROFILE */
+/* PROFILE
 
 .header_profile_container {
   display: flex;
@@ -70,7 +70,7 @@
 .follow_label12_style {
   color: var(--green_039000);
   cursor: pointer;
-}
+} */
 
 /* OPTION */
 
@@ -81,7 +81,7 @@
   justify-content: center;
 }
 
-.solid_button_container {
+/* .solid_button_container {
   width: fit-content;
 }
 
@@ -122,7 +122,7 @@
 
 .contrib_img {
   border-radius: 15px;
-}
+} */
 
 /* BODY */
 

@@ -152,3 +152,27 @@ export function IconTextButton({
     </button>
   );
 }
+
+export function DropDownButton({ buttonLabel, menuItems }) {
+  return (
+    <div className={["dropdown", classes.drop_down_button_main_container].join(' ')}>
+      <button
+        className={["dropdown-toggle", classes.drop_down_button].join(' ')}
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        {buttonLabel}
+      </button>
+      <ul className={["dropdown-menu", classes.drop_down_list_container].join(' ')}>
+        {menuItems.map((item, index) => (
+          <li key={index}>
+            <a className={["dropdown-item", classes.drop_down_item].join(' ')} href={item.href}>
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}

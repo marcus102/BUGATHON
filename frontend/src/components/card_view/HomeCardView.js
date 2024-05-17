@@ -2,16 +2,8 @@ import React, { useState, useContext } from 'react';
 import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
 import classes from './HomeCardView.module.css';
 import Colors from '../../constants/colors';
-import Image from '../../utils/ImageSection';
-import {
-  SolidButton,
-  IconButton,
-  OutlinedButton,
-  IconTextButton,
-  ButtonContainer,
-} from '../../utils/ButtonSection';
+import { SolidButton, IconTextButton, ButtonContainer, IconButton } from '../../utils/ButtonSection';
 import Text from '../../utils/TextSection';
-import images from '../../assets/images/earth-2254769.jpg';
 import {
   faHeart,
   faComment,
@@ -20,6 +12,8 @@ import {
   faChartSimple,
   faEllipsisVertical,
 } from '@fortawesome/free-solid-svg-icons';
+import UserProfileHeader from '../userProfileHeaderCmp';
+import HeaderOptions from '../headerOptionsCmp';
 
 const DUMMY_DATA = [
   { id: '1', button: 'java', color: Colors.yellow_a99000 },
@@ -37,6 +31,7 @@ const REACTIONS_DATA = [
 
 function HomeCard({
   username,
+  contributions,
   titmestamp,
   tagButton,
   proffession,
@@ -56,60 +51,15 @@ function HomeCard({
   return (
     <ButtonContainer>
       <div className={classes.home_card_header_container}>
-        <div className={classes.header_profile_container}>
-          <div className={classes.profile_container}>
-            <Image imgContainerStyle={classes.img_container} imgStyle={classes.img} src={images} />
-
-            <IconTextButton
-              inconTextButtonStyle={classes.username_button_container}
-              children={
-                <>
-                  <Text label12Style={classes.username_label12_style} label12={'@marcus'} />
-                  <Text label10Style={classes.profession_label10_style} label10={'UI/UX design'} />
-                </>
-              }
-            />
-          </div>
-          <OutlinedButton
-            buttonContainerStyle={classes.follow_button_container}
-            buttonStyle={classes.follow_button}
-            children={<Text label12Style={classes.follow_label12_style} label12={'Follow'} />}
-          />
-        </div>
+        <UserProfileHeader username={username} profession={proffession} />
         <div className={classes.header_options_container}>
-          <SolidButton
-            buttonContainerStyle={classes.solid_button_container}
-            buttonStyle={classes.solid_button}
-            children={
-              <>
-                <Text label10Style={classes.contrib_label10_style} label10={'10K Contributions'} />
-                <div className={classes.options_img_container}>
-                  <Image
-                    imgContainerStyle={classes.contrib_img_container}
-                    imgStyle={classes.contrib_img}
-                    src={images}
-                  />
-                  <Image
-                    imgContainerStyle={classes.contrib_img_container}
-                    imgStyle={classes.contrib_img}
-                    src={images}
-                  />
-                  <Image
-                    imgContainerStyle={classes.contrib_img_container}
-                    imgStyle={classes.contrib_img}
-                    src={images}
-                  />
-                </div>
-                <Text label16Style={classes.contrib_label16_style} label16={'...'} />
-              </>
-            }
-          />
+          <HeaderOptions contributions={contributions} />
           <IconButton
-            icon={faEllipsisVertical}
-            onClick={() => {
-              overlayHandler('card_view_menu', 'menu');
-            }}
-          />
+        icon={faEllipsisVertical}
+        onClick={() => {
+          overlayHandler('card_view_menu', 'menu');
+        }}
+      />
         </div>
       </div>
       <div className={classes.home_card_body_container}>

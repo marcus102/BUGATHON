@@ -1,0 +1,44 @@
+/* OPTION */
+
+.solid_button_container {
+  width: fit-content;
+}
+
+.solid_button {
+  border-radius: 10px;
+  padding: 0 6px;
+  height: 30px;
+  background-color: var(--green_039000);
+}
+
+.solid_button:hover {
+  background-color: var(--green_026c00);
+}
+
+.contrib_label10_style {
+  color: var(--white_ffffff);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.contrib_label16_style {
+  cursor: pointer;
+}
+
+.options_img_container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin: 0 0 0 10px;
+}
+
+.contrib_img_container {
+  position: relative;
+  margin-left: -9px;
+  width: 15px;
+  height: 15px;
+}
+
+.contrib_img {
+  border-radius: 15px;
+}

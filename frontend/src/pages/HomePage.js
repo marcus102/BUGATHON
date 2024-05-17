@@ -3,6 +3,7 @@ import classes from './HomePage.module.css';
 import Authentication from './AuthenticationPage';
 import BroadCast from '../components/broadcast/BroadCastCmp';
 import HomeWindow from '../components/home_window/HomeWindowCmp';
+import ExpandedCard from '../components/card_view/ExpandedCardView';
 
 function Home() {
   return (
@@ -13,7 +14,8 @@ function Home() {
         }
       />
       <Authentication />
-      <HomeWindow />
+      {/* <HomeWindow /> */}
+      <ExpandedCard />
     </div>
   );
 }
