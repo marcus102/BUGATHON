@@ -2,7 +2,12 @@ import React, { useState, useContext } from 'react';
 import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
 import classes from './HomeCardView.module.css';
 import Colors from '../../constants/colors';
-import { SolidButton, IconTextButton, ButtonContainer, IconButton } from '../../utils/ButtonSection';
+import {
+  SolidButton,
+  IconTextButton,
+  ButtonContainer,
+  IconButton,
+} from '../../utils/ButtonSection';
 import Text from '../../utils/TextSection';
 import {
   faHeart,
@@ -11,6 +16,7 @@ import {
   faArrowUpFromBracket,
   faChartSimple,
   faEllipsisVertical,
+  faEllipsis,
 } from '@fortawesome/free-solid-svg-icons';
 import UserProfileHeader from '../userProfileHeaderCmp';
 import HeaderOptions from '../headerOptionsCmp';
@@ -30,6 +36,7 @@ const REACTIONS_DATA = [
 ];
 
 function HomeCard({
+  isHeaderOption,
   username,
   contributions,
   titmestamp,
@@ -38,9 +45,12 @@ function HomeCard({
   postTitle,
   postDescription,
   children,
+  CUSTOM_REACTIONS_DATA,
 }) {
+  const REACTIONS = CUSTOM_REACTIONS_DATA ? CUSTOM_REACTIONS_DATA : REACTIONS_DATA;
+
   const [isActive, setIsActive] = useState(
-    REACTIONS_DATA.reduce((acc, reaction) => {
+    REACTIONS.reduce((acc, reaction) => {
       acc[reaction.id] = false;
       return acc;
     }, {})
@@ -53,13 +63,20 @@ function HomeCard({
       <div className={classes.home_card_header_container}>
         <UserProfileHeader username={username} profession={proffession} />
         <div className={classes.header_options_container}>
-          <HeaderOptions contributions={contributions} />
+          {isHeaderOption ? (
+            <HeaderOptions contributions={contributions} />
+          ) : (
+            <IconButton
+              inconButtonStyle={classes.header_options_icon_container}
+              icon={faEllipsis}
+            />
+          )}
           <IconButton
-        icon={faEllipsisVertical}
-        onClick={() => {
-          overlayHandler('card_view_menu', 'menu');
-        }}
-      />
+            icon={faEllipsisVertical}
+            onClick={() => {
+              overlayHandler('card_view_menu', 'menu');
+            }}
+          />
         </div>
       </div>
       <div className={classes.home_card_body_container}>
@@ -82,7 +99,7 @@ function HomeCard({
             ))}
           </div>
           <div className={classes.footer_reaction_container}>
-            {REACTIONS_DATA.map((data) => (
+            {REACTIONS.map((data) => (
               <IconTextButton
                 key={data.id}
                 onClick={() => {

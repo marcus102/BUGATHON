@@ -594,7 +594,12 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
 
         <div className={[classes.list_second_container].join(' ')}>
           {paginatedData.map((data) => (
-            <HomeCard key={data.id} postTitle={data.title} postDescription={data.description} />
+            <HomeCard
+              key={data.id}
+              isHeaderOption={true}
+              postTitle={data.title}
+              postDescription={data.description}
+            />
           ))}
         </div>
 

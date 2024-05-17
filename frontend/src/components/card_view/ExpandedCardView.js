@@ -20,11 +20,14 @@ import {
   faArrowUpFromBracket,
   faCopy,
   faAnglesRight,
+  faChartSimple,
+  faEllipsis,
 } from '@fortawesome/free-solid-svg-icons';
 import Text from '../../utils/TextSection';
 import Icon from '../../utils/IconSection';
 import Image from '../../utils/ImageSection';
 import images from '../../assets/images/post-it-4129907.jpg';
+import HomeCard from './HomeCardView';
 
 const REACTIONS_DATA = [
   { id: 'like', icon: faHeart, text: '10K', activeColor: Colors.red_FF2B2B },
@@ -32,6 +35,35 @@ const REACTIONS_DATA = [
   { id: 'pin', icon: faThumbTack, text: null, activeColor: Colors.yellow_ },
   { id: 'share', icon: faArrowUpFromBracket, text: null, activeColor: Colors.green_039000 },
   // { id: 'impression', icon: faChartSimple, text: '50K', activeColor: Colors.orange_ff7811 },
+];
+
+// const REACTIONS_DATA_2 = [
+//   { id: 'like', icon: faHeart, text: '10K', activeColor: Colors.red_FF2B2B },
+//   { id: 'comment', icon: faComment, text: '5K', activeColor: Colors.blue_0075FF },
+//   { id: 'impression', icon: faChartSimple, text: '50K', activeColor: Colors.orange_ff7811 },
+//   { id: 'more', icon: faEllipsis, text: null, activeColor: Colors.white_ },
+//   // { id: 'share', icon: faArrowUpFromBracket, text: null, activeColor: Colors.green_039000 },
+// ];
+
+const DUMMY_POST_DATA = [
+  {
+    id: '1',
+    title: 'Lorem ipsum dolor sit amet.',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+  },
+  {
+    id: '2',
+    title: 'Lorem ipsum dolor sit amet.',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+  },
+  {
+    id: '3',
+    title: 'Lorem ipsum dolor sit amet.',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+  },
 ];
 
 const IMPLEMENTATION_DATA = [
@@ -122,12 +154,14 @@ function ExpandedCard() {
           <div className={classes.body_suggestion_container}>
             <OutlinedButton
               buttonMainContainerStyle={classes.body_suggestion_button_main_container}
+              buttonTextStyle={classes.body_suggestion_button_text}
               buttonStyle={classes.body_suggestion_button_container}
               label={'View People Contributions or Solutions'}
             />
             <Icon icon={faAnglesRight} />
             <OutlinedButton
               buttonMainContainerStyle={classes.body_suggestion_button_main_container}
+              buttonTextStyle={classes.body_suggestion_button_text}
               buttonStyle={classes.body_suggestion_button_container}
               label={'Solve the bug'}
             />
@@ -145,9 +179,35 @@ function ExpandedCard() {
         </div>
       </div>
       <div className={classes.expanded_card_analytics_main_container}>
-        <div className={classes.analytics_recommendation_container}></div>
-        <div className={classes.analytics_analytic_container}></div>
-        <div className={classes.analytics_comment_container}></div>
+        <div className={classes.analytics_analytic_container}>
+          <Text textStyle={classes.analytic_container} h6={'Analytics'} />
+          <hr className={classes.body_horizontal_line_container} />
+          <div className={classes.analytic_content_container}></div>
+        </div>
+        <div className={classes.analytics_recommendation_container}>
+          <Text
+            textStyle={classes.recommendation_potentials_title_container}
+            h6={'Potetial Bug Fixes'}
+          />
+          <hr className={classes.body_horizontal_line_container} />
+          <div className={classes.recommendation_potentials_content_container}>
+            {DUMMY_POST_DATA.map((data) => (
+              <HomeCard
+                key={data.id}
+                isHeaderOption={true}
+                postTitle={data.title}
+                postDescription={data.description}
+              />
+            ))}
+
+            <OutlinedButton label={'More...'} />
+          </div>
+        </div>
+        <div className={classes.analytics_comment_container}>
+          <Text textStyle={classes.comment_title_container} h6={'Top Comments'} />
+          <hr className={classes.body_horizontal_line_container} />
+          <div className={classes.comment_content_container}></div>
+        </div>
       </div>
     </div>
   );

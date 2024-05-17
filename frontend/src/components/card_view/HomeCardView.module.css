@@ -81,6 +81,12 @@
   justify-content: center;
 }
 
+.header_options_icon_container {
+  background-color: var(--gray_50505066);
+  border-radius: 5px;
+  margin: 0 10px;
+}
+
 /* .solid_button_container {
   width: fit-content;
 }
