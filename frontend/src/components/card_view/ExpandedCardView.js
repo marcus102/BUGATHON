@@ -30,6 +30,7 @@ import Icon from '../../utils/IconSection';
 import Image from '../../utils/ImageSection';
 import images from '../../assets/images/post-it-4129907.jpg';
 import HomeCard from './HomeCardView';
+import CommentSection from '../comment/CommentSectionCmp';
 
 const REACTIONS_DATA = [
   { id: 'like', icon: faHeart, text: '10K', activeColor: Colors.red_FF2B2B },
@@ -221,6 +222,7 @@ function ExpandedCard() {
           <div className={classes.analytics_comment_container}>
             <Text textStyle={classes.comment_title_container} h6={'Top Comments'} />
             <hr className={classes.body_horizontal_line_container} />
+            <CommentSection />
             <div className={classes.comment_content_container}></div>
           </div>
         </div>

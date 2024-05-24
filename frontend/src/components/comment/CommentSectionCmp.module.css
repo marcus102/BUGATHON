@@ -5,3 +5,17 @@
   border-radius: 10px;
   margin: auto;
 }
+
+.load_more_button {
+  background-color: transparent;
+  border-radius: 0;
+  padding: 0;
+  width: fit-content;
+  color: var(--white_ffffff);
+  transition: color 0.3s ease;
+}
+
+.load_more_button:hover {
+  background-color: transparent;
+  color: var(--white_afafaf);
+}

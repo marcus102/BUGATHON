@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classes from './userProfileHeaderCmp.module.css';
 import { IconTextButton } from '../utils/ButtonSection';
 import Image from '../utils/ImageSection';
@@ -6,7 +6,9 @@ import Text from '../utils/TextSection';
 import { OutlinedButton } from '../utils/ButtonSection';
 import images from '../assets/images/earth-2254769.jpg';
 
-function UserProfileHeader({username, profession, profileImg}) {
+function UserProfileHeader({ username, profession, profileImg }) {
+  const [isFollowing, setIsFollowing] = useState(false);
+
   return (
     <div className={classes.header_profile_container}>
       <div className={classes.profile_container}>
@@ -25,7 +27,15 @@ function UserProfileHeader({username, profession, profileImg}) {
       <OutlinedButton
         buttonContainerStyle={classes.follow_button_container}
         buttonStyle={classes.follow_button}
-        children={<Text label12Style={classes.follow_label12_style} label12={'Follow'} />}
+        onClick={() => {
+          setIsFollowing(!isFollowing);
+        }}
+        children={
+          <Text
+            label12Style={classes.follow_label12_style}
+            label12={!isFollowing ? 'Follow' : 'Unfollow'}
+          />
+        }
       />
     </div>
   );

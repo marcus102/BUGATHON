@@ -17,8 +17,8 @@ function Home() {
       />
       <Authentication />
       {/* <HomeWindow /> */}
-      {/* <ExpandedCard /> */}
-      <CommentSection />
+      <ExpandedCard />
+      {/* <CommentSection /> */}
       <ScrollToTop />
     </div>
   );
