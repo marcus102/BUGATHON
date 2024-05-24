@@ -1,0 +1,7 @@
+.comment_section {
+  width: 100%;
+  background-color: var(--black_232526);
+  padding: 10px;
+  border-radius: 10px;
+  margin: auto;
+}

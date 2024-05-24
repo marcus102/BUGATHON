@@ -29,6 +29,7 @@ function Text({
   label10,
   label10Style,
   textStyle,
+  children,
 }) {
   return (
     <div className={[classes.text_container, textStyle].join(' ')}>
@@ -55,6 +56,7 @@ function Text({
       {label16 ? (
         <label className={[classes.label16, label16Style].join(' ')}>{label16}</label>
       ) : undefined}
+      {children}
     </div>
   );
 }

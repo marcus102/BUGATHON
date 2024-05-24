@@ -2,8 +2,6 @@
   display: flex;
   margin: 20px 0;
   gap: 5px;
-  /* height: 100vh;
-  overflow-y: auto; */
 }
 
 /* IMPLEMENTATION (HEADER-BODY) */
@@ -11,8 +9,8 @@
 .expanded_card_implentation_main_container {
   display: flex;
   flex-direction: column;
-  width: 60%;
   gap: 30px;
+  width: 100%;
 }
 
 /* HEADER */
@@ -26,7 +24,6 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  width: 45%;
   height: fit-content;
   padding: 0 10px;
 }
@@ -61,8 +58,8 @@
 
 .reactions_list_container {
   display: flex;
-  width: 30%;
   height: fit-content;
+  padding: 0 15px;
 }
 
 .list_icon_text_container {
@@ -143,7 +140,6 @@
 .expanded_card_analytics_main_container {
   display: flex;
   flex-direction: column;
-  width: 40%;
 }
 
 .analytics_recommendation_container {

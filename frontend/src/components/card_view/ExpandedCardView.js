@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classes from './ExpandedCardView.module.css';
 import Colors from '../../constants/colors';
 import HeaderOptions from '../headerOptionsCmp';
@@ -21,8 +21,9 @@ import {
   faArrowUpFromBracket,
   faCopy,
   faAnglesRight,
-  faChartSimple,
-  faEllipsis,
+  faChevronRight,
+  faChevronUp,
+  faChevronDown,
 } from '@fortawesome/free-solid-svg-icons';
 import Text from '../../utils/TextSection';
 import Icon from '../../utils/IconSection';
@@ -32,32 +33,22 @@ import HomeCard from './HomeCardView';
 
 const REACTIONS_DATA = [
   { id: 'like', icon: faHeart, text: '10K', activeColor: Colors.red_FF2B2B },
-  // { id: 'comment', icon: faComment, text: '5K', activeColor: Colors.blue_0075FF },
   { id: 'pin', icon: faThumbTack, text: null, activeColor: Colors.yellow_ },
   { id: 'share', icon: faArrowUpFromBracket, text: null, activeColor: Colors.green_039000 },
-  // { id: 'impression', icon: faChartSimple, text: '50K', activeColor: Colors.orange_ff7811 },
 ];
-
-// const REACTIONS_DATA_2 = [
-//   { id: 'like', icon: faHeart, text: '10K', activeColor: Colors.red_FF2B2B },
-//   { id: 'comment', icon: faComment, text: '5K', activeColor: Colors.blue_0075FF },
-//   { id: 'impression', icon: faChartSimple, text: '50K', activeColor: Colors.orange_ff7811 },
-//   { id: 'more', icon: faEllipsis, text: null, activeColor: Colors.white_ },
-//   // { id: 'share', icon: faArrowUpFromBracket, text: null, activeColor: Colors.green_039000 },
-// ];
 
 const DUMMY_POST_DATA = [
   {
     id: '1',
     title: 'Lorem ipsum dolor sit amet.',
-    state: 'reusable_code',
+    state: 'bug_fix',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
   },
   {
     id: '2',
     title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_report',
+    state: 'bug_fix',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
   },
@@ -104,19 +95,32 @@ const IMPLEMENTATION_DATA = [
 ];
 
 function ExpandedCard() {
+  const [isExpanded, setIsExpanded] = useState(true);
+
   return (
     <div className={classes.expanded_card_main_container}>
-      <div className={classes.expanded_card_implentation_main_container}>
+      <div className={`${classes.expanded_card_implentation_main_container}`}>
         <div className={classes.implentation_header_container}>
           <div className={classes.header_options_container}>
             <IconButton icon={faArrowLeft} />
             <SolidButton buttonStyle={classes.options_button_container} label={'Solve Bug'} />
-            <HeaderOptions />
+            <HeaderOptions headerOptionMainContainer={'d-none d-md-block'} />
           </div>
           <div className={classes.header_options_container}>
             <UserProfileHeader />
             <IconButton icon={faEllipsisVertical} />
-            <IconButton icon={faChevronLeft} />
+            <IconButton
+              inconButtonStyle={'d-none d-xl-block'}
+              icon={isExpanded ? faChevronRight : faChevronLeft}
+              onClick={() => {
+                setIsExpanded(!isExpanded);
+              }}
+            />
+            <IconButton
+              inconButtonStyle={'d-block d-xl-none'}
+              icon={faChevronDown}
+              onClick={() => {}}
+            />
           </div>
         </div>
         <Text textStyle={classes.implentation_second_header_container} h5={'Bug report title'} />
@@ -182,41 +186,45 @@ function ExpandedCard() {
           </div>
         </div>
       </div>
-      <div className={classes.expanded_card_analytics_main_container}>
-        <div className={classes.analytics_analytic_container}>
-          <Text textStyle={classes.analytic_container} h6={'Analytics'} />
-          <hr className={classes.body_horizontal_line_container} />
-          <div className={classes.analytic_content_container}></div>
-        </div>
-        <div className={classes.analytics_recommendation_container}>
-          <Text
-            textStyle={classes.recommendation_potentials_title_container}
-            h6={'Potetial Bug Fixes'}
-          />
-          <hr className={classes.body_horizontal_line_container} />
-          <div className={classes.recommendation_potentials_content_container}>
-            {DUMMY_POST_DATA.map((data) => (
-              <HomeCard
-                cardButtonState={data.state}
-                key={data.id}
-                isHeaderOption={true}
-                postTitle={data.title}
-                postDescription={data.description}
-              />
-            ))}
-
-            <ButtonContainer
-              children={'More...'}
-              buttonContainerMainContainer={classes.content_button_container}
+      {isExpanded && (
+        <div
+          className={`col-4 d-none d-xl-block ${classes.expanded_card_analytics_main_container}`}
+        >
+          <div className={classes.analytics_analytic_container}>
+            <Text textStyle={classes.analytic_container} h6={'Analytics'} />
+            <hr className={classes.body_horizontal_line_container} />
+            <div className={classes.analytic_content_container}></div>
+          </div>
+          <div className={classes.analytics_recommendation_container}>
+            <Text
+              textStyle={classes.recommendation_potentials_title_container}
+              h6={'Potetial Bug Fixes'}
             />
+            <hr className={classes.body_horizontal_line_container} />
+            <div className={classes.recommendation_potentials_content_container}>
+              {DUMMY_POST_DATA.map((data) => (
+                <HomeCard
+                  cardButtonState={data.state}
+                  key={data.id}
+                  isHeaderOption={true}
+                  postTitle={data.title}
+                  postDescription={data.description}
+                />
+              ))}
+
+              <ButtonContainer
+                children={'More...'}
+                buttonContainerMainContainer={classes.content_button_container}
+              />
+            </div>
+          </div>
+          <div className={classes.analytics_comment_container}>
+            <Text textStyle={classes.comment_title_container} h6={'Top Comments'} />
+            <hr className={classes.body_horizontal_line_container} />
+            <div className={classes.comment_content_container}></div>
           </div>
         </div>
-        <div className={classes.analytics_comment_container}>
-          <Text textStyle={classes.comment_title_container} h6={'Top Comments'} />
-          <hr className={classes.body_horizontal_line_container} />
-          <div className={classes.comment_content_container}></div>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

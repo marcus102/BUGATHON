@@ -64,6 +64,7 @@ export function Input({
   inputMainContainerStyle,
   inputSecondContainerStyle,
   inputStyle,
+  onKeyDown,
 }) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -78,7 +79,13 @@ export function Input({
       {label && <Text label16={label} />}
       <div className={[classes.input_second_container, inputSecondContainerStyle].join(' ')}>
         <div className={[classes.input_container, inputStyle].join(' ')}>
-          <input type={inputType} placeholder={placeholder} value={value} onChange={onChange} />
+          <input
+            type={inputType}
+            placeholder={placeholder}
+            value={value}
+            onChange={onChange}
+            onKeyDown={onKeyDown}
+          />
           {type === 'password' && (
             <IconButton
               icon={isPasswordVisible ? faEyeSlash : faEye}
