@@ -7,6 +7,18 @@
   justify-content: space-between;
 }
 
+.bug_report {
+  border-bottom: 2px solid var(--lightRed_);
+}
+
+.bug_fix {
+  border-bottom: 2px solid var(--green_026c00);
+}
+
+.reusable_code {
+  border-bottom: 2px solid var(--orange_ff7811);
+}
+
 /* PROFILE
 
 .header_profile_container {

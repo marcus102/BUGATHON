@@ -25,9 +25,10 @@
 .header_options_container {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 40%;
+  justify-content: flex-end;
+  width: 45%;
   height: fit-content;
+  padding: 0 10px;
 }
 
 .options_button_container {
@@ -46,6 +47,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 10px;
 }
 
 .img_container {
@@ -155,4 +157,23 @@
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
+}
+
+.content_button_container {
+  height: 40px;
+  align-items: center;
+  justify-content: flex-end;
+  background-color: transparent;
+  border-radius: 20px;
+  color: var(--white_ffffff);
+  transition: color 0.3s ease;
+}
+
+.content_button_container:hover{
+  background-color: transparent;
+  color: var(--white_afafaf);
+}
+
+.content_button_container:active{
+  color: var(--white_ffffff);
 }

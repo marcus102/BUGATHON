@@ -45,96 +45,112 @@ const DUMMY_POST_DATA = [
   {
     id: '1',
     title: 'Lorem ipsum dolor sit amet.',
+    state: 'bug_report',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
   },
   {
     id: '2',
     title: 'Lorem ipsum dolor sit amet.',
+    state: 'bug_fix',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
   },
   {
     id: '3',
     title: 'Lorem ipsum dolor sit amet.',
+    state: 'reusable_code',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
   },
   {
     id: '4',
     title: 'Lorem ipsum dolor sit amet.',
+    state: 'bug_fix',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
   },
   {
     id: '5',
     title: 'Lorem ipsum dolor sit amet.',
+    state: 'bug_report',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
   },
   {
     id: '6',
     title: 'Lorem ipsum dolor sit amet.',
+    state: 'bug_report',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
   },
   {
     id: '7',
     title: 'Lorem ipsum dolor sit amet.',
+    state: 'reusable code',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
   },
   {
     id: '8',
     title: 'Lorem ipsum dolor sit amet.',
+    state: 'bug_report',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
   },
   {
     id: '9',
     title: 'Lorem ipsum dolor sit amet.',
+    state: 'bug_report',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
   },
   {
     id: '10',
     title: 'Lorem ipsum dolor sit amet.',
+    state: 'bug_fix',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
   },
   {
     id: '11',
     title: 'Lorem ipsum dolor sit amet.',
+    state: 'bug_report',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
   },
   {
     id: '12',
     title: 'Lorem ipsum dolor sit amet.',
+    state: 'bug_report',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
   },
   {
     id: '13',
     title: 'Lorem ipsum dolor sit amet.',
+    state: 'reusable_code',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
   },
   {
     id: '14',
     title: 'Lorem ipsum dolor sit amet.',
+    state: 'bug_fix',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
   },
   {
     id: '15',
     title: 'Lorem ipsum dolor sit amet.',
+    state: 'bug_report',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
   },
   {
     id: '16',
     title: 'Lorem ipsum dolor sit amet.',
+    state: 'bug_report',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
   },
@@ -595,6 +611,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
         <div className={[classes.list_second_container].join(' ')}>
           {paginatedData.map((data) => (
             <HomeCard
+              cardButtonState={data.state}
               key={data.id}
               isHeaderOption={true}
               postTitle={data.title}

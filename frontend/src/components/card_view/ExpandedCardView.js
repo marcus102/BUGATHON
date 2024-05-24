@@ -9,6 +9,7 @@ import {
   OutlinedButton,
   IconTextButton,
   DropDownButton,
+  ButtonContainer,
 } from '../../utils/ButtonSection';
 import {
   faArrowLeft,
@@ -49,18 +50,21 @@ const DUMMY_POST_DATA = [
   {
     id: '1',
     title: 'Lorem ipsum dolor sit amet.',
+    state: 'reusable_code',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
   },
   {
     id: '2',
     title: 'Lorem ipsum dolor sit amet.',
+    state: 'bug_report',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
   },
   {
     id: '3',
     title: 'Lorem ipsum dolor sit amet.',
+    state: 'bug_fix',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
   },
@@ -193,6 +197,7 @@ function ExpandedCard() {
           <div className={classes.recommendation_potentials_content_container}>
             {DUMMY_POST_DATA.map((data) => (
               <HomeCard
+                cardButtonState={data.state}
                 key={data.id}
                 isHeaderOption={true}
                 postTitle={data.title}
@@ -200,7 +205,10 @@ function ExpandedCard() {
               />
             ))}
 
-            <OutlinedButton label={'More...'} />
+            <ButtonContainer
+              children={'More...'}
+              buttonContainerMainContainer={classes.content_button_container}
+            />
           </div>
         </div>
         <div className={classes.analytics_comment_container}>

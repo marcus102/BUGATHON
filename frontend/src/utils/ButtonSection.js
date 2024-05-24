@@ -62,7 +62,7 @@ export function OutlinedButton({
   return (
     <div className={`${classes.outlined_button_container} ${buttonMainContainerStyle}`}>
       <button
-        className={[classes.outlined_button, buttonStyle].join(' ')}
+        className={`${classes.outlined_button} ${buttonStyle}`}
         type="button"
         onClick={onClick}
       >

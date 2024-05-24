@@ -4,6 +4,7 @@ import Authentication from './AuthenticationPage';
 import BroadCast from '../components/broadcast/BroadCastCmp';
 import HomeWindow from '../components/home_window/HomeWindowCmp';
 import ExpandedCard from '../components/card_view/ExpandedCardView';
+import ScrollToTop from '../components/scroll_to_top/ScrollToTopCmp';
 
 function Home() {
   return (
@@ -16,6 +17,7 @@ function Home() {
       <Authentication />
       {/* <HomeWindow /> */}
       <ExpandedCard />
+      <ScrollToTop />
     </div>
   );
 }

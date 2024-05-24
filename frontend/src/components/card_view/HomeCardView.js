@@ -36,6 +36,7 @@ const REACTIONS_DATA = [
 ];
 
 function HomeCard({
+  cardButtonState,
   isHeaderOption,
   username,
   contributions,
@@ -59,7 +60,17 @@ function HomeCard({
   const { overlayHandler } = useContext(ManagmentSystem);
 
   return (
-    <ButtonContainer>
+    <ButtonContainer
+      buttonContainerMainContainer={
+        cardButtonState === 'bug_report'
+          ? classes.bug_report
+          : cardButtonState === 'bug_fix'
+          ? classes.bug_fix
+          : cardButtonState === 'reusable_code'
+          ? classes.reusable_code
+          : null
+      }
+    >
       <div className={classes.home_card_header_container}>
         <UserProfileHeader username={username} profession={proffession} />
         <div className={classes.header_options_container}>
