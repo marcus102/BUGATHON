@@ -1,0 +1,11 @@
+/* .chart-container {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+} */
+
+.chart_container {
+  background-color: #31c331; /* Dark green background color for the container */
+  padding: 20px;
+  border-radius: 10px;
+}

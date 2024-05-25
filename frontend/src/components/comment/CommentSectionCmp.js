@@ -81,7 +81,7 @@ const CommentSection = () => {
 
   return (
     <div className={classes.comment_section}>
-      <Text textStyle={'p-3'} h5={'Comments'} />
+      {/* <Text textStyle={'p-3'} h5={'Comments'} /> */}
 
       {comments.slice(0, visibleComments).map((comment) => (
         <Comment key={comment.id} comment={comment} />
