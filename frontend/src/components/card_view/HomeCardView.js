@@ -7,6 +7,7 @@ import {
   IconTextButton,
   ButtonContainer,
   IconButton,
+  DropdownMenu
 } from '../../utils/ButtonSection';
 import Text from '../../utils/TextSection';
 import {
@@ -17,22 +18,58 @@ import {
   faChartSimple,
   faEllipsisVertical,
   faEllipsis,
+  faPen,
+  faCaretRight,
+  faClipboard,
+  faUser,
+  faShareNodes,
+  faFaceGrinStars,
+  faEyeSlash,
+  faTrashCan,
+  faExclamation,
 } from '@fortawesome/free-solid-svg-icons';
 import UserProfileHeader from '../userProfileHeaderCmp';
 import HeaderOptions from '../headerOptionsCmp';
+import ToolTip from '../../utils/toolTipSection';
 
 const DUMMY_DATA = [
-  { id: '1', button: 'java', color: Colors.yellow_a99000 },
-  { id: '2', button: 'python', color: Colors.blue_57a3fb },
-  { id: '3', button: '...', color: Colors.gray_aaaaaa5e },
+  {
+    id: '1',
+    button: 'java',
+    about:
+      'versatile, object-oriented programming language for building cross-platform applications.',
+    color: Colors.yellow_a99000,
+  },
+  {
+    id: '2',
+    button: 'python',
+    about: 'versatile, readable, powerful language for web development, data science, automation.',
+    color: Colors.blue_57a3fb,
+  },
+  { id: '3', button: '...', about: 'Click for more...', color: Colors.gray_aaaaaa5e },
 ];
 
 const REACTIONS_DATA = [
-  { id: 'like', icon: faHeart, text: '10K', activeColor: Colors.red_FF2B2B },
-  { id: 'comment', icon: faComment, text: '5K', activeColor: Colors.blue_0075FF },
+  { id: 'likes', icon: faHeart, text: '10K', activeColor: Colors.red_FF2B2B },
+  { id: 'comments', icon: faComment, text: '5K', activeColor: Colors.blue_0075FF },
   { id: 'pin', icon: faThumbTack, text: null, activeColor: Colors.yellow_ },
   { id: 'share', icon: faArrowUpFromBracket, text: null, activeColor: Colors.green_039000 },
   { id: 'impression', icon: faChartSimple, text: '50K', activeColor: Colors.orange_ff7811 },
+];
+
+const CARD_VIEW_OPTION = [
+  { id: '1', icon: faPen, label: 'Edit bug report (owner)', icon_2: null, href: null },
+  { id: '2', icon: faPen, label: 'Edit bug Fix (owner)', icon_2: null, href: null },
+  { id: '3', icon: faPen, label: 'Edit Reusable Code (owner)', icon_2: null, href: null },
+  { id: '4', icon: faClipboard, label: 'Assign bug to', icon_2: faCaretRight, href: null },
+  { id: '5', icon: faComment, label: 'Comment', icon_2: null, href: null },
+  { id: '6', icon: faUser, label: 'Contributions', icon_2: faCaretRight, href: null },
+  { id: '7', icon: faShareNodes, label: 'Share', icon_2: null, href: null },
+  { id: '8', icon: faThumbTack, label: 'Pin', icon_2: null, href: null },
+  { id: '9', icon: faFaceGrinStars, label: 'Make a Review', icon_2: null, href: null },
+  { id: '10', icon: faEyeSlash, label: 'I do not want to see this', icon_2: null, href: null },
+  { id: '11', icon: faTrashCan, label: 'Delete bug report (owner)', icon_2: null, href: null },
+  { id: '12', icon: faExclamation, label: 'Report', icon_2: faCaretRight, href: null },
 ];
 
 function HomeCard({
@@ -82,12 +119,9 @@ function HomeCard({
               icon={faEllipsis}
             />
           )}
-          <IconButton
-            icon={faEllipsisVertical}
-            onClick={() => {
-              overlayHandler('card_view_menu', 'menu');
-            }}
-          />
+
+          <DropdownMenu buttonIcon={faEllipsisVertical} menuItems={CARD_VIEW_OPTION} />
+
         </div>
       </div>
       <div className={classes.home_card_body_container}>
@@ -100,31 +134,41 @@ function HomeCard({
         <div className={classes.footer_main_container}>
           <div className={classes.footer_tag_container}>
             {DUMMY_DATA.map((data) => (
-              <SolidButton
-                buttonMainContainerStyle={classes.tag_button_main_container}
-                buttonContainerStyle={classes.tag_button_container}
-                buttonStyle={classes.tag_button}
-                key={data.id}
-                children={<Text label12Style={classes.label12_style} label12={data.button} />}
+              <ToolTip
+                children={
+                  <SolidButton
+                    buttonMainContainerStyle={classes.tag_button_main_container}
+                    buttonContainerStyle={classes.tag_button_container}
+                    buttonStyle={classes.tag_button}
+                    key={data.id}
+                    children={<Text label12Style={classes.label12_style} label12={data.button} />}
+                  />
+                }
+                tooltipMessage={data.about}
               />
             ))}
           </div>
           <div className={classes.footer_reaction_container}>
             {REACTIONS.map((data) => (
-              <IconTextButton
-                key={data.id}
-                onClick={() => {
-                  setIsActive((prev) => ({
-                    ...prev,
-                    [data.id]: !prev[data.id],
-                  }));
-                }}
-                inconTextButtonStyle={classes.reaction_icon_text_button_container}
+              <ToolTip
                 children={
-                  <Text label12Style={classes.reaction_label12_style} label12={data.text} />
+                  <IconTextButton
+                    key={data.id}
+                    onClick={() => {
+                      setIsActive((prev) => ({
+                        ...prev,
+                        [data.id]: !prev[data.id],
+                      }));
+                    }}
+                    inconTextButtonStyle={classes.reaction_icon_text_button_container}
+                    children={
+                      <Text label12Style={classes.reaction_label12_style} label12={data.text} />
+                    }
+                    colorOnMouseUp={isActive[data.id] ? data.activeColor : undefined}
+                    icon={data.icon}
+                  />
                 }
-                colorOnMouseUp={isActive[data.id] ? data.activeColor : undefined}
-                icon={data.icon}
+                tooltipMessage={data.id}
               />
             ))}
           </div>

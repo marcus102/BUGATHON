@@ -62,7 +62,7 @@ function Footer() {
       <div className={classes.footer_icon_button_container}>
         {ICON_LINK_DATA.map((data) => (
           <ToolTip
-            children={<Link key={data.id} icon={data.icon} href={data.icon_link} />}
+            children={<Link key={data.id} icon_link={data.icon} href={data.icon_link} />}
             tooltipMessage={data.tool_tip}
           />
         ))}

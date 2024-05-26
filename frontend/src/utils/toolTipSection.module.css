@@ -15,7 +15,7 @@
   top: 100%;
   left: 50%;
   transform: translateX(-60%);
-  background-color: var(--black_000000aa);
+  background-color: var(--black_333333f1);
   padding: 2px 0;
   border-radius: 5px;
   z-index: 1;

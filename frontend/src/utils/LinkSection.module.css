@@ -1,13 +1,15 @@
 .link_container {
   display: flex;
-  width: fit-content;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding: 5px;
 }
 
 /* LINK 12 */
 
 .link12 {
+  gap: 5px;
+  display: flex;
   text-decoration: none;
   font-size: 12px;
   cursor: pointer;
@@ -16,6 +18,8 @@
 /* LINK 14 */
 
 .link14 {
+  display: flex;
+  gap: 5px;
   text-decoration: none;
   font-size: 14px;
   cursor: pointer;
@@ -24,6 +28,8 @@
 /* LINK 16 */
 
 .link16 {
+  display: flex;
+  gap: 5px;
   text-decoration: none;
   cursor: pointer;
 }
@@ -33,14 +39,6 @@
 .underline_link {
   text-decoration: underline;
 }
-
-/* .link_container a:hover {
-  color: var(--blue_2a8eff);
-}
-
-.link_container a:active {
-  color: var(--blue_0075FF);
-} */
 
 .link_default_color {
   color: var(--blue_0075FF);
@@ -54,6 +52,3 @@
   color: var(--blue_0075FF);
 }
 
-/* .link_container a:visited {
-  color: var(--purple_c800c8);
-} */

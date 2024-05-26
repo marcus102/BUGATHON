@@ -2,7 +2,7 @@
 
 .header_profile_container {
   display: flex;
-  width: fit-content;
+  width: 11rem;
   gap: 5px;
 }
 

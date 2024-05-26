@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import classes from './ButtonSection.module.css';
 import Icon from './IconSection';
 import Text from './TextSection';
+import Link from './LinkSection';
 
 export function ButtonContainer({ children, buttonContainerMainContainer, onClick }) {
   return (
@@ -153,26 +154,77 @@ export function IconTextButton({
   );
 }
 
-export function DropDownButton({ buttonLabel, menuItems }) {
+// export function DropDownButton({ buttonLabel, menuItems }) {
+//   return (
+//     <div className={['dropdown', classes.drop_down_button_main_container].join(' ')}>
+//       <button
+//         className={['dropdown-toggle', classes.drop_down_button].join(' ')}
+//         type="button"
+//         data-bs-toggle="dropdown"
+//         aria-expanded="false"
+//       >
+//         {buttonLabel}
+//       </button>
+//       <ul className={['dropdown-menu', classes.drop_down_list_container].join(' ')}>
+//         {menuItems.map((item, index) => (
+//           <li key={index}>
+//             <Link
+//               linkContainer={`dropdown-item ${classes.drop_down_item}`}
+//               href={item.href}
+//               children16={item.label}
+//               // icon={item.icon}
+//             />
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// }
+
+export function DropdownMenu({ buttonLabel, buttonIcon, menuItems }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className={["dropdown", classes.drop_down_button_main_container].join(' ')}>
-      <button
-        className={["dropdown-toggle", classes.drop_down_button].join(' ')}
-        type="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-      >
-        {buttonLabel}
-      </button>
-      <ul className={["dropdown-menu", classes.drop_down_list_container].join(' ')}>
-        {menuItems.map((item, index) => (
-          <li key={index}>
-            <a className={["dropdown-item", classes.drop_down_item].join(' ')} href={item.href}>
-              {item.label}
-            </a>
-          </li>
-        ))}
-      </ul>
+    <div className={classes.dropdown_menu_container} ref={dropdownRef}>
+      <IconTextButton
+        inconTextButtonStyle={classes.dropdown_toggle}
+        icon={buttonIcon}
+        label={buttonLabel}
+        onClick={toggleDropdown}
+      />
+      {isOpen && (
+        <div className={classes.dropdown_menu}>
+          {menuItems.map((data, index) => (
+            <Link
+              key={data.id}
+              linkContainer={`${classes.drop_down_item_link_container}`}
+              linkStyle={`${classes.drop_down_item_link}`}
+              href={data.href}
+              icon_2={data.icon_2}
+              children16={data.label}
+              icon={data.icon}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
