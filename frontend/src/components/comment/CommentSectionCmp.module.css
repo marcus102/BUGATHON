@@ -6,6 +6,29 @@
   margin: auto;
 }
 
+.comments_content_container {
+  height: 25rem;
+  overflow-y: auto;
+}
+
+.comment_input_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.comment_input {
+  border-radius: 5px 0 0 5px;
+}
+
+.comment_send_button_container {
+  background-color: var(--gray_50505066);
+  height: 2.85rem;
+  padding: 0 10px;
+  border-radius: 0 5px 5px 0;
+  border: 0.5px solid var(--gray_50505066);
+}
+
 .load_more_button {
   background-color: transparent;
   border-radius: 0;

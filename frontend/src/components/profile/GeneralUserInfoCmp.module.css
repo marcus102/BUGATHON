@@ -1,0 +1,122 @@
+/* USER GENERAL INFO */
+.general_user_info_content_overview_main_container {
+}
+
+/* OVERVIEW (USER INFO - BIO - TREND - BUG REPORT - BUG FIX - REUSABLE CODE ) */
+
+/* USER INFO */
+
+.content_user_info_overview_main_container {
+  display: flex;
+  width: 100%;
+}
+
+.user_info_full_name_overview_main_container {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  height: fit-content;
+  border: 1px solid #fff;
+}
+
+.full_name_overview_container {
+  display: flex;
+  gap: 5px;
+  border: 1px solid #fff;
+}
+
+.full_name_overview_icon_text_button_container {
+  display: flex;
+}
+
+.full_name_icon_text_button_overview {
+  flex-direction: row;
+  min-width: fit-content;
+}
+
+.full_info_popularity_overview_main_container {
+  display: flex;
+  width: 60%;
+}
+
+.popularity_overview_container{
+    display: flex;
+    width: 33.33%;
+    align-items: center;
+    justify-content: center;
+}
+
+.popularity_overview_button_container {
+  display: flex;
+  background-color: transparent;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px ;
+  width: fit-content;
+}
+
+.popularity_overview_button_container:hover {
+  background-color: transparent;
+}
+
+.popularity_button_overview_container {
+  display: flex;
+  align-items: center;
+}
+
+/* BIO */
+
+.content_user_bio_main_container {
+}
+
+.content_user_bio_main_container {
+}
+
+.bio_contact_container {
+  display: flex;
+  width: 100%;
+}
+
+.contact_social_container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  gap: 10px;
+}
+
+.social_container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.social_icon_text_button_container {
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 5px;
+}
+
+.contact_tel_container {
+}
+
+.tel_container {
+}
+
+.bio_container {
+}
+
+/* TREND - BUG REPORT - BUG FIX - REUSABLE CODE */
+
+.content_user_post_overview_main_container {
+}
+
+.post_card_overview_main_container {
+}
+
+/* TREND -  */
+
+/* BUG REPORT */
+
+/* BUG FIX */
+
+/* REUSABLE CODE */

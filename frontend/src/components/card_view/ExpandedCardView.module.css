@@ -142,6 +142,14 @@
   border: none;
 }
 
+.body_comment_container {
+  margin: 20px 0;
+}
+
+.comment_title_container {
+  margin: 15px 0;
+}
+
 /* ANALYTICS */
 
 .expanded_card_analytics_main_container {

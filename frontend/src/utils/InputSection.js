@@ -35,11 +35,11 @@ export function RowOfSquares({ rowOfSquaresStyle }) {
   );
 }
 
-export function TextArea({ label, placeholder, value, onChange, textAreaStyle }) {
+export function TextArea({ label, placeholder, value, onChange, textAreaStyle, onKeyDown }) {
   return (
     <div className={[classes.input_main_container, textAreaStyle].join(' ')}>
       {label && <Text label={label} />}
-      <textarea placeholder={placeholder} value={value} onChange={onChange} />
+      <textarea placeholder={placeholder} value={value} onChange={onChange} onKeyDown={onKeyDown} />
     </div>
   );
 }
@@ -78,7 +78,7 @@ export function Input({
     <div className={[classes.input_main_container, inputMainContainerStyle].join(' ')}>
       {label && <Text label16={label} />}
       <div className={[classes.input_second_container, inputSecondContainerStyle].join(' ')}>
-        <div className={[classes.input_container, inputStyle].join(' ')}>
+        <div className={`${classes.input_container} ${inputStyle}`}>
           <input
             type={inputType}
             placeholder={placeholder}

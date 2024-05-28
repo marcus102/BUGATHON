@@ -6,6 +6,7 @@ import HomeWindow from '../components/home_window/HomeWindowCmp';
 import ExpandedCard from '../components/card_view/ExpandedCardView';
 import ScrollToTop from '../components/scroll_to_top/ScrollToTopCmp';
 import CommentSection from '../components/comment/CommentSectionCmp';
+import ProfilePage from '../components/profile/ProfileCmp';
 
 function Home() {
   return (
@@ -17,7 +18,8 @@ function Home() {
       />
       <Authentication />
       {/* <HomeWindow /> */}
-      <ExpandedCard />
+      <ProfilePage />
+      {/* <ExpandedCard /> */}
       {/* <CommentSection /> */}
       <ScrollToTop />
     </div>

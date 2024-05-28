@@ -9,7 +9,6 @@ import {
   IconButton,
   OutlinedButton,
   IconTextButton,
-  DropDownButton,
   DropdownMenu,
   ButtonContainer,
 } from '../../utils/ButtonSection';
@@ -30,7 +29,6 @@ import {
   faCaretDown,
   faChartLine,
   faTag,
-  faComments,
   faPen,
   faCaretRight,
   faClipboard,
@@ -50,8 +48,6 @@ import HomeCard from './HomeCardView';
 import CommentSection from '../comment/CommentSectionCmp';
 import ActivityChart from '../activity_chart/ActivityChart';
 import ToolTip from '../../utils/toolTipSection';
-import { MenuModal } from '../../utils/OverlaySection';
-import { icon } from '@fortawesome/fontawesome-svg-core';
 
 const REACTIONS_DATA = [
   { id: 'likes', icon: faHeart, text: '10K', activeColor: Colors.red_FF2B2B },
@@ -77,7 +73,6 @@ const CARD_VIEW_OPTION = [
 const INSIGHT_DATA = [
   { id: 'Analytics', icon: faChartLine, color: Colors.orange_ff7811 },
   { id: 'Potential Bug Fixes', icon: faTag, color: Colors.green_039000 },
-  { id: 'Top Comments', icon: faComments, color: Colors.blue_0075FF },
 ];
 
 const DUMMY_POST_DATA = [
@@ -201,11 +196,13 @@ function ExpandedCard() {
   );
   const [isInsight, setIsInsight] = useState('');
 
-  const { overlayHandler } = useContext(ManagmentSystem);
+  // const { overlayHandler } = useContext(ManagmentSystem);
 
   return (
     <div className={classes.expanded_card_main_container}>
       <div className={`${classes.expanded_card_implentation_main_container}`}>
+        {/* SOLUTION MAIN HEADER */}
+
         <div className={classes.implentation_header_container}>
           <div className={classes.header_options_container}>
             <ToolTip children={<IconButton icon={faArrowLeft} />} tooltipMessage={'Go Back Home'} />
@@ -231,6 +228,8 @@ function ExpandedCard() {
         </div>
         <Text textStyle={classes.implentation_second_header_container} h5={'Bug report title'} />
         <div className={classes.implentation_body_main_container}>
+          {/* SOLUTION SECOND HEADER */}
+
           <div className={classes.body_reactions_container}>
             <Image imgContainerStyle={classes.img_container} imgStyle={classes.img} src={images} />
             <div className={classes.reactions_list_container}>
@@ -262,6 +261,8 @@ function ExpandedCard() {
             </div>
           </div>
           <hr className={classes.body_horizontal_line_container} />
+          {/* SOLUTION BODY */}
+
           <div className={classes.body_solution_container}>
             {IMPLEMENTATION_DATA.map((data) => (
               <div key={data.id}>
@@ -290,6 +291,8 @@ function ExpandedCard() {
               </div>
             ))}
           </div>
+          {/* FOOTER BUTTONS */}
+
           <div className={classes.body_suggestion_container}>
             <OutlinedButton
               buttonMainContainerStyle={classes.body_suggestion_button_main_container}
@@ -315,6 +318,13 @@ function ExpandedCard() {
               ]}
             />
             <Icon icon={faAnglesRight} />
+          </div>
+          {/* COMMENTS */}
+
+          <div className={classes.body_comment_container}>
+            <Text textStyle={classes.comment_title_container} h6={'Comments'} />
+            <CommentSection />
+            <div className={classes.comment_content_container}></div>
           </div>
         </div>
       </div>
@@ -366,12 +376,6 @@ function ExpandedCard() {
                 buttonContainerMainContainer={classes.content_button_container}
               />
             </div>
-          </div>
-          <div className={classes.analytics_comment_container}>
-            <Text textStyle={classes.comment_title_container} h6={'Top Comments'} />
-            <hr className={classes.body_horizontal_line_container} />
-            <CommentSection />
-            <div className={classes.comment_content_container}></div>
           </div>
         </div>
       )}

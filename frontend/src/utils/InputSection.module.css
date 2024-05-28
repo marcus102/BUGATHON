@@ -5,8 +5,9 @@
   justify-content: center;
   align-items: stretch;
   gap: 5px;
-  margin-bottom: 5px;
 }
+
+/* TEXT AREA */
 
 .input_main_container textarea {
   height: auto;
@@ -32,10 +33,13 @@
   margin-left: 7px;
 }
 
+/* INPUT */
+
 .input_container {
-  /* height: auto; */
   width: 100%;
+  height: fit-content;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   border-radius: 5px;
   border: 0.5px solid var(--gray_50505066);
@@ -52,6 +56,8 @@
   color: var(--white_ffffff);
   outline: none;
 }
+
+/* ROW SQUARES */
 
 .row_of_squares_container {
   display: flex;
@@ -73,6 +79,8 @@
   font-weight: bold;
   outline: none;
 }
+
+/* CHECK BOX */
 
 .checkbox_container {
   width: fit-content;
@@ -98,6 +106,8 @@
   background-size: 90% 90%;
   background-repeat: no-repeat;
 }
+
+/* RADIO */
 
 .radio_main_container {
   width: 100%;
