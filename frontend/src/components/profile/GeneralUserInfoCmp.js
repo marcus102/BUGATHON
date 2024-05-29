@@ -1,24 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Colors from '../../constants/colors';
 import classes from './GeneralUserInfoCmp.module.css';
 import Image from '../../utils/ImageSection';
 import { IconTextButton, ButtonContainer } from '../../utils/ButtonSection';
-import Line from '../../utils/LineSection';
 import Text from '../../utils/TextSection';
 import Link from '../../utils/LinkSection';
 import HomeCard from '../card_view/HomeCardView';
 import Icon from '../../utils/IconSection';
 import {
-  faArrowPointer,
-  faArrowRightFromBracket,
   faAt,
-  faEdit,
-  faGear,
-  faIdBadge,
+  faChevronDown,
+  faChevronUp,
   faLocationDot,
   faMedal,
   faPhone,
   faStar,
-  faTrashCan,
 } from '@fortawesome/free-solid-svg-icons';
 import images from '../../assets/images/people.jpg';
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
@@ -65,7 +61,7 @@ const DUMMY_POST_DATA = [
     ],
   },
   {
-    id: 'Bug Report',
+    id: 'Top Bug Report',
     children: [
       {
         id: '1',
@@ -98,7 +94,7 @@ const DUMMY_POST_DATA = [
     ],
   },
   {
-    id: 'Bug Fix',
+    id: 'Top Bug Fix',
     children: [
       {
         id: '1',
@@ -131,7 +127,7 @@ const DUMMY_POST_DATA = [
     ],
   },
   {
-    id: 'Reusable Code',
+    id: 'Top Reusable Code',
     children: [
       {
         id: '1',
@@ -194,13 +190,20 @@ const SOCIAL_DATA = [
     id: 'Contact',
     children: [
       { id: 'Email Address', icon: faAt },
-      { id: 'Tel Number:', icon: faPhone },
+      { id: 'Tel Number', icon: faPhone },
       { id: 'Located At', icon: faLocationDot },
     ],
   },
 ];
 
-const GeneralUserInfo = () => {
+function GeneralUserInfo() {
+  const [isExpanded, setIsExpanded] = useState(
+    DUMMY_POST_DATA.reduce((acc, reaction) => {
+      acc[reaction.id] = false;
+      return acc;
+    }, {})
+  );
+
   return (
     <div className={classes.general_user_info_content_overview_main_container}>
       {/* USER INFO */}
@@ -216,11 +219,21 @@ const GeneralUserInfo = () => {
                 key={data.id}
                 children={
                   <>
-                    <Icon icon={data.icon} />
-                    <Text label12={data.id} />
+                    {data.icon && <Icon icon={data.icon} />}
+                    <Text label12Style={classes.button_text} label12={data.id} />
                   </>
                 }
-                inconTextButtonStyle={classes.full_name_icon_text_button_overview}
+                inconTextButtonStyle={`${classes.full_name_icon_text_button_overview} ${
+                  data.id === 'Admin' && classes.admin_bg
+                } ${data.id === 'User' && classes.user_bg} ${
+                  data.id === 'Bronze' && classes.bronze_bg
+                } ${data.id === 'Silver' && classes.silver_bg} ${
+                  data.id === 'Gold' && classes.gold_bg
+                } ${data.id === 'Novice' && classes.novice_bg} ${
+                  data.id === 'Advance' && classes.advance_bg
+                } ${data.id === 'Intermediate' && classes.intermediate_bg} ${
+                  data.id === 'Expert' && classes.expert_bg
+                }`}
               />
             ))}
           </div>
@@ -233,10 +246,10 @@ const GeneralUserInfo = () => {
                 children={
                   <>
                     <div className={classes.popularity_button_overview_container}>
-                      <Text label15={data.id} />
-                      <Icon icon={data.icon} />
+                      <Text label15Style={classes.popularity_text_overview} label15={data.id} />
+                      {data.icon && <Icon icon={data.icon} />}
                     </div>
-                    <Text label15={data.total} />
+                    <Text label15Style={classes.popularity_text_overview} label15={data.total} />
                   </>
                 }
               />
@@ -277,22 +290,36 @@ const GeneralUserInfo = () => {
       <div className={classes.content_user_post_overview_main_container}>
         {DUMMY_POST_DATA.map((data) => (
           <div key={data.id}>
-            <Text h5={data.id} />
-            {data.children.map((subData) => (
-              <div key={subData.id} className={classes.post_card_overview_main_container}>
-                <HomeCard
-                  key={subData.id}
-                  postTitle={subData.title}
-                  postDescription={subData.description}
-                  cardButtonState={subData.state}
-                />
-              </div>
-            ))}
+            <IconTextButton
+              inconTextButtonStyle={classes.user_post_overview_container}
+              label={data.id}
+              icon_={!isExpanded[data.id] ? faChevronDown : faChevronUp}
+              onClick={() => {
+                setIsExpanded((prev) => ({
+                  ...prev,
+                  [data.id]: !prev[data.id],
+                }));
+              }}
+            />
+            {isExpanded[data.id] && (
+              <>
+                {data.children.map((subData) => (
+                  <div key={subData.id} className={classes.post_card_overview_main_container}>
+                    <HomeCard
+                      key={subData.id}
+                      postTitle={subData.title}
+                      postDescription={subData.description}
+                      cardButtonState={subData.state}
+                    />
+                  </div>
+                ))}
+              </>
+            )}
           </div>
         ))}
       </div>
     </div>
   );
-};
+}
 
 export default GeneralUserInfo;

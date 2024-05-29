@@ -13,7 +13,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const SIDE_BAR_DATA = [
-  { id: 'Edit Profile', icon: null, icon_: faEdit },
   { id: 'General', icon: null, icon_: faArrowPointer },
   { id: 'Analytics', icon: null, icon_: faArrowPointer },
   { id: 'Ranking', icon: null, icon_: faArrowPointer },
@@ -30,13 +29,18 @@ const ProfilePage = () => {
   return (
     <div className={classes.profile_page_main_container}>
       <div className={classes.profile_page_side_bar_main_container}>
-        <Image
-          src={images}
-          alt={'user profile picture'}
-          imgContainerStyle={classes.profile_images_container}
-          imgStyle={classes.profile_images}
-        />
         <div className={classes.side_bar_options_list_main_container}>
+          <Image
+            src={images}
+            alt={'user profile picture'}
+            imgContainerStyle={classes.profile_images_container}
+            imgStyle={classes.profile_images}
+          />
+          <IconTextButton
+            inconTextButtonStyle={classes.side_bar_profile_edit_button}
+            label={'Edit Pofile'}
+            icon_={faEdit}
+          />
           {SIDE_BAR_DATA.map((data) => (
             <IconTextButton
               key={data.id}
@@ -48,7 +52,9 @@ const ProfilePage = () => {
           ))}
         </div>
       </div>
-      <GeneralUserInfo />
+      <div className={classes.profile_contents_main_container}>
+        <GeneralUserInfo />
+      </div>
     </div>
   );
 };

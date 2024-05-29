@@ -132,7 +132,7 @@ export function IconTextButton({
   const iconColor = isPressed ? colorOnMouseDown : colorOnMouseUp;
   return (
     <button
-      className={[classes.icon_text_button_container, inconTextButtonStyle].join(' ')}
+      className={`${classes.icon_text_button_container} ${inconTextButtonStyle}`}
       onClick={onClick}
       onMouseDown={handleMouseActivity}
       onMouseUp={handleMouseActivity}

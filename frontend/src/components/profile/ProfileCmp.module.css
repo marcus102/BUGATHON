@@ -1,6 +1,7 @@
 .profile_page_main_container {
   display: flex;
-  margin: 20px 0;
+  margin: 30px 0;
+  gap: 10px;
 }
 
 /* SIDE BAR */
@@ -8,14 +9,16 @@
 .profile_page_side_bar_main_container {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   gap: 2rem;
   width: 25%;
+  border-right: 2px solid var(--gray_50505066);
+  overflow-y: auto;
+  height: 100vh;
 }
 
 .profile_images_container {
-  width: 7rem;
-  height: 7rem;
+  width: 8rem;
+  height: 8rem;
 }
 
 .profile_images {
@@ -25,7 +28,8 @@
 .side_bar_options_list_main_container {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
   padding: 5px;
   gap: 15px;
 }
@@ -40,6 +44,23 @@
   gap: 5px;
 }
 
+.side_bar_profile_edit_button{
+    flex-direction: row;
+    gap: 5px;
+    min-width: 70%;
+    border: 3px solid var(--gray_50505066);
+    border-radius: 10px;
+    padding: 5px 0;
+    margin-bottom: 20px;
+}
+
 .side_bar_icon_text_button_container:hover {
   background-color: var(--gray_50505066);
+}
+
+/* PROFILE */
+
+.profile_contents_main_container {
+  overflow-y: auto;
+  height: 100vh;
 }
