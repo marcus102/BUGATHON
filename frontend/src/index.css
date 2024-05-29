@@ -14,14 +14,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-/* Customizing the width of the scrollbar */
+/* Customizing the width of the vertical scrollbar and height of the horizontal scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 5px; /* Vertical scrollbar width */
+  height: 3px; /* Horizontal scrollbar height */
 }
 
 /* Customizing the track (the background of the scrollbar) */
 ::-webkit-scrollbar-track {
-  background: transparent; 
+  background: transparent;
 }
 
 /* Customizing the thumb (the draggable part of the scrollbar) */
@@ -34,4 +35,3 @@ code {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-

@@ -262,6 +262,7 @@ function GeneralUserInfo() {
                     />
                   </div>
                 ))}
+                <ButtonContainer children={<Text label14={'Click here for more...'} />} />
               </>
             )}
           </div>
