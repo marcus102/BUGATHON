@@ -28,7 +28,7 @@ const SIDE_BAR_DATA = [
 const ProfilePage = () => {
   return (
     <div className={classes.profile_page_main_container}>
-      <div className={classes.profile_page_side_bar_main_container}>
+      <div className={`d-none d-xl-flex ${classes.profile_page_side_bar_main_container}`}>
         <div className={classes.side_bar_options_list_main_container}>
           <Image
             src={images}

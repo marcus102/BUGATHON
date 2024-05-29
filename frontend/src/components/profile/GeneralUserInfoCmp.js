@@ -17,7 +17,7 @@ import {
   faStar,
 } from '@fortawesome/free-solid-svg-icons';
 import images from '../../assets/images/people.jpg';
-import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
+import { faCircleCheck, faEdit } from '@fortawesome/free-regular-svg-icons';
 import {
   faGithub,
   faLinkedin,
@@ -207,37 +207,55 @@ function GeneralUserInfo() {
   return (
     <div className={classes.general_user_info_content_overview_main_container}>
       {/* USER INFO */}
-      <div className={classes.content_user_info_overview_main_container}>
-        <div className={classes.user_info_full_name_overview_main_container}>
-          <div className={classes.full_name_overview_container}>
-            <Text h4={'SAWADOGO WENDPANGA MARCUS'} />
-            <Icon icon={faCircleCheck} />
+      <div
+        className={`${classes.content_user_info_overview_main_container} flex-column flex-xl-row`}
+      >
+        <div className={`d-flex flex-column flex-sm-row justify-content-center align-items-center w-100`}>
+          <div className={`d-block d-xl-none`}>
+            <Image
+              src={images}
+              alt={'user profile picture'}
+              imgContainerStyle={classes.profile_images_container}
+              imgStyle={classes.profile_images}
+            />
+            <IconTextButton
+              inconTextButtonStyle={classes.side_bar_profile_edit_button}
+              label={'Edit Pofile'}
+              icon_={faEdit}
+            />
           </div>
-          <div className={classes.full_name_overview_icon_text_button_container}>
-            {USER_BADGES.map((data) => (
-              <IconTextButton
-                key={data.id}
-                children={
-                  <>
-                    {data.icon && <Icon icon={data.icon} />}
-                    <Text label12Style={classes.button_text} label12={data.id} />
-                  </>
-                }
-                inconTextButtonStyle={`${classes.full_name_icon_text_button_overview} ${
-                  data.id === 'Admin' && classes.admin_bg
-                } ${data.id === 'User' && classes.user_bg} ${
-                  data.id === 'Bronze' && classes.bronze_bg
-                } ${data.id === 'Silver' && classes.silver_bg} ${
-                  data.id === 'Gold' && classes.gold_bg
-                } ${data.id === 'Novice' && classes.novice_bg} ${
-                  data.id === 'Advance' && classes.advance_bg
-                } ${data.id === 'Intermediate' && classes.intermediate_bg} ${
-                  data.id === 'Expert' && classes.expert_bg
-                }`}
-              />
-            ))}
+          <div className={classes.user_info_full_name_overview_main_container}>
+            <div className={classes.full_name_overview_container}>
+              <Text h4={'SAWADOGO WENDPANGA MARCUS'} />
+              <Icon icon={faCircleCheck} />
+            </div>
+            <div className={classes.full_name_overview_icon_text_button_container}>
+              {USER_BADGES.map((data) => (
+                <IconTextButton
+                  key={data.id}
+                  children={
+                    <>
+                      {data.icon && <Icon icon={data.icon} />}
+                      <Text label12Style={classes.button_text} label12={data.id} />
+                    </>
+                  }
+                  inconTextButtonStyle={`${classes.full_name_icon_text_button_overview} ${
+                    data.id === 'Admin' && classes.admin_bg
+                  } ${data.id === 'User' && classes.user_bg} ${
+                    data.id === 'Bronze' && classes.bronze_bg
+                  } ${data.id === 'Silver' && classes.silver_bg} ${
+                    data.id === 'Gold' && classes.gold_bg
+                  } ${data.id === 'Novice' && classes.novice_bg} ${
+                    data.id === 'Advance' && classes.advance_bg
+                  } ${data.id === 'Intermediate' && classes.intermediate_bg} ${
+                    data.id === 'Expert' && classes.expert_bg
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
+
         <div className={classes.full_info_popularity_overview_main_container}>
           {USER_TOTAL.map((data) => (
             <div key={data.id} className={classes.popularity_overview_container}>
