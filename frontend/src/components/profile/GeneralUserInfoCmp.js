@@ -210,7 +210,9 @@ function GeneralUserInfo() {
       <div
         className={`${classes.content_user_info_overview_main_container} flex-column flex-xl-row`}
       >
-        <div className={`d-flex flex-column flex-sm-row justify-content-center align-items-center w-100`}>
+        <div
+          className={`d-flex flex-column flex-sm-row align-items-center align-items-sm-start w-100`}
+        >
           <div className={`d-block d-xl-none`}>
             <Image
               src={images}
@@ -324,6 +326,7 @@ function GeneralUserInfo() {
                 {data.children.map((subData) => (
                   <div key={subData.id} className={classes.post_card_overview_main_container}>
                     <HomeCard
+                      isHeaderOption={true}
                       key={subData.id}
                       postTitle={subData.title}
                       postDescription={subData.description}
