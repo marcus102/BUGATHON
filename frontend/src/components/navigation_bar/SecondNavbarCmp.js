@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
-import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
+import React from 'react';
 import Colors from '../../constants/colors';
 // import { Modal, Button } from 'react-bootstrap';
-import { SolidButton, IconTextButton, IconButton } from '../../utils/ButtonSection';
+import { SolidButton, IconTextButton } from '../../utils/ButtonSection';
 import classes from './SecondNavbarCmp.module.css';
 import {
   faInbox,
@@ -14,13 +13,16 @@ import {
   faSliders,
 } from '@fortawesome/free-solid-svg-icons';
 import Search from '../../utils/SearchSection';
-import { MenuModal } from '../../utils/OverlaySection';
+import { DropdownMenu } from '../../utils/ButtonSection';
+
+const MENU_OPTIONS = [
+  { id: '1', icon: faBug, label: 'Critical Bug', icon_2: null, href: null },
+  { id: '2', icon: faInbox, label: 'Inbox', icon_2: null, href: null },
+  { id: '3', icon: faBell, label: 'Notifications', icon_2: null, href: null },
+  { id: '4', icon: faAdjust, label: 'Adjust', icon_2: null, href: null },
+];
 
 function SecondNavbar() {
-  const { overlayHandler } = useContext(ManagmentSystem);
-  // const [showMenu, setShowMenu] = useState(false);
-  // const handleMenuToggle = () => setShowMenu(!showMenu);
-
   return (
     <div className={classes.nav_main_container}>
       <div className="row align-items-center ">
@@ -47,28 +49,9 @@ function SecondNavbar() {
         </div>
 
         <div className="col-1 d-lg-none d-flex justify-content-end">
-          <IconButton
-            className={classes.menu_button}
-            icon={faEllipsis}
-            onClick={() => overlayHandler('menu_navber', 'menu')}
-          />
+          <DropdownMenu buttonIcon={faEllipsis} menuItems={MENU_OPTIONS} />
         </div>
       </div>
-
-      <MenuModal keyId={'menu_navber'}>
-        <IconTextButton
-          inconTextButtonStyle={classes.icon_button}
-          icon={faBug}
-          label="Critical Bug"
-        />
-        <IconTextButton inconTextButtonStyle={classes.icon_button} icon={faInbox} label="Inbox" />
-        <IconTextButton
-          inconTextButtonStyle={classes.icon_button}
-          icon={faBell}
-          label="Notifications"
-        />
-        <IconTextButton inconTextButtonStyle={classes.icon_button} icon={faAdjust} label="Adjust" />
-      </MenuModal>
     </div>
   );
 }
