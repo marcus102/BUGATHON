@@ -534,7 +534,7 @@ function ExpandedCard() {
                         <Text label14={data.title} />
                         <Icon icon={data.header_icon} color={data.header_icon_coler} />
                       </div>
-                      <Text label14={data.tottal} />
+                      <Text textStyle={classes.total_text_container} label14={data.tottal} />
                       <div className={classes.summary_counter_container}>
                         <Icon icon={data.footer_icon} />
                         <Text label12={data.pourcentage} />

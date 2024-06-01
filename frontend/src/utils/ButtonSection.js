@@ -212,6 +212,7 @@ export function DropdownMenu({
   buttonLabel,
   buttonIcon,
   menuItems,
+  children,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -251,6 +252,7 @@ export function DropdownMenu({
               // onClick={''}
             />
           ))}
+          {children}
         </div>
       )}
     </div>

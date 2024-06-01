@@ -283,6 +283,10 @@
   border-radius: 8px;
 }
 
+.total_text_container {
+  justify-content: center;
+}
+
 .analytics_recommendation_container {
   display: flex;
   flex-direction: column;
