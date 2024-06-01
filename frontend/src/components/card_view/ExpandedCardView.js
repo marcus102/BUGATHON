@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import classes from './ExpandedCardView.module.css';
 import Colors from '../../constants/colors';
 import HeaderOptions from '../headerOptionsCmp';
@@ -38,6 +38,7 @@ import {
   faTrashCan,
   faExclamation,
   faChevronDown,
+  faArrowDown,
 } from '@fortawesome/free-solid-svg-icons';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import Text from '../../utils/TextSection';
@@ -49,6 +50,7 @@ import CommentSection from '../comment/CommentSectionCmp';
 import ActivityChart from '../activity_chart/ActivityChart';
 import ToolTip from '../../utils/toolTipSection';
 import ReviewCard from '../reviews/ReviewCardCmp';
+import Link from '../../utils/LinkSection';
 
 const REACTIONS_DATA = [
   { id: 'likes', icon: faHeart, text: '10K', activeColor: Colors.red_FF2B2B },
@@ -93,6 +95,65 @@ const DUMMY_POST_DATA = [
   },
   {
     id: '3',
+    title: 'Lorem ipsum dolor sit amet.',
+    state: 'bug_fix',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+  },
+];
+
+const DUMMY_RELATED_RESULTS_POST_DATA = [
+  {
+    id: '1',
+    title: 'Lorem ipsum dolor sit amet.',
+    state: 'bug_fix',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+  },
+  {
+    id: '2',
+    title: 'Lorem ipsum dolor sit amet.',
+    state: 'bug_fix',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+  },
+  {
+    id: '3',
+    title: 'Lorem ipsum dolor sit amet.',
+    state: 'bug_fix',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+  },
+  {
+    id: '4',
+    title: 'Lorem ipsum dolor sit amet.',
+    state: 'bug_fix',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+  },
+  {
+    id: '5',
+    title: 'Lorem ipsum dolor sit amet.',
+    state: 'bug_fix',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+  },
+  {
+    id: '6',
+    title: 'Lorem ipsum dolor sit amet.',
+    state: 'bug_fix',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+  },
+  {
+    id: '7',
+    title: 'Lorem ipsum dolor sit amet.',
+    state: 'bug_fix',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+  },
+  {
+    id: '8',
     title: 'Lorem ipsum dolor sit amet.',
     state: 'bug_fix',
     description:
@@ -214,7 +275,7 @@ const DUMMY_REVIEWS = [
     username: '',
     profile: '',
     profession: '',
-    active_stars: 1,
+    active_stars: 2,
     review:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
   },
@@ -223,7 +284,7 @@ const DUMMY_REVIEWS = [
     username: '',
     profile: '',
     profession: '',
-    active_stars: 1,
+    active_stars: 3,
     review:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
   },
@@ -233,7 +294,7 @@ const DUMMY_REVIEWS = [
     username: '',
     profile: '',
     profession: '',
-    active_stars: 1,
+    active_stars: 3,
     review:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
   },
@@ -243,7 +304,7 @@ const DUMMY_REVIEWS = [
     username: '',
     profile: '',
     profession: '',
-    active_stars: 1,
+    active_stars: 2,
     review:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
   },
@@ -253,7 +314,7 @@ const DUMMY_REVIEWS = [
     username: '',
     profile: '',
     profession: '',
-    active_stars: 1,
+    active_stars: 4,
     review:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
   },
@@ -271,7 +332,7 @@ const DUMMY_REVIEWS = [
     username: '',
     profile: '',
     profession: '',
-    active_stars: 1,
+    active_stars: 4,
     review:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
   },
@@ -287,7 +348,7 @@ function ExpandedCard() {
   );
 
   const [isCollapsed, setIsCollapsed] = useState(
-    DUMMY_POST_DATA.reduce((acc, reaction) => {
+    IMPLEMENTATION_DATA.reduce((acc, reaction) => {
       acc[reaction.id] = false;
       return acc;
     }, {})
@@ -300,7 +361,7 @@ function ExpandedCard() {
   );
   const [isInsight, setIsInsight] = useState('');
 
-  // const { overlayHandler } = useContext(ManagmentSystem);
+  const relatedResultsRef = useRef(null);
 
   return (
     <div className={classes.expanded_container}>
@@ -391,20 +452,23 @@ function ExpandedCard() {
                   />
                   {!isCollapsed[data.id] && (
                     <div className={classes.body_solution_content_container}>
-                      <ToolTip
-                        children={
-                          <IconButton
-                            icon={!isCopied[data.id] ? faCopy : faCheck}
-                            onClick={() => {
-                              setIsCopied((prev) => ({
-                                ...prev,
-                                [data.id]: !prev[data.id],
-                              }));
-                            }}
-                          />
-                        }
-                        tooltipMessage={!isCopied[data.id] ? 'Copy' : 'Copied'}
-                      />
+                      <div className={classes.body_solution_icon_button}>
+                        <ToolTip
+                          children={
+                            <IconButton
+                              icon={!isCopied[data.id] ? faCopy : faCheck}
+                              onClick={() => {
+                                setIsCopied((prev) => ({
+                                  ...prev,
+                                  [data.id]: !prev[data.id],
+                                }));
+                              }}
+                            />
+                          }
+                          tooltipMessage={!isCopied[data.id] ? 'Copy' : 'Copied'}
+                        />
+                      </div>
+
                       <hr className={classes.body_horizontal_line_container} />
                       <Text
                         textStyle={classes.body_solution_text_content_container}
@@ -420,9 +484,10 @@ function ExpandedCard() {
             <div className={classes.body_suggestion_container}>
               <OutlinedButton
                 buttonMainContainerStyle={classes.body_suggestion_button_main_container}
+                buttonTextContainerStyle={classes.body_suggestion_text_container}
                 buttonTextStyle={classes.body_suggestion_button_text}
                 buttonStyle={classes.body_suggestion_button_container}
-                label={'View People Contributions or Solutions'}
+                label={'View People Contributions'}
               />
               <Icon icon={faAnglesRight} />
               <OutlinedButton
@@ -433,6 +498,7 @@ function ExpandedCard() {
               />
               <Icon icon={faAnglesRight} />
               <DropdownMenu
+                dropDownMenuStyle={classes.body_suggestion_drop_down_menu}
                 buttonLabel={'Assign bug to'}
                 buttonIcon={faCaretDown}
                 menuItems={[
@@ -455,6 +521,8 @@ function ExpandedCard() {
           <div
             className={`col-5 d-none d-xl-block ${classes.expanded_card_analytics_main_container}`}
           >
+            {/* ANALYTICS */}
+
             <div className={classes.analytics_analytic_container}>
               <Text textStyle={classes.analytic_container} h6={'Analytics'} />
               <hr className={classes.body_horizontal_line_container} />
@@ -477,6 +545,8 @@ function ExpandedCard() {
                 <ActivityChart />
               </div>
             </div>
+            {/* POTENTIAL --- */}
+
             <div className={classes.analytics_recommendation_container}>
               <Text
                 textStyle={classes.recommendation_potentials_title_container}
@@ -502,6 +572,7 @@ function ExpandedCard() {
             </div>
           </div>
         )}
+        {/* COLLAPSED SIDE BAR */}
 
         <div className={`d-flex d-xl-none ${classes.collapsed_card_implentation_container}`}>
           {INSIGHT_DATA.map((data) => (
@@ -541,15 +612,47 @@ function ExpandedCard() {
           </div>
         )}
       </div>
-
       {/* REVIEWS */}
 
       <div className={classes.expanded_card_reviews_main_container}>
-        <Text h5={'Reviews'} />
+        <div className={classes.expanded_card_reviews_header_container}>
+          <Text h5={'Reviews'} />
+          <ToolTip
+            children={
+              <IconButton
+                icon={faArrowDown}
+                onClick={() => relatedResultsRef.current.scrollIntoView({ behavior: 'smooth' })}
+              />
+            }
+            tooltipMessage={'Skip To Next'}
+          />
+        </div>
         <hr className={classes.body_horizontal_line_container} />
         <div className={`${classes.review_container}`}>
           {DUMMY_REVIEWS.map((data) => (
             <ReviewCard key={data.id} activeStars={data.active_stars} reviewBody={data.review} />
+          ))}
+        </div>
+      </div>
+      {/* RELATED RESULTS */}
+
+      <div ref={relatedResultsRef} className={classes.expanded_card_related_results_main_container}>
+        <Text
+          textStyle={classes.expanded_card_related_results_header_container}
+          h5={'Related Results'}
+        />
+
+        <hr className={classes.body_horizontal_line_container} />
+        <div className={`${classes.related_results_container}`}>
+          {DUMMY_RELATED_RESULTS_POST_DATA.map((data) => (
+            <HomeCard
+              homeCardStyle={classes.related_results_cards}
+              cardButtonState={data.state}
+              key={data.id}
+              isHeaderOption={true}
+              postTitle={data.title}
+              postDescription={data.description}
+            />
           ))}
         </div>
       </div>

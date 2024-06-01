@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import classes from './ButtonSection.module.css';
 import Icon from './IconSection';
 import Text from './TextSection';
-import Link from './LinkSection';
+import Image from './ImageSection';
 
 export function ButtonContainer({ children, buttonContainerMainContainer, onClick }) {
   return (
@@ -154,13 +154,67 @@ export function IconTextButton({
   );
 }
 
-export function DropdownMenu({ buttonLabel, buttonIcon, menuItems }) {
+export function ImageButton({ onClick, src, alt, imageButtonStyle, imageStyle }) {
+  return (
+    <button
+      type="button"
+      className={`${classes.image_button_container} ${imageButtonStyle}`}
+      onClick={onClick}
+    >
+      <Image imgContainerStyle={`${classes.image_container} ${imageStyle}`} src={src} alt={alt} />
+    </button>
+  );
+}
+
+export function ImageTextButton({
+  onClick,
+  src,
+  alt,
+  src_,
+  alt_,
+  label,
+  imageTextButtonStyle,
+  imageTextStyle,
+  imageTextLabel16Style,
+  children,
+}) {
+  return (
+    <button
+      type="button"
+      className={`${classes.image_text_button_container} ${imageTextButtonStyle}`}
+      onClick={onClick}
+    >
+      {src && (
+        <Image
+          imgContainerStyle={`${classes.image_text_container} ${imageTextStyle}`}
+          src={src}
+          alt={alt}
+        />
+      )}
+      {label && (
+        <Text label14={label} label14Style={`${classes.image_text} ${imageTextLabel16Style}`} />
+      )}
+      {src_ && (
+        <Image
+          imgContainerStyle={`${classes.image_text_container} ${imageTextStyle}`}
+          src={src_}
+          alt={alt_}
+        />
+      )}
+      {children}
+    </button>
+  );
+}
+
+export function DropdownMenu({
+  dropDownMenuStyle,
+  dropDownIconTextStyle,
+  buttonLabel,
+  buttonIcon,
+  menuItems,
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -178,13 +232,15 @@ export function DropdownMenu({ buttonLabel, buttonIcon, menuItems }) {
   return (
     <div className={classes.dropdown_menu_container} ref={dropdownRef}>
       <IconTextButton
-        inconTextButtonStyle={classes.dropdown_toggle}
+        inconTextButtonStyle={`${classes.dropdown_toggle} ${dropDownIconTextStyle}`}
         icon={buttonIcon}
         label={buttonLabel}
-        onClick={toggleDropdown}
+        onClick={() => {
+          setIsOpen(!isOpen);
+        }}
       />
       {isOpen && (
-        <div className={classes.dropdown_menu}>
+        <div className={`${classes.dropdown_menu} ${dropDownMenuStyle}`}>
           {menuItems.map((data, index) => (
             <IconTextButton
               key={data.id}

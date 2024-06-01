@@ -1,6 +1,6 @@
 .text_container {
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .label16 {
@@ -50,9 +50,4 @@
 .text_container h6,
 .text_container p  {
   color: var(--white_ffffff);
-}
-
-.quote_icon_container {
-  width: 15px;
-  height: 15px;
 }

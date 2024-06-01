@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import classes from './CommentSectionCmp.module.css';
 import Comment from './CommentCmp';
 import { Input } from '../../utils/InputSection';
-import { ButtonContainer, IconButton } from '../../utils/ButtonSection';
+import { ButtonContainer, IconButton, ImageButton } from '../../utils/ButtonSection';
 import { faChevronDown, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { DynamicLabelDropdownMenu } from '../../utils/ButtonSection';
+import SendIcon from '../../assets/icons/send.svg';
 
 const COMMENT_OPTION = [
-  { id: '1', label: 'All ( Default )', href: null },
+  { id: '1', label: 'All', href: null },
   { id: '2', label: 'Pinned', href: null },
   { id: '3', label: 'Trending', href: null },
   { id: '4', label: 'Relevent', href: null },
@@ -124,11 +125,17 @@ const CommentSection = () => {
             }
           }}
         />
-        <IconButton
+        <ImageButton
+          imageButtonStyle={classes.comment_send_button_container}
+          src={SendIcon}
+          alt={'Send'}
+          onClick={handleAddComment}
+        />
+        {/* <IconButton
           inconButtonStyle={classes.comment_send_button_container}
           icon={faPaperPlane}
           onClick={handleAddComment}
-        />
+        /> */}
       </div>
     </div>
   );

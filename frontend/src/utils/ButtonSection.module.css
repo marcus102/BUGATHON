@@ -89,6 +89,7 @@
 /* ICON BUTTON */
 
 .icon_button_container {
+  display: flex;
   width: fit-content;
   height: fit-content;
   background-color: transparent;
@@ -110,6 +111,41 @@
   border: none;
   padding: 0px 5px;
 }
+
+/* IMAGE BUTTON */
+
+.image_button_container {
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+  background-color: transparent;
+  border: none;
+  padding: 0px 5px;
+}
+
+.image_container {
+  width: 15px;
+  height: 15px;
+}
+
+/* IMAGE TEXT BUTTON */
+
+.image_text_button_container{
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+  background-color: transparent;
+  border: none;
+  padding: 0px 5px;
+}
+
+.image_text_container{
+  width: 15px;
+  height: 15px
+}
+
+.image_text{}
+
 
 /* DROP DOWN */
 

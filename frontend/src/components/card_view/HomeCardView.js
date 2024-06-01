@@ -7,7 +7,7 @@ import {
   IconTextButton,
   ButtonContainer,
   IconButton,
-  DropdownMenu
+  DropdownMenu,
 } from '../../utils/ButtonSection';
 import Text from '../../utils/TextSection';
 import {
@@ -73,6 +73,7 @@ const CARD_VIEW_OPTION = [
 ];
 
 function HomeCard({
+  homeCardStyle,
   cardButtonState,
   isHeaderOption,
   username,
@@ -98,7 +99,7 @@ function HomeCard({
 
   return (
     <ButtonContainer
-      buttonContainerMainContainer={
+      buttonContainerMainContainer={`${
         cardButtonState === 'bug_report'
           ? classes.bug_report
           : cardButtonState === 'bug_fix'
@@ -106,8 +107,10 @@ function HomeCard({
           : cardButtonState === 'reusable_code'
           ? classes.reusable_code
           : null
-      }
+      } ${homeCardStyle}`}
     >
+      {/* HEADER */}
+
       <div className={classes.home_card_header_container}>
         <UserProfileHeader username={username} profession={proffession} />
         <div className={classes.header_options_container}>
@@ -121,14 +124,17 @@ function HomeCard({
           )}
 
           <DropdownMenu buttonIcon={faEllipsisVertical} menuItems={CARD_VIEW_OPTION} />
-
         </div>
       </div>
+      {/* BODY */}
+
       <div className={classes.home_card_body_container}>
         {postTitle && <Text h4={postTitle} />}
         {postDescription && <Text p16Style={classes.body_paragraph_text} p16={postDescription} />}
         {children}
       </div>
+      {/* FOOTER */}
+
       <div className={classes.home_card_footer_container}>
         <Text textStyle={classes.timestamp_container} label10={'1mn ago'} />
         <div className={classes.footer_main_container}>
