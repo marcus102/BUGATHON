@@ -1,5 +1,4 @@
-import React, { useState, useContext } from 'react';
-import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
+import React, { useState } from 'react';
 import classes from './ExpandedCardView.module.css';
 import Colors from '../../constants/colors';
 import HeaderOptions from '../headerOptionsCmp';
@@ -38,6 +37,7 @@ import {
   faEyeSlash,
   faTrashCan,
   faExclamation,
+  faChevronDown,
 } from '@fortawesome/free-solid-svg-icons';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import Text from '../../utils/TextSection';
@@ -48,6 +48,7 @@ import HomeCard from './HomeCardView';
 import CommentSection from '../comment/CommentSectionCmp';
 import ActivityChart from '../activity_chart/ActivityChart';
 import ToolTip from '../../utils/toolTipSection';
+import ReviewCard from '../reviews/ReviewCardCmp';
 
 const REACTIONS_DATA = [
   { id: 'likes', icon: faHeart, text: '10K', activeColor: Colors.red_FF2B2B },
@@ -180,10 +181,113 @@ const ANALYTICS_DUMMY_DATA = [
   },
 ];
 
+const DUMMY_REVIEWS = [
+  {
+    id: '1',
+    username: '',
+    profile: '',
+    profession: '',
+    active_stars: 4,
+    review:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
+  },
+  {
+    id: '2',
+    username: '',
+    profile: '',
+    profession: '',
+    active_stars: 2,
+    review:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
+  },
+  {
+    id: '3',
+    username: '',
+    profile: '',
+    profession: '',
+    active_stars: 5,
+    review:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
+  },
+  {
+    id: '4',
+    username: '',
+    profile: '',
+    profession: '',
+    active_stars: 1,
+    review:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
+  },
+  {
+    id: '5',
+    username: '',
+    profile: '',
+    profession: '',
+    active_stars: 1,
+    review:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
+  },
+
+  {
+    id: '6',
+    username: '',
+    profile: '',
+    profession: '',
+    active_stars: 1,
+    review:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
+  },
+
+  {
+    id: '7',
+    username: '',
+    profile: '',
+    profession: '',
+    active_stars: 1,
+    review:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
+  },
+
+  {
+    id: '8',
+    username: '',
+    profile: '',
+    profession: '',
+    active_stars: 1,
+    review:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
+  },
+  {
+    id: '9',
+    username: '',
+    profile: '',
+    profession: '',
+    active_stars: 1,
+    review:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
+  },
+  {
+    id: '10',
+    username: '',
+    profile: '',
+    profession: '',
+    active_stars: 1,
+    review:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
+  },
+];
+
 function ExpandedCard() {
   const [isExpanded, setIsExpanded] = useState(true);
   const [isCopied, setIsCopied] = useState(
     IMPLEMENTATION_DATA.reduce((acc, reaction) => {
+      acc[reaction.id] = false;
+      return acc;
+    }, {})
+  );
+
+  const [isCollapsed, setIsCollapsed] = useState(
+    DUMMY_POST_DATA.reduce((acc, reaction) => {
       acc[reaction.id] = false;
       return acc;
     }, {})
@@ -199,207 +303,207 @@ function ExpandedCard() {
   // const { overlayHandler } = useContext(ManagmentSystem);
 
   return (
-    <div className={classes.expanded_card_main_container}>
-      <div className={`${classes.expanded_card_implentation_main_container}`}>
-        {/* SOLUTION MAIN HEADER */}
+    <div className={classes.expanded_container}>
+      <div className={classes.expanded_card_main_container}>
+        <div className={`${classes.expanded_card_implentation_main_container}`}>
+          {/* SOLUTION MAIN HEADER */}
 
-        <div className={classes.implentation_header_container}>
-          <div className={classes.header_options_container}>
-            <ToolTip children={<IconButton icon={faArrowLeft} />} tooltipMessage={'Go Back Home'} />
-            <SolidButton buttonStyle={classes.options_button_container} label={'Solve Bug'} />
-            <HeaderOptions headerOptionMainContainer={'d-none d-md-block'} />
-          </div>
-          <div className={classes.header_options_container}>
-            <UserProfileHeader />
-            <DropdownMenu buttonIcon={faEllipsisVertical} menuItems={CARD_VIEW_OPTION} />
-            <ToolTip
-              children={
-                <IconButton
-                  inconButtonStyle={'d-none d-xl-block'}
-                  icon={isExpanded ? faChevronRight : faChevronLeft}
-                  onClick={() => {
-                    setIsExpanded(!isExpanded);
-                  }}
-                />
-              }
-              tooltipMessage={isExpanded ? 'Close Insight' : 'Open Insight'}
-            />
-          </div>
-        </div>
-        <Text textStyle={classes.implentation_second_header_container} h5={'Bug report title'} />
-        <div className={classes.implentation_body_main_container}>
-          {/* SOLUTION SECOND HEADER */}
-
-          <div className={classes.body_reactions_container}>
-            <Image imgContainerStyle={classes.img_container} imgStyle={classes.img} src={images} />
-            <div className={classes.reactions_list_container}>
-              {REACTIONS_DATA.map((data) => (
-                <ToolTip
-                  children={
-                    <IconTextButton
-                      key={data.id}
-                      inconTextButtonStyle={classes.list_icon_text_container}
-                      icon={data.icon}
-                      label={data.text}
-                      colorOnMouseUp={isActive[data.id] ? data.activeColor : undefined}
-                      onClick={() => {
-                        setIsActive((prev) => ({
-                          ...prev,
-                          [data.id]: !prev[data.id],
-                        }));
-                      }}
-                    />
-                  }
-                  tooltipMessage={data.id}
-                />
-              ))}
-              <IconTextButton
-                icon={faComment}
-                inconTextButtonStyle={classes.list_comment_icon_text_container}
-                label={'Comment'}
+          <div className={classes.implentation_header_container}>
+            <div className={classes.header_options_container}>
+              <ToolTip
+                children={<IconButton icon={faArrowLeft} />}
+                tooltipMessage={'Go Back Home'}
+              />
+              <SolidButton buttonStyle={classes.options_button_container} label={'Solve Bug'} />
+              <HeaderOptions headerOptionMainContainer={'d-none d-md-block'} />
+            </div>
+            <div className={classes.header_options_container}>
+              <UserProfileHeader />
+              <DropdownMenu buttonIcon={faEllipsisVertical} menuItems={CARD_VIEW_OPTION} />
+              <ToolTip
+                children={
+                  <IconButton
+                    inconButtonStyle={'d-none d-xl-block'}
+                    icon={isExpanded ? faChevronRight : faChevronLeft}
+                    onClick={() => {
+                      setIsExpanded(!isExpanded);
+                    }}
+                  />
+                }
+                tooltipMessage={isExpanded ? 'Close Insight' : 'Open Insight'}
               />
             </div>
           </div>
-          <hr className={classes.body_horizontal_line_container} />
-          {/* SOLUTION BODY */}
+          <Text textStyle={classes.implentation_second_header_container} h5={'Bug report title'} />
+          <div className={classes.implentation_body_main_container}>
+            {/* SOLUTION SECOND HEADER */}
 
-          <div className={classes.body_solution_container}>
-            {IMPLEMENTATION_DATA.map((data) => (
-              <div key={data.id}>
-                <Text textStyle={classes.body_solution_title_container} h5={data.title} />
-                <div className={classes.body_solution_content_container}>
+            <div className={classes.body_reactions_container}>
+              <Image
+                imgContainerStyle={classes.img_container}
+                imgStyle={classes.img}
+                src={images}
+              />
+              <div className={classes.reactions_list_container}>
+                {REACTIONS_DATA.map((data) => (
                   <ToolTip
                     children={
-                      <IconButton
-                        icon={!isCopied[data.id] ? faCopy : faCheck}
+                      <IconTextButton
+                        key={data.id}
+                        inconTextButtonStyle={classes.list_icon_text_container}
+                        icon={data.icon}
+                        label={data.text}
+                        colorOnMouseUp={isActive[data.id] ? data.activeColor : undefined}
                         onClick={() => {
-                          setIsCopied((prev) => ({
+                          setIsActive((prev) => ({
                             ...prev,
                             [data.id]: !prev[data.id],
                           }));
                         }}
                       />
                     }
-                    tooltipMessage={!isCopied[data.id] ? 'Copy' : 'Copied'}
+                    tooltipMessage={data.id}
                   />
-                  <hr className={classes.body_horizontal_line_container} />
-                  <Text
-                    textStyle={classes.body_solution_text_content_container}
-                    p16={data.content}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-          {/* FOOTER BUTTONS */}
-
-          <div className={classes.body_suggestion_container}>
-            <OutlinedButton
-              buttonMainContainerStyle={classes.body_suggestion_button_main_container}
-              buttonTextStyle={classes.body_suggestion_button_text}
-              buttonStyle={classes.body_suggestion_button_container}
-              label={'View People Contributions or Solutions'}
-            />
-            <Icon icon={faAnglesRight} />
-            <OutlinedButton
-              buttonMainContainerStyle={classes.body_suggestion_button_main_container}
-              buttonTextStyle={classes.body_suggestion_button_text}
-              buttonStyle={classes.body_suggestion_button_container}
-              label={'Solve the bug'}
-            />
-            <Icon icon={faAnglesRight} />
-            <DropdownMenu
-              buttonLabel={'Assign bug to'}
-              buttonIcon={faCaretDown}
-              menuItems={[
-                { label: 'Action', href: '#' },
-                { label: 'Another action', href: '#' },
-                { label: 'Something else here', href: '#' },
-              ]}
-            />
-            <Icon icon={faAnglesRight} />
-          </div>
-          {/* COMMENTS */}
-
-          <div className={classes.body_comment_container}>
-            <Text textStyle={classes.comment_title_container} h6={'Comments'} />
-            <CommentSection />
-            <div className={classes.comment_content_container}></div>
-          </div>
-        </div>
-      </div>
-      {isExpanded && (
-        <div
-          className={`col-5 d-none d-xl-block ${classes.expanded_card_analytics_main_container}`}
-        >
-          <div className={classes.analytics_analytic_container}>
-            <Text textStyle={classes.analytic_container} h6={'Analytics'} />
-            <hr className={classes.body_horizontal_line_container} />
-            <div className={classes.analytic_content_container}>
-              <div className={classes.analytic_summaries_container}>
-                {ANALYTICS_DUMMY_DATA.map((data) => (
-                  <div key={data.id} className={classes.summary_container}>
-                    <div className={classes.summary_header_container}>
-                      <Text label14={data.title} />
-                      <Icon icon={data.header_icon} color={data.header_icon_coler} />
-                    </div>
-                    <Text label14={data.tottal} />
-                    <div className={classes.summary_counter_container}>
-                      <Icon icon={data.footer_icon} />
-                      <Text label12={data.pourcentage} />
-                    </div>
-                  </div>
                 ))}
-              </div>
-              <ActivityChart />
-            </div>
-          </div>
-          <div className={classes.analytics_recommendation_container}>
-            <Text
-              textStyle={classes.recommendation_potentials_title_container}
-              h6={'Potetial Bug Fixes'}
-            />
-            <hr className={classes.body_horizontal_line_container} />
-            <div className={classes.recommendation_potentials_content_container}>
-              {DUMMY_POST_DATA.map((data) => (
-                <HomeCard
-                  cardButtonState={data.state}
-                  key={data.id}
-                  isHeaderOption={true}
-                  postTitle={data.title}
-                  postDescription={data.description}
+                <IconTextButton
+                  icon={faComment}
+                  inconTextButtonStyle={classes.list_comment_icon_text_container}
+                  label={'Comment'}
                 />
-              ))}
+              </div>
+            </div>
+            <hr className={classes.body_horizontal_line_container} />
+            {/* SOLUTION BODY */}
 
-              <ButtonContainer
-                children={'More...'}
-                buttonContainerMainContainer={classes.content_button_container}
+            <div className={classes.body_solution_container}>
+              {IMPLEMENTATION_DATA.map((data) => (
+                <div key={data.id}>
+                  <IconTextButton
+                    inconTextButtonStyle={classes.body_solution_title_container}
+                    label={data.title}
+                    icon_={faChevronDown}
+                    onClick={() => {
+                      setIsCollapsed((prev) => ({
+                        ...prev,
+                        [data.id]: !prev[data.id],
+                      }));
+                    }}
+                  />
+                  {!isCollapsed[data.id] && (
+                    <div className={classes.body_solution_content_container}>
+                      <ToolTip
+                        children={
+                          <IconButton
+                            icon={!isCopied[data.id] ? faCopy : faCheck}
+                            onClick={() => {
+                              setIsCopied((prev) => ({
+                                ...prev,
+                                [data.id]: !prev[data.id],
+                              }));
+                            }}
+                          />
+                        }
+                        tooltipMessage={!isCopied[data.id] ? 'Copy' : 'Copied'}
+                      />
+                      <hr className={classes.body_horizontal_line_container} />
+                      <Text
+                        textStyle={classes.body_solution_text_content_container}
+                        p16={data.content}
+                      />
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+            {/* FOOTER BUTTONS */}
+
+            <div className={classes.body_suggestion_container}>
+              <OutlinedButton
+                buttonMainContainerStyle={classes.body_suggestion_button_main_container}
+                buttonTextStyle={classes.body_suggestion_button_text}
+                buttonStyle={classes.body_suggestion_button_container}
+                label={'View People Contributions or Solutions'}
               />
+              <Icon icon={faAnglesRight} />
+              <OutlinedButton
+                buttonMainContainerStyle={classes.body_suggestion_button_main_container}
+                buttonTextStyle={classes.body_suggestion_button_text}
+                buttonStyle={classes.body_suggestion_button_container}
+                label={'Solve the bug'}
+              />
+              <Icon icon={faAnglesRight} />
+              <DropdownMenu
+                buttonLabel={'Assign bug to'}
+                buttonIcon={faCaretDown}
+                menuItems={[
+                  { label: 'Action', href: '#' },
+                  { label: 'Another action', href: '#' },
+                  { label: 'Something else here', href: '#' },
+                ]}
+              />
+              <Icon icon={faAnglesRight} />
+            </div>
+            {/* COMMENTS */}
+
+            <div className={classes.body_comment_container}>
+              <Text textStyle={classes.comment_title_container} h6={'Comments'} />
+              <CommentSection />
             </div>
           </div>
         </div>
-      )}
-
-      <div className={`d-flex d-xl-none ${classes.collapsed_card_implentation_container}`}>
-        {INSIGHT_DATA.map((data) => (
-          <ToolTip
-            key={data.id}
-            children={
-              <IconButton
-                icon={data.icon}
-                onClick={() => {
-                  setIsInsight(data.id);
-                }}
-                colorOnMouseUp={isInsight === data.id ? data.color : undefined}
+        {isExpanded && (
+          <div
+            className={`col-5 d-none d-xl-block ${classes.expanded_card_analytics_main_container}`}
+          >
+            <div className={classes.analytics_analytic_container}>
+              <Text textStyle={classes.analytic_container} h6={'Analytics'} />
+              <hr className={classes.body_horizontal_line_container} />
+              <div className={classes.analytic_content_container}>
+                <div className={classes.analytic_summaries_container}>
+                  {ANALYTICS_DUMMY_DATA.map((data) => (
+                    <div key={data.id} className={classes.summary_container}>
+                      <div className={classes.summary_header_container}>
+                        <Text label14={data.title} />
+                        <Icon icon={data.header_icon} color={data.header_icon_coler} />
+                      </div>
+                      <Text label14={data.tottal} />
+                      <div className={classes.summary_counter_container}>
+                        <Icon icon={data.footer_icon} />
+                        <Text label12={data.pourcentage} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <ActivityChart />
+              </div>
+            </div>
+            <div className={classes.analytics_recommendation_container}>
+              <Text
+                textStyle={classes.recommendation_potentials_title_container}
+                h6={'Potetial Bug Fixes'}
               />
-            }
-            tooltipMessage={data.id}
-          />
-        ))}
-      </div>
+              <hr className={classes.body_horizontal_line_container} />
+              <div className={classes.recommendation_potentials_content_container}>
+                {DUMMY_POST_DATA.map((data) => (
+                  <HomeCard
+                    cardButtonState={data.state}
+                    key={data.id}
+                    isHeaderOption={true}
+                    postTitle={data.title}
+                    postDescription={data.description}
+                  />
+                ))}
 
-      {!isExpanded && (
-        <div className={`d-none d-xl-flex ${classes.collapsed_card_implentation_container}`}>
+                <ButtonContainer
+                  children={'More...'}
+                  buttonContainerMainContainer={classes.content_button_container}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div className={`d-flex d-xl-none ${classes.collapsed_card_implentation_container}`}>
           {INSIGHT_DATA.map((data) => (
             <ToolTip
               key={data.id}
@@ -416,7 +520,39 @@ function ExpandedCard() {
             />
           ))}
         </div>
-      )}
+
+        {!isExpanded && (
+          <div className={`d-none d-xl-flex ${classes.collapsed_card_implentation_container}`}>
+            {INSIGHT_DATA.map((data) => (
+              <ToolTip
+                key={data.id}
+                children={
+                  <IconButton
+                    icon={data.icon}
+                    onClick={() => {
+                      setIsInsight(data.id);
+                    }}
+                    colorOnMouseUp={isInsight === data.id ? data.color : undefined}
+                  />
+                }
+                tooltipMessage={data.id}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* REVIEWS */}
+
+      <div className={classes.expanded_card_reviews_main_container}>
+        <Text h5={'Reviews'} />
+        <hr className={classes.body_horizontal_line_container} />
+        <div className={`${classes.review_container}`}>
+          {DUMMY_REVIEWS.map((data) => (
+            <ReviewCard key={data.id} activeStars={data.active_stars} reviewBody={data.review} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

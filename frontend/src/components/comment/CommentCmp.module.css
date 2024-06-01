@@ -26,8 +26,9 @@
 
 .reactions_nain_container {
   display: flex;
-  margin: 0 20px;
-  gap: 20px;
+  justify-content: center;
+  width: fit-content;
+  gap: 10px;
 }
 
 .reactions_icon_text_button_container {

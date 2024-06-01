@@ -17,7 +17,7 @@ function Text({
   p16,
   p16Style,
   p12,
-  p12Style,
+  p12Style, 
   label16,
   label16Style,
   label15,

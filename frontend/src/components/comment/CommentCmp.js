@@ -119,7 +119,6 @@ function Comment({ comment, isReply = false }) {
         <div className={`d-flex align-items-center ${classes.comment_options_contaimer}`}>
           <Text label12={'1mn ago'} />
           <DropdownMenu buttonIcon={faEllipsisVertical} menuItems={COMMENT_OPTION} />
-          {/* <IconButton icon={faEllipsisVertical} /> */}
         </div>
       </div>
       <div className="m-3">

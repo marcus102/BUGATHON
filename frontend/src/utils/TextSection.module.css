@@ -51,3 +51,8 @@
 .text_container p  {
   color: var(--white_ffffff);
 }
+
+.quote_icon_container {
+  width: 15px;
+  height: 15px;
+}

@@ -186,14 +186,66 @@ export function DropdownMenu({ buttonLabel, buttonIcon, menuItems }) {
       {isOpen && (
         <div className={classes.dropdown_menu}>
           {menuItems.map((data, index) => (
-            <Link
+            <IconTextButton
               key={data.id}
-              linkContainer={`${classes.drop_down_item_link_container}`}
-              linkStyle={`${classes.drop_down_item_link}`}
-              href={data.href}
-              icon_2={data.icon_2}
-              children16={data.label}
+              inconTextButtonStyle={`${classes.drop_down_item_link}`}
+              icon_={data.icon_2}
+              label={data.label}
               icon={data.icon}
+              // onClick={''}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function DynamicLabelDropdownMenu({ buttonIcon, menuItems }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedLabel, setSelectedLabel] = useState('All');
+  const dropdownRef = useRef(null);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleItemClick = (label) => {
+    setSelectedLabel(label);
+    setIsOpen(false);
+  };
+
+  return (
+    <div className={classes.dropdown_menu_container} ref={dropdownRef}>
+      <IconTextButton
+        inconTextButtonStyle={classes.dropdown_toggle}
+        icon={buttonIcon}
+        label={selectedLabel}
+        onClick={toggleDropdown}
+      />
+      {isOpen && (
+        <div className={classes.dropdown_menu}>
+          {menuItems.map((data) => (
+            <IconTextButton
+              key={data.id}
+              inconTextButtonStyle={`${classes.drop_down_item_link}`}
+              icon_={data.icon_2 && data.icon_2}
+              label={data.label && data.label}
+              icon={data.icon && data.icon}
+              onClick={() => handleItemClick(data.label)}
             />
           ))}
         </div>

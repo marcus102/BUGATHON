@@ -6,7 +6,7 @@ import Text from '../utils/TextSection';
 import { OutlinedButton } from '../utils/ButtonSection';
 import images from '../assets/images/earth-2254769.jpg';
 
-function UserProfileHeader({ username, profession, profileImg }) {
+function UserProfileHeader({ username, profession, profileImg, hideFollow }) {
   const [isFollowing, setIsFollowing] = useState(false);
 
   return (
@@ -24,19 +24,21 @@ function UserProfileHeader({ username, profession, profileImg }) {
           }
         />
       </div>
-      <OutlinedButton
-        buttonContainerStyle={classes.follow_button_container}
-        buttonStyle={classes.follow_button}
-        onClick={() => {
-          setIsFollowing(!isFollowing);
-        }}
-        children={
-          <Text
-            label12Style={classes.follow_label12_style}
-            label12={!isFollowing ? 'Follow' : 'Unfollow'}
-          />
-        }
-      />
+      {!hideFollow && (
+        <OutlinedButton
+          buttonContainerStyle={classes.follow_button_container}
+          buttonStyle={classes.follow_button}
+          onClick={() => {
+            setIsFollowing(!isFollowing);
+          }}
+          children={
+            <Text
+              label12Style={classes.follow_label12_style}
+              label12={!isFollowing ? 'Follow' : 'Unfollow'}
+            />
+          }
+        />
+      )}
     </div>
   );
 }

@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
 import classes from './CommentSectionCmp.module.css';
 import Comment from './CommentCmp';
-import Text from '../../utils/TextSection';
 import { Input } from '../../utils/InputSection';
 import { ButtonContainer, IconButton } from '../../utils/ButtonSection';
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { DynamicLabelDropdownMenu } from '../../utils/ButtonSection';
+
+const COMMENT_OPTION = [
+  { id: '1', label: 'All ( Default )', href: null },
+  { id: '2', label: 'Pinned', href: null },
+  { id: '3', label: 'Trending', href: null },
+  { id: '4', label: 'Relevent', href: null },
+  { id: '6', label: 'Recent', href: null },
+  { id: '7', label: 'Oldest', href: null },
+  { id: '8', label: 'Hidden', href: null },
+  { id: '9', label: 'My Replies', href: null },
+];
 
 const CommentSection = () => {
   const [comments, setComments] = useState([
@@ -85,6 +96,9 @@ const CommentSection = () => {
 
   return (
     <div className={classes.comment_section}>
+      <div className={classes.comment_header_drop_down_container}>
+        <DynamicLabelDropdownMenu menuItems={COMMENT_OPTION} buttonIcon={faChevronDown} />
+      </div>
       <div className={classes.comments_content_container}>
         {comments.slice(0, visibleComments).map((comment) => (
           <Comment key={comment.id} comment={comment} />

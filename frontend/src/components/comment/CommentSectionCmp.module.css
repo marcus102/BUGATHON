@@ -2,8 +2,13 @@
   width: 100%;
   background-color: var(--black_232526);
   padding: 10px;
-  border-radius: 10px;
-  margin: auto;
+}
+
+.comment_header_drop_down_container {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  margin: 15px 0;
 }
 
 .comments_content_container {
