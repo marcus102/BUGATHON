@@ -122,6 +122,7 @@ export function IconTextButton({
   inconTextLabel16Style,
   iconContainerStyle,
   label,
+  unwrap,
 }) {
   const [isPressed, setIsPressed] = useState(false);
 
@@ -142,8 +143,9 @@ export function IconTextButton({
       )}
       {label && (
         <Text
+          unwrap={unwrap}
           label14={label}
-          label14Style={[classes.button_text, inconTextLabel16Style].join(' ')}
+          label14Style={`${classes.button_text} ${inconTextLabel16Style}`}
         />
       )}
       {icon_ && (
@@ -177,6 +179,7 @@ export function ImageTextButton({
   imageTextStyle,
   imageTextLabel16Style,
   children,
+  unwrap,
 }) {
   return (
     <button
@@ -192,7 +195,11 @@ export function ImageTextButton({
         />
       )}
       {label && (
-        <Text label14={label} label14Style={`${classes.image_text} ${imageTextLabel16Style}`} />
+        <Text
+          unwrap={unwrap}
+          label14={label}
+          label14Style={`${classes.image_text} ${imageTextLabel16Style}`}
+        />
       )}
       {src_ && (
         <Image
@@ -213,6 +220,7 @@ export function DropdownMenu({
   buttonIcon,
   menuItems,
   children,
+  buttonChildren,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -236,22 +244,28 @@ export function DropdownMenu({
         inconTextButtonStyle={`${classes.dropdown_toggle} ${dropDownIconTextStyle}`}
         icon={buttonIcon}
         label={buttonLabel}
+        children={buttonChildren}
         onClick={() => {
           setIsOpen(!isOpen);
         }}
       />
       {isOpen && (
         <div className={`${classes.dropdown_menu} ${dropDownMenuStyle}`}>
-          {menuItems.map((data, index) => (
-            <IconTextButton
-              key={data.id}
-              inconTextButtonStyle={`${classes.drop_down_item_link}`}
-              icon_={data.icon_2}
-              label={data.label}
-              icon={data.icon}
-              // onClick={''}
-            />
-          ))}
+          {menuItems && (
+            <>
+              {menuItems.map((data, index) => (
+                <IconTextButton
+                  key={data.id}
+                  inconTextButtonStyle={`${classes.drop_down_item_link}`}
+                  icon_={data.icon_2}
+                  label={data.label}
+                  icon={data.icon}
+                  // onClick={''}
+                />
+              ))}
+            </>
+          )}
+
           {children}
         </div>
       )}
@@ -259,7 +273,12 @@ export function DropdownMenu({
   );
 }
 
-export function DynamicLabelDropdownMenu({ buttonIcon, menuItems }) {
+export function DynamicLabelDropdownMenu({
+  buttonIcon,
+  menuItems,
+  dropDownMenuStyle,
+  dropDownIconTextStyle,
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedLabel, setSelectedLabel] = useState('All');
   const dropdownRef = useRef(null);
@@ -289,13 +308,13 @@ export function DynamicLabelDropdownMenu({ buttonIcon, menuItems }) {
   return (
     <div className={classes.dropdown_menu_container} ref={dropdownRef}>
       <IconTextButton
-        inconTextButtonStyle={classes.dropdown_toggle}
+        inconTextButtonStyle={`${classes.dropdown_toggle} ${dropDownIconTextStyle}`}
         icon={buttonIcon}
         label={selectedLabel}
         onClick={toggleDropdown}
       />
       {isOpen && (
-        <div className={classes.dropdown_menu}>
+        <div className={`${classes.dropdown_menu} ${dropDownMenuStyle}`}>
           {menuItems.map((data) => (
             <IconTextButton
               key={data.id}

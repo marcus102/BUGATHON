@@ -203,9 +203,6 @@
   width: 16rem;
 }
 
-/* .drop_down_item_link_container {
-} */
-
 .drop_down_item_link {
   flex-direction: row;
   justify-content: flex-start;

@@ -17,7 +17,7 @@ function Text({
   p16,
   p16Style,
   p12,
-  p12Style, 
+  p12Style,
   label16,
   label16Style,
   label15,
@@ -30,9 +30,12 @@ function Text({
   label10Style,
   textStyle,
   children,
+  unwrap,
 }) {
   return (
-    <div className={[classes.text_container, textStyle].join(' ')}>
+    <div
+      className={`${!unwrap ? classes.text_container : classes.unwrap_text_container} ${textStyle}`}
+    >
       {h1 ? <h1 className={[classes.h1, h1Style].join(' ')}>{h1}</h1> : undefined}
       {h2 ? <h2 className={[classes.h2, h2Style].join(' ')}>{h2}</h2> : undefined}
       {h3 ? <h3 className={[classes.h3, h3Style].join(' ')}>{h3}</h3> : undefined}

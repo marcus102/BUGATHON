@@ -3,7 +3,7 @@ import classes from './headerOptionsCmp.module.css';
 import { SolidButton } from '../utils/ButtonSection';
 import Text from '../utils/TextSection';
 import Image from '../utils/ImageSection';
-import images from '../assets/images/earth-2254769.jpg';
+import images from '../assets/images/globe.jpg';
 
 function HeaderOptions({ headerOptionMainContainer, contributions, img1, img2, img3 }) {
   return (

@@ -39,7 +39,7 @@
   width: 100%;
   height: fit-content;
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   align-items: center;
   border-radius: 5px;
   border: 0.5px solid var(--gray_50505066);

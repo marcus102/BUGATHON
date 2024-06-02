@@ -41,6 +41,25 @@
   margin: 15px 0;
 }
 
+/* DROP DOWN OPTIONS (ASSIGNED BUG - INBOX - NOTIFICATION - ADJUST)  */
+
 .dorp_down_menu {
   width: 10rem;
 }
+
+.header_option_button {
+  flex-direction: column;
+}
+
+.header_option_menu {
+  width: 45rem;
+  height: 25rem;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* INBOX */
+
+/* NOTIFICATION */
+
+/* ADJUST */

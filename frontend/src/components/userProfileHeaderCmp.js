@@ -4,7 +4,7 @@ import { IconTextButton } from '../utils/ButtonSection';
 import Image from '../utils/ImageSection';
 import Text from '../utils/TextSection';
 import { OutlinedButton } from '../utils/ButtonSection';
-import images from '../assets/images/earth-2254769.jpg';
+import images from '../assets/images/globe.jpg';
 
 function UserProfileHeader({ username, profession, profileImg, hideFollow }) {
   const [isFollowing, setIsFollowing] = useState(false);

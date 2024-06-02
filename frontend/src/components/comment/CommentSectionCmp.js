@@ -2,20 +2,20 @@ import React, { useState } from 'react';
 import classes from './CommentSectionCmp.module.css';
 import Comment from './CommentCmp';
 import { Input } from '../../utils/InputSection';
-import { ButtonContainer, IconButton, ImageButton } from '../../utils/ButtonSection';
-import { faChevronDown, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { ButtonContainer, ImageButton } from '../../utils/ButtonSection';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { DynamicLabelDropdownMenu } from '../../utils/ButtonSection';
 import SendIcon from '../../assets/icons/send.svg';
 
 const COMMENT_OPTION = [
-  { id: '1', label: 'All', href: null },
-  { id: '2', label: 'Pinned', href: null },
-  { id: '3', label: 'Trending', href: null },
-  { id: '4', label: 'Relevent', href: null },
-  { id: '6', label: 'Recent', href: null },
-  { id: '7', label: 'Oldest', href: null },
-  { id: '8', label: 'Hidden', href: null },
-  { id: '9', label: 'My Replies', href: null },
+  { id: '1', label: 'All' },
+  { id: '2', label: 'Pinned' },
+  { id: '3', label: 'Trending' },
+  { id: '4', label: 'Relevent' },
+  { id: '6', label: 'Recent' },
+  { id: '7', label: 'Oldest' },
+  { id: '8', label: 'Hidden' },
+  { id: '9', label: 'My Replies' },
 ];
 
 const CommentSection = () => {

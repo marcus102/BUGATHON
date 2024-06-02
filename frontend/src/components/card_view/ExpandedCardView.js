@@ -44,13 +44,12 @@ import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import Text from '../../utils/TextSection';
 import Icon from '../../utils/IconSection';
 import Image from '../../utils/ImageSection';
-import images from '../../assets/images/post-it-4129907.jpg';
+import images from '../../assets/images/blog.jpg';
 import HomeCard from './HomeCardView';
 import CommentSection from '../comment/CommentSectionCmp';
 import ActivityChart from '../activity_chart/ActivityChart';
 import ToolTip from '../../utils/toolTipSection';
 import ReviewCard from '../reviews/ReviewCardCmp';
-import Link from '../../utils/LinkSection';
 
 const REACTIONS_DATA = [
   { id: 'likes', icon: faHeart, text: '10K', activeColor: Colors.red_FF2B2B },
