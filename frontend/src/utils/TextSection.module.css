@@ -54,3 +54,13 @@
 .text_container p {
   color: var(--white_ffffff);
 }
+
+.unwrap_text_container h1,
+.unwrap_text_container h2,
+.unwrap_text_container h3,
+.unwrap_text_container h4,
+.unwrap_text_container h5,
+.unwrap_text_container h6,
+.unwrap_text_container p {
+  color: var(--white_ffffff);
+}

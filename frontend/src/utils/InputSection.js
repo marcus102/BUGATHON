@@ -44,12 +44,12 @@ export function TextArea({ label, placeholder, value, onChange, textAreaStyle, o
   );
 }
 
-export function CheckBox({ label12, label16, checkboxStyle, value }) {
+export function CheckBox({ label12, label16, checkboxStyle, value, unwrap }) {
   return (
-    <div className={[classes.checkbox_container, checkboxStyle].join(' ')}>
+    <div className={`${classes.checkbox_container} ${checkboxStyle}`}>
       <input type="checkbox" value={value} />
-      {label16 ? <Text label16={label16} /> : undefined}
-      {label12 ? <Text label12={label12} /> : undefined}
+      {label16 ? <Text unwrap={unwrap} label16={label16} /> : undefined}
+      {label12 ? <Text unwrap={unwrap} label12={label12} /> : undefined}
     </div>
   );
 }
@@ -65,6 +65,8 @@ export function Input({
   inputSecondContainerStyle,
   inputStyle,
   onKeyDown,
+  unwrap,
+  unwrap_,
 }) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -76,7 +78,7 @@ export function Input({
 
   return (
     <div className={[classes.input_main_container, inputMainContainerStyle].join(' ')}>
-      {label && <Text label16={label} />}
+      {label && <Text unwrap={unwrap} label16={label} />}
       <div className={[classes.input_second_container, inputSecondContainerStyle].join(' ')}>
         <div className={`${classes.input_container} ${inputStyle}`}>
           <input
@@ -94,7 +96,7 @@ export function Input({
           )}
         </div>
         {instructionLabel ? (
-          <Text textStyle={classes.instructionLabel} label12={instructionLabel} />
+          <Text unwrap={unwrap_} textStyle={classes.instructionLabel} label12={instructionLabel} />
         ) : undefined}
       </div>
     </div>
@@ -118,7 +120,6 @@ export function Select({ label, options }) {
 
 export function Radio({
   children,
-  radioMainContainerStyle,
   radioContainerStyle,
   checked,
   label,
@@ -126,17 +127,22 @@ export function Radio({
   size,
   color,
   onChange,
+  inputValue,
+  unwrap,
 }) {
   return (
-    <div className={[classes.radio_main_container, radioMainContainerStyle].join(' ')}>
+    <div className={`${classes.radio_container} ${radioContainerStyle}`}>
       {icon && (
         <Icon iconContainerStyle={classes.icon_container} icon={icon} size={size} color={color} />
       )}
-      <div className={[classes.radio_container, radioContainerStyle].join(' ')}>
-        <input type="radio" name="flexRadioDefault" onChange={onChange} checked={checked} />
-        {label && <Text textStyle={classes.text_container} label16={label} />}
-      </div>
-
+      <input
+        type="radio"
+        name="flexRadioDefault"
+        value={inputValue}
+        onChange={(e) => onChange(e.target.value)}
+        checked={checked}
+      />
+      {label && <Text unwrap={unwrap} textStyle={classes.text_container} label16={label} />}
       {children}
     </div>
   );

@@ -48,6 +48,7 @@ import ServiceIcon from '../../assets/icons/service.svg';
 import Image from '../../utils/ImageSection';
 import AssignedBug from './second_navabar_options/AssignedBugCmp';
 import Notification from './second_navabar_options/NotificationCmp';
+import Adjust from './second_navabar_options/AdjustCmp';
 
 const MENU_OPTIONS = [
   { id: '1', icon: faBug, label: 'Assigned Bug', icon_2: null },
@@ -205,7 +206,7 @@ function SecondNavbar() {
             dropDownIconTextStyle={classes.header_option_button}
             buttonIcon={faSliders}
             buttonLabel={'Adjust'}
-            menuItems={''}
+            children={<Adjust />}
           />
         </div>
 

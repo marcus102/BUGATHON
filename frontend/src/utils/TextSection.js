@@ -36,29 +36,19 @@ function Text({
     <div
       className={`${!unwrap ? classes.text_container : classes.unwrap_text_container} ${textStyle}`}
     >
-      {h1 ? <h1 className={[classes.h1, h1Style].join(' ')}>{h1}</h1> : undefined}
-      {h2 ? <h2 className={[classes.h2, h2Style].join(' ')}>{h2}</h2> : undefined}
-      {h3 ? <h3 className={[classes.h3, h3Style].join(' ')}>{h3}</h3> : undefined}
-      {h4 ? <h4 className={[classes.h4, h4Style].join(' ')}>{h4}</h4> : undefined}
-      {h5 ? <h5 className={[classes.h5, h5Style].join(' ')}>{h5}</h5> : undefined}
-      {h6 ? <h6 className={[classes.h6, h6Style].join(' ')}>{h6}</h6> : undefined}
-      {p16 ? <p className={[classes.p16, p16Style].join(' ')}>{p16}</p> : undefined}
-      {p12 ? <p className={[classes.p12, p12Style].join(' ')}>{p12}</p> : undefined}
-      {label10 ? (
-        <label className={[classes.label10, label10Style].join(' ')}>{label10}</label>
-      ) : undefined}
-      {label15 ? (
-        <label className={[classes.label15, label15Style].join(' ')}>{label15}</label>
-      ) : undefined}
-      {label14 ? (
-        <label className={[classes.label14, label14Style].join(' ')}>{label14}</label>
-      ) : undefined}
-      {label12 ? (
-        <label className={[classes.label12, label12Style].join(' ')}>{label12}</label>
-      ) : undefined}
-      {label16 ? (
-        <label className={[classes.label16, label16Style].join(' ')}>{label16}</label>
-      ) : undefined}
+      {h1 && <h1 className={`${classes.h1} ${h1Style}`}>{h1}</h1>}
+      {h2 && <h2 className={`${classes.h2} ${h2Style}`}>{h2}</h2>}
+      {h3 && <h3 className={`${classes.h3} ${h3Style}`}>{h3}</h3>}
+      {h4 && <h4 className={`${classes.h4} ${h4Style}`}>{h4}</h4>}
+      {h5 && <h5 className={`${classes.h5} ${h5Style}`}>{h5}</h5>}
+      {h6 && <h6 className={`${classes.h6} ${h6Style}`}>{h6}</h6>}
+      {p16 && <p className={`${classes.p16} ${p16Style}`}>{p16}</p>}
+      {p12 && <p className={`${classes.p12} ${p12Style}`}>{p12}</p>}
+      {label10 && <label className={`${classes.label10} ${label10Style}`}>{label10}</label>}
+      {label15 && <label className={`${classes.label15} ${label15Style} `}>{label15}</label>}
+      {label14 && <label className={`${classes.label14} ${label14Style}`}>{label14}</label>}
+      {label12 && <label className={`${classes.label12} ${label12Style}`}>{label12}</label>}
+      {label16 && <label className={`${classes.label16} ${label16Style}`}>{label16}</label>}
       {children}
     </div>
   );
