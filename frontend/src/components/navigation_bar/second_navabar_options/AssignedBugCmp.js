@@ -2,26 +2,16 @@ import React from 'react';
 import classes from './AssignedBugCmp.module.css';
 import Colors from '../../../constants/colors';
 import {
-  DropdownMenu,
-  DynamicLabelDropdownMenu,
-  SolidButton,
-  OutlinedButton,
-  IconButton,
-} from '../../../utils/ButtonSection';
-import Text from '../../../utils/TextSection';
-import {
   faThumbTack,
   faArrowUpFromBracket,
   faTrashCan,
   faExclamation,
   faCaretRight,
-  faEllipsisVertical,
-  faChevronDown,
   faHeart,
 } from '@fortawesome/free-solid-svg-icons';
 import profile_1 from '../../../assets/images/study.jpg';
 import profile_2 from '../../../assets/images/people.jpg';
-import Image from '../../../utils/ImageSection';
+import CustomMenu from '../../custom/CustomMenuCmp';
 
 const DUMMY_ASSIGNED_BUG = [
   {
@@ -30,7 +20,7 @@ const DUMMY_ASSIGNED_BUG = [
     profile_2: profile_2,
     title: 'Bug report assigned to you by @leyla 1mn ago',
     notification:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat',
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat. Mauris eleifend eros id metus volutpat',
     tag: 'Critical',
     type: 'submited',
   },
@@ -42,7 +32,7 @@ const DUMMY_ASSIGNED_BUG = [
     notification:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat',
     tag: 'Pending',
-    type: 'recieved',
+    type: 'received',
   },
   {
     id: '3',
@@ -52,7 +42,7 @@ const DUMMY_ASSIGNED_BUG = [
     notification:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat',
     tag: 'Stable',
-    type: 'recieved',
+    type: 'received',
   },
 ];
 
@@ -81,88 +71,24 @@ const ASSIGNMENT_DROP_DOWN = [
 
 const ASSIGNMENT_OPTION = [
   { id: '1', icon: faThumbTack, label: 'Pin', icon_2: null },
-  { id: '2', icon: faHeart, label: 'Like contribution', icon_2: null },
-  { id: '3', icon: faArrowUpFromBracket, label: 'Share contribution', icon_2: null },
+  { id: '2', icon: faHeart, label: 'Like', icon_2: null },
+  { id: '3', icon: faArrowUpFromBracket, label: 'Share', icon_2: null },
   { id: '4', icon: faTrashCan, label: 'Remove this bug assignment', icon_2: null },
   { id: '5', icon: faExclamation, label: 'Report (users only)', icon_2: faCaretRight },
 ];
 
 function AssignedBug() {
   return (
-    <div className={classes.header_option_main_container}>
-      <div className={classes.option_header_container}>
-        <Text h5={'Assigned Bugs'} />
-        <DynamicLabelDropdownMenu
-          dropDownMenuStyle={classes.option_header_menu_container}
-          buttonIcon={faChevronDown}
-          menuItems={ASSIGNMENT_DROP_DOWN}
-        />
-      </div>
-
-      {DUMMY_ASSIGNED_BUG.map((data) => (
-        <div key={data.id} className={classes.header_option_content_main_container}>
-          <div className={classes.option_content_header_container}>
-            <div className={classes.option_content_img_main_container}>
-              <Image
-                imgContainerStyle={classes.content_img_container}
-                imgStyle={classes.content_img}
-                src={data.profile}
-                alt={'profile_1'}
-              />
-              <Image
-                imgContainerStyle={classes.content_img_container}
-                imgStyle={classes.content_img}
-                src={data.profile_2}
-                alt={'profile_2'}
-              />
-            </div>
-            <div className={classes.option_content_body_container}>
-              <div className={classes.option_content_body_text_container}>
-                <Text h6={data.title} />
-                <Text
-                  textStyle={`${classes.content_body_critical_tag_container}`}
-                  label10={data.tag}
-                />
-              </div>
-              <Text p16={data.notification} />
-            </div>
-            <DropdownMenu
-              dropDownMenuStyle={classes.option_content_body_menu_container}
-              buttonIcon={faEllipsisVertical}
-              menuItems={ASSIGNMENT_OPTION}
-            />
-          </div>
-          <OutlinedButton
-            buttonStyle={classes.header_option_outlined_button_container}
-            buttonMainContainerStyle={classes.header_option_outlined_button_main_container}
-            label={'View more...'}
-          />
-          {data.type === 'recieved' && (
-            <div className={classes.option_content_body_2_container}>
-              {ASSIGNMENT_BUG_BUTTON.map((btn_data) => (
-                <SolidButton
-                  key={btn_data.id}
-                  buttonMainContainerStyle={classes.header_option_solid_button_main_container}
-                  buttonStyle={classes.header_option_solid_button_container}
-                  label={btn_data.button_label}
-                />
-              ))}
-            </div>
-          )}
-
-          <div className={classes.option_content_footer_container}>
-            {ASSIGNMENT_REACTIONS_DATA.map((icon_data) => (
-              <IconButton
-                key={icon_data.id}
-                icon={icon_data.icon}
-                colorOnMouseUp={icon_data.active_color}
-              />
-            ))}
-          </div>
-          <hr className={classes.header_option_horizontal_line_container} />
-        </div>
-      ))}
-    </div>
+    <CustomMenu
+      title={'Assigned Bugs'}
+      dropDown={ASSIGNMENT_DROP_DOWN}
+      dataList={DUMMY_ASSIGNED_BUG}
+      option={ASSIGNMENT_OPTION}
+      button={ASSIGNMENT_BUG_BUTTON}
+      reactionData={ASSIGNMENT_REACTIONS_DATA}
+      solidButtonDataType={'received'}
+      emptyContentLabel={'No Assigned Bugs'}
+    />
   );
 }
 

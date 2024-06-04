@@ -220,6 +220,7 @@ export function DropdownMenu({
   buttonIcon,
   menuItems,
   children,
+  children_,
   buttonChildren,
   onClick,
 }) {
@@ -250,6 +251,7 @@ export function DropdownMenu({
           setIsOpen(!isOpen);
         }}
       />
+
       {isOpen && (
         <div className={`${classes.dropdown_menu} ${dropDownMenuStyle}`}>
           {menuItems && (

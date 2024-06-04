@@ -49,6 +49,7 @@ import Image from '../../utils/ImageSection';
 import AssignedBug from './second_navabar_options/AssignedBugCmp';
 import Notification from './second_navabar_options/NotificationCmp';
 import Adjust from './second_navabar_options/AdjustCmp';
+import Inbox from './second_navabar_options/InboxCmp';
 
 const MENU_OPTIONS = [
   { id: '1', icon: faBug, label: 'Assigned Bug', icon_2: null },
@@ -120,28 +121,20 @@ const SEARCH_DROP_DOWN = [
 
 const INBOX_DATA = [];
 
-const ADJUST_DATA = [
-  {
-    id: 'Collapse',
-    icon: faCaretDown,
-    children: [
-      { id: '1', label: 'All' },
-      { id: '2', label: 'Potential Suggestions' },
-      { id: '3', label: 'Analytics' },
-      { id: '4', label: 'None (default)' },
-    ],
-  },
-  {
-    id: 'Other',
-    icon: null,
-    children: [
-      { id: '1', label: '---' },
-      { id: '2', label: '----' },
-      { id: '3', label: '-----' },
-      { id: '4', label: '------' },
-    ],
-  },
-];
+const renderChildComponent = (id) => {
+  switch (id) {
+    case '1':
+      return <AssignedBug />;
+    case '2':
+      return <Inbox />;
+    case '3':
+      return <Notification />;
+    case '4':
+      return <Adjust />;
+    default:
+      return null;
+  }
+};
 
 function SecondNavbar() {
   return (
@@ -165,49 +158,16 @@ function SecondNavbar() {
         {/* DROP DOWN OPTIONS */}
 
         <div className="col-lg-5 d-none d-lg-flex justify-content-end gap-3 ">
-          {/* {MENU_OPTIONS.map((data) => (
+          {MENU_OPTIONS.map((data) => (
             <DropdownMenu
               key={data.id}
               dropDownMenuStyle={classes.header_option_menu}
               dropDownIconTextStyle={classes.header_option_button}
               buttonIcon={data.icon}
               buttonLabel={data.label}
-              children={
-                <>
-                  data.id === '1' && <AssignedBug />
-                  data.id === '2' && <Notification />
-                </>
-              }
+              children={renderChildComponent(data.id)}
             />
-          ))} */}
-          <DropdownMenu
-            dropDownMenuStyle={classes.header_option_menu}
-            dropDownIconTextStyle={classes.header_option_button}
-            buttonIcon={faBug}
-            buttonLabel={'Assigned Bug'}
-            children={<AssignedBug />}
-          />
-          <DropdownMenu
-            dropDownMenuStyle={classes.header_option_menu}
-            dropDownIconTextStyle={classes.header_option_button}
-            buttonIcon={faInbox}
-            buttonLabel={'Inbox'}
-            menuItems={''}
-          />
-          <DropdownMenu
-            dropDownMenuStyle={classes.header_option_menu}
-            dropDownIconTextStyle={classes.header_option_button}
-            buttonIcon={faBell}
-            buttonLabel={'Notifications'}
-            children={<Notification />}
-          />
-          <DropdownMenu
-            dropDownMenuStyle={classes.header_option_menu}
-            dropDownIconTextStyle={classes.header_option_button}
-            buttonIcon={faSliders}
-            buttonLabel={'Adjust'}
-            children={<Adjust />}
-          />
+          ))}
         </div>
 
         <div className="col-1 d-lg-none d-flex justify-content-end">
@@ -216,34 +176,16 @@ function SecondNavbar() {
             buttonIcon={faEllipsis}
             children={
               <>
-                <DropdownMenu
-                  dropDownMenuStyle={classes.header_option_menu}
-                  dropDownIconTextStyle={classes.header_option_button}
-                  buttonIcon={faBug}
-                  buttonLabel={'Assigned Bug'}
-                  children={<AssignedBug />}
-                />
-                <DropdownMenu
-                  dropDownMenuStyle={classes.header_option_menu}
-                  dropDownIconTextStyle={classes.header_option_button}
-                  buttonIcon={faInbox}
-                  buttonLabel={'Inbox'}
-                  menuItems={''}
-                />
-                <DropdownMenu
-                  dropDownMenuStyle={classes.header_option_menu}
-                  dropDownIconTextStyle={classes.header_option_button}
-                  buttonIcon={faBell}
-                  buttonLabel={'Notifications'}
-                  children={<Notification />}
-                />
-                <DropdownMenu
-                  dropDownMenuStyle={classes.header_option_menu}
-                  dropDownIconTextStyle={classes.header_option_button}
-                  buttonIcon={faSliders}
-                  buttonLabel={'Adjust'}
-                  children={<Adjust />}
-                />
+                {MENU_OPTIONS.map((data) => (
+                  <DropdownMenu
+                    key={data.id}
+                    dropDownMenuStyle={classes.header_option_menu}
+                    dropDownIconTextStyle={classes.header_option_button}
+                    buttonIcon={data.icon}
+                    buttonLabel={data.label}
+                    children={renderChildComponent(data.id)}
+                  />
+                ))}
               </>
             }
           />

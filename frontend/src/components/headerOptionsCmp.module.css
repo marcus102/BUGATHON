@@ -1,19 +1,18 @@
 /* OPTION */
 
 .solid_button_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
   width: fit-content;
-  
-}
-
-.solid_button {
   border-radius: 10px;
-  padding: 0 6px;
+  padding: 0 10px;
   height: 35px;
-  width: 9rem;
   background-color: var(--green_039000);
 }
 
-.solid_button:hover {
+.solid_button_container:hover {
   background-color: var(--green_026c00);
 }
 
@@ -43,4 +42,12 @@
 
 .contrib_img {
   border-radius: 15px;
+}
+
+/* DROP-DOWN */
+.header_option_menu {
+  width: 45rem;
+  height: 25rem;
+  padding: 20px;
+  overflow-y: auto;
 }
