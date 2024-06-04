@@ -221,6 +221,7 @@ export function DropdownMenu({
   menuItems,
   children,
   buttonChildren,
+  onClick,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);

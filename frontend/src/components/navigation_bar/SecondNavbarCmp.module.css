@@ -41,10 +41,14 @@
   margin: 15px 0;
 }
 
-/* DROP DOWN OPTIONS (ASSIGNED BUG - INBOX - NOTIFICATION - ADJUST)  */
+/* DROP DOWN OPTIONS (NEW - ASSIGNED BUG - INBOX - NOTIFICATION - ADJUST)  */
 
 .dorp_down_menu {
-  width: 10rem;
+  width: 25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
 }
 
 .header_option_button {
@@ -56,6 +60,11 @@
   height: 25rem;
   padding: 20px;
   overflow-y: auto;
+}
+
+/* NEW */
+.create_drop_down_menu {
+  width: 11rem;
 }
 
 /* INBOX */

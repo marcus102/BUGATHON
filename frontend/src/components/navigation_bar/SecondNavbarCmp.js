@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Colors from '../../constants/colors';
 import {
   DropdownMenu,
@@ -214,7 +214,38 @@ function SecondNavbar() {
           <DropdownMenu
             dropDownMenuStyle={classes.dorp_down_menu}
             buttonIcon={faEllipsis}
-            menuItems={MENU_OPTIONS}
+            children={
+              <>
+                <DropdownMenu
+                  dropDownMenuStyle={classes.header_option_menu}
+                  dropDownIconTextStyle={classes.header_option_button}
+                  buttonIcon={faBug}
+                  buttonLabel={'Assigned Bug'}
+                  children={<AssignedBug />}
+                />
+                <DropdownMenu
+                  dropDownMenuStyle={classes.header_option_menu}
+                  dropDownIconTextStyle={classes.header_option_button}
+                  buttonIcon={faInbox}
+                  buttonLabel={'Inbox'}
+                  menuItems={''}
+                />
+                <DropdownMenu
+                  dropDownMenuStyle={classes.header_option_menu}
+                  dropDownIconTextStyle={classes.header_option_button}
+                  buttonIcon={faBell}
+                  buttonLabel={'Notifications'}
+                  children={<Notification />}
+                />
+                <DropdownMenu
+                  dropDownMenuStyle={classes.header_option_menu}
+                  dropDownIconTextStyle={classes.header_option_button}
+                  buttonIcon={faSliders}
+                  buttonLabel={'Adjust'}
+                  children={<Adjust />}
+                />
+              </>
+            }
           />
         </div>
       </div>
