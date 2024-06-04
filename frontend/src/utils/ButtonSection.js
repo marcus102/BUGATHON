@@ -26,19 +26,17 @@ export function SolidButton({
   icon,
   color,
   size,
+  unwrap,
 }) {
   return (
     <div className={`${classes.solid_button_container} ${buttonMainContainerStyle}`}>
-      <button
-        className={[classes.solid_button, buttonStyle].join(' ')}
-        type="button"
-        onClick={onClick}
-      >
+      <button className={`${classes.solid_button} ${buttonStyle}`} type="button" onClick={onClick}>
         {label && (
           <Text
+            unwrap={unwrap}
             textStyle={buttonTextContainerStyle}
             label14={label}
-            label14Style={[classes.button_text, buttonTextStyle].join(' ')}
+            label14Style={`${classes.button_text} ${buttonTextStyle}`}
           />
         )}
         {icon && <Icon icon={icon} color={color} size={size} />}
@@ -59,6 +57,7 @@ export function OutlinedButton({
   icon,
   color,
   size,
+  unwrap,
 }) {
   return (
     <div className={`${classes.outlined_button_container} ${buttonMainContainerStyle}`}>
@@ -69,6 +68,7 @@ export function OutlinedButton({
       >
         {label && (
           <Text
+            unwrap={unwrap}
             textStyle={buttonTextContainerStyle}
             label14={label}
             label14Style={[classes.button_text, buttonTextStyle].join(' ')}

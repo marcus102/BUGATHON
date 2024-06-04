@@ -72,15 +72,6 @@
   border-radius: 100%;
 }
 
-/* .option_content_body_container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    min-width: 100%;
-    border: 1px solid #fff;
-  } */
-
 .option_content_body_text_container {
   display: flex;
   gap: 5px;

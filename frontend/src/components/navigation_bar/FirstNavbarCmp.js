@@ -22,9 +22,7 @@ function FirstNavBar() {
         <Navbar.Brand className={classes.brand_style} as={NavLink} to="/">
           BUGATHON
         </Navbar.Brand>
-        <Navbar.Collapse
-          className={[classes.navbar_collapse_container].join(' ')}
-        >
+        <Navbar.Collapse className={[classes.navbar_collapse_container].join(' ')}>
           <Nav
             className={classes.nav_link_container}
             activeKey={activeKey}
@@ -83,8 +81,9 @@ function FirstNavBar() {
           </Nav>
           <Nav className={classes.buttons_container}>
             <SolidButton
+              unwrap={true}
               buttonMainContainerStyle={classes.auth_button_main_container}
-              buttonContainerStyle={classes.auth_button_container}
+              buttonStyle={classes.auth_button_container}
               label="Sign Up"
               onClick={() => {
                 overlayHandler('auth', 'overlay');
@@ -92,8 +91,9 @@ function FirstNavBar() {
               }}
             />
             <OutlinedButton
+              unwrap={true}
               buttonMainContainerStyle={classes.auth_button_main_container}
-              buttonContainerStyle={classes.auth_button_container}
+              buttonStyle={classes.auth_button_container}
               label="Sign In"
               onClick={() => {
                 overlayHandler('auth', 'overlay');

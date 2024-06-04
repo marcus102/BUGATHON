@@ -361,6 +361,7 @@ function ExpandedCard() {
   const [isInsight, setIsInsight] = useState('');
 
   const relatedResultsRef = useRef(null);
+  const commentSectionsRef = useRef(null);
 
   return (
     <div className={classes.expanded_container}>
@@ -374,11 +375,17 @@ function ExpandedCard() {
                 children={<IconButton icon={faArrowLeft} />}
                 tooltipMessage={'Go Back Home'}
               />
-              <SolidButton buttonStyle={classes.options_button_container} label={'Solve Bug'} />
-              <HeaderOptions headerOptionMainContainer={'d-none d-md-block'} />
+              <SolidButton
+                unwrap={true}
+                buttonStyle={classes.options_button_container}
+                label={'Solve Bug'}
+              />
+              <UserProfileHeader />
             </div>
             <div className={classes.header_options_container}>
-              <UserProfileHeader />
+              <div className={`d-none d-md-block`}>
+                <HeaderOptions headerOptionMainContainer={'d-none d-xl-block'} />
+              </div>
               <DropdownMenu buttonIcon={faEllipsisVertical} menuItems={CARD_VIEW_OPTION} />
               <ToolTip
                 children={
@@ -429,6 +436,7 @@ function ExpandedCard() {
                   icon={faComment}
                   inconTextButtonStyle={classes.list_comment_icon_text_container}
                   label={'Comment'}
+                  onClick={() => commentSectionsRef.current.scrollIntoView({ behavior: 'smooth' })}
                 />
               </div>
             </div>
@@ -508,14 +516,69 @@ function ExpandedCard() {
               />
               <Icon icon={faAnglesRight} />
             </div>
+            {/* ANALYTICS (WHEN SIDEBAR IS COLLAPSED) */}
+
+            {!isExpanded && (
+              <div className={classes.body_analytics_container}>
+                <div className={`d-none d-xl-flex ${classes.analytics_analytic_container_2}`}>
+                  <Text textStyle={classes.analytic_container} h6={'Analytics'} />
+                  <hr className={classes.body_horizontal_line_container} />
+                  <div className={classes.analytic_content_container}>
+                    <div className={classes.analytic_summaries_container_2}>
+                      {ANALYTICS_DUMMY_DATA.map((data) => (
+                        <div key={data.id} className={classes.summary_container_2}>
+                          <div className={classes.summary_header_container}>
+                            <Text label14={data.title} />
+                            <Icon icon={data.header_icon} color={data.header_icon_coler} />
+                          </div>
+                          <Text textStyle={classes.total_text_container} label14={data.tottal} />
+                          <div className={classes.summary_counter_container}>
+                            <Icon icon={data.footer_icon} />
+                            <Text label12={data.pourcentage} />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <ActivityChart />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div className={classes.body_analytics_container}>
+              <div className={`d-flex d-xl-none ${classes.analytics_analytic_container_2}`}>
+                <Text textStyle={classes.analytic_container} h6={'Analytics'} />
+                <hr className={classes.body_horizontal_line_container} />
+                <div className={classes.analytic_content_container}>
+                  <div className={classes.analytic_summaries_container_2}>
+                    {ANALYTICS_DUMMY_DATA.map((data) => (
+                      <div key={data.id} className={classes.summary_container_2}>
+                        <div className={classes.summary_header_container}>
+                          <Text label14={data.title} />
+                          <Icon icon={data.header_icon} color={data.header_icon_coler} />
+                        </div>
+                        <Text textStyle={classes.total_text_container} label14={data.tottal} />
+                        <div className={classes.summary_counter_container}>
+                          <Icon icon={data.footer_icon} />
+                          <Text label12={data.pourcentage} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <ActivityChart />
+                </div>
+              </div>
+            </div>
+
             {/* COMMENTS */}
 
-            <div className={classes.body_comment_container}>
+            <div ref={commentSectionsRef} className={classes.body_comment_container}>
               <Text textStyle={classes.comment_title_container} h6={'Comments'} />
               <CommentSection />
             </div>
           </div>
         </div>
+
         {isExpanded && (
           <div
             className={`col-5 d-none d-xl-block ${classes.expanded_card_analytics_main_container}`}
@@ -569,45 +632,6 @@ function ExpandedCard() {
                 />
               </div>
             </div>
-          </div>
-        )}
-        {/* COLLAPSED SIDE BAR */}
-
-        <div className={`d-flex d-xl-none ${classes.collapsed_card_implentation_container}`}>
-          {INSIGHT_DATA.map((data) => (
-            <ToolTip
-              key={data.id}
-              children={
-                <IconButton
-                  icon={data.icon}
-                  onClick={() => {
-                    setIsInsight(data.id);
-                  }}
-                  colorOnMouseUp={isInsight === data.id ? data.color : undefined}
-                />
-              }
-              tooltipMessage={data.id}
-            />
-          ))}
-        </div>
-
-        {!isExpanded && (
-          <div className={`d-none d-xl-flex ${classes.collapsed_card_implentation_container}`}>
-            {INSIGHT_DATA.map((data) => (
-              <ToolTip
-                key={data.id}
-                children={
-                  <IconButton
-                    icon={data.icon}
-                    onClick={() => {
-                      setIsInsight(data.id);
-                    }}
-                    colorOnMouseUp={isInsight === data.id ? data.color : undefined}
-                  />
-                }
-                tooltipMessage={data.id}
-              />
-            ))}
           </div>
         )}
       </div>
