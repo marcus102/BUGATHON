@@ -153,7 +153,7 @@ function SecondNavbar() {
         {/* SEARCH */}
 
         <div className="col-md-8 col-lg-5 col-7  justify-content-center ">
-          <Search />
+          <DropdownMenu buttonChildren={<Search />} />
         </div>
         {/* DROP DOWN OPTIONS */}
 
