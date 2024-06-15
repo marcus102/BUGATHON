@@ -214,13 +214,13 @@ export function ImageTextButton({
 }
 
 export function DropdownMenu({
+  dropDownMainContainerStyle,
   dropDownMenuStyle,
   dropDownIconTextStyle,
   buttonLabel,
   buttonIcon,
   menuItems,
   children,
-  children_,
   buttonChildren,
   onClick,
 }) {
@@ -241,7 +241,10 @@ export function DropdownMenu({
   }, []);
 
   return (
-    <div className={classes.dropdown_menu_container} ref={dropdownRef}>
+    <div
+      className={`${classes.dropdown_menu_container} ${dropDownMainContainerStyle}`}
+      ref={dropdownRef}
+    >
       <IconTextButton
         inconTextButtonStyle={`${classes.dropdown_toggle} ${dropDownIconTextStyle}`}
         icon={buttonIcon}

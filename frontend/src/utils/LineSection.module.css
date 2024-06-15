@@ -3,7 +3,7 @@
   border: none;
   height: 2px;
   background-color: var(--gray_50505066);
-  width: 95%;
+  width: 100%;
 }
 
 .vertical_line {
@@ -11,5 +11,5 @@
   background-color: var(--gray_50505066);
   border: none;
   height: 2px;
-  width: 95%;
+  width: 100%;
 }

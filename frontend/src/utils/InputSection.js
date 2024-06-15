@@ -95,9 +95,9 @@ export function Input({
             />
           )}
         </div>
-        {instructionLabel ? (
+        {instructionLabel && (
           <Text unwrap={unwrap_} textStyle={classes.instructionLabel} label12={instructionLabel} />
-        ) : undefined}
+        )}
       </div>
     </div>
   );

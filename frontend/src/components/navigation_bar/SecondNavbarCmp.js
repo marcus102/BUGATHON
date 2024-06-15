@@ -33,7 +33,6 @@ import {
   faChevronDown,
   faHeart,
 } from '@fortawesome/free-solid-svg-icons';
-import Search from '../../utils/SearchSection';
 import {
   faEyeSlash,
   faMoon,
@@ -50,6 +49,7 @@ import AssignedBug from './second_navabar_options/AssignedBugCmp';
 import Notification from './second_navabar_options/NotificationCmp';
 import Adjust from './second_navabar_options/AdjustCmp';
 import Inbox from './second_navabar_options/InboxCmp';
+import Search from '../../utils/SearchSection';
 
 const MENU_OPTIONS = [
   { id: '1', icon: faBug, label: 'Assigned Bug', icon_2: null },
@@ -141,6 +141,7 @@ function SecondNavbar() {
     <div className={classes.nav_main_container}>
       <div className="row align-items-center ">
         {/* NEW */}
+        
         <div className="col-md-2 col-4 d-flex justify-content-start ">
           <DropdownMenu
             dropDownMenuStyle={classes.create_drop_down_menu}
@@ -153,7 +154,7 @@ function SecondNavbar() {
         {/* SEARCH */}
 
         <div className="col-md-8 col-lg-5 col-7  justify-content-center ">
-          <DropdownMenu buttonChildren={<Search />} />
+          <Search />
         </div>
         {/* DROP DOWN OPTIONS */}
 

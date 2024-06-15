@@ -47,7 +47,5 @@
 /* DROP-DOWN */
 .header_option_menu {
   width: 45rem;
-  height: 25rem;
   padding: 20px;
-  overflow-y: auto;
 }

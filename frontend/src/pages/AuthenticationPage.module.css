@@ -6,7 +6,7 @@
 }
 
 .outline_button_second_container {
-  min-width: 100%;
+  width: 100%;
 }
 
 .outline_button {
@@ -15,6 +15,7 @@
   border-radius: 10px;
   background-color: transparent;
   align-items: flex-start;
+  
 }
 
 .outline_button:hover {

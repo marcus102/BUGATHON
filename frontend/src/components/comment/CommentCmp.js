@@ -6,7 +6,6 @@ import {
   faChartSimple,
   faEllipsisVertical,
   faThumbTack,
-  faPaperPlane,
   faPen,
   faCaretRight,
   faEyeSlash,
@@ -16,12 +15,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Collapse } from 'react-bootstrap';
 import classes from './CommentCmp.module.css';
-import { IconTextButton, IconButton, DropdownMenu } from '../../utils/ButtonSection';
+import { IconTextButton, DropdownMenu } from '../../utils/ButtonSection';
 import { Input } from '../../utils/InputSection';
 import UserProfileHeader from '../userProfileHeaderCmp';
 import Text from '../../utils/TextSection';
-import { ButtonContainer } from '../../utils/ButtonSection';
+import { ButtonContainer, ImageButton } from '../../utils/ButtonSection';
 import ToolTip from '../../utils/toolTipSection';
+import SendIcon from '../../assets/icons/send.svg';
 
 const COMMENT_REACTIONS_DATA = [
   {
@@ -181,10 +181,10 @@ function Comment({ comment, isReply = false }) {
               }
             }}
           />
-
-          <IconButton
-            inconButtonStyle={classes.comment_send_button_container}
-            icon={faPaperPlane}
+          <ImageButton
+            imageButtonStyle={classes.comment_send_button_container}
+            src={SendIcon}
+            alt={'Send'}
             onClick={handleAddReply}
           />
         </div>

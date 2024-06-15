@@ -14,7 +14,7 @@ function Authentication() {
       {(currentAuthStatus === 'signUp' || currentAuthStatus === 'signIn') && (
         <div className={classes.outline_button_container}>
           <OutlinedButton
-            buttonContainerStyle={classes.outline_button_second_container}
+            buttonMainContainerStyle={classes.outline_button_second_container}
             buttonStyle={[
               classes.outline_button,
               currentAuthStatus === 'signIn' ? classes.active_outline_button : undefined,
@@ -23,7 +23,7 @@ function Authentication() {
             onClick={() => currentAuthStatusHandler('signIn')}
           />
           <OutlinedButton
-            buttonContainerStyle={classes.outline_button_second_container}
+            buttonMainContainerStyle={classes.outline_button_second_container}
             buttonStyle={[
               classes.outline_button,
               currentAuthStatus === 'signUp' ? classes.active_outline_button : undefined,

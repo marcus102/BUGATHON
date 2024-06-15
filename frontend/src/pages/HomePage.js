@@ -18,8 +18,8 @@ function Home() {
       />
       <Authentication />
       {/* <HomeWindow /> */}
-      {/* <ProfilePage /> */}
-      <ExpandedCard />
+      <ProfilePage />
+      {/* <ExpandedCard /> */}
       {/* <CommentSection /> */}
       <ScrollToTop />
     </div>

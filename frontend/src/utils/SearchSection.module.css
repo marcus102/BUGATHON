@@ -1,15 +1,49 @@
 /* MAIN CONTAINER */
 
+.drop_down_main_container {
+  width: 100%;
+}
+
 .search_main_container {
   display: flex;
+  justify-content: flex-start;
   width: 100%;
   height: fit-content;
-  padding: 0 5px;
+  gap: 5px;
+  padding: 4px;
   border-radius: 10px;
-  background: var(--black_ffffff0d);
+  /* background: var(--black_ffffff0d); */
   border: 0.5px solid var(--gray_50505066);
   align-items: center;
-  justify-content: center;
+}
+
+.drop_down_menu_main_container {
+  width: 100%;
+}
+
+.drop_down_menu_main_container_2 {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  height: 15rem;
+  overflow-y: auto;
+  gap: 20px;
+}
+
+.drop_down_menu_icon_text_container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-right: 2px solid var(--gray_50505066);
+  padding: 0 10px;
+  /* border: 1px solid #fff; */
+}
+
+.icon_text_container {
+  max-width: fit-content;
+  flex-direction: row;
+  margin-bottom: 10px;
+  /* border: 1px solid #fff; */
 }
 
 /* SEARCH INPUT */

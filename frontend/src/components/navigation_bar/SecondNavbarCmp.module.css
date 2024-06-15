@@ -1,4 +1,6 @@
 .nav_main_container {
+  /* display: flex; */
+  /* height: 60px; */
   border-radius: 10px;
   background-color: var(--black_ffffff0d);
   margin: 70px 10px 10px 10px;
@@ -57,9 +59,7 @@
 
 .header_option_menu {
   width: 45rem;
-  height: 25rem;
   padding: 20px;
-  overflow-y: auto;
 }
 
 /* NEW */
