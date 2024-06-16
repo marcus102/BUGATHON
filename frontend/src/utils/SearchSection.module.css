@@ -10,9 +10,7 @@
   width: 100%;
   height: fit-content;
   gap: 5px;
-  padding: 4px;
   border-radius: 10px;
-  /* background: var(--black_ffffff0d); */
   border: 0.5px solid var(--gray_50505066);
   align-items: center;
 }

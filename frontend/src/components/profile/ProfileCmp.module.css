@@ -6,7 +6,14 @@
 
 /* PROFILE */
 
+.profile_page_second_container {
+  width: 100%;
+  /* border: 1px solid #fff; */
+}
+
 .profile_contents_main_container {
   overflow-y: auto;
   height: 100vh;
+  width: 100%;
+  /* border: 1px solid #fff; */
 }

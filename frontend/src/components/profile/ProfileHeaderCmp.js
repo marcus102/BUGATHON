@@ -7,6 +7,8 @@ import images from '../../assets/images/people.jpg';
 import Text from '../../utils/TextSection';
 import { IconTextButton, ButtonContainer } from '../../utils/ButtonSection';
 import Icon from '../../utils/IconSection';
+import BronzeBadge from '../../assets/icons/bronze_badge.svg';
+import VerifiedBadge from '../../assets/icons/verified_badge.svg';
 
 const USER_TOTAL = [
   { id: 'Followers', total: '100K', icon: null },
@@ -15,11 +17,11 @@ const USER_TOTAL = [
 ];
 
 const USER_BADGES = [
-  { id: '@marcus', icon: null },
-  { id: 'Computer Scientist', icon: null },
-  { id: 'Admin', icon: null },
-  { id: 'Novice', icon: null },
-  { id: 'Bronze', icon: faMedal },
+  { id: '@marcus', image: null },
+  { id: 'Computer Scientist', image: null },
+  { id: 'Admin', image: null },
+  { id: 'Novice', image: null },
+  { id: 'Bronze', image: BronzeBadge },
 ];
 
 function ProfileHeader() {
@@ -44,18 +46,12 @@ function ProfileHeader() {
         <div className={classes.user_info_full_name_overview_main_container}>
           <div className={classes.full_name_overview_container}>
             <Text h4={'SAWADOGO WENDPANGA MARCUS'} />
-            <Icon icon={faCircleCheck} />
+            <Image src={VerifiedBadge} alt={'Verification Badge'} />
           </div>
           <div className={classes.full_name_overview_icon_text_button_container}>
             {USER_BADGES.map((data) => (
               <IconTextButton
                 key={data.id}
-                children={
-                  <>
-                    {data.icon && <Icon icon={data.icon} />}
-                    <Text label12Style={classes.button_text} label12={data.id} />
-                  </>
-                }
                 inconTextButtonStyle={`${classes.full_name_icon_text_button_overview} ${
                   data.id === 'Admin' && classes.admin_bg
                 } ${data.id === 'User' && classes.user_bg} ${
@@ -67,12 +63,18 @@ function ProfileHeader() {
                 } ${data.id === 'Intermediate' && classes.intermediate_bg} ${
                   data.id === 'Expert' && classes.expert_bg
                 }`}
+                children={
+                  <>
+                    {data.image && <Image src={data.image} alt={'Badge'} />}
+                    <Text label12Style={classes.button_text} label12={data.id} />
+                  </>
+                }
               />
             ))}
           </div>
         </div>
       </div>
-    
+
       <div className={classes.full_info_popularity_overview_main_container}>
         {USER_TOTAL.map((data) => (
           <div key={data.id} className={classes.popularity_overview_container}>
@@ -88,7 +90,6 @@ function ProfileHeader() {
                 </>
               }
             />
-            {/* <div className={classes.user_info_followers_overview_main_container}></div> */}
           </div>
         ))}
       </div>

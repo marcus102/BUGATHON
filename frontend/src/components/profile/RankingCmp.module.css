@@ -1,0 +1,134 @@
+/* MAIN (RANKING - BADGE) */
+
+.ranking_root_container {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+  background-color: var(--black_9696960d);
+  border-radius: 10px;
+  padding: 15px;
+}
+
+/* RANKING */
+
+.ranking_level_main_container {
+  display: flex;
+  flex-direction: column;
+  border-right: 2px solid var(--white_616161f4);
+  padding-right: 10px;
+  gap: 15px;
+  width: 100%;
+}
+
+.level_main_container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.level_main_container:hover {
+  background-color: var(--black_333333f1);
+}
+
+.blue_color {
+  background-color: var(--blue_0077ff5a);
+}
+
+.yellow_color {
+  background-color: var(--yellow_ffd90053);
+}
+
+.red_color {
+  background-color: var(--red_ff2b2b57);
+}
+
+.level_header_container {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.level_header_tag_text {
+  color: var(--white_ffffff);
+  font-weight: bold;
+}
+
+.level_header_tag_container {
+  padding: 2px 5px;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.blue_color_ {
+  background-color: var(--blue_0075FF);
+}
+
+.yellow_color_ {
+  background-color: var(--yellow_);
+}
+
+.red_color_ {
+  background-color: var(--red_FF2B2B);
+}
+
+/* BADGE */
+
+.ranking_badges_main_container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.badges_main_container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.badges_main_container:hover {
+  background-color: var(--black_333333f1);
+}
+
+.bronze_color {
+  background-color: var(--orange_d3966e52);
+}
+
+.silver_color {
+  background-color: var(--silver_b2c1c063);
+}
+
+.gold_color {
+  background-color: var(--yellow_ffcf3155);
+}
+
+.badges_header_container {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.badges_header_tag_text {
+  color: var(--white_ffffff);
+  font-weight: bold;
+}
+
+.badges_header_tag_container {
+  padding: 2px 5px;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.bronze_color_ {
+  background-color: var(--orange_d3976e);
+}
+
+.silver_color_ {
+  background-color: var(--silver_b2c1c0);
+}
+
+.gold_color_ {
+  background-color: var(--yellow_ffce31);
+}
+
+/* OVERLAY */

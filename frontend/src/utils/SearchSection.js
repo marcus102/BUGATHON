@@ -33,7 +33,7 @@ const SEARCH_DROP_DOWN = [
     children: [
       { id: '1', title: 'Light Mode', icon: faSun },
       { id: '2', title: 'Dark Mode', icon: faMoon },
-      { id: '3', title: 'System Mode', icon: faDesktop }
+      { id: '3', title: 'System Mode', icon: faDesktop },
     ],
   },
   {
@@ -83,7 +83,6 @@ function Search({ icon, onClick }) {
           dropDownMenuStyle={classes.drop_down_menu_main_container}
           buttonChildren={
             <div className={classes.search_main_container}>
-              <Icon icon={faSearch} />
               <Input placeholder={'Search'} />
             </div>
           }
