@@ -13,6 +13,7 @@ import { Overlay } from '../../utils/OverlaySection';
 import Image from '../../utils/ImageSection';
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import ProgressBar from '../activity_chart/ProgressBarCmp';
 
 const RANKING_DATA = [
   {
@@ -98,10 +99,10 @@ const BADGES_DETAILS_DATA = [
           'Users who are new to the website or community, with limited activity, experience, or problem-solving contributions.',
         badge: BronzeBadge,
         criteria: [
-          { id: '1', title: 'Total Bug Reports', result: '1K' },
-          { id: '2', title: 'Total Bug Fixes', result: '500' },
-          { id: '3', title: 'Total Reusable Code', result: '300' },
-          { id: '4', title: 'Total Blog Posts', result: '4K' },
+          { id: '1', title: 'Total Bug Reports', result: '1K', progress: 20 },
+          { id: '2', title: 'Total Bug Fixes', result: '500', progress: 90 },
+          { id: '3', title: 'Total Reusable Code', result: '300', progress: 30 },
+          { id: '4', title: 'Total Blog Posts', result: '4K', progress: 50 },
         ],
         status: 'Earned',
       },
@@ -112,10 +113,10 @@ const BADGES_DETAILS_DATA = [
           'Users who are new to the website or community, with limited activity, experience, or problem-solving contributions.',
         badge: SilverBadge,
         criteria: [
-          { id: '1', title: 'Total Bug Reports', result: '3K' },
-          { id: '2', title: 'Total Bug Fixes', result: '500' },
-          { id: '3', title: 'Total Reusable Code', result: '300' },
-          { id: '4', title: 'Total Blog Posts', result: '4K' },
+          { id: '1', title: 'Total Bug Reports', result: '3K', progress: 20 },
+          { id: '2', title: 'Total Bug Fixes', result: '500', progress: 40 },
+          { id: '3', title: 'Total Reusable Code', result: '300', progress: 10 },
+          { id: '4', title: 'Total Blog Posts', result: '4K', progress: 30 },
         ],
         status: 'Pending',
       },
@@ -125,10 +126,10 @@ const BADGES_DETAILS_DATA = [
         description:
           'Users who are new to the website or community, with limited activity, experience, or problem-solving contributions.',
         criteria: [
-          { id: '1', title: 'Total Bug Reports', result: '1K' },
-          { id: '2', title: 'Total Bug Fixes', result: '500' },
-          { id: '3', title: 'Total Reusable Code', result: '300' },
-          { id: '4', title: 'Total Blog Posts', result: '10K' },
+          { id: '1', title: 'Total Bug Reports', result: '1K', progress: 15 },
+          { id: '2', title: 'Total Bug Fixes', result: '500', progress: 80 },
+          { id: '3', title: 'Total Reusable Code', result: '300', progress: 30 },
+          { id: '4', title: 'Total Blog Posts', result: '10K', progress: 50 },
         ],
         badge: GoldBadge,
         status: 'Not Active',
@@ -218,11 +219,15 @@ function Ranking() {
 
       {/* OVERLAY */}
       <Overlay keyId={'rank_info'}>
-        <Image
-          imgContainerStyle={`${classes.ranking_image_container}`}
-          src={RankingImage}
-          alt={'Ranking Details Image'}
-        />
+        <div className={`${classes.ranking_image_main_container}`}>
+          <Image
+            imgContainerStyle={`${classes.ranking_image_container}`}
+            imgStyle={`${classes.ranking_image}`}
+            src={RankingImage}
+            alt={'Ranking Details Image'}
+          />
+        </div>
+
         {BADGES_DETAILS_DATA.map((data) => (
           <div key={data.id} className={`${classes.rank_root_container}`}>
             <div className={`${classes.rank_overlay_header_container}`}>
@@ -236,11 +241,16 @@ function Ranking() {
                     alt={'Badges'}
                   />
                 ))}
-                <Text textStyle={`${classes.header_tag_container}`} label12={data.status} />
+                <Text
+                  textStyle={`${classes.header_tag_container} ${classes.blue_color_}`}
+                  label10Style={`${classes.header_tag_text}`}
+                  label10={data.status}
+                />
               </div>
               <div className={`${classes.header_profile_container}`}>
                 <Image
                   imgContainerStyle={`${classes.header_profile_image_container}`}
+                  imgStyle={`${classes.header_profile_image}`}
                   src={data.profile}
                   alt={'User Profile'}
                 />
@@ -250,7 +260,7 @@ function Ranking() {
             <Text label14={data.description} />
             <Text h6={`Completed Challenges: ${data.completed_challenges}`} />
             {data.children.map((sub_data) => (
-              <div key={sub_data.id}>
+              <div key={sub_data.id} className={`${classes.body_badge_main_container}`}>
                 <div className={`${classes.body_badge_container}`}>
                   <Text h5={sub_data.title} />
                   <Image
@@ -258,14 +268,24 @@ function Ranking() {
                     src={sub_data.badge}
                     alt={'Badges'}
                   />
-                  <Text textStyle={`${classes.body_tag_container}`} label10={sub_data.status} />
+                  <Text
+                    textStyle={`${classes.body_tag_container} ${
+                      sub_data.title === 'Bronze' && classes.bronze_color_
+                    } ${sub_data.title === 'Silver' && classes.silver_color_} ${
+                      sub_data.title === 'Gold' && classes.gold_color_
+                    }`}
+                    label10Style={`${classes.body_tag_text}`}
+                    label10={sub_data.status}
+                  />
                   <IconButton icon={faChevronDown} />
                 </div>
                 <Text label14={sub_data.description} />
                 <Text h6={'Criteria'} />
+
                 {sub_data.criteria.map((criteria) => (
-                  <div key={criteria.id}>
-                    <Text p16={`${criteria.title}: ${criteria.result}`} />
+                  <div key={criteria.id} className={`${classes.criteria_list_container}`}>
+                    <Text unwrap={true} p16={`${criteria.title}: ${criteria.result}`} />
+                    <ProgressBar percent={criteria.progress} />
                   </div>
                 ))}
               </div>

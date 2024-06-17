@@ -1,0 +1,10 @@
+.progress_bar_main_container {
+    display: flex;
+    width: 30%;
+}
+
+.progress_text {
+    padding: 0 5px;
+    color: var(--gray_777777);
+    font-weight: bold;
+}
