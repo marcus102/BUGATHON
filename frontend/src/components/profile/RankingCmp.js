@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
 import Colors from '../../constants/colors';
 import classes from './RankingCmp.module.css';
 import Text from '../../utils/TextSection';
@@ -6,9 +7,12 @@ import BronzeBadge from '../../assets/icons/bronze_badge.svg';
 import SilverBadge from '../../assets/icons/silver_badge.svg';
 import GoldBadge from '../../assets/icons/gold_badge.svg';
 import Profile from '../../assets/images/quote.jpg';
-import { ButtonContainer, IconButton } from '../../utils/ButtonSection';
+import RankingImage from '../../assets/images/study.jpg';
+import { ButtonContainer, IconButton, SolidButton } from '../../utils/ButtonSection';
 import { Overlay } from '../../utils/OverlaySection';
 import Image from '../../utils/ImageSection';
+import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 const RANKING_DATA = [
   {
@@ -74,59 +78,76 @@ const BADGES_DATA = [
 
 const BADGES_DETAILS_DATA = [
   {
-    id: 'bronze',
+    id: 'novice',
+    rank: 'Novice',
     user: '@marcus',
     profile: Profile,
-    title: 'Bronze',
     description:
       'Users who are new to the website or community, with limited activity, experience, or problem-solving contributions.',
-    badge: BronzeBadge,
-    criteria: [
-      { id: '1', title: 'Total Bug Reports', result: '1K' },
-      { id: '2', title: 'Total Bug Fixes', result: '500' },
-      { id: '3', title: 'Total Reusable Code', result: '300' },
-      { id: '4', title: 'Total Blog Posts', result: '4K' },
+    completed_challenges: '2',
+    badges: [
+      { id: '1', badge: BronzeBadge },
+      { id: '2', badge: SilverBadge },
     ],
     status: 'Earned',
-  },
-  {
-    id: 'silver',
-    user: '@marcus',
-    profile: Profile,
-    title: 'Silver',
-    description:
-      'Users who are new to the website or community, with limited activity, experience, or problem-solving contributions.',
-    badge: SilverBadge,
-    criteria: [
-      { id: '1', title: 'Total Bug Reports', result: '3K' },
-      { id: '2', title: 'Total Bug Fixes', result: '500' },
-      { id: '3', title: 'Total Reusable Code', result: '300' },
-      { id: '4', title: 'Total Blog Posts', result: '4K' },
+    children: [
+      {
+        id: 'bronze',
+        title: 'Bronze',
+        description:
+          'Users who are new to the website or community, with limited activity, experience, or problem-solving contributions.',
+        badge: BronzeBadge,
+        criteria: [
+          { id: '1', title: 'Total Bug Reports', result: '1K' },
+          { id: '2', title: 'Total Bug Fixes', result: '500' },
+          { id: '3', title: 'Total Reusable Code', result: '300' },
+          { id: '4', title: 'Total Blog Posts', result: '4K' },
+        ],
+        status: 'Earned',
+      },
+      {
+        id: 'silver',
+        title: 'Silver',
+        description:
+          'Users who are new to the website or community, with limited activity, experience, or problem-solving contributions.',
+        badge: SilverBadge,
+        criteria: [
+          { id: '1', title: 'Total Bug Reports', result: '3K' },
+          { id: '2', title: 'Total Bug Fixes', result: '500' },
+          { id: '3', title: 'Total Reusable Code', result: '300' },
+          { id: '4', title: 'Total Blog Posts', result: '4K' },
+        ],
+        status: 'Pending',
+      },
+      {
+        id: 'gold',
+        title: 'Gold',
+        description:
+          'Users who are new to the website or community, with limited activity, experience, or problem-solving contributions.',
+        criteria: [
+          { id: '1', title: 'Total Bug Reports', result: '1K' },
+          { id: '2', title: 'Total Bug Fixes', result: '500' },
+          { id: '3', title: 'Total Reusable Code', result: '300' },
+          { id: '4', title: 'Total Blog Posts', result: '10K' },
+        ],
+        badge: GoldBadge,
+        status: 'Not Active',
+      },
     ],
-    status: 'Pending',
-  },
-  {
-    id: 'gold',
-    user: '@marcus',
-    profile: Profile,
-    title: 'Gold',
-    description:
-      'Users who are new to the website or community, with limited activity, experience, or problem-solving contributions.',
-    criteria: [
-      { id: '1', title: 'Total Bug Reports', result: '1K' },
-      { id: '2', title: 'Total Bug Fixes', result: '500' },
-      { id: '3', title: 'Total Reusable Code', result: '300' },
-      { id: '4', title: 'Total Blog Posts', result: '4K' },
-    ],
-    badge: GoldBadge,
-    status: 'Not Active',
   },
 ];
 
 function Ranking() {
+  const { overlayHandler } = useContext(ManagmentSystem);
   return (
-    <>
-      <div className={`${classes.ranking_root_container}`}>
+    <div className={`${classes.ranking_root_container}`}>
+      <IconButton
+        icon={faQuestionCircle}
+        onClick={() => {
+          overlayHandler('rank_info', 'overlay');
+        }}
+      />
+      <div className={`${classes.ranking_container}`}>
         {/* RANKING */}
         <div className={`${classes.ranking_level_main_container}`}>
           <Text h5={'Ranking'} />
@@ -152,8 +173,8 @@ function Ranking() {
                       label10={rank_data.status}
                     />
                   </div>
-                  <Text label12={rank_data.description} />
-                  <Text label12={'Click for more...'} />
+                  <Text label12Style={`${classes.body_style}`} label12={rank_data.description} />
+                  <Text label12Style={`${classes.body_style}`} label12={'Click for more...'} />
                 </>
               }
             />
@@ -186,44 +207,74 @@ function Ranking() {
                       label10={badge_data.status}
                     />
                   </div>
-                  <Text label12={badge_data.description} />
-                  <Text label12={'Click for more...'} />
+                  <Text label12Style={`${classes.body_style}`} label12={badge_data.description} />
+                  <Text label12Style={`${classes.body_style}`} label12={'Click for more...'} />
                 </>
               }
             />
           ))}
         </div>
       </div>
+
       {/* OVERLAY */}
-      <Overlay
-        children={
-          <>
-            <div>
-              <div>
-                <Text h5={''} />
-                <Image src={''} alt={''} />
-                <Text textStyle={`${classes.badges_header_tag_container}`} label10={''} />
+      <Overlay keyId={'rank_info'}>
+        <Image
+          imgContainerStyle={`${classes.ranking_image_container}`}
+          src={RankingImage}
+          alt={'Ranking Details Image'}
+        />
+        {BADGES_DETAILS_DATA.map((data) => (
+          <div key={data.id} className={`${classes.rank_root_container}`}>
+            <div className={`${classes.rank_overlay_header_container}`}>
+              <div className={`${classes.header_badge_container}`}>
+                <Text h5={data.rank} />
+                {data.badges.map((badge) => (
+                  <Image
+                    key={badge.id}
+                    imgContainerStyle={`${classes.header_badge_image_container}`}
+                    src={badge.badge}
+                    alt={'Badges'}
+                  />
+                ))}
+                <Text textStyle={`${classes.header_tag_container}`} label12={data.status} />
               </div>
-              <div>
-                <Image src={''} alt={''} />
-                <Text label14={''} />
+              <div className={`${classes.header_profile_container}`}>
+                <Image
+                  imgContainerStyle={`${classes.header_profile_image_container}`}
+                  src={data.profile}
+                  alt={'User Profile'}
+                />
+                <Text label14={data.user} />
               </div>
             </div>
-            <Text label14={''} />
-            <Text h6={``} />
-            <div>
-              <Text h5={''} />
-              <Image src={''} alt={''} />
-              <Text textStyle={`${classes.badges_header_tag_container}`} label10={''} />
-              <IconButton />
-            </div>
-            <Text label14={''} />
-            <Text h6={''} />
-            <Text label14={''} />
-          </>
-        }
-      />
-    </>
+            <Text label14={data.description} />
+            <Text h6={`Completed Challenges: ${data.completed_challenges}`} />
+            {data.children.map((sub_data) => (
+              <div key={sub_data.id}>
+                <div className={`${classes.body_badge_container}`}>
+                  <Text h5={sub_data.title} />
+                  <Image
+                    imgContainerStyle={`${classes.body_badge_image_container}`}
+                    src={sub_data.badge}
+                    alt={'Badges'}
+                  />
+                  <Text textStyle={`${classes.body_tag_container}`} label10={sub_data.status} />
+                  <IconButton icon={faChevronDown} />
+                </div>
+                <Text label14={sub_data.description} />
+                <Text h6={'Criteria'} />
+                {sub_data.criteria.map((criteria) => (
+                  <div key={criteria.id}>
+                    <Text p16={`${criteria.title}: ${criteria.result}`} />
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        ))}
+        <SolidButton label={'OK'} />
+      </Overlay>
+    </div>
   );
 }
 
