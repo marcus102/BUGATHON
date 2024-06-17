@@ -4,6 +4,11 @@ import GeneralUserInfo from './GeneralUserInfoCmp';
 import Ranking from './RankingCmp';
 import { ProfileSideBar, ProfileSideBar2 } from './ProfileSideBarCmp';
 import ProfileHeader from './ProfileHeaderCmp';
+import UserBugFix from './UserBugFixCmp';
+import UserBugReport from './UserBugReportCmp';
+import UserReusableCode from './UserReusableCodeCmp';
+import Analytics from './AnalyticsCmp';
+import UserBlogPost from './UserBlogPostCmp';
 
 function ProfilePage() {
   return (
@@ -13,8 +18,13 @@ function ProfilePage() {
         <ProfileSideBar2 />
         <div className={classes.profile_contents_main_container}>
           <ProfileHeader />
+          {/* <Analytics /> */}
+          {/* <UserBlogPost /> */}
           {/* <GeneralUserInfo /> */}
-          <Ranking />
+          {/* <Ranking /> */}
+          {/* <UserBugFix /> */}
+          {/* <UserBugReport /> */}
+          <UserReusableCode />
         </div>
       </div>
     </div>
