@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
 import classes from './ProfileSideBarCmp.module.css';
 import Image from '../../utils/ImageSection';
 import images from '../../assets/images/people.jpg';
@@ -25,6 +26,7 @@ const SIDE_BAR_DATA = [
 ];
 
 export function ProfileSideBar() {
+  const { profileSideBarButtonHandler, profileSideBarButton } = useContext(ManagmentSystem);
   return (
     <div className={`d-none d-xl-flex ${classes.profile_page_side_bar_main_container}`}>
       <div className={classes.side_bar_options_list_main_container}>
@@ -45,7 +47,8 @@ export function ProfileSideBar() {
             inconTextButtonStyle={classes.side_bar_icon_text_button_container}
             label={data.id}
             icon={data.icon}
-            icon_={data.icon_}
+            icon_={profileSideBarButton === data.id ? data.icon_ : undefined}
+            onClick={() => profileSideBarButtonHandler(data.id)}
           />
         ))}
       </div>
@@ -54,6 +57,7 @@ export function ProfileSideBar() {
 }
 
 export function ProfileSideBar2() {
+  const { profileSideBarButtonHandler } = useContext(ManagmentSystem);
   return (
     <div className={`d-flex d-xl-none ${classes.profile_page_side_bar_main_container_2}`}>
       {SIDE_BAR_DATA.map((data) => (
@@ -62,6 +66,7 @@ export function ProfileSideBar2() {
           inconTextButtonStyle={classes.side_bar_icon_text_button_container_2}
           label={data.id}
           icon={data.icon}
+          onClick={() => profileSideBarButtonHandler(data.id)}
         />
       ))}
     </div>

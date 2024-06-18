@@ -11,6 +11,8 @@ export const ManagmentSystem = createContext({
   themeHandler: (parameters) => {},
   currentButtonPosition: { top: 0, left: 0 },
   handleCurrentButtonPosition: () => {},
+  profileSideBarButton: '',
+  profileSideBarButtonHandler: (parameters) => {},
 });
 
 export default function ManagmentSystemProvider({ children }) {
@@ -20,6 +22,7 @@ export default function ManagmentSystemProvider({ children }) {
     headerTab: 'all',
     theme: 'dark',
     currentButtonPosition: { top: 0, left: 0 },
+    profileSideBarButton: 'General',
   };
 
   function reducer(state, action) {
@@ -57,6 +60,11 @@ export default function ManagmentSystemProvider({ children }) {
             left: action.payload.left + window.scrollX,
           },
         };
+      case 'SET_PROFILE_SIDEBAR_BUTTON':
+        return {
+          ...state,
+          profileSideBarButton: action.payload,
+        };
       default:
         return state;
     }
@@ -84,6 +92,10 @@ export default function ManagmentSystemProvider({ children }) {
     dispatch({ type: 'SET_BUTTON_POSITION', payload: parameters });
   };
 
+  const profileSideBarButtonHandler = (parameters) => {
+    dispatch({ type: 'SET_PROFILE_SIDEBAR_BUTTON', payload: parameters });
+  };
+
   const value = {
     overlay: state.overlay,
     overlayHandler: overlayHandler,
@@ -95,92 +107,9 @@ export default function ManagmentSystemProvider({ children }) {
     themeHandler: themeHandler,
     currentButtonPosition: state.currentButtonPosition,
     handleCurrentButtonPosition: handleCurrentButtonPosition,
+    profileSideBarButton: state.profileSideBarButton,
+    profileSideBarButtonHandler: profileSideBarButtonHandler,
   };
 
   return <ManagmentSystem.Provider value={value}>{children}</ManagmentSystem.Provider>;
 }
-
-// import React, { createContext, useState, useReducer } from 'react';
-
-// export const ManagmentSystem = createContext({
-//   overlay: { open: false, keyId: '', layout: '' },
-//   overlayHandler: (key, layout) => {},
-//   currentAuthStatus: '',
-//   currentAuthStatusHandler: (parameters) => {},
-//   headerTab: '',
-//   headerTabHandler: (parameters) => {},
-//   theme: '',
-//   themeHandler: (parameters) => {},
-//   currentButtonPosition: { top: 0, left: 0 },
-//   handleCurrentButtonPosition: () => {},
-// });
-
-// // function RegistrationManagmentReducer(state, action) {}
-
-// // function SystemManagmentReducer(state, action) {}
-
-// export default function ManagmentSystemProvider({ children }) {
-//   // const [userRegistration, dispatch_auth] = useReducer(RegistrationManagmentReducer, []);
-//   // const [systemManagement, dispatch_system] = useReducer(SystemManagmentReducer, []);
-//   const [isOverlayOpen, setIsOverlayOpen] = useState({ open: false, overlay: '' });
-//   const [authSatus, setAuthStatus] = useState('signIn');
-//   const [currentHeaderTab, setCurrentHeaderTab] = useState('all');
-//   const [systemTheme, setSystemTheme] = useState('dark');
-//   const [buttonPosition, setButtonPosition] = useState({ top: 0, left: 0 });
-
-//   const handleCurrentButtonPosition = (parameters) => {
-//     setButtonPosition((prev) => ({
-//       ...prev,
-//       top: parameters.top + window.scrollY,
-//       left: parameters.left + window.scrollX,
-//     }));
-//   };
-
-//   const themeHandler = (parameters) => {
-//     setSystemTheme(parameters);
-//   };
-
-//   const headerTabHandler = (parameters) => {
-//     setCurrentHeaderTab(parameters);
-//   };
-
-//   // function userSignUp(key, value) {
-//   //   try {
-//   //     AsyncStorage.setItem(key.toString(), value.toString());
-//   //     dispatch({
-//   //       type: 'USER_SIGNUP',
-//   //       payload: { [key]: value },
-//   //     });
-//   //   } catch (error) {
-//   //     throw error.message;
-//   //   }
-//   // }
-
-//   const currentAuthStatusHandler = (parameters) => {
-//     setAuthStatus(parameters);
-//   };
-
-//   const overlayHandler = (keyId, layout) => {
-//     setIsOverlayOpen((prev) => ({
-//       ...prev,
-//       open: !prev.open,
-//       keyId,
-//       layout,
-//     }));
-//   };
-
-//   const value = {
-//     overlay: isOverlayOpen,
-//     overlayHandler: overlayHandler,
-//     currentAuthStatus: authSatus,
-//     currentAuthStatusHandler: currentAuthStatusHandler,
-//     headerTab: currentHeaderTab,
-//     headerTabHandler: headerTabHandler,
-//     theme: systemTheme,
-//     themeHandler: themeHandler,
-//     currentButtonPosition: buttonPosition,
-//     handleCurrentButtonPosition: handleCurrentButtonPosition,
-//   };
-
-//   return <ManagmentSystem.Provider value={value}>{children}</ManagmentSystem.Provider>;
-// }
