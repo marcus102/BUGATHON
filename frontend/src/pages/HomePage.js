@@ -17,8 +17,8 @@ function Home() {
         }
       />
       <Authentication />
-      {/* <HomeWindow /> */}
-      <ProfilePage />
+      <HomeWindow />
+      {/* <ProfilePage /> */}
       {/* <ExpandedCard /> */}
       {/* <CommentSection /> */}
       <ScrollToTop />

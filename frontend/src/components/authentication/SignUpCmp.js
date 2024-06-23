@@ -73,10 +73,7 @@ function SignUp() {
 
       <div className={['d-flex justify-content-start gap-1', classes.checkbox_container].join(' ')}>
         <CheckBox label12={'By taking this action, you agree to our'} />
-        <Link children12={'terms'} />
-        <Text label12={'and'} />
-        <Link children12={'conditions'} />
-        <Text label12={'.'} />
+        <Link children12={'terms & conditions .'} />
       </div>
 
       <SolidButton
