@@ -1,11 +1,5 @@
 /* SIDE BAR (RELEASES - FILTERING - SETTINGS) */
 
-.home_window_collapsed_side_bar_main_container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
 .side_bar_tool_tip_container {
   transform: translateX(-30%);
 }

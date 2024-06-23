@@ -7,12 +7,8 @@ export const ManagmentSystem = createContext({
   currentAuthStatusHandler: (parameters) => {},
   headerTab: '',
   headerTabHandler: (parameters) => {},
-  theme: '',
-  themeHandler: (parameters) => {},
   sideBar: { theme: 'dark', isOpen: true },
   sideBarHandler: ({ theme, isOpen }) => {},
-  currentButtonPosition: { top: 0, left: 0 },
-  handleCurrentButtonPosition: () => {},
   profileSideBarButton: '',
   profileSideBarButtonHandler: (parameters) => {},
 });
@@ -22,9 +18,7 @@ export default function ManagmentSystemProvider({ children }) {
     overlay: { open: false, keyId: '', layout: '' },
     currentAuthStatus: 'signIn',
     headerTab: 'all',
-    theme: 'dark',
     sideBar: { theme: 'dark', isOpen: true },
-    currentButtonPosition: { top: 0, left: 0 },
     profileSideBarButton: 'General',
   };
 
@@ -50,26 +44,12 @@ export default function ManagmentSystemProvider({ children }) {
           ...state,
           headerTab: action.payload,
         };
-      case 'SET_THEME':
-        return {
-          ...state,
-          theme: action.payload,
-        };
       case 'SET_SIDE_BAR':
         return {
           ...state,
           sideBar: {
             theme: action.payload.theme,
             isOpen: action.payload.isOpen,
-          },
-          /////////////
-        };
-      case 'SET_BUTTON_POSITION':
-        return {
-          ...state,
-          currentButtonPosition: {
-            top: action.payload.top + window.scrollY,
-            left: action.payload.left + window.scrollX,
           },
         };
       case 'SET_PROFILE_SIDEBAR_BUTTON':
@@ -96,16 +76,8 @@ export default function ManagmentSystemProvider({ children }) {
     dispatch({ type: 'SET_HEADER_TAB', payload: parameters });
   };
 
-  const themeHandler = (parameters) => {
-    dispatch({ type: 'SET_THEME', payload: parameters });
-  };
-
   const sideBarHandler = ({ theme, isOpen }) => {
     dispatch({ type: 'SET_SIDE_BAR', payload: { theme, isOpen } });
-  };
-
-  const handleCurrentButtonPosition = (parameters) => {
-    dispatch({ type: 'SET_BUTTON_POSITION', payload: parameters });
   };
 
   const profileSideBarButtonHandler = (parameters) => {
@@ -119,12 +91,8 @@ export default function ManagmentSystemProvider({ children }) {
     currentAuthStatusHandler: currentAuthStatusHandler,
     headerTab: state.headerTab,
     headerTabHandler: headerTabHandler,
-    theme: state.theme,
-    themeHandler: themeHandler,
     sideBar: state.sideBar,
     sideBarHandler: sideBarHandler,
-    currentButtonPosition: state.currentButtonPosition,
-    handleCurrentButtonPosition: handleCurrentButtonPosition,
     profileSideBarButton: state.profileSideBarButton,
     profileSideBarButtonHandler: profileSideBarButtonHandler,
   };

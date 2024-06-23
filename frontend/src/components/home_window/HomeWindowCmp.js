@@ -1,26 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
 import classes from './HomeWindowCmp.module.css';
-import Colors from '../../constants/colors';
-import {
-  IconButton,
-  SolidButton,
-  IconTextButton,
-  ButtonContainer,
-} from '../../utils/ButtonSection';
-import {
-  faChevronLeft,
-  faChevronRight,
-  faThumbTack,
-  faQuestion,
-  faFire,
-  faAngleRight,
-} from '@fortawesome/free-solid-svg-icons';
-import Text from '../../utils/TextSection';
 import HomeCard from '../card_view/HomeCardView';
-import ToolTip from '../../utils/toolTipSection';
 import { HomeCollapsedSideBar, HomeExpandedSideBar } from './home_window_options/SideBarCmp';
 import HomeHeader from './home_window_options/HeaderCmp';
+import Pagination from '../../utils/PaginationSection';
+import usePagination from '../../custom_hooks/usePaginationHook';
 
 const DUMMY_POST_DATA = [
   {
@@ -137,92 +122,14 @@ const DUMMY_POST_DATA = [
   },
 ];
 
-const HEADER_BUTTON = [
-  {
-    id: '1',
-    button: 'Pinned',
-    icon: faThumbTack,
-    color: Colors.orange_ff7811,
-    data: 'pinned',
-    style: 'd-none d-lg-block',
-  },
-  {
-    id: '2',
-    button: 'Trending',
-    icon: faFire,
-    color: Colors.orange_ff7811,
-    data: 'trending',
-    style: '',
-  },
-  {
-    id: '3',
-    button: 'All',
-    icon: null,
-    color: null,
-    data: 'all',
-    style: '',
-  },
-  {
-    id: '4',
-    button: 'Bug Reports',
-    icon: null,
-    color: null,
-    data: 'bug_report',
-    style: 'd-none d-lg-block',
-  },
-  {
-    id: '5',
-    button: 'Bug Fixes',
-    icon: null,
-    color: null,
-    data: 'bug_fixe',
-    style: 'd-none d-xl-block',
-  },
-  {
-    id: '6',
-    button: 'Reusable Code',
-    icon: null,
-    color: null,
-    data: 'reusable_code',
-    style: 'd-none d-xxl-block',
-  },
-  {
-    id: '7',
-    button: '',
-    icon: faAngleRight,
-    color: null,
-    data: '',
-    style: '',
-  },
-];
-
 function HomeWindow({ homeWindowMainContainerStyle }) {
-  const { headerTab, headerTabHandler } = useContext(ManagmentSystem);
-
-  const [isSideBarOpen, setIsSideBarOpen] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
+  const { sideBar } = useContext(ManagmentSystem);
 
   const ITEMS_PER_PAGE = 5;
-  const totalPages = Math.ceil(DUMMY_POST_DATA.length / ITEMS_PER_PAGE);
-
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const paginatedData = DUMMY_POST_DATA.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
+  const { currentPage, totalPages, paginatedData, handlePageChange } = usePagination(
+    DUMMY_POST_DATA,
+    ITEMS_PER_PAGE
+  );
 
   return (
     <div className={`${classes.home_window_main_container} ${homeWindowMainContainerStyle}`}>
@@ -232,7 +139,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
         <HomeCollapsedSideBar />
       </div>
 
-      {!isSideBarOpen && (
+      {!sideBar.isOpen && (
         <div
           className={` d-none d-xl-flex ${classes.home_window_collapsed_side_bar_main_container}`}
         >
@@ -240,7 +147,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
         </div>
       )}
 
-      {isSideBarOpen && (
+      {sideBar.isOpen && (
         <div className={`d-none d-xl-flex col-lg-2 ${classes.home_window_side_bar_main_container}`}>
           <HomeExpandedSideBar />
         </div>
@@ -251,7 +158,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
         <HomeHeader />
 
         {/* BODY */}
-        <div className={[classes.list_second_container].join(' ')}>
+        <div className={classes.list_second_container}>
           {paginatedData.map((data) => (
             <HomeCard
               cardButtonState={data.state}
@@ -263,38 +170,12 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
           ))}
         </div>
 
-        <div className={classes.list_pagination_container}>
-          <hr className={classes.horizontal_line} />
-          <IconTextButton
-            inconTextButtonStyle={classes.previous_pagination_icon_text_container}
-            label={'Previous'}
-            icon={faChevronLeft}
-            onClick={handlePreviousPage}
-            disabled={currentPage === 1}
-          />
-
-          <div className={classes.pagination_button_main_container}>
-            {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
-              <ButtonContainer
-                key={page}
-                buttonContainerMainContainer={[
-                  classes.pagination_button_container,
-                  page === currentPage ? classes.active_page : '',
-                ].join(' ')}
-                onClick={() => handlePageChange(page)}
-                children={<Text label12={`${page}`} />}
-              />
-            ))}
-          </div>
-
-          <IconTextButton
-            inconTextButtonStyle={classes.next_pagination_icon_text_container}
-            label={'Next'}
-            icon={faChevronRight}
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages}
-          />
-        </div>
+        {/* PAGINATION */}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       </div>
     </div>
   );
