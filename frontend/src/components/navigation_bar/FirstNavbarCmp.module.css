@@ -61,7 +61,7 @@
 .buttons_container {
   display: flex;
   flex-direction: row;
-  width: 15rem;
+  width: fit-content;
 }
 
 .auth_button_main_container {

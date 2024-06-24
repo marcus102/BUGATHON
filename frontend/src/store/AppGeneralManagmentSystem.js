@@ -48,8 +48,14 @@ export default function ManagmentSystemProvider({ children }) {
         return {
           ...state,
           sideBar: {
-            theme: action.payload.theme,
-            isOpen: action.payload.isOpen,
+            theme:
+              action.payload.theme !== null && action.payload.theme !== undefined
+                ? action.payload.theme
+                : state.sideBar.theme,
+            isOpen:
+              action.payload.isOpen !== null && action.payload.isOpen !== undefined
+                ? action.payload.isOpen
+                : state.sideBar.isOpen,
           },
         };
       case 'SET_PROFILE_SIDEBAR_BUTTON':

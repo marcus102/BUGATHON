@@ -141,7 +141,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
 
       {!sideBar.isOpen && (
         <div
-          className={` d-none d-xl-flex ${classes.home_window_collapsed_side_bar_main_container}`}
+          className={`d-none d-xl-flex ${classes.home_window_collapsed_side_bar_main_container}`}
         >
           <HomeCollapsedSideBar />
         </div>

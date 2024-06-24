@@ -112,6 +112,7 @@ export function HomeExpandedSideBar() {
   return (
     <>
       <DropdownMenu
+        dropDownMenuStyle={classes.create_menu_container}
         buttonChildren={
           <OutlinedButton
             buttonMainContainerStyle={classes.add_button_main_container}
@@ -254,6 +255,7 @@ export function HomeCollapsedSideBar() {
   return (
     <>
       <DropdownMenu
+        dropDownMenuStyle={classes.create_menu_container_2}
         buttonChildren={
           <ToolTip
             toolTipStyle={classes.side_bar_tool_tip_container}

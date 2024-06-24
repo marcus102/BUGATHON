@@ -6,10 +6,21 @@
 
 /* RELEASES */
 
+.create_menu_container {
+  width: 12rem;
+  margin-right: 10px;
+}
+
+.create_menu_container_2 {
+  width: 12rem;
+  margin-right: 10px;
+  left: 0;
+}
+
 .add_button_main_container {
   margin-top: 20px;
   justify-content: flex-start;
-  width: fit-content;
+  width: 100%;
 }
 
 .add_button {
