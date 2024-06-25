@@ -1,10 +1,8 @@
 .nav_main_container {
-  /* display: flex; */
-  /* height: 60px; */
   border-radius: 10px;
   background-color: var(--black_ffffff0d);
   margin: 70px 10px 10px 10px;
-  padding: 5px 20px;
+  padding: 10px 20px;
 }
 
 /* + NEW BUTTON */

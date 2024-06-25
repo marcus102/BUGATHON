@@ -1,11 +1,13 @@
 .text_container {
   white-space: wrap;
   text-align: start;
+  height: fit-content;
 }
 
 .unwrap_text_container {
   white-space: nowrap;
   text-align: start;
+  height: fit-content;
 }
 
 .label16 {

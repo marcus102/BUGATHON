@@ -37,8 +37,8 @@ export function RowOfSquares({ rowOfSquaresStyle }) {
 
 export function TextArea({ label, placeholder, value, onChange, textAreaStyle, onKeyDown }) {
   return (
-    <div className={[classes.input_main_container, textAreaStyle].join(' ')}>
-      {label && <Text label={label} />}
+    <div className={`${classes.input_main_container} ${textAreaStyle}`}>
+      {label && <Text label16={label} />}
       <textarea placeholder={placeholder} value={value} onChange={onChange} onKeyDown={onKeyDown} />
     </div>
   );

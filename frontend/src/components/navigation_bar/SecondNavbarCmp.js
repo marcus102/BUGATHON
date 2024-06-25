@@ -138,59 +138,57 @@ const renderChildComponent = (id) => {
 
 function SecondNavbar() {
   return (
-    <div className={classes.nav_main_container}>
-      <div className="row align-items-center ">
-        {/* NEW */}
-        
-        <div className="col-md-2 col-4 d-flex justify-content-start ">
+    <div className={`row align-items-center ${classes.nav_main_container}`}>
+      {/* NEW */}
+
+      <div className="col-md-2 col-4 d-flex justify-content-start ">
+        <DropdownMenu
+          dropDownMenuStyle={classes.create_drop_down_menu}
+          dropDownIconTextStyle={classes.new_button_container}
+          buttonLabel={'New'}
+          buttonIcon={faPlus}
+          menuItems={CREATE_MENU}
+        />
+      </div>
+      {/* SEARCH */}
+
+      <div className="col-md-8 col-lg-5 col-7  justify-content-center ">
+        <Search />
+      </div>
+      {/* DROP DOWN OPTIONS */}
+
+      <div className="col-lg-5 d-none d-lg-flex justify-content-end gap-3 ">
+        {MENU_OPTIONS.map((data) => (
           <DropdownMenu
-            dropDownMenuStyle={classes.create_drop_down_menu}
-            dropDownIconTextStyle={classes.new_button_container}
-            buttonLabel={'New'}
-            buttonIcon={faPlus}
-            menuItems={CREATE_MENU}
+            key={data.id}
+            dropDownMenuStyle={classes.header_option_menu}
+            dropDownIconTextStyle={classes.header_option_button}
+            buttonIcon={data.icon}
+            buttonLabel={data.label}
+            children={renderChildComponent(data.id)}
           />
-        </div>
-        {/* SEARCH */}
+        ))}
+      </div>
 
-        <div className="col-md-8 col-lg-5 col-7  justify-content-center ">
-          <Search />
-        </div>
-        {/* DROP DOWN OPTIONS */}
-
-        <div className="col-lg-5 d-none d-lg-flex justify-content-end gap-3 ">
-          {MENU_OPTIONS.map((data) => (
-            <DropdownMenu
-              key={data.id}
-              dropDownMenuStyle={classes.header_option_menu}
-              dropDownIconTextStyle={classes.header_option_button}
-              buttonIcon={data.icon}
-              buttonLabel={data.label}
-              children={renderChildComponent(data.id)}
-            />
-          ))}
-        </div>
-
-        <div className="col-1 d-lg-none d-flex justify-content-end">
-          <DropdownMenu
-            dropDownMenuStyle={classes.dorp_down_menu}
-            buttonIcon={faEllipsis}
-            children={
-              <>
-                {MENU_OPTIONS.map((data) => (
-                  <DropdownMenu
-                    key={data.id}
-                    dropDownMenuStyle={classes.header_option_menu}
-                    dropDownIconTextStyle={classes.header_option_button}
-                    buttonIcon={data.icon}
-                    buttonLabel={data.label}
-                    children={renderChildComponent(data.id)}
-                  />
-                ))}
-              </>
-            }
-          />
-        </div>
+      <div className="col-1 d-lg-none d-flex justify-content-end">
+        <DropdownMenu
+          dropDownMenuStyle={classes.dorp_down_menu}
+          buttonIcon={faEllipsis}
+          children={
+            <>
+              {MENU_OPTIONS.map((data) => (
+                <DropdownMenu
+                  key={data.id}
+                  dropDownMenuStyle={classes.header_option_menu}
+                  dropDownIconTextStyle={classes.header_option_button}
+                  buttonIcon={data.icon}
+                  buttonLabel={data.label}
+                  children={renderChildComponent(data.id)}
+                />
+              ))}
+            </>
+          }
+        />
       </div>
     </div>
   );

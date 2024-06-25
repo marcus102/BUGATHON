@@ -7,6 +7,7 @@ import ExpandedCard from '../components/card_view/ExpandedCardView';
 import ScrollToTop from '../components/scroll_to_top/ScrollToTopCmp';
 import CommentSection from '../components/comment/CommentSectionCmp';
 import ProfilePage from '../components/profile/ProfileCmp';
+import Settings from '../components/settings/settingsCmp';
 
 function Home() {
   return (
@@ -17,10 +18,11 @@ function Home() {
         }
       />
       <Authentication />
-      <HomeWindow />
+      {/* <HomeWindow /> */}
       {/* <ProfilePage /> */}
       {/* <ExpandedCard /> */}
       {/* <CommentSection /> */}
+      <Settings />
       <ScrollToTop />
     </div>
   );

@@ -7,9 +7,8 @@
 }
 
 .vertical_line {
-  transform: rotate(90deg);
   background-color: var(--gray_50505066);
   border: none;
-  height: 2px;
-  width: 100%;
+  /* height: 100px; */
+  width: 300px;
 }
