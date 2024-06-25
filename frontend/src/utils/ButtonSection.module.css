@@ -27,22 +27,22 @@
 .solid_button_container {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0 15px;
+  justify-content: flex-start;
+  margin: 10px 0;
 }
 
 .solid_button {
-  max-width: 100%;
-  min-width: 100%;
+  width: fit-content;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
   background-color: var(--blue_11323C);
-  border-radius: 20px;
+  border-radius: 7px;
   border: none;
   transition: background-color 0.3s ease;
+  padding: 5px 10px;
 }
 
 .solid_button:hover {

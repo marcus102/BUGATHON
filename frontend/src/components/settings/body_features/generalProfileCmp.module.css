@@ -9,12 +9,12 @@
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  width: 30%;
+  width: fit-content;
 }
 
 .profile_images_container {
-  width: 15rem;
-  height: 15rem;
+  width: 12rem;
+  height: 12rem;
   border: 3px solid var(--gray_50505066);
   border-radius: 100%;
 }
@@ -28,7 +28,7 @@
   border: 2px solid var(--gray_50505066);
   border-radius: 10px;
   min-width: fit-content;
-  padding: 5px 15px;
+  padding: 5px 10px;
 }
 
 .profile_tips_container {
@@ -44,6 +44,8 @@
 
 .profile_edit_main_container {
   display: flex;
+  width: 100%;
+  align-items: center;
   flex-direction: column;
   gap: 20px;
 }

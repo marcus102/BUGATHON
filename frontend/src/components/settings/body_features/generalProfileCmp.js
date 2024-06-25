@@ -103,8 +103,8 @@ const PROFILE_EDIT_DATA = [
 
 function GeneralProfile() {
   return (
-    <div className={classes.general_profile_main_container}>
-      <div className={classes.profile_main_container}>
+    <div className={`${classes.general_profile_main_container} flex-column flex-md-row`}>
+      <div className={`${classes.profile_main_container}`}>
         <Image
           src={profile}
           alt={'user profile picture'}

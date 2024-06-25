@@ -31,7 +31,7 @@ const SIDE_BAR_DATA = [
   { id: 'Notifications', icon: faBell, icon_: faArrowPointer, underline: true },
   { id: 'Edit Email', icon: faA, icon_: faArrowPointer, underline: false },
   {
-    id: 'Password & Authentication',
+    id: 'Authentication',
     icon: faShieldHalved,
     icon_: faArrowPointer,
     underline: false,
@@ -41,13 +41,13 @@ const SIDE_BAR_DATA = [
   { id: 'Bug Report ', icon: faBug, icon_: faArrowPointer, underline: false },
   { id: 'Bug Fixes', icon: faBugSlash, icon_: faArrowPointer, underline: false },
   { id: 'Reusable Code ', icon: faCode, icon_: faArrowPointer, underline: true },
-  { id: 'Scheduled Reminders', icon: faClock, icon_: faArrowPointer, underline: true },
-  { id: 'Authorized Applications', icon: faComputer, icon_: faArrowPointer, underline: true },
+  { id: 'Reminders', icon: faClock, icon_: faArrowPointer, underline: true },
+  { id: 'Authorization', icon: faComputer, icon_: faArrowPointer, underline: true },
 ];
 
-function SideBar() {
+export function SideBar() {
   return (
-    <div className={classes.side_bar_main_container}>
+    <div className={` d-none d-xl-flex ${classes.side_bar_main_container}`}>
       <ButtonContainer
         buttonContainerMainContainer={classes.side_bar_header_container}
         children={
@@ -81,4 +81,21 @@ function SideBar() {
   );
 }
 
-export default SideBar;
+export function SideBar2() {
+  // const { profileSideBarButtonHandler } = useContext(ManagmentSystem);
+  return (
+    <div className={`d-flex d-xl-none ${classes.profile_page_side_bar_main_container_2}`}>
+      {SIDE_BAR_DATA.map((data) => (
+        <div key={data.id} className={classes.side_bar_content_container_2}>
+          <IconTextButton
+            unwrap={true}
+            inconTextButtonStyle={classes.side_bar_icon_text_button_container_2}
+            icon={data.icon}
+            label={data.id}
+            icon_={data.icon_}
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
