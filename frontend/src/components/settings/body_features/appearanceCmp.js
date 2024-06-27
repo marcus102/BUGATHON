@@ -69,7 +69,7 @@ const APPEARANCE_DATA = [
 ];
 
 function Appearance() {
-  const [selectedLabel, setSelectedLabel] = useState('Always open(default)');
+//   const [selectedLabel, setSelectedLabel] = useState('Always open(default)');
 
   return (
     <>
