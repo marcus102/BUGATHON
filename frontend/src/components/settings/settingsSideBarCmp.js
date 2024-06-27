@@ -48,7 +48,7 @@ const SIDE_BAR_DATA = [
 export function SideBar() {
   return (
     <div className={` d-none d-xl-flex ${classes.side_bar_main_container}`}>
-      <ButtonContainer
+      {/* <ButtonContainer
         buttonContainerMainContainer={classes.side_bar_header_container}
         children={
           <>
@@ -61,8 +61,8 @@ export function SideBar() {
             <Text label16={'@marcus'} />
           </>
         }
-      />
-      <Line direction={'horizontal'} />
+      /> */}
+      {/* <Line direction={'horizontal'} /> */}
       <div className={classes.side_bar_content_container}>
         {SIDE_BAR_DATA.map((data) => (
           <div key={data.id} className={classes.side_bar_content_container_2}>

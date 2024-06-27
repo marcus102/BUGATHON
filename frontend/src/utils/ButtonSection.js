@@ -281,6 +281,7 @@ export function DropdownMenu({
 
 export function DynamicLabelDropdownMenu({
   buttonIcon,
+  buttonLabel,
   menuItems,
   dropDownMenuStyle,
   dropDownIconTextStyle,
@@ -316,7 +317,7 @@ export function DynamicLabelDropdownMenu({
       <IconTextButton
         inconTextButtonStyle={`${classes.dropdown_toggle} ${dropDownIconTextStyle}`}
         icon={buttonIcon}
-        label={selectedLabel}
+        label={buttonLabel ? buttonLabel : selectedLabel}
         onClick={toggleDropdown}
       />
       {isOpen && (
