@@ -5,9 +5,10 @@ import AccountSettings from './body_features/accountSettingsCmp';
 import Appearance from './body_features/appearanceCmp';
 import Accessibility from './body_features/accessibilityCmp';
 import Notification from './body_features/notificationCmp';
+import Email from './body_features/emailCmp';
 
 function Body() {
-  return <Notification />;
+  return <Email />;
 }
 
 export default Body;

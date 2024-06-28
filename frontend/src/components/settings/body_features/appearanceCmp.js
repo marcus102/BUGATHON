@@ -4,12 +4,7 @@ import { faChevronDown, faDesktop } from '@fortawesome/free-solid-svg-icons';
 import { faCircle, faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
 import Text from '../../../utils/TextSection';
 import Icon from '../../../utils/IconSection';
-import {
-  DropdownMenu,
-  IconButton,
-  ButtonContainer,
-  DynamicLabelDropdownMenu,
-} from '../../../utils/ButtonSection';
+import { ButtonContainer, DynamicLabelDropdownMenu } from '../../../utils/ButtonSection';
 import Link from '../../../utils/LinkSection';
 
 const APPEARANCE_DATA = [
@@ -69,7 +64,7 @@ const APPEARANCE_DATA = [
 ];
 
 function Appearance() {
-//   const [selectedLabel, setSelectedLabel] = useState('Always open(default)');
+  //   const [selectedLabel, setSelectedLabel] = useState('Always open(default)');
 
   return (
     <>

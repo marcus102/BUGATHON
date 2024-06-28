@@ -1,0 +1,55 @@
+.email_main_container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.email_list_container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin: 5px 0;
+}
+
+.email_container {
+  display: flex;
+  gap: 10px;
+  width: fit-content;
+}
+
+.public_bg {
+  background-color: var(--green_039000);
+}
+
+.private_bg {
+  background-color: var(--red_FF2B2B);
+}
+
+.icon_button_container {
+  display: flex;
+  width: fit-content;
+  gap: 20px;
+}
+
+.email_list_container_2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.dropdown_button_container {
+  min-width: fit-content;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid var(--gray_50505066);
+}
+
+.dropdown_menu_container {
+  left: 0;
+  width: 12rem;
+}
+
+.solid_button_container {
+  margin-bottom: 25px;
+}
