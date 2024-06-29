@@ -30,36 +30,47 @@ const ACCESSIBILITY_DATA = [
         id: '1.2',
         label: 'Auto play Animated images',
         sub_description:
-          'Autoplay animated images are dynamic visual elements that play automatically without requiring any user interaction. These images are often referred to as GIFs (Graphics Interchange Format) or animated GIFs. ',
+          'Autoplay animated images are dynamic visual elements that play automatically without requiring any user interaction. These images are often referred to as GIFs (Graphics Interchange Format) or animated GIFs.',
         sub_description_link: 'Learn more about autoplay animated images',
       },
     ],
   },
 ];
 
-function Accessibility() {
+const Accessibility = () => {
   return (
     <>
       {ACCESSIBILITY_DATA.map((data) => (
         <div key={data.id} className={classes.accessibility_main_container}>
           <Text h5={data.title} />
-          <div className={classes.accessibility_container}>
-            <Text label12={data.description} />
-            <Link underline={true} children12={data.description_link} />
-          </div>
-          {data.children.map((sub_data) => (
-            <div key={sub_data.id} className={classes.accessibility_container}>
-              <Switch label={sub_data.label} />
-              <div className={classes.accessibility_container}>
-                <Text label12={sub_data.sub_description} />
-                <Link underline={true} children12={sub_data.sub_description_link} />
-              </div>
-            </div>
-          ))}
+          {renderDescription(data)}
+          {renderChildren(data.children)}
         </div>
       ))}
     </>
   );
-}
+};
+
+const renderDescription = (data) => {
+  if (!data.description) return null;
+  return (
+    <div className={classes.accessibility_container}>
+      <Text label12={data.description} />
+      <Link underline children12={data.description_link} />
+    </div>
+  );
+};
+
+const renderChildren = (children) => {
+  return children.map((sub_data) => (
+    <div key={sub_data.id} className={classes.accessibility_container}>
+      <Switch label={sub_data.label} />
+      <div className={classes.accessibility_container}>
+        <Text label12={sub_data.sub_description} />
+        <Link underline children12={sub_data.sub_description_link} />
+      </div>
+    </div>
+  ));
+};
 
 export default Accessibility;

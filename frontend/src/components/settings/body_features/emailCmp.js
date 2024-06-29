@@ -83,63 +83,16 @@ const EMAIL_DATA = [
   },
 ];
 
-function Email() {
+const Email = () => {
   return (
     <>
       {EMAIL_DATA.map((data) => (
         <div key={data.id} className={classes.email_main_container}>
           <Text h5={data.title} />
-          {/* IF ID = 1 */}
-          {data.id === '1' &&
-            data.children.map((sub_data) => (
-              <div key={sub_data.id} className={classes.email_list_container}>
-                <div className={classes.email_container}>
-                  <Text label14={sub_data.email} />
-                  {sub_data.tags.map((tag) => (
-                    <Tag
-                      tagContainerStyle={`${
-                        tag.id === 'private'
-                          ? classes.private_bg
-                          : tag.id === 'public'
-                          ? classes.public_bg
-                          : classes.default_bg
-                      }`}
-                      key={tag.id}
-                      label={tag.label}
-                      tooltipMessage={tag.message}
-                    />
-                  ))}
-                </div>
-
-                <div className={classes.icon_button_container}>
-                  {sub_data.icon_buttons.length !== 0 &&
-                    sub_data.icon_buttons.map((icon_data) => (
-                      <IconButton key={icon_data.id} icon={icon_data.icon} />
-                    ))}
-                </div>
-              </div>
-            ))}
-          {/* IF ID = 3 */}
-          {data.id === '3' &&
-            data.children.map((sub_data) => (
-              <div key={sub_data.id} className={classes.email_list_container_2}>
-                <Text label14={sub_data.email} />
-                <DynamicLabelDropdownMenu
-                  dropDownIconTextStyle={classes.dropdown_button_container}
-                  dropDownMenuStyle={classes.dropdown_menu_container}
-                  buttonLabel={sub_data.label}
-                  buttonIcon={faChevronDown}
-                  menuItems={sub_data.menu}
-                />
-              </div>
-            ))}
-          {/*  */}
+          {data.id === '1' && renderEmailList(data.children)}
+          {data.id === '3' && renderEmailPrivacy(data.children)}
           {data.input_placeholder && <Input placeholder={data.input_placeholder} />}
-          <div className={classes.description_container}>
-            <Text label12={data.description} />
-            <Link underline={true} children12={data.description_link} />
-          </div>
-
+          {renderDescription(data)}
           {data.button && (
             <SolidButton buttonStyle={classes.solid_button_container} label={data.button} />
           )}
@@ -147,6 +100,67 @@ function Email() {
       ))}
     </>
   );
-}
+};
+
+const renderEmailList = (children) => (
+  <>
+    {children.map((sub_data) => (
+      <div key={sub_data.id} className={classes.email_list_container}>
+        <div className={classes.email_container}>
+          <Text label14={sub_data.email} />
+          {sub_data.tags.map((tag) => (
+            <Tag
+              key={tag.id}
+              tagContainerStyle={getTagStyle(tag.id)}
+              label={tag.label}
+              tooltipMessage={tag.message}
+            />
+          ))}
+        </div>
+        <div className={classes.icon_button_container}>
+          {sub_data.icon_buttons.map((icon_data) => (
+            <IconButton key={icon_data.id} icon={icon_data.icon} />
+          ))}
+        </div>
+      </div>
+    ))}
+  </>
+);
+
+const renderEmailPrivacy = (children) => (
+  <>
+    {children.map((sub_data) => (
+      <div key={sub_data.id} className={classes.email_list_container_2}>
+        <Text label14={sub_data.email} />
+        <DynamicLabelDropdownMenu
+          dropDownIconTextStyle={classes.dropdown_button_container}
+          dropDownMenuStyle={classes.dropdown_menu_container}
+          buttonLabel={sub_data.label}
+          buttonIcon={faChevronDown}
+          menuItems={sub_data.menu}
+        />
+      </div>
+    ))}
+  </>
+);
+
+const renderDescription = (data) =>
+  data.description && (
+    <div className={classes.description_container}>
+      <Text label12={data.description} />
+      <Link underline children12={data.description_link} />
+    </div>
+  );
+
+const getTagStyle = (tagId) => {
+  switch (tagId) {
+    case 'private':
+      return classes.private_bg;
+    case 'public':
+      return classes.public_bg;
+    default:
+      return classes.default_bg;
+  }
+};
 
 export default Email;

@@ -63,69 +63,74 @@ const APPEARANCE_DATA = [
   },
 ];
 
-function Appearance() {
-  //   const [selectedLabel, setSelectedLabel] = useState('Always open(default)');
-
+const Appearance = () => {
   return (
     <>
       {APPEARANCE_DATA.map((data) => (
         <div key={data.id} className={classes.appearance_main_container}>
           <Text h5={data.title} />
-          <div className={classes.title_container}>
-            <Text label12={data.description} />
-            <Link underline={true} children12={data.description_link} />
-          </div>
-          <Text h6={data.sub_title} />
-          {data.id === '1' && (
-            <div className={classes.card_main_container}>
-              {data.children.map((sub_data) => (
-                <div key={sub_data.id} className={classes.card_container}>
-                  <ButtonContainer
-                    buttonContainerMainContainer={classes.button_container}
-                    children={
-                      <div className={classes.card}>
-                        <div className={classes.header}>
-                          <div className={classes.icon_text}>
-                            <Icon icon={sub_data.icon} />
-                            <Text label14={sub_data.label} />
-                          </div>
-                          <Icon icon={sub_data.icon_} />
-                        </div>
-                        <div className={classes.content}>
-                          <div className={classes.circle}></div>
-                          <div className={`${classes.line} ${classes.long}`}></div>
-                          <div className={`${classes.line} ${classes.short}`}></div>
-                          <div className={`${classes.rectangle}`}></div>
-                          <div className={`${classes.rectangle} ${classes.small}`}></div>
-                        </div>
-                      </div>
-                    }
-                  />
-                </div>
-              ))}
-            </div>
-          )}
-
-          {data.id === '2' && (
-            <div className={classes.dropdown_main_container}>
-              {data.children.map((sub_data) => (
-                <div key={sub_data.id} className={classes.dropdown_container}>
-                  <Text h6={sub_data.title} />
-                  <DynamicLabelDropdownMenu
-                    dropDownIconTextStyle={classes.dropdown_button_container}
-                    dropDownMenuStyle={classes.dropdown_menu_container}
-                    buttonLabel={sub_data.button}
-                    buttonIcon={sub_data.icon}
-                    menuItems={sub_data.menu}
-                  />
-                </div>
-              ))}
-            </div>
-          )}
+          {renderDescription(data)}
+          {data.sub_title && <Text h6={data.sub_title} />}
+          {data.id === '1' && renderThemeMode(data.children)}
+          {data.id === '2' && renderNavigation(data.children)}
         </div>
       ))}
     </>
   );
-}
+};
+
+const renderDescription = (data) => (
+  <div className={classes.title_container}>
+    <Text label12={data.description} />
+    <Link underline children12={data.description_link} />
+  </div>
+);
+
+const renderThemeMode = (children) => (
+  <div className={classes.card_main_container}>
+    {children.map((sub_data) => (
+      <div key={sub_data.id} className={classes.card_container}>
+        <ButtonContainer
+          buttonContainerMainContainer={classes.button_container}
+          children={
+            <div className={classes.card}>
+              <div className={classes.header}>
+                <div className={classes.icon_text}>
+                  <Icon icon={sub_data.icon} />
+                  <Text label14={sub_data.label} />
+                </div>
+                <Icon icon={sub_data.icon_} />
+              </div>
+              <div className={classes.content}>
+                <div className={classes.circle}></div>
+                <div className={`${classes.line} ${classes.long}`}></div>
+                <div className={`${classes.line} ${classes.short}`}></div>
+                <div className={classes.rectangle}></div>
+                <div className={`${classes.rectangle} ${classes.small}`}></div>
+              </div>
+            </div>
+          }
+        />
+      </div>
+    ))}
+  </div>
+);
+
+const renderNavigation = (children) => (
+  <div className={classes.dropdown_main_container}>
+    {children.map((sub_data) => (
+      <div key={sub_data.id} className={classes.dropdown_container}>
+        <Text h6={sub_data.title} />
+        <DynamicLabelDropdownMenu
+          dropDownIconTextStyle={classes.dropdown_button_container}
+          dropDownMenuStyle={classes.dropdown_menu_container}
+          buttonLabel={sub_data.button}
+          buttonIcon={sub_data.icon}
+          menuItems={sub_data.menu}
+        />
+      </div>
+    ))}
+  </div>
+);
 
 export default Appearance;

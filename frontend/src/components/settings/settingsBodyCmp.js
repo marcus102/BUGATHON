@@ -8,9 +8,10 @@ import Notification from './body_features/notificationCmp';
 import Email from './body_features/emailCmp';
 import Authentication from './body_features/authenticationCmp';
 import Session from './body_features/sessionCmp';
+import Moderation from './body_features/moderationCmp';
 
 function Body() {
-  return <Session />;
+  return <Moderation />;
 }
 
 export default Body;
