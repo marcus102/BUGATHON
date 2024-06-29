@@ -42,32 +42,41 @@ const NOTIFICATION_DATA = [
   },
 ];
 
-function Notification() {
+const Notification = () => {
   return (
     <>
       {NOTIFICATION_DATA.map((data) => (
         <div key={data.id} className={classes.notification_main_container}>
           <Text h5={data.title} />
           {data.sub_title && <Text h6={data.sub_title} />}
-          {data.description && (
-            <div className={classes.notification_container}>
-              <Text label12={data.description} />
-              <Link underline={true} children12={data.description_link} />
-            </div>
-          )}
-          {data.children.length !== 0 && (
-            <div className={classes.radio_container}>
-              {data.children.map((sub_data) => (
-                <Radio key={sub_data.id} label={sub_data.label} />
-              ))}
-            </div>
-          )}
-
+          {renderDescription(data)}
+          {renderChildren(data.children)}
           {data.label && <CheckBox label16={data.label} />}
         </div>
       ))}
     </>
   );
-}
+};
+
+const renderDescription = (data) => {
+  if (!data.description) return null;
+  return (
+    <div className={classes.notification_container}>
+      <Text label12={data.description} />
+      <Link underline children12={data.description_link} />
+    </div>
+  );
+};
+
+const renderChildren = (children) => {
+  if (children.length === 0) return null;
+  return (
+    <div className={classes.radio_container}>
+      {children.map((sub_data) => (
+        <Radio key={sub_data.id} label={sub_data.label} />
+      ))}
+    </div>
+  );
+};
 
 export default Notification;

@@ -9,7 +9,7 @@ import Email from './body_features/emailCmp';
 import Authentication from './body_features/authenticationCmp';
 
 function Body() {
-  return <Authentication />;
+  return <Notification />;
 }
 
 export default Body;
