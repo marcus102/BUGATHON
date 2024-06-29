@@ -2,7 +2,6 @@
   display: flex;
   width: fit-content;
   align-items: center;
-  background-color: var(--gray_50505066);
   padding: 2px 5px;
   gap: 5px;
   margin: 0 4px;

@@ -6,9 +6,10 @@ import Appearance from './body_features/appearanceCmp';
 import Accessibility from './body_features/accessibilityCmp';
 import Notification from './body_features/notificationCmp';
 import Email from './body_features/emailCmp';
+import Authentication from './body_features/authenticationCmp';
 
 function Body() {
-  return <Email />;
+  return <Authentication />;
 }
 
 export default Body;

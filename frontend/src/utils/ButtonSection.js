@@ -4,6 +4,30 @@ import Icon from './IconSection';
 import Text from './TextSection';
 import Image from './ImageSection';
 
+export function PlaneButton({
+  children,
+  buttonContainerMainContainer,
+  onClick,
+  label10,
+  label12,
+  label14,
+  label16,
+  unwrap,
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={` ${classes.plane_button_main_container} ${buttonContainerMainContainer}`}
+    >
+      {label10 && <Text label10Style={classes.button_text} unwrap={unwrap} label10={label10} />}
+      {label12 && <Text label12Style={classes.button_text} unwrap={unwrap} label12={label12} />}
+      {label14 && <Text label14Style={classes.button_text} unwrap={unwrap} label14={label14} />}
+      {label16 && <Text label16Style={classes.button_text} unwrap={unwrap} label16={label16} />}
+      {children}
+    </button>
+  );
+}
+
 export function ButtonContainer({ children, buttonContainerMainContainer, onClick }) {
   return (
     <button

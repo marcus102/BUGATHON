@@ -25,6 +25,10 @@
   background-color: var(--red_FF2B2B);
 }
 
+.default_bg {
+  background-color: var(--gray_50505066);
+}
+
 .icon_button_container {
   display: flex;
   width: fit-content;

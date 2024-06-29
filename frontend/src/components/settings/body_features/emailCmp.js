@@ -32,7 +32,7 @@ const EMAIL_DATA = [
           { id: 'private', label: 'Private', message: 'Private email address' },
         ],
         icon_buttons: [
-          { id: 'edit', icon: faEdit, },
+          { id: 'edit', icon: faEdit },
           { id: 'delete', icon: faTrashCan },
         ],
       },
@@ -96,7 +96,18 @@ function Email() {
                 <div className={classes.email_container}>
                   <Text label14={sub_data.email} />
                   {sub_data.tags.map((tag) => (
-                    <Tag key={tag.id} label={tag.label} tooltipMessage={tag.message}/>
+                    <Tag
+                      tagContainerStyle={`${
+                        tag.id === 'private'
+                          ? classes.private_bg
+                          : tag.id === 'public'
+                          ? classes.public_bg
+                          : classes.default_bg
+                      }`}
+                      key={tag.id}
+                      label={tag.label}
+                      tooltipMessage={tag.message}
+                    />
                   ))}
                 </div>
 

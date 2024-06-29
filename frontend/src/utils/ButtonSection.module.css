@@ -4,6 +4,20 @@
   cursor: pointer;
 }
 
+/* PLANE BUTTON */
+
+.plane_button_main_container {
+  display: flex;
+  width: fit-content;
+  background-color: transparent;
+  border: none;
+  margin: 10px 0;
+}
+
+.button_text {
+  cursor: pointer;
+}
+
 /* BUTTON CONTAINER */
 
 .button_container_main_container {
@@ -12,7 +26,7 @@
   background-color: var(--black_9696960d);
   border-radius: 5px;
   padding: 10px;
-  width: 100%;
+  width: fit-content;
   height: fit-content;
   border: none;
   transition: background-color 0.3s ease;
@@ -128,7 +142,7 @@
 
 /* IMAGE TEXT BUTTON */
 
-.image_text_button_container{
+.image_text_button_container {
   display: flex;
   width: fit-content;
   height: fit-content;
@@ -137,13 +151,13 @@
   padding: 0px 5px;
 }
 
-.image_text_container{
+.image_text_container {
   width: 15px;
-  height: 15px
+  height: 15px;
 }
 
-.image_text{}
-
+.image_text {
+}
 
 /* DROP DOWN */
 
