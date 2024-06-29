@@ -7,9 +7,10 @@ import Accessibility from './body_features/accessibilityCmp';
 import Notification from './body_features/notificationCmp';
 import Email from './body_features/emailCmp';
 import Authentication from './body_features/authenticationCmp';
+import Session from './body_features/sessionCmp';
 
 function Body() {
-  return <Notification />;
+  return <Session />;
 }
 
 export default Body;

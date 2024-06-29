@@ -1,0 +1,41 @@
+.session_main_container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.session_content_main_container {
+  display: flex;
+  gap: 4rem;
+}
+
+.session_description_container {
+}
+
+.session_image_main_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.session_image_container {
+  height: 15rem;
+  width: 15rem;
+}
+
+.session_current_session_container {
+  display: flex;
+  gap: 5px;
+}
+
+.dot_image_container {
+  height: 12px;
+  width: 12px;
+}
+
+.session_data_container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
