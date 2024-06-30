@@ -70,8 +70,14 @@ const Moderation = () => {
           <Text h5={data.title} />
           {data.id === '1' && renderBlockUser(data.children)}
           {data.id === '2' && renderBlockedUsers(data.children)}
-          {data.label && <Input label={data.label} placeholder={data.placeholder} />}
-          {data.button && <SolidButton label={data.button} />}
+          {data.id === '1' && (
+            <div className={classes.moderation_input_container}>
+              {data.label && <Input label={data.label} placeholder={data.placeholder} />}
+              {data.button && (
+                <SolidButton buttonStyle={classes.solid_button_container} label={data.button} />
+              )}
+            </div>
+          )}
         </div>
       ))}
     </>
@@ -100,7 +106,7 @@ const renderBlockedUsers = (children) => {
         <Text label12={sub_data.reason} />
         <Text label12={sub_data.date} />
       </div>
-      <OutlinedButton label={sub_data.button} />
+      <OutlinedButton buttonStyle={classes.outlined_button_container} label={sub_data.button} />
     </div>
   ));
 };

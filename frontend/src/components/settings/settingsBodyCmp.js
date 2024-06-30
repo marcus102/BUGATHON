@@ -9,6 +9,10 @@ import Email from './body_features/emailCmp';
 import Authentication from './body_features/authenticationCmp';
 import Session from './body_features/sessionCmp';
 import Moderation from './body_features/moderationCmp';
+import BugFix from './body_features/bugFixCmp';
+import BugReport from './body_features/bugReportCmp';
+import ReusableCode from './body_features/reusableCodeCmp';
+import Authorization from './body_features/authorizationCmp';
 
 function Body() {
   return <Moderation />;

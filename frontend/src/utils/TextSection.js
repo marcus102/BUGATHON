@@ -1,5 +1,6 @@
 import React from 'react';
 import classes from './TextSection.module.css';
+import Tag from './tagSection';
 
 function Text({
   h1,
@@ -31,6 +32,7 @@ function Text({
   textStyle,
   children,
   unwrap,
+  tag,
 }) {
   return (
     <div
@@ -49,6 +51,7 @@ function Text({
       {label14 && <label className={`${classes.label14} ${label14Style}`}>{label14}</label>}
       {label12 && <label className={`${classes.label12} ${label12Style}`}>{label12}</label>}
       {label16 && <label className={`${classes.label16} ${label16Style}`}>{label16}</label>}
+      {tag && <Tag label={tag}/>}
       {children}
     </div>
   );

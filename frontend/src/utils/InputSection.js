@@ -78,7 +78,7 @@ export function Input({
 
   return (
     <div className={[classes.input_main_container, inputMainContainerStyle].join(' ')}>
-      {label && <Text unwrap={unwrap} label16={label} />}
+      {label && <Text unwrap={unwrap} label14={label} />}
       <div className={[classes.input_second_container, inputSecondContainerStyle].join(' ')}>
         <div className={`${classes.input_container} ${inputStyle}`}>
           <input

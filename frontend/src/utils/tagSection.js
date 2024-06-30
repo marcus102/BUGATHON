@@ -20,7 +20,11 @@ function Tag({
   return (
     <ToolTip
       children={
-        <div className={`${classes.tag_main_container} ${tagContainerStyle}`}>
+        <div
+          className={`${classes.tag_main_container} ${
+            tagContainerStyle ? tagContainerStyle : classes.tag_default_background
+          }`}
+        >
           {icon && <Icon iconContainerStyle={iconContainerStyle} icon={icon} />}
           {src && (
             <Image imgContainerStyle={imgContainerStyle} imgStyle={imgStyle} src={src} alt={alt} />

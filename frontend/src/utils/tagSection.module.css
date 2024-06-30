@@ -2,8 +2,12 @@
   display: flex;
   width: fit-content;
   align-items: center;
-  padding: 2px 5px;
+  padding: 1px 5px;
   gap: 5px;
   margin: 0 4px;
   border-radius: 5px;
+}
+
+.tag_default_background {
+  background-color: var(--gray_50505066);
 }

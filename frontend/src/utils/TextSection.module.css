@@ -1,10 +1,12 @@
 .text_container {
+  display: flex;
   white-space: wrap;
   text-align: start;
   height: fit-content;
 }
 
 .unwrap_text_container {
+  display: flex;
   white-space: nowrap;
   text-align: start;
   height: fit-content;
