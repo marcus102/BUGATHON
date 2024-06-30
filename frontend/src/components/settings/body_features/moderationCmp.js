@@ -106,7 +106,11 @@ const renderBlockedUsers = (children) => {
         <Text label12={sub_data.reason} />
         <Text label12={sub_data.date} />
       </div>
-      <OutlinedButton buttonStyle={classes.outlined_button_container} label={sub_data.button} />
+      <OutlinedButton
+        unwrap={true}
+        buttonStyle={classes.outlined_button_container}
+        label={sub_data.button}
+      />
     </div>
   ));
 };

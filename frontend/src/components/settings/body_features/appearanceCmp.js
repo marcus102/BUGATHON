@@ -89,7 +89,7 @@ const renderDescription = (data) => (
 const renderThemeMode = (children) => (
   <div className={classes.card_main_container}>
     {children.map((sub_data) => (
-      <div key={sub_data.id} className={classes.card_container}>
+      <div key={sub_data.id}>
         <ButtonContainer
           buttonContainerMainContainer={classes.button_container}
           children={

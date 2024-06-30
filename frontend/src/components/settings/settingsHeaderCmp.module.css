@@ -1,14 +1,6 @@
 .header_main_container {
   display: flex;
   justify-content: space-between;
-  padding: 0 10px;
+  padding: 0 20px;
   width: 100%;
-  align-items: flex-end;
-}
-
-.header_title_container {
-  display: flex;
-  align-items: flex-end;
-  gap: 5px;
-  width: fit-content;
 }

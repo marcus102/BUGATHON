@@ -11,6 +11,8 @@ export const ManagmentSystem = createContext({
   sideBarHandler: ({ theme, isOpen }) => {},
   profileSideBarButton: '',
   profileSideBarButtonHandler: (parameters) => {},
+  settingSideBarButton: '',
+  settingSideBarButtonHandler: (parameters) => {},
 });
 
 export default function ManagmentSystemProvider({ children }) {
@@ -20,6 +22,7 @@ export default function ManagmentSystemProvider({ children }) {
     headerTab: 'all',
     sideBar: { theme: 'dark', isOpen: true },
     profileSideBarButton: 'General',
+    settingSideBarButton: 'General Profile',
   };
 
   function reducer(state, action) {
@@ -63,6 +66,12 @@ export default function ManagmentSystemProvider({ children }) {
           ...state,
           profileSideBarButton: action.payload,
         };
+      case 'SET_SETTING_SIDEBAR_BUTTON':
+        return {
+          ...state,
+          settingSideBarButton: action.payload,
+        };
+      ///
       default:
         return state;
     }
@@ -90,6 +99,10 @@ export default function ManagmentSystemProvider({ children }) {
     dispatch({ type: 'SET_PROFILE_SIDEBAR_BUTTON', payload: parameters });
   };
 
+  const settingSideBarButtonHandler = (parameters) => {
+    dispatch({ type: 'SET_SETTING_SIDEBAR_BUTTON', payload: parameters });
+  };
+
   const value = {
     overlay: state.overlay,
     overlayHandler: overlayHandler,
@@ -101,6 +114,8 @@ export default function ManagmentSystemProvider({ children }) {
     sideBarHandler: sideBarHandler,
     profileSideBarButton: state.profileSideBarButton,
     profileSideBarButtonHandler: profileSideBarButtonHandler,
+    settingSideBarButton: state.settingSideBarButton,
+    settingSideBarButtonHandler: settingSideBarButtonHandler,
   };
 
   return <ManagmentSystem.Provider value={value}>{children}</ManagmentSystem.Provider>;
