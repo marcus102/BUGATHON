@@ -9,7 +9,6 @@ import {
   OutlinedButton,
   IconTextButton,
   DropdownMenu,
-  ButtonContainer,
 } from '../../utils/ButtonSection';
 import {
   faArrowLeft,
@@ -22,9 +21,6 @@ import {
   faAnglesRight,
   faChevronRight,
   faCheck,
-  faChartSimple,
-  faCaretUp,
-  faPeopleGroup,
   faCaretDown,
   faChartLine,
   faTag,
@@ -38,18 +34,18 @@ import {
   faTrashCan,
   faExclamation,
   faChevronDown,
-  faArrowDown,
 } from '@fortawesome/free-solid-svg-icons';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import Text from '../../utils/TextSection';
 import Icon from '../../utils/IconSection';
 import Image from '../../utils/ImageSection';
 import images from '../../assets/images/blog.jpg';
-import HomeCard from './HomeCardView';
 import CommentSection from '../comment/CommentSectionCmp';
-import ActivityChart from '../activity_chart/ActivityChart';
 import ToolTip from '../../utils/toolTipSection';
-import ReviewCard from '../reviews/ReviewCardCmp';
+import { Analytics, Analytics2 } from './expanded/analyticsCmp';
+import PotentialBugFixes from './expanded/potentialBugFixes';
+import RelatedReviews from './expanded/relatedReviewsCmp';
+import RelatedResults from './expanded/relatedResultCmp';
 
 const REACTIONS_DATA = [
   { id: 'likes', icon: faHeart, text: '10K', activeColor: Colors.red_FF2B2B },
@@ -75,89 +71,6 @@ const CARD_VIEW_OPTION = [
 const INSIGHT_DATA = [
   { id: 'Analytics', icon: faChartLine, color: Colors.orange_ff7811 },
   { id: 'Potential Bug Fixes', icon: faTag, color: Colors.green_039000 },
-];
-
-const DUMMY_POST_DATA = [
-  {
-    id: '1',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '2',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '3',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-];
-
-const DUMMY_RELATED_RESULTS_POST_DATA = [
-  {
-    id: '1',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '2',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '3',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '4',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '5',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '6',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '7',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '8',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
 ];
 
 const IMPLEMENTATION_DATA = [
@@ -190,150 +103,6 @@ const IMPLEMENTATION_DATA = [
     title: 'Actual Behavior',
     content:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-];
-
-const ANALYTICS_DUMMY_DATA = [
-  {
-    id: '1',
-    title: 'Activities',
-    header_icon: faChartSimple,
-    header_icon_coler: Colors.orange_ff7811,
-    tottal: '50K',
-    footer_icon: faCaretUp,
-    pourcentage: '300.45%',
-  },
-  {
-    id: '2',
-    title: 'Likes',
-    header_icon: faHeart,
-    header_icon_coler: Colors.red_,
-    tottal: '10K',
-    footer_icon: faCaretUp,
-    pourcentage: '110.50%',
-  },
-  {
-    id: '3',
-    title: 'Comments',
-    header_icon: faComment,
-    header_icon_coler: Colors.blue_0075FF,
-    tottal: '15K',
-    footer_icon: faCaretUp,
-    pourcentage: '200%',
-  },
-  {
-    id: '4',
-    title: 'Shares',
-    header_icon: faArrowUpFromBracket,
-    header_icon_coler: Colors.green_039000,
-    tottal: '50K',
-    footer_icon: faCaretUp,
-    pourcentage: '110.45%',
-  },
-  {
-    id: '5',
-    title: 'Contributions',
-    header_icon: faPeopleGroup,
-    header_icon_coler: Colors.yellow_a99000,
-    tottal: '50K',
-    footer_icon: faCaretDown,
-    pourcentage: '20.34%',
-  },
-];
-
-const DUMMY_REVIEWS = [
-  {
-    id: '1',
-    username: '',
-    profile: '',
-    profession: '',
-    active_stars: 4,
-    review:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
-  },
-  {
-    id: '2',
-    username: '',
-    profile: '',
-    profession: '',
-    active_stars: 2,
-    review:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
-  },
-  {
-    id: '3',
-    username: '',
-    profile: '',
-    profession: '',
-    active_stars: 5,
-    review:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
-  },
-  {
-    id: '4',
-    username: '',
-    profile: '',
-    profession: '',
-    active_stars: 2,
-    review:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
-  },
-  {
-    id: '5',
-    username: '',
-    profile: '',
-    profession: '',
-    active_stars: 3,
-    review:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
-  },
-
-  {
-    id: '6',
-    username: '',
-    profile: '',
-    profession: '',
-    active_stars: 3,
-    review:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
-  },
-
-  {
-    id: '7',
-    username: '',
-    profile: '',
-    profession: '',
-    active_stars: 2,
-    review:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
-  },
-
-  {
-    id: '8',
-    username: '',
-    profile: '',
-    profession: '',
-    active_stars: 4,
-    review:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
-  },
-  {
-    id: '9',
-    username: '',
-    profile: '',
-    profession: '',
-    active_stars: 1,
-    review:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
-  },
-  {
-    id: '10',
-    username: '',
-    profile: '',
-    profession: '',
-    active_stars: 4,
-    review:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis.',
   },
 ];
 
@@ -521,52 +290,14 @@ function ExpandedCard() {
             {!isExpanded && (
               <div className={classes.body_analytics_container}>
                 <div className={`d-none d-xl-flex ${classes.analytics_analytic_container_2}`}>
-                  <Text textStyle={classes.analytic_container} h6={'Analytics'} />
-                  <hr className={classes.body_horizontal_line_container} />
-                  <div className={classes.analytic_content_container}>
-                    <div className={classes.analytic_summaries_container_2}>
-                      {ANALYTICS_DUMMY_DATA.map((data) => (
-                        <div key={data.id} className={classes.summary_container_2}>
-                          <div className={classes.summary_header_container}>
-                            <Text label14={data.title} />
-                            <Icon icon={data.header_icon} color={data.header_icon_coler} />
-                          </div>
-                          <Text textStyle={classes.total_text_container} label14={data.tottal} />
-                          <div className={classes.summary_counter_container}>
-                            <Icon icon={data.footer_icon} />
-                            <Text label12={data.pourcentage} />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    <ActivityChart />
-                  </div>
+                  <Analytics2 />
                 </div>
               </div>
             )}
 
             <div className={classes.body_analytics_container}>
               <div className={`d-flex d-xl-none ${classes.analytics_analytic_container_2}`}>
-                <Text textStyle={classes.analytic_container} h6={'Analytics'} />
-                <hr className={classes.body_horizontal_line_container} />
-                <div className={classes.analytic_content_container}>
-                  <div className={classes.analytic_summaries_container_2}>
-                    {ANALYTICS_DUMMY_DATA.map((data) => (
-                      <div key={data.id} className={classes.summary_container_2}>
-                        <div className={classes.summary_header_container}>
-                          <Text label14={data.title} />
-                          <Icon icon={data.header_icon} color={data.header_icon_coler} />
-                        </div>
-                        <Text textStyle={classes.total_text_container} label14={data.tottal} />
-                        <div className={classes.summary_counter_container}>
-                          <Icon icon={data.footer_icon} />
-                          <Text label12={data.pourcentage} />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <ActivityChart />
-                </div>
+                <Analytics2 />
               </div>
             </div>
 
@@ -584,100 +315,23 @@ function ExpandedCard() {
             className={`col-5 d-none d-xl-block ${classes.expanded_card_analytics_main_container}`}
           >
             {/* ANALYTICS */}
+            <Analytics />
 
-            <div className={classes.analytics_analytic_container}>
-              <Text textStyle={classes.analytic_container} h6={'Analytics'} />
-              <hr className={classes.body_horizontal_line_container} />
-              <div className={classes.analytic_content_container}>
-                <div className={classes.analytic_summaries_container}>
-                  {ANALYTICS_DUMMY_DATA.map((data) => (
-                    <div key={data.id} className={classes.summary_container}>
-                      <div className={classes.summary_header_container}>
-                        <Text label14={data.title} />
-                        <Icon icon={data.header_icon} color={data.header_icon_coler} />
-                      </div>
-                      <Text textStyle={classes.total_text_container} label14={data.tottal} />
-                      <div className={classes.summary_counter_container}>
-                        <Icon icon={data.footer_icon} />
-                        <Text label12={data.pourcentage} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <ActivityChart />
-              </div>
-            </div>
             {/* POTENTIAL --- */}
-
-            <div className={classes.analytics_recommendation_container}>
-              <Text
-                textStyle={classes.recommendation_potentials_title_container}
-                h6={'Potetial Bug Fixes'}
-              />
-              <hr className={classes.body_horizontal_line_container} />
-              <div className={classes.recommendation_potentials_content_container}>
-                {DUMMY_POST_DATA.map((data) => (
-                  <HomeCard
-                    cardButtonState={data.state}
-                    key={data.id}
-                    isHeaderOption={true}
-                    postTitle={data.title}
-                    postDescription={data.description}
-                  />
-                ))}
-
-                <ButtonContainer
-                  children={'More...'}
-                  buttonContainerMainContainer={classes.content_button_container}
-                />
-              </div>
-            </div>
+            <PotentialBugFixes />
           </div>
         )}
       </div>
       {/* REVIEWS */}
 
-      <div className={classes.expanded_card_reviews_main_container}>
-        <div className={classes.expanded_card_reviews_header_container}>
-          <Text h5={'Reviews'} />
-          <ToolTip
-            children={
-              <IconButton
-                icon={faArrowDown}
-                onClick={() => relatedResultsRef.current.scrollIntoView({ behavior: 'smooth' })}
-              />
-            }
-            tooltipMessage={'Skip To Next'}
-          />
-        </div>
-        <hr className={classes.body_horizontal_line_container} />
-        <div className={`${classes.review_container}`}>
-          {DUMMY_REVIEWS.map((data) => (
-            <ReviewCard key={data.id} activeStars={data.active_stars} reviewBody={data.review} />
-          ))}
-        </div>
-      </div>
+      <RelatedReviews
+        onClick={() => relatedResultsRef.current.scrollIntoView({ behavior: 'smooth' })}
+      />
+
       {/* RELATED RESULTS */}
 
       <div ref={relatedResultsRef} className={classes.expanded_card_related_results_main_container}>
-        <Text
-          textStyle={classes.expanded_card_related_results_header_container}
-          h5={'Related Results'}
-        />
-
-        <hr className={classes.body_horizontal_line_container} />
-        <div className={`${classes.related_results_container}`}>
-          {DUMMY_RELATED_RESULTS_POST_DATA.map((data) => (
-            <HomeCard
-              homeCardStyle={classes.related_results_cards}
-              cardButtonState={data.state}
-              key={data.id}
-              isHeaderOption={true}
-              postTitle={data.title}
-              postDescription={data.description}
-            />
-          ))}
-        </div>
+        <RelatedResults />
       </div>
     </div>
   );

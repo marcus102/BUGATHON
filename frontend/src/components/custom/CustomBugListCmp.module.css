@@ -12,14 +12,7 @@
     justify-content: space-between;
     width: 100%;
   }
-  
-  .body_horizontal_line_container {
-    border: none;
-    height: 2px;
-    background-color: var(--gray_50505066);
-    width: 100%;
-  }
-  
+
   .bug_fixes_container {
     display: flex;
     flex-wrap: wrap;
