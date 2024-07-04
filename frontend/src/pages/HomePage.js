@@ -23,8 +23,8 @@ function Home() {
       {/* <ProfilePage /> */}
       {/* <ExpandedCard /> */}
       {/* <CommentSection /> */}
-      {/* <Settings /> */}
-      <CreateNew />
+      <Settings />
+      {/* <CreateNew /> */}
       <ScrollToTop />
     </div>
   );

@@ -18,11 +18,7 @@ import {
   faUser,
   faUserGear,
 } from '@fortawesome/free-solid-svg-icons';
-import Image from '../../utils/ImageSection';
-import Text from '../../utils/TextSection';
-import Line from '../../utils/LineSection';
-import { ButtonContainer, IconTextButton } from '../../utils/ButtonSection';
-import profileImg from '../../assets/images/people.jpg';
+import { HorizontalScrollView, VerticalScrollView } from '../../utils/ScrollViewsSection';
 
 const SIDE_BAR_DATA = [
   { id: 'General Profile', icon: faUser, icon_: faArrowPointer, underline: false },
@@ -49,22 +45,12 @@ const SIDE_BAR_DATA = [
 export function SideBar() {
   const { settingSideBarButtonHandler, settingSideBarButton } = useContext(ManagmentSystem);
   return (
-    <div className={` d-none d-xl-flex ${classes.side_bar_main_container}`}>
-      <div className={classes.side_bar_content_container}>
-        {SIDE_BAR_DATA.map((data) => (
-          <div key={data.id} className={classes.side_bar_content_container_2}>
-            <IconTextButton
-              unwrap={true}
-              inconTextButtonStyle={classes.side_bar_icon_text_button}
-              icon={data.icon}
-              label={data.id}
-              icon_={data.id === settingSideBarButton && data.icon_}
-              onClick={() => settingSideBarButtonHandler(data.id)}
-            />
-            {data.underline === true && <Line direction={'horizontal'} />}
-          </div>
-        ))}
-      </div>
+    <div className={`d-none d-xl-flex ${classes.side_bar_main_container}`}>
+      <VerticalScrollView
+        METADATA={SIDE_BAR_DATA}
+        activeButton={settingSideBarButton}
+        onClick={settingSideBarButtonHandler}
+      />
     </div>
   );
 }
@@ -72,19 +58,12 @@ export function SideBar() {
 export function SideBar2() {
   const { settingSideBarButtonHandler, settingSideBarButton } = useContext(ManagmentSystem);
   return (
-    <div className={`d-flex d-xl-none ${classes.profile_page_side_bar_main_container_2}`}>
-      {SIDE_BAR_DATA.map((data) => (
-        <div key={data.id} className={classes.side_bar_content_container_2}>
-          <IconTextButton
-            unwrap={true}
-            inconTextButtonStyle={classes.side_bar_icon_text_button_container_2}
-            icon={data.icon}
-            label={data.id}
-            icon_={data.id === settingSideBarButton && data.icon_}
-            onClick={() => settingSideBarButtonHandler(data.id)}
-          />
-        </div>
-      ))}
+    <div className={`d-flex d-xl-none ${classes.side_bar_main_container}`}>
+      <HorizontalScrollView
+        METADATA={SIDE_BAR_DATA}
+        activeButton={settingSideBarButton}
+        onClick={settingSideBarButtonHandler}
+      />
     </div>
   );
 }
