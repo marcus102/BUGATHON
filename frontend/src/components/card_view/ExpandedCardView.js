@@ -22,8 +22,6 @@ import {
   faChevronRight,
   faCheck,
   faCaretDown,
-  faChartLine,
-  faTag,
   faPen,
   faCaretRight,
   faClipboard,
@@ -46,6 +44,7 @@ import { Analytics, Analytics2 } from './expanded/analyticsCmp';
 import PotentialBugFixes from './expanded/potentialBugFixes';
 import RelatedReviews from './expanded/relatedReviewsCmp';
 import RelatedResults from './expanded/relatedResultCmp';
+import Line from '../../utils/LineSection';
 
 const REACTIONS_DATA = [
   { id: 'likes', icon: faHeart, text: '10K', activeColor: Colors.red_FF2B2B },
@@ -68,10 +67,10 @@ const CARD_VIEW_OPTION = [
   { id: '12', icon: faExclamation, label: 'Report', icon_2: faCaretRight, href: null },
 ];
 
-const INSIGHT_DATA = [
-  { id: 'Analytics', icon: faChartLine, color: Colors.orange_ff7811 },
-  { id: 'Potential Bug Fixes', icon: faTag, color: Colors.green_039000 },
-];
+// const INSIGHT_DATA = [
+//   { id: 'Analytics', icon: faChartLine, color: Colors.orange_ff7811 },
+//   { id: 'Potential Bug Fixes', icon: faTag, color: Colors.green_039000 },
+// ];
 
 const IMPLEMENTATION_DATA = [
   {
@@ -106,18 +105,157 @@ const IMPLEMENTATION_DATA = [
   },
 ];
 
-function ExpandedCard() {
+const Header = ({ isExpanded, setIsExpanded }) => (
+  <div className={classes.implentation_header_container}>
+    <div className={classes.header_options_container}>
+      <ToolTip children={<IconButton icon={faArrowLeft} />} tooltipMessage={'Go Back Home'} />
+      <SolidButton unwrap buttonStyle={classes.options_button_container} label={'Solve Bug'} />
+      <UserProfileHeader />
+    </div>
+    <div className={classes.header_options_container}>
+      <div className="d-none d-md-block">
+        <HeaderOptions headerOptionMainContainer="d-none d-xl-block" />
+      </div>
+      <DropdownMenu buttonIcon={faEllipsisVertical} menuItems={CARD_VIEW_OPTION} />
+      <ToolTip
+        children={
+          <IconButton
+            inconButtonStyle="d-none d-xl-block"
+            icon={isExpanded ? faChevronRight : faChevronLeft}
+            onClick={() => setIsExpanded(!isExpanded)}
+          />
+        }
+        tooltipMessage={isExpanded ? 'Close Insight' : 'Open Insight'}
+      />
+    </div>
+  </div>
+);
+
+const Reactions = ({ isActive, setIsActive, commentSectionsRef }) => (
+  <div className={classes.body_reactions_container}>
+    <Image imgContainerStyle={classes.img_container} imgStyle={classes.img} src={images} />
+    <div className={classes.reactions_list_container}>
+      {REACTIONS_DATA.map((data) => (
+        <ToolTip
+          key={data.id}
+          children={
+            <IconTextButton
+              inconTextButtonStyle={classes.list_icon_text_container}
+              icon={data.icon}
+              label={data.text}
+              colorOnMouseUp={isActive[data.id] ? data.activeColor : undefined}
+              onClick={() =>
+                setIsActive((prev) => ({
+                  ...prev,
+                  [data.id]: !prev[data.id],
+                }))
+              }
+            />
+          }
+          tooltipMessage={data.id}
+        />
+      ))}
+      <IconTextButton
+        icon={faComment}
+        inconTextButtonStyle={classes.list_comment_icon_text_container}
+        label="Comment"
+        onClick={() => commentSectionsRef.current.scrollIntoView({ behavior: 'smooth' })}
+      />
+    </div>
+  </div>
+);
+
+const ImplementationSection = ({ isCollapsed, setIsCollapsed, isCopied, setIsCopied }) => (
+  <div className={classes.body_solution_container}>
+    {IMPLEMENTATION_DATA.map((data) => (
+      <div key={data.id}>
+        <IconTextButton
+          inconTextButtonStyle={classes.body_solution_title_container}
+          label={data.title}
+          icon_={faChevronDown}
+          onClick={() =>
+            setIsCollapsed((prev) => ({
+              ...prev,
+              [data.id]: !prev[data.id],
+            }))
+          }
+        />
+        {!isCollapsed[data.id] && (
+          <div className={classes.body_solution_content_container}>
+            <div className={classes.body_solution_icon_button}>
+              <ToolTip
+                children={
+                  <IconButton
+                    icon={!isCopied[data.id] ? faCopy : faCheck}
+                    onClick={() =>
+                      setIsCopied((prev) => ({
+                        ...prev,
+                        [data.id]: !prev[data.id],
+                      }))
+                    }
+                  />
+                }
+                tooltipMessage={!isCopied[data.id] ? 'Copy' : 'Copied'}
+              />
+            </div>
+            <hr className={classes.body_horizontal_line_container} />
+            <Text textStyle={classes.body_solution_text_content_container} p16={data.content} />
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+);
+
+const FooterButtons = () => (
+  <div className={classes.body_suggestion_container}>
+    <OutlinedButton
+      buttonMainContainerStyle={classes.body_suggestion_button_main_container}
+      buttonTextContainerStyle={classes.body_suggestion_text_container}
+      buttonTextStyle={classes.body_suggestion_button_text}
+      buttonStyle={classes.body_suggestion_button_container}
+      label="View People Contributions"
+    />
+    <Icon icon={faAnglesRight} />
+    <OutlinedButton
+      buttonMainContainerStyle={classes.body_suggestion_button_main_container}
+      buttonTextStyle={classes.body_suggestion_button_text}
+      buttonStyle={classes.body_suggestion_button_container}
+      label="Solve the bug"
+    />
+    <Icon icon={faAnglesRight} />
+    <DropdownMenu
+      dropDownMenuStyle={classes.body_suggestion_drop_down_menu}
+      buttonLabel="Assign bug to"
+      buttonIcon={faCaretDown}
+      menuItems={[
+        { label: 'Action', href: '#' },
+        { label: 'Another action', href: '#' },
+        { label: 'Something else here', href: '#' },
+      ]}
+    />
+    <Icon icon={faAnglesRight} />
+  </div>
+);
+
+const Comments = ({ commentSectionsRef }) => (
+  <div ref={commentSectionsRef} className={classes.body_comment_container}>
+    <Text textStyle={classes.comment_title_container} h6="Comments" />
+    <CommentSection />
+  </div>
+);
+
+const ExpandedCard = () => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [isCopied, setIsCopied] = useState(
-    IMPLEMENTATION_DATA.reduce((acc, reaction) => {
-      acc[reaction.id] = false;
+    IMPLEMENTATION_DATA.reduce((acc, item) => {
+      acc[item.id] = false;
       return acc;
     }, {})
   );
-
   const [isCollapsed, setIsCollapsed] = useState(
-    IMPLEMENTATION_DATA.reduce((acc, reaction) => {
-      acc[reaction.id] = false;
+    IMPLEMENTATION_DATA.reduce((acc, item) => {
+      acc[item.id] = false;
       return acc;
     }, {})
   );
@@ -127,7 +265,6 @@ function ExpandedCard() {
       return acc;
     }, {})
   );
-  const [isInsight, setIsInsight] = useState('');
 
   const relatedResultsRef = useRef(null);
   const commentSectionsRef = useRef(null);
@@ -135,158 +272,23 @@ function ExpandedCard() {
   return (
     <div className={classes.expanded_container}>
       <div className={classes.expanded_card_main_container}>
-        <div className={`${classes.expanded_card_implentation_main_container}`}>
-          {/* SOLUTION MAIN HEADER */}
-
-          <div className={classes.implentation_header_container}>
-            <div className={classes.header_options_container}>
-              <ToolTip
-                children={<IconButton icon={faArrowLeft} />}
-                tooltipMessage={'Go Back Home'}
-              />
-              <SolidButton
-                unwrap={true}
-                buttonStyle={classes.options_button_container}
-                label={'Solve Bug'}
-              />
-              <UserProfileHeader />
-            </div>
-            <div className={classes.header_options_container}>
-              <div className={`d-none d-md-block`}>
-                <HeaderOptions headerOptionMainContainer={'d-none d-xl-block'} />
-              </div>
-              <DropdownMenu buttonIcon={faEllipsisVertical} menuItems={CARD_VIEW_OPTION} />
-              <ToolTip
-                children={
-                  <IconButton
-                    inconButtonStyle={'d-none d-xl-block'}
-                    icon={isExpanded ? faChevronRight : faChevronLeft}
-                    onClick={() => {
-                      setIsExpanded(!isExpanded);
-                    }}
-                  />
-                }
-                tooltipMessage={isExpanded ? 'Close Insight' : 'Open Insight'}
-              />
-            </div>
-          </div>
-          <Text textStyle={classes.implentation_second_header_container} h5={'Bug report title'} />
+        <div className={classes.expanded_card_implentation_main_container}>
+          <Header isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
+          <Text textStyle={classes.implentation_second_header_container} h5="Bug report title" />
           <div className={classes.implentation_body_main_container}>
-            {/* SOLUTION SECOND HEADER */}
-
-            <div className={classes.body_reactions_container}>
-              <Image
-                imgContainerStyle={classes.img_container}
-                imgStyle={classes.img}
-                src={images}
-              />
-              <div className={classes.reactions_list_container}>
-                {REACTIONS_DATA.map((data) => (
-                  <ToolTip
-                    children={
-                      <IconTextButton
-                        key={data.id}
-                        inconTextButtonStyle={classes.list_icon_text_container}
-                        icon={data.icon}
-                        label={data.text}
-                        colorOnMouseUp={isActive[data.id] ? data.activeColor : undefined}
-                        onClick={() => {
-                          setIsActive((prev) => ({
-                            ...prev,
-                            [data.id]: !prev[data.id],
-                          }));
-                        }}
-                      />
-                    }
-                    tooltipMessage={data.id}
-                  />
-                ))}
-                <IconTextButton
-                  icon={faComment}
-                  inconTextButtonStyle={classes.list_comment_icon_text_container}
-                  label={'Comment'}
-                  onClick={() => commentSectionsRef.current.scrollIntoView({ behavior: 'smooth' })}
-                />
-              </div>
-            </div>
-            <hr className={classes.body_horizontal_line_container} />
-            {/* SOLUTION BODY */}
-
-            <div className={classes.body_solution_container}>
-              {IMPLEMENTATION_DATA.map((data) => (
-                <div key={data.id}>
-                  <IconTextButton
-                    inconTextButtonStyle={classes.body_solution_title_container}
-                    label={data.title}
-                    icon_={faChevronDown}
-                    onClick={() => {
-                      setIsCollapsed((prev) => ({
-                        ...prev,
-                        [data.id]: !prev[data.id],
-                      }));
-                    }}
-                  />
-                  {!isCollapsed[data.id] && (
-                    <div className={classes.body_solution_content_container}>
-                      <div className={classes.body_solution_icon_button}>
-                        <ToolTip
-                          children={
-                            <IconButton
-                              icon={!isCopied[data.id] ? faCopy : faCheck}
-                              onClick={() => {
-                                setIsCopied((prev) => ({
-                                  ...prev,
-                                  [data.id]: !prev[data.id],
-                                }));
-                              }}
-                            />
-                          }
-                          tooltipMessage={!isCopied[data.id] ? 'Copy' : 'Copied'}
-                        />
-                      </div>
-
-                      <hr className={classes.body_horizontal_line_container} />
-                      <Text
-                        textStyle={classes.body_solution_text_content_container}
-                        p16={data.content}
-                      />
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-            {/* FOOTER BUTTONS */}
-
-            <div className={classes.body_suggestion_container}>
-              <OutlinedButton
-                buttonMainContainerStyle={classes.body_suggestion_button_main_container}
-                buttonTextContainerStyle={classes.body_suggestion_text_container}
-                buttonTextStyle={classes.body_suggestion_button_text}
-                buttonStyle={classes.body_suggestion_button_container}
-                label={'View People Contributions'}
-              />
-              <Icon icon={faAnglesRight} />
-              <OutlinedButton
-                buttonMainContainerStyle={classes.body_suggestion_button_main_container}
-                buttonTextStyle={classes.body_suggestion_button_text}
-                buttonStyle={classes.body_suggestion_button_container}
-                label={'Solve the bug'}
-              />
-              <Icon icon={faAnglesRight} />
-              <DropdownMenu
-                dropDownMenuStyle={classes.body_suggestion_drop_down_menu}
-                buttonLabel={'Assign bug to'}
-                buttonIcon={faCaretDown}
-                menuItems={[
-                  { label: 'Action', href: '#' },
-                  { label: 'Another action', href: '#' },
-                  { label: 'Something else here', href: '#' },
-                ]}
-              />
-              <Icon icon={faAnglesRight} />
-            </div>
-            {/* ANALYTICS (WHEN SIDEBAR IS COLLAPSED) */}
-
+            <Reactions
+              isActive={isActive}
+              setIsActive={setIsActive}
+              commentSectionsRef={commentSectionsRef}
+            />
+            <Line direction={'horizontal'} />
+            <ImplementationSection
+              isCollapsed={isCollapsed}
+              setIsCollapsed={setIsCollapsed}
+              isCopied={isCopied}
+              setIsCopied={setIsCopied}
+            />
+            <FooterButtons />
             {!isExpanded && (
               <div className={classes.body_analytics_container}>
                 <div className={`d-none d-xl-flex ${classes.analytics_analytic_container_2}`}>
@@ -294,47 +296,31 @@ function ExpandedCard() {
                 </div>
               </div>
             )}
-
             <div className={classes.body_analytics_container}>
               <div className={`d-flex d-xl-none ${classes.analytics_analytic_container_2}`}>
                 <Analytics2 />
               </div>
             </div>
-
-            {/* COMMENTS */}
-
-            <div ref={commentSectionsRef} className={classes.body_comment_container}>
-              <Text textStyle={classes.comment_title_container} h6={'Comments'} />
-              <CommentSection />
-            </div>
+            <Comments commentSectionsRef={commentSectionsRef} />
           </div>
         </div>
-
         {isExpanded && (
           <div
             className={`col-5 d-none d-xl-block ${classes.expanded_card_analytics_main_container}`}
           >
-            {/* ANALYTICS */}
             <Analytics />
-
-            {/* POTENTIAL --- */}
             <PotentialBugFixes />
           </div>
         )}
       </div>
-      {/* REVIEWS */}
-
       <RelatedReviews
         onClick={() => relatedResultsRef.current.scrollIntoView({ behavior: 'smooth' })}
       />
-
-      {/* RELATED RESULTS */}
-
       <div ref={relatedResultsRef} className={classes.expanded_card_related_results_main_container}>
         <RelatedResults />
       </div>
     </div>
   );
-}
+};
 
 export default ExpandedCard;

@@ -339,6 +339,7 @@ export function DynamicLabelDropdownMenu({
   return (
     <div className={classes.dropdown_menu_container} ref={dropdownRef}>
       <IconTextButton
+        unwrap={true}
         inconTextButtonStyle={`${classes.dropdown_toggle} ${dropDownIconTextStyle}`}
         icon={buttonIcon}
         label={buttonLabel ? buttonLabel : selectedLabel}
@@ -349,6 +350,7 @@ export function DynamicLabelDropdownMenu({
           {menuItems.map((data) => (
             <IconTextButton
               key={data.id}
+              unwrap={true}
               inconTextButtonStyle={`${classes.drop_down_item_link}`}
               icon_={data.icon_2 && data.icon_2}
               label={data.label && data.label}

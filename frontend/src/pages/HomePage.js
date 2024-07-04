@@ -8,6 +8,7 @@ import ScrollToTop from '../components/scroll_to_top/ScrollToTopCmp';
 import CommentSection from '../components/comment/CommentSectionCmp';
 import ProfilePage from '../components/profile/ProfileCmp';
 import Settings from '../components/settings/settingsCmp';
+import CreateNew from '../components/new/createNewCmp';
 
 function Home() {
   return (
@@ -20,9 +21,10 @@ function Home() {
       <Authentication />
       {/* <HomeWindow /> */}
       {/* <ProfilePage /> */}
-      <ExpandedCard />
+      {/* <ExpandedCard /> */}
       {/* <CommentSection /> */}
       {/* <Settings /> */}
+      <CreateNew />
       <ScrollToTop />
     </div>
   );
