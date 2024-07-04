@@ -16,12 +16,20 @@ export function HorizontalScrollView({ METADATA, children, onClick, activeButton
               icon={data.icon}
               label={data.id}
               icon_={data.id === activeButton && data.icon_}
-              onClick={onClick}
+              onClick={() => onClick(data.id)}
             />
           )}
 
           {!data.icon && (
-            <PlaneButton key={data.id} unwrap={true} label14={data.label} onClick={onClick} />
+            <PlaneButton
+              key={data.id}
+              unwrap={true}
+              buttonContainerMainContainer={
+                activeButton === data.id && classes.side_bar_plane_button_container
+              }
+              label14={data.label}
+              onClick={() => onClick(data.id)}
+            />
           )}
         </>
       ))}

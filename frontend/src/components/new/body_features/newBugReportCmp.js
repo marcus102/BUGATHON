@@ -35,7 +35,7 @@ const NEW_BUG_REPORT_FORM_DATA = [
   {
     id: 'bug_report',
     title: 'Create A Bug Report',
-    input_label: 'Input',
+    input_label: 'Title',
     input_placeholder: 'Enter Your Bug Report Title Here',
     children: [
       {
@@ -120,13 +120,25 @@ const NEW_BUG_REPORT_FORM_DATA = [
 
 function NewBugReport() {
   const [currrentAlignment, setCurrentAlignment] = useState(faAlignLeft);
+  const [activeButton, setActiveButton] = useState('1');
+  const [isActive, setIsActive] = useState(
+    NEW_BUG_REPORT_FORM_DATA[0].icon_buttons.reduce((acc, item) => {
+      acc[item.id] = false;
+      return acc;
+    }, {})
+  );
+
   return (
     <>
       {NEW_BUG_REPORT_FORM_DATA.map((data) => (
         <div key={data.id} className={classes.new_bug_report_container}>
           <Text h5={data.title} />
           <Input label={data.input_label} placeholder={data.input_placeholder} />
-          <HorizontalScrollView METADATA={data.children} />
+          <HorizontalScrollView
+            METADATA={data.children}
+            onClick={setActiveButton}
+            activeButton={activeButton}
+          />
           <div className={classes.icon_buttons_container}>
             <div className={classes.icon_buttons}>
               {data.icon_buttons.map((sub_data) => (
@@ -134,7 +146,18 @@ function NewBugReport() {
                   <div className={classes.icons}>
                     {['1', '2', '3', '4', '5', '6', '7', '8'].includes(sub_data.id) && (
                       <ToolTip
-                        children={<IconButton icon={sub_data.icon} />}
+                        children={
+                          <IconButton
+                            inconButtonStyle={isActive[sub_data.id] && classes.icon_button}
+                            icon={sub_data.icon}
+                            onClick={() => {
+                              setIsActive((prev) => ({
+                                ...prev,
+                                [sub_data.id]: !prev[sub_data.id],
+                              }));
+                            }}
+                          />
+                        }
                         tooltipMessage={sub_data.tooltipmessage}
                       />
                     )}
@@ -181,7 +204,11 @@ function NewBugReport() {
             <CheckBox label12={data.check_box} />
             <Link children12={data.check_box_link} />
           </div>
-          <SolidButton label={data.button} />
+          <SolidButton
+            buttonMainContainerStyle={classes.solid_button_container}
+            buttonStyle={classes.solid_button}
+            label={data.button}
+          />
         </div>
       ))}
     </>
