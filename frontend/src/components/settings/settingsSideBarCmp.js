@@ -58,7 +58,7 @@ export function SideBar() {
 export function SideBar2() {
   const { settingSideBarButtonHandler, settingSideBarButton } = useContext(ManagmentSystem);
   return (
-    <div className={`d-flex d-xl-none ${classes.side_bar_main_container}`}>
+    <div className={`d-flex d-xl-none`}>
       <HorizontalScrollView
         METADATA={SIDE_BAR_DATA}
         activeButton={settingSideBarButton}

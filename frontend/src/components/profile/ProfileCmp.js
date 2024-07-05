@@ -1,15 +1,16 @@
 import React, { useContext } from 'react';
 import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
 import classes from './ProfileCmp.module.css';
-import GeneralUserInfo from './GeneralUserInfoCmp';
-import Ranking from './RankingCmp';
-import { ProfileSideBar, ProfileSideBar2 } from './ProfileSideBarCmp';
-import ProfileHeader from './ProfileHeaderCmp';
-import UserBugFix from './UserBugFixCmp';
-import UserBugReport from './UserBugReportCmp';
-import UserReusableCode from './UserReusableCodeCmp';
-import Analytics from './AnalyticsCmp';
-import UserBlogPost from './UserBlogPostCmp';
+import GeneralUserInfo from './body_features/GeneralUserInfoCmp';
+import Ranking from './body_features/RankingCmp';
+import { ProfileSideBar, ProfileSideBar2 } from './body_features/ProfileSideBarCmp';
+import ProfileHeader from './body_features/ProfileHeaderCmp';
+import UserBugFix from './body_features/UserBugFixCmp';
+import UserBugReport from './body_features/UserBugReportCmp';
+import UserReusableCode from './body_features/UserReusableCodeCmp';
+import Analytics from './body_features/AnalyticsCmp';
+import UserBlogPost from './body_features/UserBlogPostCmp';
+import { VerticalScrollView } from '../../utils/ScrollViewsSection';
 
 function ProfilePage() {
   const { profileSideBarButton } = useContext(ManagmentSystem);
@@ -18,16 +19,20 @@ function ProfilePage() {
       <ProfileSideBar />
       <div className={`${classes.profile_page_second_container}`}>
         <ProfileSideBar2 />
-        <div className={classes.profile_contents_main_container}>
-          <ProfileHeader />
-          {profileSideBarButton === 'General' && <GeneralUserInfo />}
-          {profileSideBarButton === 'Analytics' && <Analytics />}
-          {profileSideBarButton === 'Blog' && <UserBlogPost />}
-          {profileSideBarButton === 'Ranking' && <Ranking />}
-          {profileSideBarButton === 'Bug Fixes' && <UserBugFix />}
-          {profileSideBarButton === 'Bug Reports' && <UserBugReport />}
-          {profileSideBarButton === 'Reusable Code' && <UserReusableCode />}
-        </div>
+        <VerticalScrollView
+          children={
+            <>
+              <ProfileHeader />
+              {profileSideBarButton === 'General' && <GeneralUserInfo />}
+              {profileSideBarButton === 'Analytics' && <Analytics />}
+              {profileSideBarButton === 'Blog' && <UserBlogPost />}
+              {profileSideBarButton === 'Ranking' && <Ranking />}
+              {profileSideBarButton === 'Bug Fixes' && <UserBugFix />}
+              {profileSideBarButton === 'Bug Reports' && <UserBugReport />}
+              {profileSideBarButton === 'Reusable Code' && <UserReusableCode />}
+            </>
+          }
+        />
       </div>
     </div>
   );

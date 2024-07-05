@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './UserBugReportCmp.module.css';
-import CustomBugList from '../custom/CustomBugListCmp';
+import CustomBugList from '../../custom/CustomBugListCmp';
 
 const DUMMY_BUG_REPORT_DATA = [
   {

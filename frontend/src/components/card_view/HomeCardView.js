@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react';
-import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
+import React, { useState } from 'react';
+// import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
 import classes from './HomeCardView.module.css';
 import Colors from '../../constants/colors';
 import {
@@ -95,7 +95,7 @@ function HomeCard({
     }, {})
   );
 
-  const { overlayHandler } = useContext(ManagmentSystem);
+  // const { overlayHandler } = useContext(ManagmentSystem);
 
   return (
     <ButtonContainer

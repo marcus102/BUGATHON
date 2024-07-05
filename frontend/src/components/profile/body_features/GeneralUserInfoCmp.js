@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
-import Colors from '../../constants/colors';
 import classes from './GeneralUserInfoCmp.module.css';
-import Image from '../../utils/ImageSection';
-import { IconTextButton, ButtonContainer } from '../../utils/ButtonSection';
-import Text from '../../utils/TextSection';
-import Link from '../../utils/LinkSection';
-import HomeCard from '../card_view/HomeCardView';
-import Icon from '../../utils/IconSection';
+import { IconTextButton, ButtonContainer } from '../../../utils/ButtonSection';
+import Text from '../../../utils/TextSection';
+import HomeCard from '../../card_view/HomeCardView';
 import {
   faAt,
   faChevronDown,
@@ -16,8 +12,6 @@ import {
   faPhone,
   faStar,
 } from '@fortawesome/free-solid-svg-icons';
-import images from '../../assets/images/people.jpg';
-import { faCircleCheck, faEdit } from '@fortawesome/free-regular-svg-icons';
 import {
   faGithub,
   faLinkedin,
@@ -161,19 +155,19 @@ const DUMMY_POST_DATA = [
   },
 ];
 
-const USER_TOTAL = [
-  { id: 'Followers', total: '100K', icon: null },
-  { id: 'Followings', total: '10K', icon: null },
-  { id: 'Stars', total: '5K', icon: faStar },
-];
+// const USER_TOTAL = [
+//   { id: 'Followers', total: '100K', icon: null },
+//   { id: 'Followings', total: '10K', icon: null },
+//   { id: 'Stars', total: '5K', icon: faStar },
+// ];
 
-const USER_BADGES = [
-  { id: '@marcus', icon: null },
-  { id: 'Computer Scientist', icon: null },
-  { id: 'Admin', icon: null },
-  { id: 'Novice', icon: null },
-  { id: 'Bronze', icon: faMedal },
-];
+// const USER_BADGES = [
+//   { id: '@marcus', icon: null },
+//   { id: 'Computer Scientist', icon: null },
+//   { id: 'Admin', icon: null },
+//   { id: 'Novice', icon: null },
+//   { id: 'Bronze', icon: faMedal },
+// ];
 
 const SOCIAL_DATA = [
   {

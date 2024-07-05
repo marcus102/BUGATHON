@@ -1,6 +1,6 @@
 import React from 'react';
-import classes from './UserReusableCodeCmp.module.css';
-import CustomBugList from '../custom/CustomBugListCmp';
+// import classes from './UserReusableCodeCmp.module.css';
+import CustomBugList from '../../custom/CustomBugListCmp';
 
 const DUMMY_REUSABLE_CODE_DATA = [
   {

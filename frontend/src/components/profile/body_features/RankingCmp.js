@@ -1,19 +1,19 @@
 import React, { useContext } from 'react';
-import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
-import Colors from '../../constants/colors';
+import { ManagmentSystem } from '../../../store/AppGeneralManagmentSystem';
+import Colors from '../../../constants/colors';
 import classes from './RankingCmp.module.css';
-import Text from '../../utils/TextSection';
-import BronzeBadge from '../../assets/icons/bronze_badge.svg';
-import SilverBadge from '../../assets/icons/silver_badge.svg';
-import GoldBadge from '../../assets/icons/gold_badge.svg';
-import Profile from '../../assets/images/quote.jpg';
-import RankingImage from '../../assets/images/study.jpg';
-import { ButtonContainer, IconButton, SolidButton } from '../../utils/ButtonSection';
-import { Overlay } from '../../utils/OverlaySection';
-import Image from '../../utils/ImageSection';
+import Text from '../../../utils/TextSection';
+import BronzeBadge from '../../../assets/icons/bronze_badge.svg';
+import SilverBadge from '../../../assets/icons/silver_badge.svg';
+import GoldBadge from '../../../assets/icons/gold_badge.svg';
+import Profile from '../../../assets/images/quote.jpg';
+import RankingImage from '../../../assets/images/study.jpg';
+import { ButtonContainer, IconButton, SolidButton } from '../../../utils/ButtonSection';
+import { Overlay } from '../../../utils/OverlaySection';
+import Image from '../../../utils/ImageSection';
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import ProgressBar from '../activity_chart/ProgressBarCmp';
+import ProgressBar from '../../activity_chart/ProgressBarCmp';
 
 const RANKING_DATA = [
   {

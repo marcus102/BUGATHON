@@ -2,13 +2,13 @@ import React from 'react';
 import classes from './ProfileHeaderCmp.module.css';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import Image from '../../utils/ImageSection';
-import images from '../../assets/images/people.jpg';
-import Text from '../../utils/TextSection';
-import { IconTextButton, ButtonContainer } from '../../utils/ButtonSection';
-import Icon from '../../utils/IconSection';
-import BronzeBadge from '../../assets/icons/bronze_badge.svg';
-import VerifiedBadge from '../../assets/icons/verified_badge.svg';
+import Image from '../../../utils/ImageSection';
+import images from '../../../assets/images/people.jpg';
+import Text from '../../../utils/TextSection';
+import { IconTextButton, ButtonContainer } from '../../../utils/ButtonSection';
+import Icon from '../../../utils/IconSection';
+import BronzeBadge from '../../../assets/icons/bronze_badge.svg';
+import VerifiedBadge from '../../../assets/icons/verified_badge.svg';
 
 const USER_TOTAL = [
   { id: 'Followers', total: '100K', icon: null },

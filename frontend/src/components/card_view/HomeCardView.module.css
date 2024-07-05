@@ -19,71 +19,6 @@
   border-bottom: 1px solid var(--orange_ff7811);
 }
 
-/* PROFILE
-
-.header_profile_container {
-  display: flex;
-  width: fit-content;
-  gap: 5px;
-}
-
-.profile_container {
-  display: flex;
-  width: fit-content;
-  align-items: center;
-  gap: 5px;
-}
-
-.username_button_container {
-  padding: 0;
-  max-width: 100%;
-  justify-content: flex-start;
-  align-items: flex-start;
-}
-
-.username_label12_style {
-  font-weight: bold;
-  display: flex;
-  justify-content: flex-start;
-  cursor: pointer;
-}
-
-.profession_label10_style {
-  cursor: pointer;
-  width: 59px;
-}
-
-.img_container {
-  width: 30px;
-  height: 30px;
-}
-
-.img {
-  border-radius: 30px;
-}
-
-.follow_button_container {
-  width: fit-content;
-}
-
-.follow_button {
-  flex-direction: row;
-  border: none;
-  background-color: transparent;
-  gap: 0;
-  padding: 0;
-}
-
-.follow_button:hover {
-  border: none;
-  background-color: transparent;
-}
-
-.follow_label12_style {
-  color: var(--green_039000);
-  cursor: pointer;
-} */
-
 /* OPTION */
 
 .header_options_container {
@@ -98,49 +33,6 @@
   border-radius: 5px;
   margin: 0 10px;
 }
-
-/* .solid_button_container {
-  width: fit-content;
-}
-
-.solid_button {
-  border-radius: 10px;
-  padding: 0 6px;
-  height: 30px;
-  background-color: var(--green_039000);
-}
-
-.solid_button:hover {
-  background-color: var(--green_026c00);
-}
-
-.contrib_label10_style {
-  color: var(--white_ffffff);
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.contrib_label16_style {
-  cursor: pointer;
-}
-
-.options_img_container {
-  display: flex;
-  align-items: center;
-  position: relative;
-  margin: 0 0 0 10px;
-}
-
-.contrib_img_container {
-  position: relative;
-  margin-left: -9px;
-  width: 15px;
-  height: 15px;
-}
-
-.contrib_img {
-  border-radius: 15px;
-} */
 
 /* BODY */
 

@@ -6,6 +6,7 @@ import { HomeCollapsedSideBar, HomeExpandedSideBar } from './home_window_options
 import HomeHeader from './home_window_options/HeaderCmp';
 import Pagination from '../../utils/PaginationSection';
 import usePagination from '../../custom_hooks/usePaginationHook';
+import { VerticalScrollView } from '../../utils/ScrollViewsSection';
 
 const DUMMY_POST_DATA = [
   {
@@ -149,7 +150,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
 
       {sideBar.isOpen && (
         <div className={`d-none d-xl-flex col-lg-2 ${classes.home_window_side_bar_main_container}`}>
-          <HomeExpandedSideBar />
+          <VerticalScrollView children={<HomeExpandedSideBar />} />
         </div>
       )}
 
@@ -158,17 +159,21 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
         <HomeHeader />
 
         {/* BODY */}
-        <div className={classes.list_second_container}>
-          {paginatedData.map((data) => (
-            <HomeCard
-              cardButtonState={data.state}
-              key={data.id}
-              isHeaderOption={true}
-              postTitle={data.title}
-              postDescription={data.description}
-            />
-          ))}
-        </div>
+        <VerticalScrollView
+          children={
+            <>
+              {paginatedData.map((data) => (
+                <HomeCard
+                  cardButtonState={data.state}
+                  key={data.id}
+                  isHeaderOption={true}
+                  postTitle={data.title}
+                  postDescription={data.description}
+                />
+              ))}
+            </>
+          }
+        />
 
         {/* PAGINATION */}
         <Pagination

@@ -17,7 +17,6 @@ export function HorizontalScrollView({ METADATA, children, onClick, activeButton
               }`}
               icon={data.icon}
               label={data.id}
-            //   icon_={data.id === activeButton && data.icon_}
               onClick={() => onClick(data.id)}
             />
           )}
@@ -48,7 +47,7 @@ export function VerticalScrollView({ METADATA, children, onClick, activeButton }
           <div key={data.id}>
             <IconTextButton
               unwrap={true}
-              inconTextButtonStyle={classes.side_bar_icon_text_button_container}
+              inconTextButtonStyle={classes.side_bar_icon_text_button_container_2}
               icon={data.icon}
               label={data.id}
               icon_={data.id === activeButton && data.icon_}

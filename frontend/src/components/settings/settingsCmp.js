@@ -4,6 +4,7 @@ import Header from './settingsHeaderCmp';
 import { SideBar, SideBar2 } from './settingsSideBarCmp';
 import Body from './settingsBodyCmp';
 import Line from '../../utils/LineSection';
+import { VerticalScrollView } from '../../utils/ScrollViewsSection';
 
 function Settings() {
   return (
@@ -13,9 +14,7 @@ function Settings() {
       <div className={classes.settings_body_container}>
         <Header />
         <Line direction={'horizontal'} />
-        <div className={classes.body_container}>
-          <Body />
-        </div>
+        <VerticalScrollView children={<Body />}/>
       </div>
     </div>
   );

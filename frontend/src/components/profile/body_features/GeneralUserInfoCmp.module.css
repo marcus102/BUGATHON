@@ -3,8 +3,6 @@
   padding: 0 10px;
 }
 
-/* OVERVIEW (BIO - TREND - BUG REPORT - BUG FIX - REUSABLE CODE ) */
-
 /* BIO */
 
 .content_user_bio_main_container {
@@ -73,11 +71,3 @@
   display: flex;
   margin: 10px 0;
 }
-
-/* TREND -  */
-
-/* BUG REPORT */
-
-/* BUG FIX */
-
-/* REUSABLE CODE */
