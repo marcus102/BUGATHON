@@ -2,7 +2,7 @@ import React from 'react';
 import Colors from '../constants/colors';
 import classes from './headerOptionsCmp.module.css';
 import Text from '../utils/TextSection';
-import Image from '../utils/ImageSection';
+import { Image } from '../utils/MediaSection';
 import images from '../assets/images/globe.jpg';
 import {
   faArrowUpFromBracket,

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { ManagmentSystem } from '../../../store/AppGeneralManagmentSystem';
 import classes from './ProfileSideBarCmp.module.css';
-import Image from '../../../utils/ImageSection';
+import { Image } from '../../../utils/MediaSection';
 import images from '../../../assets/images/people.jpg';
 import { IconTextButton } from '../../../utils/ButtonSection';
 import {

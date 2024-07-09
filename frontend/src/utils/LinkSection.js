@@ -15,6 +15,7 @@ function Link({
   color,
   linkContainer,
   linkStyle,
+  download,
 }) {
   return (
     <div className={`${linkContainer} ${classes.link_container}`}>
@@ -25,6 +26,7 @@ function Link({
             linkStyle ? linkStyle : classes.link_default_color
           }`}
           href={href}
+          download={download}
         >
           {icon && <Icon icon={icon} size={size} color={color} />}
           {children12}

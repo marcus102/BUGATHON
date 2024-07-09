@@ -1,13 +1,5 @@
-import React, { useState } from 'react';
-import Colors from '../../constants/colors';
-import {
-  DropdownMenu,
-  DynamicLabelDropdownMenu,
-  SolidButton,
-  OutlinedButton,
-  IconButton,
-} from '../../utils/ButtonSection';
-import Text from '../../utils/TextSection';
+import React from 'react';
+import { DropdownMenu } from '../../utils/ButtonSection';
 import classes from './SecondNavbarCmp.module.css';
 import {
   faInbox,
@@ -17,34 +9,14 @@ import {
   faEllipsis,
   faSliders,
   faNewspaper,
-  faThumbTack,
-  faArrowUpFromBracket,
-  faTrashCan,
-  faExclamation,
-  faCaretRight,
   faHome,
   faGear,
   faDesktop,
   faFile,
-  faCheckDouble,
-  faCaretDown,
-  faChevronCircleDown,
-  faEllipsisVertical,
-  faChevronDown,
-  faHeart,
 } from '@fortawesome/free-solid-svg-icons';
-import {
-  faEyeSlash,
-  faMoon,
-  faQuestionCircle,
-  faSun,
-  faUser,
-} from '@fortawesome/free-regular-svg-icons';
-import profile_1 from '../../assets/images/study.jpg';
-import profile_2 from '../../assets/images/people.jpg';
+import { faMoon, faQuestionCircle, faSun, faUser } from '@fortawesome/free-regular-svg-icons';
 import ApiIcon from '../../assets/icons/API.svg';
 import ServiceIcon from '../../assets/icons/service.svg';
-import Image from '../../utils/ImageSection';
 import AssignedBug from './second_navabar_options/AssignedBugCmp';
 import Notification from './second_navabar_options/NotificationCmp';
 import Adjust from './second_navabar_options/AdjustCmp';

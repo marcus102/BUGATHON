@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
 import classes from './CustomMenuCmp.module.css';
 import Text from '../../utils/TextSection';
 import {
@@ -9,11 +10,11 @@ import {
   IconButton,
   IconTextButton,
 } from '../../utils/ButtonSection';
-import Image from '../../utils/ImageSection';
+import { Image } from '../../utils/MediaSection';
 import { faChevronDown, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import Line from '../../utils/LineSection';
 
-const OptionHeader = ({ title, dropDown, headerOption }) => (
+const OptionHeader = ({ title, dropDown, headerOption, buttonLabel, my_key }) => (
   <div className={classes.option_header_container}>
     {title && <Text h5={title} />}
     {(headerOption || dropDown) && (
@@ -31,6 +32,8 @@ const OptionHeader = ({ title, dropDown, headerOption }) => (
           <DynamicLabelDropdownMenu
             dropDownMenuStyle={classes.option_header_menu_container}
             buttonIcon={faChevronDown}
+            buttonLabel={buttonLabel}
+            my_key={my_key}
             menuItems={dropDown}
           />
         )}
@@ -132,10 +135,18 @@ function CustomMenu({
   solidButtonDataType,
   emptyContentLabel,
   headerOption,
+  buttonLabel,
+  my_key,
 }) {
   return (
     <div className={classes.header_option_main_container}>
-      <OptionHeader title={title} dropDown={dropDown} headerOption={headerOption} />
+      <OptionHeader
+        title={title}
+        dropDown={dropDown}
+        headerOption={headerOption}
+        buttonLabel={buttonLabel}
+        my_key={my_key}
+      />
       <div className={classes.header_option_content_root_container}>
         {dataList?.length > 0 ? (
           dataList.map((data) => (

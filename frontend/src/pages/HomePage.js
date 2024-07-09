@@ -20,11 +20,11 @@ function Home() {
       />
       <Authentication />
       {/* <HomeWindow /> */}
-      <ProfilePage />
+      {/* <ProfilePage /> */}
       {/* <ExpandedCard /> */}
       {/* <CommentSection /> */}
       {/* <Settings /> */}
-      {/* <CreateNew /> */}
+      <CreateNew />
       <ScrollToTop />
     </div>
   );

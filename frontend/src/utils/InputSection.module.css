@@ -162,3 +162,169 @@
 .switch input:checked + label:before {
   transform: translateX(20px);
 }
+
+/* TEXT EDITOR */
+
+.new_bug_report_container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.icon_buttons_container {
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  border: 1px solid var(--gray_50505066);
+}
+
+.icon_buttons {
+  display: flex;
+  padding: 10px 20px;
+  width: 100%;
+}
+
+.icons {
+  margin: 0 10px;
+}
+
+.icon_button {
+  border-radius: 5px;
+}
+
+.icon_button:hover {
+  background-color: var(--black_333333e0);
+}
+
+.icon_button:active {
+  background-color: var(--black_232526);
+}
+
+.icons_2 {
+  margin: 0 10px;
+}
+
+/* Example styles for text alignment */
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+/*  */
+
+.options_container {
+  display: flex;
+  gap: 5rem;
+}
+
+.option_container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.dropdown_button_container {
+  border: 1px solid var(--gray_50505066);
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.dropdown_menu_container {
+  left: 0;
+  width: fit-content;
+}
+
+.check_box_container {
+  display: flex;
+  align-items: center;
+}
+
+.solid_button_container {
+  width: 100%;
+  justify-content: center;
+}
+
+.solid_button {
+  padding: 0 5rem;
+}
+
+.editorContainer {
+  color: var(--white_ffffff);
+  border-radius: 0 0 5px 5px;
+  padding: 10px;
+  min-height: 200px;
+  background: var(--black_ffffff0d);
+}
+
+.editor {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.editorBlock {
+  margin-bottom: 10px;
+}
+
+:global(.public-DraftEditor-content) {
+  min-height: 200px;
+  padding: 10px;
+}
+
+:global(.public-DraftStyleDefault-block) {
+  margin: 0;
+}
+
+:global(.public-DraftStyleDefault-pre) {
+  background: var(--black_ffffff0d);
+  padding: 10px;
+  border-radius: 0 0 5px 5px;
+}
+
+.emoji_picker_container {
+  position: fixed;
+  top: 5rem;
+  left: 70rem;
+  z-index: 99;
+}
+
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 8rem;
+  width: 100%;
+  border: 3px dashed var(--gray_50505066);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.dropzone_text {
+  cursor: pointer;
+  color: var(--white_afafaf);
+}
+
+.image_container {
+  width: 15%;
+  height: 15%;
+}
+
+.image {
+  border-radius: 10px;
+}
+
+.highlight {
+  background-color: var(--gray_50505066);
+}

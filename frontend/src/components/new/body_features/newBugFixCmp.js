@@ -21,33 +21,21 @@ import { TextEditor } from '../../../utils/InputSection';
 const NEW_BUG_REPORT_FORM_DATA = [
   {
     id: 'bug_report',
-    title: 'Create A Bug Report',
+    title: 'Create A Bug Fix',
     input_label: 'Title',
-    input_placeholder: 'Enter Your Bug Report Title Here',
+    input_placeholder: 'Enter Your Bug Fix Title Here',
     children: [
       {
         id: '1',
-        label: 'Description',
+        label: 'Solution',
       },
       {
         id: '2',
-        label: 'Code Base',
+        label: 'Description',
       },
       {
         id: '3',
-        label: 'Bug Report',
-      },
-      {
-        id: '4',
-        label: 'Steps To Reproduce',
-      },
-      {
-        id: '5',
-        label: 'Expected Behavior',
-      },
-      {
-        id: '6',
-        label: 'Expected Behavior',
+        label: 'Result',
       },
     ],
     icon_buttons: [
@@ -67,48 +55,15 @@ const NEW_BUG_REPORT_FORM_DATA = [
       { id: '14', icon: faRotateRight, tooltipmessage: 'Next' },
     ],
     editor_placeholder: 'Description',
-    options: [
-      {
-        id: '1',
-        title: 'Browser (optional)',
-        label: 'Chrome',
-        menu: [
-          { id: '1', label: 'Chrome' },
-          { id: '2', label: 'Edge' },
-          { id: '3', label: 'Brave' },
-          { id: '4', label: 'FireFox' },
-          { id: '5', label: 'Opera' },
-        ],
-      },
-      {
-        id: '2',
-        title: 'Device(s) (optional)',
-        label: 'Desktop',
-        menu: [
-          { id: '1', label: 'Desktop' },
-          { id: '2', label: 'Modile' },
-          { id: '3', label: 'Other' },
-        ],
-      },
-      {
-        id: '3',
-        title: 'Severity (optional)',
-        label: 'Medium',
-        menu: [
-          { id: '1', label: 'High' },
-          { id: '2', label: 'Medium' },
-          { id: '3', label: 'Low' },
-        ],
-      },
-    ],
+    options: null,
     check_box: 'By proceeding with this action, you are consenting to abide by our',
     check_box_link: 'terms & conditions.',
     button: 'Submit',
   },
 ];
 
-function NewBugReport() {
+function NewBugFix() {
   return <TextEditor META_DATA={NEW_BUG_REPORT_FORM_DATA} />;
 }
 
-export default NewBugReport;
+export default NewBugFix;

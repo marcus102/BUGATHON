@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ManagmentSystem } from '../../../store/AppGeneralManagmentSystem';
 import classes from './AssignedBugCmp.module.css';
 import Colors from '../../../constants/colors';
 import {
@@ -78,6 +79,9 @@ const ASSIGNMENT_OPTION = [
 ];
 
 function AssignedBug() {
+  const { dropDownDefault } = useContext(ManagmentSystem);
+  const { assigned_bug } = dropDownDefault;
+
   return (
     <CustomMenu
       title={'Assigned Bugs'}
@@ -88,6 +92,8 @@ function AssignedBug() {
       reactionData={ASSIGNMENT_REACTIONS_DATA}
       solidButtonDataType={'received'}
       emptyContentLabel={'No Assigned Bugs'}
+      buttonLabel={assigned_bug}
+      my_key={'assigned_bug'}
     />
   );
 }

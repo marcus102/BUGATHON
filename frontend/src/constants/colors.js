@@ -4,6 +4,7 @@ const Colors = {
   blue_57a3fb:'#57a3fb',
   transparentBlack_: '#0000001a',
   white_: '#ffffff',
+  white_afafaf: '#afafaf',
   white_ffffff0d: '#ffffff0d',
   gray_dedcdcb8: '#dedcdcb8',
   gray_aaaaaa5e: '#aaaaaa5e',

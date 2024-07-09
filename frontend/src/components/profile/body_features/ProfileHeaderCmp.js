@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './ProfileHeaderCmp.module.css';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import Image from '../../../utils/ImageSection';
+import { Image } from '../../../utils/MediaSection';
 import images from '../../../assets/images/people.jpg';
 import Text from '../../../utils/TextSection';
 import { IconTextButton, ButtonContainer } from '../../../utils/ButtonSection';

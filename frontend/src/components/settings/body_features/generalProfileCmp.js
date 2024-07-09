@@ -1,14 +1,13 @@
 import React from 'react';
 import classes from './generalProfileCmp.module.css';
 import { IconTextButton, SolidButton } from '../../../utils/ButtonSection';
-import Image from '../../../utils/ImageSection';
+import { Image } from '../../../utils/MediaSection';
 import profile from '../../../assets/images/globe.jpg';
 import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
 import Text from '../../../utils/TextSection';
 import Icon from '../../../utils/IconSection';
 import { Input, TextArea } from '../../../utils/InputSection';
 import { faImage } from '@fortawesome/free-regular-svg-icons';
-import Line from '../../../utils/LineSection';
 
 const TIPS_DATA = [
   {

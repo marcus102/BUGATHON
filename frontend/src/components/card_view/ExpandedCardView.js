@@ -36,7 +36,7 @@ import {
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import Text from '../../utils/TextSection';
 import Icon from '../../utils/IconSection';
-import Image from '../../utils/ImageSection';
+import { Image } from '../../utils/MediaSection';
 import images from '../../assets/images/blog.jpg';
 import CommentSection from '../comment/CommentSectionCmp';
 import ToolTip from '../../utils/toolTipSection';

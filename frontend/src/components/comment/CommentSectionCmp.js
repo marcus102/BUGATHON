@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
 import classes from './CommentSectionCmp.module.css';
 import Comment from './CommentCmp';
 import { Input } from '../../utils/InputSection';
@@ -19,6 +20,8 @@ const COMMENT_OPTION = [
 ];
 
 const CommentSection = () => {
+  const { dropDownDefault } = useContext(ManagmentSystem);
+  const { comment } = dropDownDefault;
   const [comments, setComments] = useState([
     {
       id: 1,
@@ -98,7 +101,12 @@ const CommentSection = () => {
   return (
     <div className={classes.comment_section}>
       <div className={classes.comment_header_drop_down_container}>
-        <DynamicLabelDropdownMenu menuItems={COMMENT_OPTION} buttonIcon={faChevronDown} />
+        <DynamicLabelDropdownMenu
+          menuItems={COMMENT_OPTION}
+          buttonIcon={faChevronDown}
+          buttonLabel={comment}
+          my_key={'comment'}
+        />
       </div>
       <div className={classes.comments_content_container}>
         {comments.slice(0, visibleComments).map((comment) => (

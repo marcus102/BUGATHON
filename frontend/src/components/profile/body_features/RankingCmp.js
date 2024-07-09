@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { ManagmentSystem } from '../../../store/AppGeneralManagmentSystem';
-import Colors from '../../../constants/colors';
 import classes from './RankingCmp.module.css';
 import Text from '../../../utils/TextSection';
 import BronzeBadge from '../../../assets/icons/bronze_badge.svg';
@@ -10,7 +9,7 @@ import Profile from '../../../assets/images/quote.jpg';
 import RankingImage from '../../../assets/images/study.jpg';
 import { ButtonContainer, IconButton, SolidButton } from '../../../utils/ButtonSection';
 import { Overlay } from '../../../utils/OverlaySection';
-import Image from '../../../utils/ImageSection';
+import { Image } from '../../../utils/MediaSection';
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import ProgressBar from '../../activity_chart/ProgressBarCmp';

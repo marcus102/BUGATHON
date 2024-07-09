@@ -13,6 +13,13 @@ export const ManagmentSystem = createContext({
   profileSideBarButtonHandler: (parameters) => {},
   settingSideBarButton: '',
   settingSideBarButtonHandler: (parameters) => {},
+  dropDownDefault: {
+    assigned_bug: 'All',
+    notification: 'All',
+    comment: 'All',
+    create_new: 'Bug Report',
+  },
+  dropDownDefaultHandler: ({ assigned_bug, notification, comment, create_new }) => {},
 });
 
 export default function ManagmentSystemProvider({ children }) {
@@ -23,6 +30,12 @@ export default function ManagmentSystemProvider({ children }) {
     sideBar: { theme: 'dark', isOpen: true },
     profileSideBarButton: 'General',
     settingSideBarButton: 'General Profile',
+    dropDownDefault: {
+      assigned_bug: 'All',
+      notification: 'All',
+      comment: 'All',
+      create_new: 'Bug Report',
+    },
   };
 
   function reducer(state, action) {
@@ -71,7 +84,17 @@ export default function ManagmentSystemProvider({ children }) {
           ...state,
           settingSideBarButton: action.payload,
         };
-      ///
+      case 'SET_DROPDOWN_DEFAULT':
+        return {
+          ...state,
+          dropDownDefault: {
+            ...state.dropDownDefault,
+            ...(action.payload.assigned_bug !== undefined && { assigned_bug: action.payload.assigned_bug }),
+            ...(action.payload.notification !== undefined && { notification: action.payload.notification }),
+            ...(action.payload.comment !== undefined && { comment: action.payload.comment }),
+            ...(action.payload.create_new !== undefined && { create_new: action.payload.create_new }),
+          },
+        };
       default:
         return state;
     }
@@ -103,6 +126,13 @@ export default function ManagmentSystemProvider({ children }) {
     dispatch({ type: 'SET_SETTING_SIDEBAR_BUTTON', payload: parameters });
   };
 
+  const dropDownDefaultHandler = ({ assigned_bug, notification, comment, create_new }) => {
+    dispatch({
+      type: 'SET_DROPDOWN_DEFAULT',
+      payload: { assigned_bug, notification, comment, create_new },
+    });
+  };
+
   const value = {
     overlay: state.overlay,
     overlayHandler: overlayHandler,
@@ -116,6 +146,8 @@ export default function ManagmentSystemProvider({ children }) {
     profileSideBarButtonHandler: profileSideBarButtonHandler,
     settingSideBarButton: state.settingSideBarButton,
     settingSideBarButtonHandler: settingSideBarButtonHandler,
+    dropDownDefault: state.dropDownDefault,
+    dropDownDefaultHandler: dropDownDefaultHandler,
   };
 
   return <ManagmentSystem.Provider value={value}>{children}</ManagmentSystem.Provider>;

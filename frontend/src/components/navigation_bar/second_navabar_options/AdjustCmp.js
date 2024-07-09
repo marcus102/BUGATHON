@@ -1,8 +1,7 @@
 import React from 'react';
 import classes from './AdjustCmp.module.css';
-import { CheckBox, Radio } from '../../../utils/InputSection';
+import { Radio } from '../../../utils/InputSection';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
-import { DropdownMenu } from '../../../utils/ButtonSection';
 import Text from '../../../utils/TextSection';
 
 const ADJUST_DATA = [

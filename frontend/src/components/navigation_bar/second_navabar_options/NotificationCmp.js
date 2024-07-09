@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ManagmentSystem } from '../../../store/AppGeneralManagmentSystem';
 import classes from './NotificationCmp.module.css';
 import { faTrashCan, faExclamation, faCheckDouble } from '@fortawesome/free-solid-svg-icons';
 import { faEyeSlash } from '@fortawesome/free-regular-svg-icons';
@@ -51,6 +52,8 @@ const NOTIFICATION_OPTION = [
 ];
 
 function Notification() {
+  const { dropDownDefault } = useContext(ManagmentSystem);
+  const { notification } = dropDownDefault;
   return (
     <CustomMenu
       title={'Notifications'}
@@ -61,6 +64,8 @@ function Notification() {
       headerOption={NOTIFICATION_HEADER}
       solidButtonDataType={'request'}
       emptyContentLabel={'No Notifications Available yet!'}
+      buttonLabel={notification}
+      my_key={'notification'}
     />
   );
 }

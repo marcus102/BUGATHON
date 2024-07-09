@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './sessionCmp.module.css';
 import desktopImg from '../../../assets/icons/session.svg';
 import dotImg from '../../../assets/icons/green_dot.svg';
-import Image from '../../../utils/ImageSection';
+import { Image } from '../../../utils/MediaSection';
 import Text from '../../../utils/TextSection';
 import Link from '../../../utils/LinkSection';
 

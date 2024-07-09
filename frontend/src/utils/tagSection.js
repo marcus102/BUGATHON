@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './tagSection.module.css';
 import Text from './TextSection';
-import Image from './ImageSection';
+import { Image } from './MediaSection';
 import Icon from './IconSection';
 import ToolTip from './toolTipSection';
 

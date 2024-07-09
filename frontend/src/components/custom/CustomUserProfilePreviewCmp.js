@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import classes from './CustomUserProfilePreviewCmp.module.css';
 import Text from '../../utils/TextSection';
-import Image from '../../utils/ImageSection';
+import { Image } from '../../utils/MediaSection';
 import {
   IconButton,
   ButtonContainer,

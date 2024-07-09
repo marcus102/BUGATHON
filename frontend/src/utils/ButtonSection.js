@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { ManagmentSystem } from '../store/AppGeneralManagmentSystem';
 import classes from './ButtonSection.module.css';
 import Icon from './IconSection';
 import Text from './TextSection';
-import Image from './ImageSection';
+import { Image } from './MediaSection';
 
 export function PlaneButton({
   children,
@@ -309,14 +310,17 @@ export function DynamicLabelDropdownMenu({
   menuItems,
   dropDownMenuStyle,
   dropDownIconTextStyle,
+  my_key,
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedLabel, setSelectedLabel] = useState('All');
+  const { dropDownDefaultHandler } = useContext(ManagmentSystem);
+  // const { all, bug_report } = dropDownDefault;
+  // const [selectedLabel, setSelectedLabel] = useState('All');
   const dropdownRef = useRef(null);
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
+  // const toggleDropdown = () => {
+  //   setIsOpen(!isOpen);
+  // };
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -331,10 +335,10 @@ export function DynamicLabelDropdownMenu({
     };
   }, []);
 
-  const handleItemClick = (label) => {
-    setSelectedLabel(label);
-    setIsOpen(false);
-  };
+  // const handleItemClick = (label) => {
+  //   dropDownDefaultHandler({ [my_key]: label });
+  //   setIsOpen(false);
+  // };
 
   return (
     <div className={classes.dropdown_menu_container} ref={dropdownRef}>
@@ -342,8 +346,8 @@ export function DynamicLabelDropdownMenu({
         unwrap={true}
         inconTextButtonStyle={`${classes.dropdown_toggle} ${dropDownIconTextStyle}`}
         icon={buttonIcon}
-        label={buttonLabel ? buttonLabel : selectedLabel}
-        onClick={toggleDropdown}
+        label={buttonLabel}
+        onClick={() => setIsOpen(!isOpen)}
       />
       {isOpen && (
         <div className={`${classes.dropdown_menu} ${dropDownMenuStyle}`}>
@@ -355,7 +359,10 @@ export function DynamicLabelDropdownMenu({
               icon_={data.icon_2 && data.icon_2}
               label={data.label && data.label}
               icon={data.icon && data.icon}
-              onClick={() => handleItemClick(data.label)}
+              onClick={() => {
+                dropDownDefaultHandler({ [my_key]: data.label });
+                setIsOpen(false);
+              }}
             />
           ))}
         </div>

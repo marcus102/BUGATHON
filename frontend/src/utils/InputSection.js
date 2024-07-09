@@ -1,9 +1,42 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import classes from './InputSection.module.css';
 import Text from './TextSection';
-import { IconButton } from './ButtonSection';
+import { IconButton, DynamicLabelDropdownMenu, SolidButton } from './ButtonSection';
 import Icon from './IconSection';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+
+import Colors from '../constants/colors';
+import Link from './LinkSection';
+import {
+  faUnderline,
+  faItalic,
+  faB,
+  faCode,
+  faFaceSmile,
+  faAlignCenter,
+  faAlignJustify,
+  faAlignLeft,
+  faAlignRight,
+  faRotateLeft,
+  faRotateRight,
+  faChevronDown,
+  faHighlighter,
+  faPlusCircle,
+  faPaperclip,
+  faListOl,
+} from '@fortawesome/free-solid-svg-icons';
+import ToolTip from './toolTipSection';
+import { HorizontalScrollView } from './ScrollViewsSection';
+import { Image, Audio, Video } from './MediaSection';
+
+import { Editor, EditorState, RichUtils, Modifier, AtomicBlockUtils } from 'draft-js';
+import { useDropzone } from 'react-dropzone';
+import data from '@emoji-mart/data';
+import Picker from '@emoji-mart/react';
+
+import prismPlugin from './syntaxHighlightPlugin';
+
+const plugins = [prismPlugin];
 
 export function RowOfSquares({ rowOfSquaresStyle }) {
   const numSquares = 6;
@@ -156,3 +189,290 @@ export function Switch({ label, switchStyle, checked }) {
     </div>
   );
 }
+
+// START OF TEXT EDITOR
+export function TextEditor({ META_DATA }) {
+  const [activeButton, setActiveButton] = useState('1');
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop: useFileDrop(editorState, setEditorState),
+  });
+
+  return (
+    <>
+      {META_DATA.map((data) => (
+        <div key={data.id} className={classes.new_bug_report_container}>
+          <Text h5={data.title} />
+          <Input label={data.input_label} placeholder={data.input_placeholder} />
+          <HorizontalScrollView
+            METADATA={data.children}
+            onClick={setActiveButton}
+            activeButton={activeButton}
+          />
+          <IconButtons
+            iconButtons={data.icon_buttons}
+            editorState={editorState}
+            setEditorState={setEditorState}
+            showEmojiPicker={showEmojiPicker}
+            setShowEmojiPicker={setShowEmojiPicker}
+          />
+          <EditorContainer
+            editorState={editorState}
+            setEditorState={setEditorState}
+            getRootProps={getRootProps}
+            getInputProps={getInputProps}
+          />
+          {showEmojiPicker && <EmojiPicker onSelect={addEmoji(editorState, setEditorState)} />}
+          {data.options && <Options options={data.options} />}
+          <CheckBoxWithLink label={data.check_box} link={data.check_box_link} />
+          <SolidButton
+            buttonMainContainerStyle={classes.solid_button_container}
+            buttonStyle={classes.solid_button}
+            label={data.button}
+          />
+        </div>
+      ))}
+    </>
+  );
+}
+
+function useFileDrop(editorState, setEditorState) {
+  return useCallback(
+    (acceptedFiles) => {
+      acceptedFiles.forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const contentState = editorState.getCurrentContent();
+          const contentStateWithEntity = contentState.createEntity(
+            file.type.startsWith('image/')
+              ? 'IMAGE'
+              : file.type.startsWith('video/')
+              ? 'VIDEO'
+              : file.type.startsWith('audio/')
+              ? 'AUDIO'
+              : 'FILE',
+            'IMMUTABLE',
+            {
+              src: reader.result,
+              type: file.type,
+              name: file.name,
+            }
+          );
+          const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+          const newEditorState = AtomicBlockUtils.insertAtomicBlock(editorState, entityKey, ' ');
+          setEditorState(newEditorState);
+        };
+        reader.readAsDataURL(file);
+      });
+    },
+    [editorState, setEditorState]
+  );
+}
+
+function IconButtons({
+  iconButtons,
+  editorState,
+  setEditorState,
+  showEmojiPicker,
+  setShowEmojiPicker,
+}) {
+  const toggleInlineStyle = (style) =>
+    setEditorState(RichUtils.toggleInlineStyle(editorState, style));
+  const toggleBlockType = (blockType) =>
+    setEditorState(RichUtils.toggleBlockType(editorState, blockType));
+  const handleUndo = () => setEditorState(EditorState.undo(editorState));
+  const handleRedo = () => setEditorState(EditorState.redo(editorState));
+  const toggleHighlight = () => {
+    const selection = editorState.getSelection();
+    const currentStyle = editorState.getCurrentInlineStyle();
+    let newContentState;
+
+    if (currentStyle.has('HIGHLIGHT')) {
+      newContentState = Modifier.removeInlineStyle(
+        editorState.getCurrentContent(),
+        selection,
+        'HIGHLIGHT'
+      );
+    } else {
+      newContentState = Modifier.applyInlineStyle(
+        editorState.getCurrentContent(),
+        selection,
+        'HIGHLIGHT'
+      );
+    }
+
+    setEditorState(EditorState.push(editorState, newContentState, 'change-inline-style'));
+  };
+
+  return (
+    <div className={classes.icon_buttons_container}>
+      <div className={classes.icon_buttons}>
+        {iconButtons.map((button) => (
+          <ToolTip key={button.id} tooltipMessage={button.tooltipmessage}>
+            <IconButton
+              inconButtonStyle={classes.icon_button}
+              icon={button.icon}
+              onClick={() => {
+                const actionMap = {
+                  1: () => toggleInlineStyle('BOLD'),
+                  2: () => toggleInlineStyle('ITALIC'),
+                  3: () => toggleInlineStyle('UNDERLINE'),
+                  4: () => toggleHighlight(),
+                  5: () => toggleBlockType('code-block'),
+                  6: () => setShowEmojiPicker(!showEmojiPicker),
+                  7: () => document.getElementById('attachement-upload-input').click(),
+                  8: () => toggleBlockType('ordered-list-item'),
+                  9: () => toggleBlockType('left'),
+                  10: () => toggleBlockType('center'),
+                  11: () => toggleBlockType('right'),
+                  12: () => toggleBlockType('justify'),
+                  13: () => handleUndo(),
+                  14: () => handleRedo(),
+                };
+
+                const actionFunction = actionMap[button.id];
+                if (actionFunction) {
+                  actionFunction();
+                }
+              }}
+            />
+          </ToolTip>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function EditorContainer({ editorState, setEditorState, getRootProps, getInputProps }) {
+  const blockRendererFn = (contentBlock) => {
+    const type = contentBlock.getType();
+    if (type === 'atomic') {
+      const entity = editorState.getCurrentContent().getEntity(contentBlock.getEntityAt(0));
+      const entityType = entity.getType();
+      switch (entityType) {
+        case 'IMAGE':
+          return { component: UploadedImage, editable: false };
+        case 'VIDEO':
+          return { component: UploadedVideo, editable: false };
+        case 'AUDIO':
+          return { component: UploadedAudio, editable: false };
+        case 'FILE':
+          return { component: UploadedFile, editable: false };
+        default:
+          return null;
+      }
+    }
+    return null;
+  };
+
+  const styleMap = {
+    HIGHLIGHT: {
+      backgroundColor: Colors.gray_aaaaaa5e,
+      borderRadius: '5px',
+      padding: '0 5px',
+    },
+  };
+
+  return (
+    <div className={classes.editorContainer}>
+      <Editor
+        editorState={editorState}
+        onChange={setEditorState}
+        plugins={plugins}
+        editorKey="editor"
+        blockRendererFn={blockRendererFn}
+        customStyleMap={styleMap}
+        blockStyleFn={(contentBlock) => {
+          const type = contentBlock.getType();
+          return `${classes.editorBlock} ${classes[`text-${type}`]}`;
+        }}
+        className={classes.editor}
+      />
+      <div {...getRootProps()} className={classes.dropzone}>
+        <input {...getInputProps()} id="attachement-upload-input" />
+        <Icon icon={faPlusCircle} color={Colors.white_afafaf} />
+        <Text
+          label14Style={classes.dropzone_text}
+          label14="Add Image, Video, Audio, or File (Drag and drop...)"
+        />
+      </div>
+    </div>
+  );
+}
+
+function EmojiPicker({ onSelect }) {
+  return (
+    <div className={classes.emoji_picker_container}>
+      <Picker data={data} emojiSize={20} onEmojiSelect={onSelect} />
+    </div>
+  );
+}
+
+function Options({ options }) {
+  return (
+    <div className={classes.options_container}>
+      {options.map((option) => (
+        <div key={option.id} className={classes.option_container}>
+          <Text h6={`${option.title} :`} />
+          <DynamicLabelDropdownMenu
+            dropDownIconTextStyle={classes.dropdown_button_container}
+            dropDownMenuStyle={classes.dropdown_menu_container}
+            buttonLabel={option.label}
+            buttonIcon={faChevronDown}
+            menuItems={option.menu}
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function CheckBoxWithLink({ label, link }) {
+  return (
+    <div className={classes.check_box_container}>
+      <CheckBox label12={label} />
+      <Link children12={link} />
+    </div>
+  );
+}
+
+function addEmoji(editorState, setEditorState) {
+  return (emoji) => {
+    const contentState = Modifier.insertText(
+      editorState.getCurrentContent(),
+      editorState.getSelection(),
+      emoji.native
+    );
+    const newEditorState = EditorState.push(editorState, contentState, 'insert-characters');
+    setEditorState(newEditorState);
+  };
+}
+
+function UploadedImage(props) {
+  const { src } = props.contentState.getEntity(props.block.getEntityAt(0)).getData();
+  return (
+    <Image
+      src={src}
+      alt="Uploaded"
+      imgContainerStyle={classes.image_container}
+      imgStyle={classes.image}
+    />
+  );
+}
+
+function UploadedVideo(props) {
+  const { src } = props.contentState.getEntity(props.block.getEntityAt(0)).getData();
+  return <Video src={src} />;
+}
+
+function UploadedAudio(props) {
+  const { src } = props.contentState.getEntity(props.block.getEntityAt(0)).getData();
+  return <Audio src={src} />;
+}
+
+function UploadedFile(props) {
+  const { src, name } = props.contentState.getEntity(props.block.getEntityAt(0)).getData();
+  return <Link underline href={src} download={name} label14={name} />;
+}
+// END OF TEXT EDITOR
