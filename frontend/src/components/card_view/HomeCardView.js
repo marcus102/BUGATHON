@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-// import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
 import classes from './HomeCardView.module.css';
 import Colors from '../../constants/colors';
 import {
-  SolidButton,
   IconTextButton,
   ButtonContainer,
   IconButton,
   DropdownMenu,
+  PlaneButton,
 } from '../../utils/ButtonSection';
 import Text from '../../utils/TextSection';
 import {
@@ -32,7 +31,7 @@ import UserProfileHeader from '../userProfileHeaderCmp';
 import HeaderOptions from '../headerOptionsCmp';
 import ToolTip from '../../utils/toolTipSection';
 
-const DUMMY_DATA = [
+const DUMMY_TAG_DATA = [
   {
     id: '1',
     button: 'java',
@@ -136,48 +135,38 @@ function HomeCard({
       {/* FOOTER */}
 
       <div className={classes.home_card_footer_container}>
-        <Text textStyle={classes.timestamp_container} label10={'1mn ago'} />
-        <div className={classes.footer_main_container}>
-          <div className={classes.footer_tag_container}>
-            {DUMMY_DATA.map((data) => (
-              <ToolTip
-                children={
-                  <SolidButton
-                    buttonMainContainerStyle={classes.tag_button_main_container}
-                    buttonContainerStyle={classes.tag_button_container}
-                    buttonStyle={classes.tag_button}
-                    key={data.id}
-                    children={<Text label12Style={classes.label12_style} label12={data.button} />}
-                  />
-                }
-                tooltipMessage={data.about}
-              />
-            ))}
-          </div>
-          <div className={classes.footer_reaction_container}>
-            {REACTIONS.map((data) => (
-              <ToolTip
-                children={
-                  <IconTextButton
-                    key={data.id}
-                    onClick={() => {
-                      setIsActive((prev) => ({
-                        ...prev,
-                        [data.id]: !prev[data.id],
-                      }));
-                    }}
-                    inconTextButtonStyle={classes.reaction_icon_text_button_container}
-                    children={
-                      <Text label12Style={classes.reaction_label12_style} label12={data.text} />
-                    }
-                    colorOnMouseUp={isActive[data.id] ? data.activeColor : undefined}
-                    icon={data.icon}
-                  />
-                }
-                tooltipMessage={data.id}
-              />
-            ))}
-          </div>
+        <div className={classes.footer_tag_container}>
+          {DUMMY_TAG_DATA.map((data) => (
+            <ToolTip
+              children={<PlaneButton key={data.id} label12={data.button} />}
+              tooltipMessage={data.about}
+            />
+          ))}
+          <Text textStyle={classes.timestamp_container} label10={'1mn ago'} />
+        </div>
+        <div className={classes.footer_reaction_container}>
+          {REACTIONS.map((data) => (
+            <ToolTip
+              children={
+                <IconTextButton
+                  key={data.id}
+                  onClick={() => {
+                    setIsActive((prev) => ({
+                      ...prev,
+                      [data.id]: !prev[data.id],
+                    }));
+                  }}
+                  inconTextButtonStyle={classes.reaction_icon_text_button_container}
+                  children={
+                    <Text label12Style={classes.reaction_label12_style} label12={data.text} />
+                  }
+                  colorOnMouseUp={isActive[data.id] ? data.activeColor : undefined}
+                  icon={data.icon}
+                />
+              }
+              tooltipMessage={data.id}
+            />
+          ))}
         </div>
       </div>
     </ButtonContainer>

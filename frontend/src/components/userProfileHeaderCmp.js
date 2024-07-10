@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import classes from './userProfileHeaderCmp.module.css';
 import Text from '../utils/TextSection';
-import { OutlinedButton } from '../utils/ButtonSection';
+import { OutlinedButton, PlaneButton } from '../utils/ButtonSection';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faExclamationCircle, faUserLock } from '@fortawesome/free-solid-svg-icons';
 import CustomUserProfilePreview from './custom/CustomUserProfilePreviewCmp';
@@ -30,25 +30,19 @@ function UserProfileHeader({ username, profession, profileImg, hideFollow }) {
 
   return (
     <div className={classes.header_profile_container}>
-      <div className={classes.profile_container}>
-        <CustomUserProfilePreview
-          METADATA={DUMMY_GUEST_USER_PROFILE}
-          username={'marcus'}
-          hideFollow={false}
-          hideEdit={true}
-        />
-      </div>
+      <CustomUserProfilePreview
+        METADATA={DUMMY_GUEST_USER_PROFILE}
+        username={'marcus'}
+        hideFollow={false}
+        hideEdit={true}
+      />
       {!hideFollow && (
-        <OutlinedButton
-          buttonMainContainerStyle={classes.follow_button_container}
-          buttonStyle={classes.follow_button}
+        <PlaneButton
+          unwrap={true}
+          label12Style={classes.follow_label12_style}
           onClick={handleFollowToggle}
-        >
-          <Text
-            label12Style={classes.follow_label12_style}
-            label12={!isFollowing ? 'Follow' : 'Unfollow'}
-          />
-        </OutlinedButton>
+          label12={!isFollowing ? 'Follow' : 'Unfollow'}
+        />
       )}
     </div>
   );

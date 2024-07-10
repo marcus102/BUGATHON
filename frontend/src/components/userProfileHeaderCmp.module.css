@@ -4,7 +4,6 @@
   display: flex;
   align-items: center;
   width: 11rem;
-  gap: 5px;
 }
 
 .profile_container {
@@ -14,28 +13,6 @@
   gap: 5px;
 }
 
-.follow_button_container {
-  width: fit-content;
-  height: fit-content;
-  padding: 0;
-}
-
-.follow_button {
-  flex-direction: row;
-  border: none;
-  background-color: transparent;
-  gap: 0;
-  padding: 2px 5px;
-  min-width: fit-content;
-  height: fit-content;
-}
-
-.follow_button:hover {
-  border: none;
-  background-color: transparent;
-}
-
 .follow_label12_style {
   color: var(--green_039000);
-  cursor: pointer;
 }

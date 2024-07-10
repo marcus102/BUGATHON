@@ -16,7 +16,7 @@ function ProfilePage() {
   const { profileSideBarButton } = useContext(ManagmentSystem);
   return (
     <div className={classes.profile_page_main_container}>
-      <ProfileSideBar />
+      <ProfileSideBar isMyProfile={true}/>
       <div className={`${classes.profile_page_second_container}`}>
         <ProfileSideBar2 />
         <VerticalScrollView

@@ -22,12 +22,12 @@ function Home() {
         }
       />
       <Authentication />
-      {/* <HomeWindow /> */}
+      <HomeWindow />
       {/* <ProfilePage /> */}
       {/* <ExpandedCard /> */}
       {/* <ExpandedBugReport /> */}
       {/* <ExpandedBugFix /> */}
-      <ExpandedReusableCode />
+      {/* <ExpandedReusableCode /> */}
       {/* <CommentSection /> */}
       {/* <Settings /> */}
       {/* <CreateNew /> */}

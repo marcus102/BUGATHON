@@ -93,7 +93,7 @@ function HeaderOptions({ headerOptionMainContainer, contributions, img1, img2, i
               src={images}
             />
           </div>
-          <Text label16Style={classes.contrib_label16_style} label16={'...'} />
+          {/* <Text label16Style={classes.contrib_label16_style} label16={'...'} /> */}
         </div>
       }
       children={

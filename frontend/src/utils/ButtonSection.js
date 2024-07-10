@@ -10,9 +10,13 @@ export function PlaneButton({
   buttonContainerMainContainer,
   onClick,
   label10,
+  label10Style,
   label12,
+  label12Style,
   label14,
+  label14Style,
   label16,
+  label16Style,
   unwrap,
 }) {
   return (
@@ -20,10 +24,34 @@ export function PlaneButton({
       onClick={onClick}
       className={` ${classes.plane_button_main_container} ${buttonContainerMainContainer}`}
     >
-      {label10 && <Text label10Style={classes.button_text} unwrap={unwrap} label10={label10} />}
-      {label12 && <Text label12Style={classes.button_text} unwrap={unwrap} label12={label12} />}
-      {label14 && <Text label14Style={classes.button_text} unwrap={unwrap} label14={label14} />}
-      {label16 && <Text label16Style={classes.button_text} unwrap={unwrap} label16={label16} />}
+      {label10 && (
+        <Text
+          label10Style={`${classes.button_text} ${label10Style}`}
+          unwrap={unwrap}
+          label10={label10}
+        />
+      )}
+      {label12 && (
+        <Text
+          label12Style={`${classes.button_text} ${label12Style}`}
+          unwrap={unwrap}
+          label12={label12}
+        />
+      )}
+      {label14 && (
+        <Text
+          label14Style={`${classes.button_text} ${label14Style}`}
+          unwrap={unwrap}
+          label14={label14}
+        />
+      )}
+      {label16 && (
+        <Text
+          label16Style={`${classes.button_text} ${label16Style}`}
+          unwrap={unwrap}
+          label16={label16}
+        />
+      )}
       {children}
     </button>
   );

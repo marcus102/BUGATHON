@@ -18,7 +18,7 @@ const ProfileDropdownButton = ({ mainProfile, username, profession, profileImg }
   <>
     {mainProfile && <IconButton icon={faChevronDown} />}
     <div className={classes.username_button_container}>
-      <Text label16Style={classes.username_label16_style} label16={`@${username}`} />
+      <Text label14Style={classes.username_label14_style} label14={`@${username}`} />
       {profession && (
         <Text label10Style={classes.profession_label10_style} label10={`${profession}`} />
       )}
