@@ -29,13 +29,10 @@ const DUMMY_POST_DATA = [
   },
 ];
 
-function PotentialBugFixes() {
+function PotentialBugFixes({ potentialTitle }) {
   return (
     <div className={classes.recommendation_main_container}>
-      <Text
-        textStyle={classes.recommendation_potentials_title_container}
-        h6={'Potetial Bug Fixes'}
-      />
+      <Text textStyle={classes.recommendation_potentials_title_container} h6={potentialTitle} />
       <Line direction={'horizontal'} />
       <div className={classes.recommendation_potentials_content_container}>
         {DUMMY_POST_DATA.map((data) => (

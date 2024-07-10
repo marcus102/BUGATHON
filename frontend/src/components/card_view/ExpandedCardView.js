@@ -34,20 +34,6 @@ import RelatedReviews from './body_features/relatedReviewsCmp';
 import RelatedResults from './body_features/relatedResultCmp';
 import Line from '../../utils/LineSection';
 
-const BUTTON_DATA = [
-  { id: '1', label: 'View People Contributions', children: null },
-  { id: '2', label: 'Solve The Bug', children: null },
-  {
-    id: '3',
-    label: 'Assign The Bug To',
-    children: [
-      { id: '3.1', label: 'Action', href: '#' },
-      { id: '3.2', label: 'Another Action', href: '#' },
-      { id: '3.3', label: 'Something Else Here', href: '#' },
-    ],
-  },
-];
-
 const Header = ({ isExpanded, setIsExpanded, CARD_VIEW_OPTION_META_DATA }) => (
   <div className={classes.implentation_header_container}>
     <div className={classes.header_options_container}>
@@ -156,9 +142,9 @@ const ImplementationSection = ({
   </div>
 );
 
-const FooterButtons = () => (
+const FooterButtons = ({ SUGESTION_BUTTON_META_DATA }) => (
   <div className={classes.body_suggestion_container}>
-    {BUTTON_DATA.map((data) => (
+    {SUGESTION_BUTTON_META_DATA.map((data) => (
       <div key={data.id} className={classes.body_suggestion_button_container}>
         {['1', '2'].includes(data.id) && <PlaneButton label14={data.label} />}
         {data.id === '3' && (
@@ -186,6 +172,9 @@ const ExpandedCard = ({
   REACTIONS_META_DATA,
   IMPLEMENTATION_META_DATA,
   CARD_VIEW_OPTION_META_DATA,
+  SUGESTION_BUTTON_META_DATA,
+  title,
+  potentialTitle,
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [isCopied, setIsCopied] = useState(
@@ -219,7 +208,7 @@ const ExpandedCard = ({
             setIsExpanded={setIsExpanded}
             CARD_VIEW_OPTION_META_DATA={CARD_VIEW_OPTION_META_DATA}
           />
-          <Text textStyle={classes.implentation_second_header_container} h5="Bug report title" />
+          <Text textStyle={classes.implentation_second_header_container} h5={title} />
           <div className={classes.implentation_body_main_container}>
             <Reactions
               REACTIONS_META_DATA={REACTIONS_META_DATA}
@@ -235,7 +224,8 @@ const ExpandedCard = ({
               isCopied={isCopied}
               setIsCopied={setIsCopied}
             />
-            <FooterButtons />
+            <FooterButtons SUGESTION_BUTTON_META_DATA={SUGESTION_BUTTON_META_DATA} />
+
             {!isExpanded && (
               <div className={classes.body_analytics_container}>
                 <div className={`d-none d-xl-flex ${classes.analytics_analytic_container_2}`}>
@@ -256,7 +246,7 @@ const ExpandedCard = ({
             className={`col-5 d-none d-xl-block ${classes.expanded_card_analytics_main_container}`}
           >
             <Analytics />
-            <PotentialBugFixes />
+            <PotentialBugFixes potentialTitle={potentialTitle} />
           </div>
         )}
       </div>

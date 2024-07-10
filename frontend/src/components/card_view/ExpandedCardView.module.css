@@ -142,23 +142,9 @@
   width: fit-content;
 }
 
-/* .body_suggestion_text_container {
-  flex-wrap: nowrap;
-} */
-
 .body_suggestion_button_container {
  display: flex;
  align-items: center;
- border: 1px solid #fff;
-}
-
-.body_suggestion_button_text:hover {
-  color: var(--white_afafaf);
-}
-
-.body_suggestion_button_container:hover {
-  background-color: transparent;
-  border: none;
 }
 
 .body_suggestion_drop_down_menu {

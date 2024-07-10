@@ -10,6 +10,8 @@ import ProfilePage from '../components/profile/ProfileCmp';
 import Settings from '../components/settings/settingsCmp';
 import CreateNew from '../components/new/createNewCmp';
 import ExpandedBugReport from '../components/card_view/expanded/ExpandedBugReportCmp';
+import ExpandedBugFix from '../components/card_view/expanded/ExpandedBugFixCmp';
+import ExpandedReusableCode from '../components/card_view/expanded/ExpandedReusableCodeCmp';
 
 function Home() {
   return (
@@ -23,7 +25,9 @@ function Home() {
       {/* <HomeWindow /> */}
       {/* <ProfilePage /> */}
       {/* <ExpandedCard /> */}
-      <ExpandedBugReport />
+      {/* <ExpandedBugReport /> */}
+      {/* <ExpandedBugFix /> */}
+      <ExpandedReusableCode />
       {/* <CommentSection /> */}
       {/* <Settings /> */}
       {/* <CreateNew /> */}
