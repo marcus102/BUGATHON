@@ -6,34 +6,35 @@ import Line from './LineSection';
 export function HorizontalScrollView({ METADATA, children, onClick, activeButton }) {
   return (
     <div className={classes.horizontal_scroll_view_container}>
-      {METADATA.map((data) => (
-        <>
-          {data.icon && (
-            <IconTextButton
-              key={data.id}
-              unwrap={true}
-              inconTextButtonStyle={`${classes.side_bar_icon_text_button_container} ${
-                activeButton === data.id && classes.active_side_bar_icon_text_button_container
-              }`}
-              icon={data.icon}
-              label={data.id}
-              onClick={() => onClick(data.id)}
-            />
-          )}
+      {METADATA &&
+        METADATA.map((data) => (
+          <>
+            {data.icon && (
+              <IconTextButton
+                key={data.id}
+                unwrap={true}
+                inconTextButtonStyle={`${classes.side_bar_icon_text_button_container} ${
+                  activeButton === data.id && classes.active_side_bar_icon_text_button_container
+                }`}
+                icon={data.icon}
+                label={data.id}
+                onClick={() => onClick(data.id)}
+              />
+            )}
 
-          {!data.icon && (
-            <PlaneButton
-              key={data.id}
-              unwrap={true}
-              buttonContainerMainContainer={
-                activeButton === data.id && classes.side_bar_plane_button_container
-              }
-              label14={data.label}
-              onClick={() => onClick(data.id)}
-            />
-          )}
-        </>
-      ))}
+            {!data.icon && (
+              <PlaneButton
+                key={data.id}
+                unwrap={true}
+                buttonContainerMainContainer={
+                  activeButton === data.id && classes.side_bar_plane_button_container
+                }
+                label14={data.label}
+                onClick={() => onClick(data.id)}
+              />
+            )}
+          </>
+        ))}
       {children}
     </div>
   );

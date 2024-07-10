@@ -126,8 +126,8 @@
   width: 100%;
 }
 
-.body_solution_text_content_container {
-}
+/* .body_solution_text_content_container {
+} */
 
 .body_suggestion_container {
   display: flex;
@@ -142,17 +142,14 @@
   width: fit-content;
 }
 
-.body_suggestion_text_container {
+/* .body_suggestion_text_container {
   flex-wrap: nowrap;
-}
+} */
 
 .body_suggestion_button_container {
-  max-width: fit-content;
-  min-width: fit-content;
-  height: fit-content;
-  gap: 0;
-  background-color: transparent;
-  border: none;
+ display: flex;
+ align-items: center;
+ border: 1px solid #fff;
 }
 
 .body_suggestion_button_text:hover {

@@ -1,30 +1,13 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback, useContext } from 'react';
+import { ManagmentSystem } from '../store/AppGeneralManagmentSystem';
 import classes from './InputSection.module.css';
 import Text from './TextSection';
 import { IconButton, DynamicLabelDropdownMenu, SolidButton } from './ButtonSection';
 import Icon from './IconSection';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-
 import Colors from '../constants/colors';
 import Link from './LinkSection';
-import {
-  faUnderline,
-  faItalic,
-  faB,
-  faCode,
-  faFaceSmile,
-  faAlignCenter,
-  faAlignJustify,
-  faAlignLeft,
-  faAlignRight,
-  faRotateLeft,
-  faRotateRight,
-  faChevronDown,
-  faHighlighter,
-  faPlusCircle,
-  faPaperclip,
-  faListOl,
-} from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import ToolTip from './toolTipSection';
 import { HorizontalScrollView } from './ScrollViewsSection';
 import { Image, Audio, Video } from './MediaSection';
@@ -306,11 +289,12 @@ function IconButtons({
   };
 
   return (
-    <div className={classes.icon_buttons_container}>
-      <div className={classes.icon_buttons}>
-        {iconButtons.map((button) => (
-          <ToolTip key={button.id} tooltipMessage={button.tooltipmessage}>
+    <HorizontalScrollView
+      children={
+        <>
+          {iconButtons.map((button) => (
             <IconButton
+              key={button.id}
               inconButtonStyle={classes.icon_button}
               icon={button.icon}
               onClick={() => {
@@ -337,10 +321,10 @@ function IconButtons({
                 }
               }}
             />
-          </ToolTip>
-        ))}
-      </div>
-    </div>
+          ))}
+        </>
+      }
+    />
   );
 }
 
@@ -410,6 +394,8 @@ function EmojiPicker({ onSelect }) {
 }
 
 function Options({ options }) {
+  const { dropDownDefault } = useContext(ManagmentSystem);
+  const { browser, device, severity } = dropDownDefault;
   return (
     <div className={classes.options_container}>
       {options.map((option) => (
@@ -418,7 +404,8 @@ function Options({ options }) {
           <DynamicLabelDropdownMenu
             dropDownIconTextStyle={classes.dropdown_button_container}
             dropDownMenuStyle={classes.dropdown_menu_container}
-            buttonLabel={option.label}
+            buttonLabel={option.id === '1' ? browser : option.id === '2' ? device : severity}
+            my_key={option.id === '1' ? 'browser' : option.id === '2' ? 'device' : 'severity'}
             buttonIcon={faChevronDown}
             menuItems={option.menu}
           />
@@ -431,7 +418,7 @@ function Options({ options }) {
 function CheckBoxWithLink({ label, link }) {
   return (
     <div className={classes.check_box_container}>
-      <CheckBox label12={label} />
+      <CheckBox unwrap={true} label12={label} />
       <Link children12={link} />
     </div>
   );

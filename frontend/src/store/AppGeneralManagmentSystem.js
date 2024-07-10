@@ -19,7 +19,15 @@ export const ManagmentSystem = createContext({
     comment: 'All',
     create_new: 'Bug Report',
   },
-  dropDownDefaultHandler: ({ assigned_bug, notification, comment, create_new }) => {},
+  dropDownDefaultHandler: ({
+    assigned_bug,
+    notification,
+    comment,
+    create_new,
+    browser,
+    device,
+    severity,
+  }) => {},
 });
 
 export default function ManagmentSystemProvider({ children }) {
@@ -35,6 +43,9 @@ export default function ManagmentSystemProvider({ children }) {
       notification: 'All',
       comment: 'All',
       create_new: 'Bug Report',
+      browser: 'Chrome',
+      device: 'Desktop',
+      severity: 'Low',
     },
   };
 
@@ -89,10 +100,25 @@ export default function ManagmentSystemProvider({ children }) {
           ...state,
           dropDownDefault: {
             ...state.dropDownDefault,
-            ...(action.payload.assigned_bug !== undefined && { assigned_bug: action.payload.assigned_bug }),
-            ...(action.payload.notification !== undefined && { notification: action.payload.notification }),
+            ...(action.payload.assigned_bug !== undefined && {
+              assigned_bug: action.payload.assigned_bug,
+            }),
+            ...(action.payload.notification !== undefined && {
+              notification: action.payload.notification,
+            }),
             ...(action.payload.comment !== undefined && { comment: action.payload.comment }),
-            ...(action.payload.create_new !== undefined && { create_new: action.payload.create_new }),
+            ...(action.payload.create_new !== undefined && {
+              create_new: action.payload.create_new,
+            }),
+            ...(action.payload.browser !== undefined && {
+              browser: action.payload.browser,
+            }),
+            ...(action.payload.device !== undefined && {
+              device: action.payload.device,
+            }),
+            ...(action.payload.severity !== undefined && {
+              severity: action.payload.severity,
+            }),
           },
         };
       default:
@@ -126,10 +152,18 @@ export default function ManagmentSystemProvider({ children }) {
     dispatch({ type: 'SET_SETTING_SIDEBAR_BUTTON', payload: parameters });
   };
 
-  const dropDownDefaultHandler = ({ assigned_bug, notification, comment, create_new }) => {
+  const dropDownDefaultHandler = ({
+    assigned_bug,
+    notification,
+    comment,
+    create_new,
+    browser,
+    device,
+    severity,
+  }) => {
     dispatch({
       type: 'SET_DROPDOWN_DEFAULT',
-      payload: { assigned_bug, notification, comment, create_new },
+      payload: { assigned_bug, notification, comment, create_new, browser, device, severity },
     });
   };
 

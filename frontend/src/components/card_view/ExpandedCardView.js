@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import classes from './ExpandedCardView.module.css';
-import Colors from '../../constants/colors';
 import HeaderOptions from '../headerOptionsCmp';
 import UserProfileHeader from '../userProfileHeaderCmp';
 import {
@@ -9,28 +8,17 @@ import {
   OutlinedButton,
   IconTextButton,
   DropdownMenu,
+  PlaneButton,
 } from '../../utils/ButtonSection';
 import {
   faArrowLeft,
   faChevronLeft,
   faEllipsisVertical,
-  faHeart,
   faComment,
-  faThumbTack,
-  faArrowUpFromBracket,
   faAnglesRight,
   faChevronRight,
   faCheck,
   faCaretDown,
-  faPen,
-  faCaretRight,
-  faClipboard,
-  faUser,
-  faShareNodes,
-  faFaceGrinStars,
-  faEyeSlash,
-  faTrashCan,
-  faExclamation,
   faChevronDown,
 } from '@fortawesome/free-solid-svg-icons';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
@@ -40,72 +28,27 @@ import { Image } from '../../utils/MediaSection';
 import images from '../../assets/images/blog.jpg';
 import CommentSection from '../comment/CommentSectionCmp';
 import ToolTip from '../../utils/toolTipSection';
-import { Analytics, Analytics2 } from './expanded/analyticsCmp';
-import PotentialBugFixes from './expanded/potentialBugFixes';
-import RelatedReviews from './expanded/relatedReviewsCmp';
-import RelatedResults from './expanded/relatedResultCmp';
+import { Analytics, Analytics2 } from './body_features/analyticsCmp';
+import PotentialBugFixes from './body_features/potentialBugFixes';
+import RelatedReviews from './body_features/relatedReviewsCmp';
+import RelatedResults from './body_features/relatedResultCmp';
 import Line from '../../utils/LineSection';
 
-const REACTIONS_DATA = [
-  { id: 'likes', icon: faHeart, text: '10K', activeColor: Colors.red_FF2B2B },
-  { id: 'pin', icon: faThumbTack, text: null, activeColor: Colors.yellow_ },
-  { id: 'share', icon: faArrowUpFromBracket, text: null, activeColor: Colors.green_039000 },
-];
-
-const CARD_VIEW_OPTION = [
-  { id: '1', icon: faPen, label: 'Edit bug report (owner)', icon_2: null, href: null },
-  { id: '2', icon: faPen, label: 'Edit bug Fix (owner)', icon_2: null, href: null },
-  { id: '3', icon: faPen, label: 'Edit Reusable Code (owner)', icon_2: null, href: null },
-  { id: '4', icon: faClipboard, label: 'Assign bug to', icon_2: faCaretRight, href: null },
-  { id: '5', icon: faComment, label: 'Comment', icon_2: null, href: null },
-  { id: '6', icon: faUser, label: 'Contributions', icon_2: faCaretRight, href: null },
-  { id: '7', icon: faShareNodes, label: 'Share', icon_2: null, href: null },
-  { id: '8', icon: faThumbTack, label: 'Pin', icon_2: null, href: null },
-  { id: '9', icon: faFaceGrinStars, label: 'Make a Review', icon_2: null, href: null },
-  { id: '10', icon: faEyeSlash, label: 'I do not want to see this', icon_2: null, href: null },
-  { id: '11', icon: faTrashCan, label: 'Delete bug report (owner)', icon_2: null, href: null },
-  { id: '12', icon: faExclamation, label: 'Report', icon_2: faCaretRight, href: null },
-];
-
-// const INSIGHT_DATA = [
-//   { id: 'Analytics', icon: faChartLine, color: Colors.orange_ff7811 },
-//   { id: 'Potential Bug Fixes', icon: faTag, color: Colors.green_039000 },
-// ];
-
-const IMPLEMENTATION_DATA = [
+const BUTTON_DATA = [
+  { id: '1', label: 'View People Contributions', children: null },
+  { id: '2', label: 'Solve The Bug', children: null },
   {
-    id: 'Description',
-    title: 'Description',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: 'Bug Report',
-    title: 'Bug Report',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: 'Steps to Reproduce',
-    title: 'Steps to Reproduce',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: 'Expected Behavior',
-    title: 'Expected Behavior',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: 'Actual Behavior',
-    title: 'Actual Behavior',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+    id: '3',
+    label: 'Assign The Bug To',
+    children: [
+      { id: '3.1', label: 'Action', href: '#' },
+      { id: '3.2', label: 'Another Action', href: '#' },
+      { id: '3.3', label: 'Something Else Here', href: '#' },
+    ],
   },
 ];
 
-const Header = ({ isExpanded, setIsExpanded }) => (
+const Header = ({ isExpanded, setIsExpanded, CARD_VIEW_OPTION_META_DATA }) => (
   <div className={classes.implentation_header_container}>
     <div className={classes.header_options_container}>
       <ToolTip children={<IconButton icon={faArrowLeft} />} tooltipMessage={'Go Back Home'} />
@@ -116,7 +59,7 @@ const Header = ({ isExpanded, setIsExpanded }) => (
       <div className="d-none d-md-block">
         <HeaderOptions headerOptionMainContainer="d-none d-xl-block" />
       </div>
-      <DropdownMenu buttonIcon={faEllipsisVertical} menuItems={CARD_VIEW_OPTION} />
+      <DropdownMenu buttonIcon={faEllipsisVertical} menuItems={CARD_VIEW_OPTION_META_DATA} />
       <ToolTip
         children={
           <IconButton
@@ -131,11 +74,11 @@ const Header = ({ isExpanded, setIsExpanded }) => (
   </div>
 );
 
-const Reactions = ({ isActive, setIsActive, commentSectionsRef }) => (
+const Reactions = ({ REACTIONS_META_DATA, isActive, setIsActive, commentSectionsRef }) => (
   <div className={classes.body_reactions_container}>
     <Image imgContainerStyle={classes.img_container} imgStyle={classes.img} src={images} />
     <div className={classes.reactions_list_container}>
-      {REACTIONS_DATA.map((data) => (
+      {REACTIONS_META_DATA.map((data) => (
         <ToolTip
           key={data.id}
           children={
@@ -165,9 +108,15 @@ const Reactions = ({ isActive, setIsActive, commentSectionsRef }) => (
   </div>
 );
 
-const ImplementationSection = ({ isCollapsed, setIsCollapsed, isCopied, setIsCopied }) => (
+const ImplementationSection = ({
+  IMPLEMENTATION_META_DATA,
+  isCollapsed,
+  setIsCollapsed,
+  isCopied,
+  setIsCopied,
+}) => (
   <div className={classes.body_solution_container}>
-    {IMPLEMENTATION_DATA.map((data) => (
+    {IMPLEMENTATION_META_DATA.map((data) => (
       <div key={data.id}>
         <IconTextButton
           inconTextButtonStyle={classes.body_solution_title_container}
@@ -209,32 +158,20 @@ const ImplementationSection = ({ isCollapsed, setIsCollapsed, isCopied, setIsCop
 
 const FooterButtons = () => (
   <div className={classes.body_suggestion_container}>
-    <OutlinedButton
-      buttonMainContainerStyle={classes.body_suggestion_button_main_container}
-      buttonTextContainerStyle={classes.body_suggestion_text_container}
-      buttonTextStyle={classes.body_suggestion_button_text}
-      buttonStyle={classes.body_suggestion_button_container}
-      label="View People Contributions"
-    />
-    <Icon icon={faAnglesRight} />
-    <OutlinedButton
-      buttonMainContainerStyle={classes.body_suggestion_button_main_container}
-      buttonTextStyle={classes.body_suggestion_button_text}
-      buttonStyle={classes.body_suggestion_button_container}
-      label="Solve the bug"
-    />
-    <Icon icon={faAnglesRight} />
-    <DropdownMenu
-      dropDownMenuStyle={classes.body_suggestion_drop_down_menu}
-      buttonLabel="Assign bug to"
-      buttonIcon={faCaretDown}
-      menuItems={[
-        { label: 'Action', href: '#' },
-        { label: 'Another action', href: '#' },
-        { label: 'Something else here', href: '#' },
-      ]}
-    />
-    <Icon icon={faAnglesRight} />
+    {BUTTON_DATA.map((data) => (
+      <div key={data.id} className={classes.body_suggestion_button_container}>
+        {['1', '2'].includes(data.id) && <PlaneButton label14={data.label} />}
+        {data.id === '3' && (
+          <DropdownMenu
+            dropDownMenuStyle={classes.body_suggestion_drop_down_menu}
+            buttonLabel={data.label}
+            buttonIcon={faCaretDown}
+            menuItems={data.children && data.children}
+          />
+        )}
+        <Icon icon={faAnglesRight} />
+      </div>
+    ))}
   </div>
 );
 
@@ -245,22 +182,26 @@ const Comments = ({ commentSectionsRef }) => (
   </div>
 );
 
-const ExpandedCard = () => {
+const ExpandedCard = ({
+  REACTIONS_META_DATA,
+  IMPLEMENTATION_META_DATA,
+  CARD_VIEW_OPTION_META_DATA,
+}) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [isCopied, setIsCopied] = useState(
-    IMPLEMENTATION_DATA.reduce((acc, item) => {
+    IMPLEMENTATION_META_DATA.reduce((acc, item) => {
       acc[item.id] = false;
       return acc;
     }, {})
   );
   const [isCollapsed, setIsCollapsed] = useState(
-    IMPLEMENTATION_DATA.reduce((acc, item) => {
+    IMPLEMENTATION_META_DATA.reduce((acc, item) => {
       acc[item.id] = false;
       return acc;
     }, {})
   );
   const [isActive, setIsActive] = useState(
-    REACTIONS_DATA.reduce((acc, reaction) => {
+    REACTIONS_META_DATA.reduce((acc, reaction) => {
       acc[reaction.id] = false;
       return acc;
     }, {})
@@ -273,16 +214,22 @@ const ExpandedCard = () => {
     <div className={classes.expanded_container}>
       <div className={classes.expanded_card_main_container}>
         <div className={classes.expanded_card_implentation_main_container}>
-          <Header isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
+          <Header
+            isExpanded={isExpanded}
+            setIsExpanded={setIsExpanded}
+            CARD_VIEW_OPTION_META_DATA={CARD_VIEW_OPTION_META_DATA}
+          />
           <Text textStyle={classes.implentation_second_header_container} h5="Bug report title" />
           <div className={classes.implentation_body_main_container}>
             <Reactions
+              REACTIONS_META_DATA={REACTIONS_META_DATA}
               isActive={isActive}
               setIsActive={setIsActive}
               commentSectionsRef={commentSectionsRef}
             />
             <Line direction={'horizontal'} />
             <ImplementationSection
+              IMPLEMENTATION_META_DATA={IMPLEMENTATION_META_DATA}
               isCollapsed={isCollapsed}
               setIsCollapsed={setIsCollapsed}
               isCopied={isCopied}

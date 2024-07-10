@@ -9,6 +9,7 @@ import CommentSection from '../components/comment/CommentSectionCmp';
 import ProfilePage from '../components/profile/ProfileCmp';
 import Settings from '../components/settings/settingsCmp';
 import CreateNew from '../components/new/createNewCmp';
+import ExpandedBugReport from '../components/card_view/expanded/ExpandedBugReportCmp';
 
 function Home() {
   return (
@@ -22,9 +23,10 @@ function Home() {
       {/* <HomeWindow /> */}
       {/* <ProfilePage /> */}
       {/* <ExpandedCard /> */}
+      <ExpandedBugReport />
       {/* <CommentSection /> */}
       {/* <Settings /> */}
-      <CreateNew />
+      {/* <CreateNew /> */}
       <ScrollToTop />
     </div>
   );

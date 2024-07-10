@@ -32,7 +32,7 @@ function CreateNew() {
         <IconTextButton
           inconTextButtonStyle={classes.icon_text_button}
           icon={faEye}
-          label={'Preview'}
+          label={'Show Preview'}
         />
       </div>
       <Line />
