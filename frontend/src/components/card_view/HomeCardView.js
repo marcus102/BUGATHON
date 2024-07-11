@@ -30,6 +30,7 @@ import {
 import UserProfileHeader from '../userProfileHeaderCmp';
 import HeaderOptions from '../headerOptionsCmp';
 import ToolTip from '../../utils/toolTipSection';
+import { useNavigate } from 'react-router-dom';
 
 const DUMMY_TAG_DATA = [
   {
@@ -84,7 +85,6 @@ function HomeCard({
   postDescription,
   children,
   CUSTOM_REACTIONS_DATA,
-  onClick,
 }) {
   const REACTIONS = CUSTOM_REACTIONS_DATA ? CUSTOM_REACTIONS_DATA : REACTIONS_DATA;
 
@@ -94,6 +94,8 @@ function HomeCard({
       return acc;
     }, {})
   );
+
+  const navigate = useNavigate();
 
   // const { overlayHandler } = useContext(ManagmentSystem);
 
@@ -108,7 +110,11 @@ function HomeCard({
           ? classes.reusable_code
           : null
       } ${homeCardStyle}`}
-      onClick={onClick}
+      onClick={() => {
+        cardButtonState === 'bug_report' && navigate('/detail/bug_report');
+        cardButtonState === 'bug_fix' && navigate('/detail/bug_fix');
+        cardButtonState === 'reusable_code' && navigate('/detail/reusable_code');
+      }}
     >
       {/* HEADER */}
 

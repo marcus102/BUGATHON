@@ -9,9 +9,9 @@ function CreatePage() {
   const params = useParams();
   return (
     <CreateNew>
-      {params.postId === 'bug_report' && <NewBugReport />}
-      {params.postId === 'bug_fix' && <NewBugFix />}
-      {params.postId === 'reusable_code' && <NewReusableCode />}
+      {params.postTypeId === 'bug_report' && <NewBugReport />}
+      {params.postTypeId === 'bug_fix' && <NewBugFix />}
+      {params.postTypeId === 'reusable_code' && <NewReusableCode />}
     </CreateNew>
   );
 }

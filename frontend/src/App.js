@@ -34,7 +34,7 @@ const router = createBrowserRouter([
             element: <SettingsPage />,
           },
           {
-            path: '/details/:postId',
+            path: '/detail/:postId',
             element: <ExpandedHomePage />,
           },
         ],
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
       },
       { path: '/services', element: <Services /> },
       { path: '/blog', element: <Blog /> },
-      { path: '/new/:postId', element: <CreatePage /> },
+      { path: '/new/:postTypeId', element: <CreatePage /> },
     ],
   },
 ]);
