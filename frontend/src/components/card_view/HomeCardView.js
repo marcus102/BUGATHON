@@ -26,6 +26,7 @@ import {
   faEyeSlash,
   faTrashCan,
   faExclamation,
+  faArrowUpRightFromSquare,
 } from '@fortawesome/free-solid-svg-icons';
 import UserProfileHeader from '../userProfileHeaderCmp';
 import HeaderOptions from '../headerOptionsCmp';
@@ -100,8 +101,8 @@ function HomeCard({
   // const { overlayHandler } = useContext(ManagmentSystem);
 
   return (
-    <ButtonContainer
-      buttonContainerMainContainer={`${
+    <div
+      className={`${classes.home_card} ${
         cardButtonState === 'bug_report'
           ? classes.bug_report
           : cardButtonState === 'bug_fix'
@@ -110,11 +111,6 @@ function HomeCard({
           ? classes.reusable_code
           : null
       } ${homeCardStyle}`}
-      onClick={() => {
-        cardButtonState === 'bug_report' && navigate('/detail/bug_report');
-        cardButtonState === 'bug_fix' && navigate('/detail/bug_fix');
-        cardButtonState === 'reusable_code' && navigate('/detail/reusable_code');
-      }}
     >
       {/* HEADER */}
 
@@ -140,6 +136,17 @@ function HomeCard({
         {postDescription && <Text p16Style={classes.body_paragraph_text} p16={postDescription} />}
         {children}
       </div>
+
+      <IconTextButton
+        inconTextButtonStyle={classes.more_button}
+        label={'Click for more'}
+        icon_={faArrowUpRightFromSquare}
+        onClick={() => {
+          cardButtonState === 'bug_report' && navigate('/detail/bug_report');
+          cardButtonState === 'bug_fix' && navigate('/detail/bug_fix');
+          cardButtonState === 'reusable_code' && navigate('/detail/reusable_code');
+        }}
+      />
       {/* FOOTER */}
 
       <div className={classes.home_card_footer_container}>
@@ -177,7 +184,7 @@ function HomeCard({
           ))}
         </div>
       </div>
-    </ButtonContainer>
+    </div>
   );
 }
 

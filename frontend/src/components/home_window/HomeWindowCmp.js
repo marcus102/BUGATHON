@@ -159,21 +159,17 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
         <HomeHeader />
 
         {/* BODY */}
-        <VerticalScrollView
-          children={
-            <>
-              {paginatedData.map((data) => (
-                <HomeCard
-                  cardButtonState={data.state}
-                  key={data.id}
-                  isHeaderOption={true}
-                  postTitle={data.title}
-                  postDescription={data.description}
-                />
-              ))}
-            </>
-          }
-        />
+        <VerticalScrollView>
+          {paginatedData.map((data) => (
+            <HomeCard
+              cardButtonState={data.state}
+              key={data.id}
+              isHeaderOption={true}
+              postTitle={data.title}
+              postDescription={data.description}
+            />
+          ))}
+        </VerticalScrollView>
 
         {/* PAGINATION */}
         <Pagination

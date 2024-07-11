@@ -32,12 +32,29 @@ import PotentialBugFixes from './body_features/potentialBugFixes';
 import RelatedReviews from './body_features/relatedReviewsCmp';
 import RelatedResults from './body_features/relatedResultCmp';
 import Line from '../../utils/LineSection';
+import { useNavigate } from 'react-router-dom';
 
-const Header = ({ isExpanded, setIsExpanded, CARD_VIEW_OPTION_META_DATA }) => (
+const Header = ({
+  isExpanded,
+  setIsExpanded,
+  CARD_VIEW_OPTION_META_DATA,
+  handleNavigation,
+  postType,
+}) => (
   <div className={classes.implentation_header_container}>
     <div className={classes.header_options_container}>
-      <ToolTip children={<IconButton icon={faArrowLeft} />} tooltipMessage={'Go Back Home'} />
-      <SolidButton unwrap buttonStyle={classes.options_button_container} label={'Solve Bug'} />
+      <ToolTip
+        children={<IconButton icon={faArrowLeft} onClick={() => handleNavigation('home')} />}
+        tooltipMessage={'Go Back Home'}
+      />
+      <SolidButton
+        unwrap
+        buttonStyle={classes.options_button_container}
+        label={'Make An Attempt'}
+        onClick={() =>
+          handleNavigation(postType === 'bug_report' || postType ==='bug_fix' ? 'bug_fix' : 'reusable_code')
+        }
+      />
       <UserProfileHeader />
     </div>
     <div className={classes.header_options_container}>
@@ -174,6 +191,7 @@ const ExpandedCard = ({
   SUGESTION_BUTTON_META_DATA,
   title,
   potentialTitle,
+  postType,
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [isCopied, setIsCopied] = useState(
@@ -197,6 +215,14 @@ const ExpandedCard = ({
 
   const relatedResultsRef = useRef(null);
   const commentSectionsRef = useRef(null);
+  const navigate = useNavigate();
+
+  const handleNavigation = (id) => {
+    id === 'home' && navigate('/');
+    id === 'bug_report' && navigate('/new/bug_fix');
+    id === 'bug_fix' && navigate('/new/bug_fix');
+    id === 'reusable_code' && navigate('/new/reusable_code');
+  };
 
   return (
     <div className={classes.expanded_container}>
@@ -206,6 +232,8 @@ const ExpandedCard = ({
             isExpanded={isExpanded}
             setIsExpanded={setIsExpanded}
             CARD_VIEW_OPTION_META_DATA={CARD_VIEW_OPTION_META_DATA}
+            handleNavigation={handleNavigation}
+            postType={postType}
           />
           <Text textStyle={classes.implentation_second_header_container} h5={title} />
           <div className={classes.implentation_body_main_container}>
