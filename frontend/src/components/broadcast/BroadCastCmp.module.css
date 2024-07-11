@@ -1,17 +1,12 @@
 .broadcast_main_container {
     display: flex;
-    flex-direction: column;
-    border: 2px solid var(--gray_50505066);
+    align-items: flex-start;
     background: var(--black_9696960d);
-    padding: 5px 15px;
-    margin: 0 10px;
-    border-radius: 10px;
+    padding: 10px 15px;
 }
 
 .cancel_button_container {
     display: flex;
-    min-width: 100%;
     align-items: center;
     justify-content: flex-end;
-    margin: 5px 0;
 }

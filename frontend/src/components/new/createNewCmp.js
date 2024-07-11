@@ -1,33 +1,19 @@
-import React, { useContext } from 'react';
-import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
+import React from 'react';
 import classes from './createNewCmp.module.css';
-import NewBugReport from './body_features/newBugReportCmp';
-import NewBugFix from './body_features/newBugFixCmp';
-import NewReusableCode from './body_features/newReusableCodeCmp';
-import { DynamicLabelDropdownMenu } from '../../utils/ButtonSection';
-import { IconTextButton } from '../../utils/ButtonSection';
-import { faBug, faBugSlash, faChevronDown, faCode, faEye } from '@fortawesome/free-solid-svg-icons';
+import { IconButton, IconTextButton } from '../../utils/ButtonSection';
+import { faArrowLeftLong, faEye } from '@fortawesome/free-solid-svg-icons';
+import ToolTip from '../../utils/toolTipSection';
 import Line from '../../utils/LineSection';
+import { useNavigate } from 'react-router-dom';
 
-const OPTIONS_DATA = [
-  { id: '1', label: 'Bug Report', icon: faBug },
-  { id: '2', label: 'Bug Fix', icon: faBugSlash },
-  { id: '3', label: 'Reusable Code', icon: faCode },
-];
-
-function CreateNew() {
-  const { dropDownDefault } = useContext(ManagmentSystem);
-  const { create_new } = dropDownDefault;
-
+function CreateNew({ children }) {
+  const navigation = useNavigate();
   return (
     <div className={classes.main_container}>
       <div className={classes.button_container}>
-        <DynamicLabelDropdownMenu
-          dropDownMenuStyle={classes.dropdown_menu}
-          buttonLabel={create_new}
-          buttonIcon={faChevronDown}
-          menuItems={OPTIONS_DATA}
-          my_key={'create_new'}
+        <ToolTip
+          children={<IconButton icon={faArrowLeftLong} onClick={() => navigation('/')} />}
+          tooltipMessage={'Go Back'}
         />
         <IconTextButton
           inconTextButtonStyle={classes.icon_text_button}
@@ -36,9 +22,7 @@ function CreateNew() {
         />
       </div>
       <Line />
-      {create_new === 'Bug Report' && <NewBugReport />}
-      {create_new === 'Bug Fix' && <NewBugFix />}
-      {create_new === 'Reusable Code' && <NewReusableCode />}
+      {children}
     </div>
   );
 }

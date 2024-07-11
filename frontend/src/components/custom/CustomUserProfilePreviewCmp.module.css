@@ -155,15 +155,18 @@
 .popularity_text_overview {
   cursor: pointer;
 }
+.profile_overview_icon_text_button {
+  flex-direction: row;
+}
 
-.popularity_overview_button_container_2 {
+/* .popularity_overview_button_container_2 {
   background-color: transparent;
   justify-content: flex-end;
 }
 
 .popularity_overview_button_container_2:hover {
   background-color: transparent;
-}
+} */
 
 .popularity_overview_icon_text_button {
   flex-direction: row;

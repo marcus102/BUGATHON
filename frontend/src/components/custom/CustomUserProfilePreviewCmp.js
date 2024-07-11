@@ -12,7 +12,8 @@ import {
 import Icon from '../../utils/IconSection';
 import images from '../../assets/images/people.jpg';
 import VerifiedBadge from '../../assets/icons/verified_badge.svg';
-import { faChevronDown, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUpRightFromSquare, faChevronDown, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileDropdownButton = ({ mainProfile, username, profession, profileImg }) => (
   <>
@@ -31,7 +32,14 @@ const ProfileDropdownButton = ({ mainProfile, username, profession, profileImg }
   </>
 );
 
-const GuestUserInfo = ({ hideFollow, hideEdit, isFollowing, handleFollowToggle, METADATA }) => (
+const GuestUserInfo = ({
+  hideFollow,
+  hideEdit,
+  isFollowing,
+  handleFollowToggle,
+  METADATA,
+  handleNavigation,
+}) => (
   <div className={classes.guest_user_info_full_name_overview_main_container}>
     <div className={classes.full_name_overview_container}>
       <Image
@@ -83,11 +91,13 @@ const GuestUserInfo = ({ hideFollow, hideEdit, isFollowing, handleFollowToggle, 
             </ButtonContainer>
           ))}
         </div>
-        <ButtonContainer
-          buttonContainerMainContainer={classes.popularity_overview_button_container_2}
-        >
-          <Text label10Style={classes.popularity_text_overview} label10="Go to profile" />
-        </ButtonContainer>
+        <IconTextButton
+          unwrap={true}
+          inconTextButtonStyle={classes.profile_overview_icon_text_button}
+          label={'Visit profile'}
+          icon_={faArrowUpRightFromSquare}
+          onClick={() => handleNavigation('profile')}
+        />
         {data.buttons.map((btnData) => (
           <IconTextButton
             inconTextButtonStyle={classes.popularity_overview_icon_text_button}
@@ -95,6 +105,7 @@ const GuestUserInfo = ({ hideFollow, hideEdit, isFollowing, handleFollowToggle, 
             key={btnData.id}
             icon={btnData.icon}
             label={btnData.title}
+            onClick={() => handleNavigation(btnData.id)}
           />
         ))}
       </div>
@@ -112,9 +123,15 @@ function CustomUserProfilePreview({
   mainProfile,
 }) {
   const [isFollowing, setIsFollowing] = useState(false);
+  const navigate = useNavigate();
 
   const handleFollowToggle = () => {
     setIsFollowing(!isFollowing);
+  };
+
+  const handleNavigation = (id) => {
+    id === 'settings' && navigate(`/settings`);
+    id === 'profile' && navigate(`/profile`);
   };
 
   return (
@@ -136,6 +153,7 @@ function CustomUserProfilePreview({
           hideEdit={hideEdit}
           isFollowing={isFollowing}
           handleFollowToggle={handleFollowToggle}
+          handleNavigation={handleNavigation}
           METADATA={METADATA}
         />
       }

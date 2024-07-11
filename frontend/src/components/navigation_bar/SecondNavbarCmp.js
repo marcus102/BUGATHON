@@ -22,6 +22,7 @@ import Notification from './second_navabar_options/NotificationCmp';
 import Adjust from './second_navabar_options/AdjustCmp';
 import Inbox from './second_navabar_options/InboxCmp';
 import Search from '../../utils/SearchSection';
+import { Link } from 'react-router-dom';
 
 const MENU_OPTIONS = [
   { id: '1', icon: faBug, label: 'Assigned Bug', icon_2: null },
@@ -31,9 +32,9 @@ const MENU_OPTIONS = [
 ];
 
 const CREATE_MENU = [
-  { id: '1', icon: faBug, label: 'Bug Report', icon_2: null, href: null },
-  { id: '2', icon: faInbox, label: 'Reusable Code', icon_2: null, href: null },
-  { id: '3', icon: faNewspaper, label: 'Blog Post', icon_2: null, href: null },
+  { id: 'bug_report', icon: faBug, label: 'Bug Report', icon_2: null, href: null },
+  { id: 'reusable_code', icon: faInbox, label: 'Reusable Code', icon_2: null, href: null },
+  { id: 'blog_post', icon: faNewspaper, label: 'Blog Post', icon_2: null, href: null },
 ];
 
 const SEARCH_DROP_DOWN = [
@@ -120,6 +121,7 @@ function SecondNavbar() {
           buttonLabel={'New'}
           buttonIcon={faPlus}
           menuItems={CREATE_MENU}
+          post={'new'}
         />
       </div>
       {/* SEARCH */}
@@ -151,7 +153,11 @@ function SecondNavbar() {
               {MENU_OPTIONS.map((data) => (
                 <DropdownMenu
                   key={data.id}
-                  dropDownMenuStyle={classes.header_option_menu}
+                  dropDownMenuStyle={`${classes.header_option_menu} ${
+                    data.id === '1' && classes.assigned_bug_menu
+                  } ${data.id === '2' && classes.inbox_menu} ${
+                    data.id === '3' && classes.notification_menu
+                  } ${data.id === '4' && classes.adjust_menu}`}
                   dropDownIconTextStyle={classes.header_option_button}
                   buttonIcon={data.icon}
                   buttonLabel={data.label}

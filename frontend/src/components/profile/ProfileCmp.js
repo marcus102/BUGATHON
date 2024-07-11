@@ -12,11 +12,11 @@ import Analytics from './body_features/AnalyticsCmp';
 import UserBlogPost from './body_features/UserBlogPostCmp';
 import { VerticalScrollView } from '../../utils/ScrollViewsSection';
 
-function ProfilePage() {
+function Profile() {
   const { profileSideBarButton } = useContext(ManagmentSystem);
   return (
     <div className={classes.profile_page_main_container}>
-      <ProfileSideBar isMyProfile={true}/>
+      <ProfileSideBar isMyProfile={true} />
       <div className={`${classes.profile_page_second_container}`}>
         <ProfileSideBar2 />
         <VerticalScrollView
@@ -38,4 +38,4 @@ function ProfilePage() {
   );
 }
 
-export default ProfilePage;
+export default Profile;

@@ -6,6 +6,7 @@ import { SolidButton, OutlinedButton } from '../../utils/ButtonSection';
 import { NavLink } from 'react-router-dom';
 import { faArrowRightFromBracket, faGear, faStar } from '@fortawesome/free-solid-svg-icons';
 import CustomUserProfilePreview from '../custom/CustomUserProfilePreviewCmp';
+import Text from '../../utils/TextSection';
 
 const DUMMY_GUEST_USER_PROFILE = [
   {
@@ -16,8 +17,8 @@ const DUMMY_GUEST_USER_PROFILE = [
       { id: '1.3', title: 'Star', total: '10K', icon: faStar },
     ],
     buttons: [
-      { id: '1.4', title: 'Settings', icon: faGear },
-      { id: '1.5', title: 'Logout', icon: faArrowRightFromBracket },
+      { id: 'settings', title: 'Settings', icon: faGear },
+      { id: 'logout', title: 'Logout', icon: faArrowRightFromBracket },
     ],
   },
 ];
@@ -48,7 +49,7 @@ function FirstNavBar() {
               setActiveKey(selectedKey);
             }}
           >
-            <Nav.Item>
+            {/* <Nav.Item>
               <NavLink
                 className={[
                   activeKey === '/' ? 'text-primary' : classes.link_style,
@@ -59,41 +60,32 @@ function FirstNavBar() {
               >
                 Home
               </NavLink>
-            </Nav.Item>
+            </Nav.Item> */}
             <Nav.Item>
               <NavLink
-                className={[
-                  activeKey === '/chronobug' ? 'text-primary' : classes.link_style,
-                  classes.nav_link,
-                ].join(' ')}
+                className={classes.nav_link}
                 to="/chronobug"
                 onClick={() => setActiveKey('/chronobug')}
               >
-                ChronoBug
+                <Text label14Style={classes.label14Style} label14={'ChronoBug'} />
               </NavLink>
             </Nav.Item>
             <Nav.Item>
               <NavLink
-                className={[
-                  activeKey === '/services' ? 'text-primary' : classes.link_style,
-                  classes.nav_link,
-                ].join(' ')}
+                className={classes.nav_link}
                 to="/services"
                 onClick={() => setActiveKey('/services')}
               >
-                Services
+                <Text label14Style={classes.label14Style} label14={'Services'} />
               </NavLink>
             </Nav.Item>
             <Nav.Item>
               <NavLink
-                className={[
-                  activeKey === '/blog' ? 'text-primary' : classes.link_style,
-                  classes.nav_link,
-                ].join(' ')}
+                className={classes.nav_link}
                 to="/blog"
                 onClick={() => setActiveKey('/blog')}
               >
-                Blog
+                <Text label14Style={classes.label14Style} label14={'Blog'} />
               </NavLink>
             </Nav.Item>
           </Nav>

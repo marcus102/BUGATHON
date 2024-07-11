@@ -12,6 +12,12 @@ function BroadCast({ h1Title, h2Title, h3Title, h4Title, h5Title, h6Title, p16, 
       {(h1Title || h2Title || h3Title || h4Title || h5Title || h6Title || p16 || p12) &&
         isVisible && (
           <div className={classes.broadcast_main_container}>
+            {(h1Title || h2Title || h3Title || h4Title || h5Title || h6Title) && (
+              <Text h1={h1Title} h2={h2Title} h3={h3Title} h4={h4Title} h5={h5Title} h6={h6Title} />
+            )}
+            {(p16 || p12) && <Text p16={p16} p12={p12} />}
+            {children}
+            
             <div className={classes.cancel_button_container}>
               <IconButton
                 icon={faXmark}
@@ -20,12 +26,6 @@ function BroadCast({ h1Title, h2Title, h3Title, h4Title, h5Title, h6Title, p16, 
                 }}
               />
             </div>
-
-            {(h1Title || h2Title || h3Title || h4Title || h5Title || h6Title) && (
-              <Text h1={h1Title} h2={h2Title} h3={h3Title} h4={h4Title} h5={h5Title} h6={h6Title} />
-            )}
-            {(p16 || p12) && <Text p16={p16} p12={p12} />}
-            {children}
           </div>
         )}
     </>

@@ -6,28 +6,10 @@
 
 /* RELEASES */
 
-.create_menu_container {
-  width: 12rem;
-  margin-right: 10px;
-}
-
 .create_menu_container_2 {
   width: 12rem;
   margin-right: 10px;
   left: 0;
-}
-
-.add_button_main_container {
-  margin-top: 20px;
-  justify-content: flex-start;
-  width: 100%;
-}
-
-.add_button {
-  flex-direction: row-reverse;
-  border-radius: 10px;
-  padding: 0 15px;
-  gap: 10px;
 }
 
 .side_bar_releases_main_container {
@@ -55,31 +37,18 @@
 
 .filterig_header_container {
   display: flex;
-  justify-content: center;
+  justify-content:space-evenly;
+  align-items: center;
   width: 100%;
   gap: 5px;
 }
 
-.filtering_button_main_container {
-  width: 50%;
-  padding: 0;
-}
-
-.filtering_button {
-  border-radius: 10px;
-  background-color: transparent;
-}
-
-.filtering_button:hover {
-  background-color: var(--black_ffffff0d);
-}
-
-.filtering_button:active {
-  background-color: var(--black_9696960d);
-}
-
 .active_button {
   border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  width: 50%;
   background-color: var(--black_ffffff0d);
 }
 
@@ -180,9 +149,9 @@
   min-width: fit-content;
 }
 
-.more_settings_text {
+/* .more_settings_text {
   cursor: pointer;
-}
+} */
 
 .logout_container {
   flex-direction: row;

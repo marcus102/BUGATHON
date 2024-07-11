@@ -5,7 +5,7 @@ import Colors from '../../../constants/colors';
 import {
   IconButton,
   DropdownMenu,
-  OutlinedButton,
+  PlaneButton,
   SolidButton,
   IconTextButton,
 } from '../../../utils/ButtonSection';
@@ -26,17 +26,13 @@ import {
   faAngleDown,
 } from '@fortawesome/free-solid-svg-icons';
 import Text from '../../../utils/TextSection';
+import { useNavigate } from 'react-router-dom';
+import Line from '../../../utils/LineSection';
 
 const THEME_DATA = [
   { id: '1', icon: faSun, active: 'light', tool_tip: 'Light Mode' },
   { id: '2', icon: faMoon, active: 'dark', tool_tip: 'Night Mode' },
   { id: '3', icon: faDesktop, active: 'system', tool_tip: 'System Mode' },
-];
-
-const CREATE_MENU = [
-  { id: '1', icon: faBug, label: 'Bug Report', icon_2: null, href: null },
-  { id: '2', icon: faInbox, label: 'Reusable Code', icon_2: null, href: null },
-  { id: '3', icon: faNewspaper, label: 'Blog Post', icon_2: null, href: null },
 ];
 
 const FILTERING_DATA = [
@@ -106,48 +102,34 @@ export function HomeExpandedSideBar() {
   const [isThemeExpanded, setIsThemeExpanded] = useState(true);
   const { sideBarHandler, sideBar } = useContext(ManagmentSystem);
   const { theme } = sideBar;
+  const navigate = useNavigate();
 
   const CURRENT_DATA = isFiltering ? FILTERING_DATA : SORTING_DATA;
 
   return (
     <>
-      <DropdownMenu
-        dropDownMenuStyle={classes.create_menu_container}
-        buttonChildren={
-          <OutlinedButton
-            buttonMainContainerStyle={classes.add_button_main_container}
-            buttonStyle={classes.add_button}
-            icon={faPlus}
-            label={'New'}
-          />
-        }
-        menuItems={CREATE_MENU}
-      />
-
       <div className={classes.side_bar_releases_main_container}>
         <Text h5={'Releases'} />
-        <hr className={classes.releases_horizontal_bar} />
+        <Line direction={'horizontal'} />
         <Text p16={'Release 1'} />
         <Text p16={'Release 2'} />
       </div>
 
       <div className={classes.side_bar_filterig_main_container}>
         <div className={classes.filterig_header_container}>
-          <SolidButton
-            buttonMainContainerStyle={classes.filtering_button_main_container}
-            buttonStyle={isFiltering ? classes.active_button : classes.filtering_button}
+          <PlaneButton
+            buttonContainerMainContainer={isFiltering && classes.active_button}
+            label14={'Filtering'}
             onClick={() => {
               setIsFiltering(true);
             }}
-            label={'Filtering'}
           />
-          <SolidButton
-            buttonMainContainerStyle={classes.filtering_button_main_container}
-            buttonStyle={!isFiltering ? classes.active_button : classes.filtering_button}
+          <PlaneButton
+            buttonContainerMainContainer={!isFiltering && classes.active_button}
+            label14={'Sorting'}
             onClick={() => {
               setIsFiltering(false);
             }}
-            label={'Sorting'}
           />
         </div>
         <>
@@ -225,13 +207,8 @@ export function HomeExpandedSideBar() {
               unwrap={true}
               inconTextButtonStyle={classes.more_settings_container}
               icon={faGears}
-              children={
-                <Text
-                  unwrap={true}
-                  label14Style={classes.more_settings_text}
-                  label14={'More Settings'}
-                />
-              }
+              label={'More Settings'}
+              onClick={() => navigate(`/settings`)}
             />
 
             <IconTextButton
@@ -239,7 +216,8 @@ export function HomeExpandedSideBar() {
               icon={faArrowRightFromBracket}
               colorOnMouseUp={Colors.red_FF2B2B}
               colorOnMouseDown={Colors.red_ff3c3c}
-              children={<Text label14Style={classes.logout_text} label14={'Logout'} />}
+              inconTextLabel16Style={classes.logout_text}
+              label={'Logout'}
             />
           </>
         )}
@@ -254,18 +232,6 @@ export function HomeCollapsedSideBar() {
 
   return (
     <>
-      <DropdownMenu
-        dropDownMenuStyle={classes.create_menu_container_2}
-        buttonChildren={
-          <ToolTip
-            toolTipStyle={classes.side_bar_tool_tip_container}
-            children={<IconButton icon={faPlus} />}
-            tooltipMessage={'New'}
-          />
-        }
-        menuItems={CREATE_MENU}
-      />
-
       <ToolTip
         toolTipStyle={classes.side_bar_tool_tip_container}
         children={<IconButton icon={faFilter} />}

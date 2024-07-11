@@ -1,8 +1,7 @@
 .fixedNavbar {
-  position: fixed;
-  top: 0;
+  display: flex;
   width: 100%;
-  z-index: 99;
+  height: 4rem;
   background-color: #232526;
 }
 
@@ -56,6 +55,10 @@
 .nav_link {
   text-decoration: none;
   margin: 0 15px;
+}
+
+.label14Style {
+  cursor: pointer;
 }
 
 .buttons_container {

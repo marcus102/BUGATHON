@@ -5,7 +5,6 @@ import UserProfileHeader from '../userProfileHeaderCmp';
 import {
   SolidButton,
   IconButton,
-  OutlinedButton,
   IconTextButton,
   DropdownMenu,
   PlaneButton,

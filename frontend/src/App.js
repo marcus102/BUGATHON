@@ -5,7 +5,11 @@ import RootLayout from './pages/Root.js';
 import ChronoBug from './pages/ChronoBugPage.js';
 import Services from './pages/ServicesPage.js';
 import Blog from './pages/BlogPage.js';
-import Home from './pages/HomePage.js';
+import HomePage from './pages/HomePage.js';
+import SettingsPage from './pages/SettingsPage.js';
+import ProfilePage from './pages/ProfilePageCmp.js';
+import ExpandedHomePage from './pages/ExpandedHome.js';
+import CreatePage from './pages/CreatePage.js';
 import SecondNavBarRoot from './pages/SecondNavBarRootPage.js';
 
 const router = createBrowserRouter([
@@ -19,7 +23,19 @@ const router = createBrowserRouter([
         children: [
           {
             path: '/',
-            element: <Home />,
+            element: <HomePage />,
+          },
+          {
+            path: '/profile',
+            element: <ProfilePage />,
+          },
+          {
+            path: '/settings',
+            element: <SettingsPage />,
+          },
+          {
+            path: '/details/:postId',
+            element: <ExpandedHomePage />,
           },
         ],
       },
@@ -29,6 +45,7 @@ const router = createBrowserRouter([
       },
       { path: '/services', element: <Services /> },
       { path: '/blog', element: <Blog /> },
+      { path: '/new/:postId', element: <CreatePage /> },
     ],
   },
 ]);

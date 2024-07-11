@@ -84,6 +84,7 @@ function HomeCard({
   postDescription,
   children,
   CUSTOM_REACTIONS_DATA,
+  onClick,
 }) {
   const REACTIONS = CUSTOM_REACTIONS_DATA ? CUSTOM_REACTIONS_DATA : REACTIONS_DATA;
 
@@ -107,6 +108,7 @@ function HomeCard({
           ? classes.reusable_code
           : null
       } ${homeCardStyle}`}
+      onClick={onClick}
     >
       {/* HEADER */}
 

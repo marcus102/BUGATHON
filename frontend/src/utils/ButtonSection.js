@@ -4,6 +4,7 @@ import classes from './ButtonSection.module.css';
 import Icon from './IconSection';
 import Text from './TextSection';
 import { Image } from './MediaSection';
+import { useNavigate } from 'react-router-dom';
 
 export function PlaneButton({
   children,
@@ -276,15 +277,19 @@ export function DropdownMenu({
   children,
   buttonChildren,
   onClick,
+  post,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setIsOpen(false);
     }
   };
+
+  const handleMenuClick = () => {};
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
@@ -310,20 +315,20 @@ export function DropdownMenu({
 
       {isOpen && (
         <div className={`${classes.dropdown_menu} ${dropDownMenuStyle}`}>
-          {menuItems && (
-            <>
-              {menuItems.map((data, index) => (
-                <IconTextButton
-                  key={data.id}
-                  inconTextButtonStyle={`${classes.drop_down_item_link}`}
-                  icon_={data.icon_2}
-                  label={data.label}
-                  icon={data.icon}
-                  // onClick={''}
-                />
-              ))}
-            </>
-          )}
+          {menuItems &&
+            menuItems.map((data, index) => (
+              <IconTextButton
+                key={data.id}
+                inconTextButtonStyle={`${classes.drop_down_item_link}`}
+                icon_={data.icon_2}
+                label={data.label}
+                icon={data.icon}
+                onClick={() => {
+                  post && navigate(`/${post}/${data.id}`);
+                  setIsOpen(false);
+                }}
+              />
+            ))}
 
           {children}
         </div>
