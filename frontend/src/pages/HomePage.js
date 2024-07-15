@@ -6,7 +6,7 @@ import HomeWindow from '../components/home_window/HomeWindowCmp';
 function HomePage() {
   return (
     <div className={classes.home_main_container}>
-      <Authentication />
+      {/* <Authentication /> */}
       <HomeWindow />
     </div>
   );

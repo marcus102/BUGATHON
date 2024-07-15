@@ -59,6 +59,10 @@
   padding: 20px;
 }
 
+.header_option_menu2 {
+  width: 40rem;
+}
+
 .assigned_bug_menu {
   width: 30rem;
   left: -80px;

@@ -12,3 +12,8 @@
 .forgot_password_container {
   margin: 10px 0 0 5px;
 }
+
+.checkbox_container {
+  display: flex;
+  align-items: center;
+}

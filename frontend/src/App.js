@@ -11,6 +11,7 @@ import ProfilePage from './pages/ProfilePageCmp.js';
 import ExpandedHomePage from './pages/ExpandedHome.js';
 import CreatePage from './pages/CreatePage.js';
 import SecondNavBarRoot from './pages/SecondNavBarRootPage.js';
+import AuthenticationPage from './pages/AuthenticationPage.js';
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       { path: '/blog', element: <Blog /> },
       { path: '/new/:postTypeId', element: <CreatePage /> },
     ],
+  },
+  {
+    path: '/auth',
+    element: <AuthenticationPage />,
   },
 ]);
 

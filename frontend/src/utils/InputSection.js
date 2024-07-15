@@ -51,11 +51,25 @@ export function RowOfSquares({ rowOfSquaresStyle }) {
   );
 }
 
-export function TextArea({ label, placeholder, value, onChange, textAreaStyle, onKeyDown }) {
+export function TextArea({
+  label,
+  placeholder,
+  value,
+  onChange,
+  textAreaStyle,
+  onKeyDown,
+  defaultValue,
+}) {
   return (
     <div className={`${classes.input_main_container} ${textAreaStyle}`}>
       {label && <Text label16={label} />}
-      <textarea placeholder={placeholder} value={value} onChange={onChange} onKeyDown={onKeyDown} />
+      <textarea
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
+        defaultValue={defaultValue ? defaultValue : ''}
+      />
     </div>
   );
 }
@@ -81,6 +95,7 @@ export function Input({
   inputSecondContainerStyle,
   inputStyle,
   onKeyDown,
+  defaultValue,
   unwrap,
   unwrap_,
 }) {
@@ -103,6 +118,7 @@ export function Input({
             value={value}
             onChange={onChange}
             onKeyDown={onKeyDown}
+            defaultValue={defaultValue ? defaultValue : ''}
           />
           {type === 'password' && (
             <IconButton

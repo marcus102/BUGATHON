@@ -10,7 +10,10 @@ process.on('uncaughtException', err => {
 dotenv.config({ path: './config.env' });
 const app = require('./app');
 
-const dbUrl = process.env.DATABASE_URL.replace('<PASSWORD>', process.env.DATABASE_PASSWORD);
+const dbUrl = process.env.DATABASE_URL.replace('<USERNAME>', process.env.DATABASE_USERNAME).replace(
+  '<PASSWORD>',
+  process.env.DATABASE_PASSWORD
+);
 
 mongoose
   .connect(dbUrl, {
@@ -22,6 +25,7 @@ mongoose
     console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
   });
 
+// START SERVER
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
   console.log(`App running on port ${port}...`);
@@ -34,5 +38,12 @@ process.on('unhandledRejection', err => {
   console.log(err.name, err.message);
   server.close(() => {
     process.exit(1);
+  });
+});
+
+process.on('SIGTERM', () => {
+  console.log('👋 SIGTERM RECEIVED. Shutting down gracefully');
+  server.close(() => {
+    console.log('💥 Process terminated!');
   });
 });

@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom';
 import { faArrowRightFromBracket, faGear, faStar } from '@fortawesome/free-solid-svg-icons';
 import CustomUserProfilePreview from '../custom/CustomUserProfilePreviewCmp';
 import Text from '../../utils/TextSection';
+import { useNavigate } from 'react-router-dom';
 
 const DUMMY_GUEST_USER_PROFILE = [
   {
@@ -27,6 +28,8 @@ function FirstNavBar() {
   const [showOverlay, setShowOverlay] = useState(false);
   const [activeKey, setActiveKey] = useState('/');
   const [isVisible, setIsVisible] = useState(false);
+
+  const navigate = useNavigate();
 
   const { overlayHandler, currentAuthStatusHandler } = useContext(ManagmentSystem);
 
@@ -90,9 +93,9 @@ function FirstNavBar() {
             </Nav.Item>
           </Nav>
           <Nav className={classes.buttons_container}>
-            {isVisible && (
+            {!isVisible && (
               <>
-                <SolidButton
+                {/* <SolidButton
                   unwrap={true}
                   buttonMainContainerStyle={classes.auth_button_main_container}
                   buttonStyle={classes.auth_button_container}
@@ -101,26 +104,29 @@ function FirstNavBar() {
                     overlayHandler('auth', 'overlay');
                     currentAuthStatusHandler('signUp');
                   }}
-                />
+                /> */}
+                
                 <OutlinedButton
                   unwrap={true}
                   buttonMainContainerStyle={classes.auth_button_main_container}
                   buttonStyle={classes.auth_button_container}
                   label="Sign In"
                   onClick={() => {
-                    overlayHandler('auth', 'overlay');
                     currentAuthStatusHandler('signIn');
+                    navigate('/auth');
                   }}
                 />
               </>
             )}
-            <CustomUserProfilePreview
-              METADATA={DUMMY_GUEST_USER_PROFILE}
-              username={'marcus'}
-              hideFollow={true}
-              hideEdit={false}
-              mainProfile={true}
-            />
+            {isVisible && (
+              <CustomUserProfilePreview
+                METADATA={DUMMY_GUEST_USER_PROFILE}
+                username={'marcus'}
+                hideFollow={true}
+                hideEdit={false}
+                mainProfile={true}
+              />
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

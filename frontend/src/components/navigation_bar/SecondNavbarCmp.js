@@ -135,7 +135,7 @@ function SecondNavbar() {
         {MENU_OPTIONS.map((data) => (
           <DropdownMenu
             key={data.id}
-            dropDownMenuStyle={classes.header_option_menu}
+            dropDownMenuStyle={classes.header_option_menu2}
             dropDownIconTextStyle={classes.header_option_button}
             buttonIcon={data.icon}
             buttonLabel={data.label}
