@@ -19,10 +19,12 @@ export function PlaneButton({
   label16,
   label16Style,
   unwrap,
+  disabled,
 }) {
   return (
     <button
       onClick={onClick}
+      disabled={disabled}
       className={` ${classes.plane_button_main_container} ${buttonContainerMainContainer}`}
     >
       {label10 && (
@@ -58,10 +60,11 @@ export function PlaneButton({
   );
 }
 
-export function ButtonContainer({ children, buttonContainerMainContainer, onClick }) {
+export function ButtonContainer({ children, buttonContainerMainContainer, onClick, disabled }) {
   return (
     <button
       onClick={onClick}
+      disabled={disabled}
       className={`${classes.button_container_main_container} ${buttonContainerMainContainer}`}
     >
       {children}
@@ -80,11 +83,17 @@ export function SolidButton({
   icon,
   color,
   size,
+  disabled,
   unwrap,
 }) {
   return (
     <div className={`${classes.solid_button_container} ${buttonMainContainerStyle}`}>
-      <button className={`${classes.solid_button} ${buttonStyle}`} type="button" onClick={onClick}>
+      <button
+        className={`${classes.solid_button} ${buttonStyle}`}
+        disabled={disabled}
+        type="button"
+        onClick={onClick}
+      >
         {label && (
           <Text
             unwrap={unwrap}
@@ -111,12 +120,14 @@ export function OutlinedButton({
   icon,
   color,
   size,
+  disabled,
   unwrap,
 }) {
   return (
     <div className={`${classes.outlined_button_container} ${buttonMainContainerStyle}`}>
       <button
         className={`${classes.outlined_button} ${buttonStyle}`}
+        disabled={disabled}
         type="button"
         onClick={onClick}
       >
@@ -288,8 +299,6 @@ export function DropdownMenu({
       setIsOpen(false);
     }
   };
-
-  const handleMenuClick = () => {};
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);

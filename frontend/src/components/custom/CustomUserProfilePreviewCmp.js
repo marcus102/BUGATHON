@@ -27,7 +27,7 @@ const ProfileDropdownButton = ({ mainProfile, username, profession, profileImg }
     <Image
       imgContainerStyle={classes.img_container}
       imgStyle={classes.img}
-      src={profileImg || images}
+      src={profileImg ? profileImg : images}
     />
   </>
 );
@@ -39,6 +39,7 @@ const GuestUserInfo = ({
   handleFollowToggle,
   METADATA,
   handleNavigation,
+  profileMode,
 }) => (
   <div className={classes.guest_user_info_full_name_overview_main_container}>
     <div className={classes.full_name_overview_container}>
@@ -67,7 +68,7 @@ const GuestUserInfo = ({
             >
               <Text
                 label12Style={classes.follow_label12_style}
-                label12={!isFollowing ? 'Follow' : 'Unfollow'}
+                label12={!isFollowing ? 'Follow' : 'Following'}
               />
             </OutlinedButton>
           )}
@@ -96,7 +97,7 @@ const GuestUserInfo = ({
           inconTextButtonStyle={classes.profile_overview_icon_text_button}
           label={'Visit profile'}
           icon_={faArrowUpRightFromSquare}
-          onClick={() => handleNavigation('profile')}
+          onClick={() => handleNavigation('profile', profileMode)}
         />
         {data.buttons.map((btnData) => (
           <IconTextButton
@@ -121,6 +122,7 @@ function CustomUserProfilePreview({
   hideFollow,
   hideEdit,
   mainProfile,
+  profileMode,
 }) {
   const [isFollowing, setIsFollowing] = useState(false);
   const navigate = useNavigate();
@@ -129,9 +131,9 @@ function CustomUserProfilePreview({
     setIsFollowing(!isFollowing);
   };
 
-  const handleNavigation = (id) => {
+  const handleNavigation = (id, profileMode) => {
     id === 'settings' && navigate(`/settings`);
-    id === 'profile' && navigate(`/profile`);
+    id === 'profile' && navigate(`/profile?mode=${profileMode}`);
   };
 
   return (
@@ -155,6 +157,7 @@ function CustomUserProfilePreview({
           handleFollowToggle={handleFollowToggle}
           handleNavigation={handleNavigation}
           METADATA={METADATA}
+          profileMode={profileMode}
         />
       }
     />

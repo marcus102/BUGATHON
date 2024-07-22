@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
 import classes from './FirstNavbarCmp.module.css';
 import { Navbar, Nav, Container } from 'react-bootstrap';
-import { SolidButton, OutlinedButton } from '../../utils/ButtonSection';
+import { OutlinedButton } from '../../utils/ButtonSection';
 import { NavLink } from 'react-router-dom';
 import { faArrowRightFromBracket, faGear, faStar } from '@fortawesome/free-solid-svg-icons';
 import CustomUserProfilePreview from '../custom/CustomUserProfilePreviewCmp';
@@ -52,18 +52,6 @@ function FirstNavBar() {
               setActiveKey(selectedKey);
             }}
           >
-            {/* <Nav.Item>
-              <NavLink
-                className={[
-                  activeKey === '/' ? 'text-primary' : classes.link_style,
-                  classes.nav_link,
-                ].join(' ')}
-                to="/"
-                onClick={() => setActiveKey('/')}
-              >
-                Home
-              </NavLink>
-            </Nav.Item> */}
             <Nav.Item>
               <NavLink
                 className={classes.nav_link}
@@ -93,38 +81,26 @@ function FirstNavBar() {
             </Nav.Item>
           </Nav>
           <Nav className={classes.buttons_container}>
-            {!isVisible && (
-              <>
-                {/* <SolidButton
-                  unwrap={true}
-                  buttonMainContainerStyle={classes.auth_button_main_container}
-                  buttonStyle={classes.auth_button_container}
-                  label="Sign Up"
-                  onClick={() => {
-                    overlayHandler('auth', 'overlay');
-                    currentAuthStatusHandler('signUp');
-                  }}
-                /> */}
-                
-                <OutlinedButton
-                  unwrap={true}
-                  buttonMainContainerStyle={classes.auth_button_main_container}
-                  buttonStyle={classes.auth_button_container}
-                  label="Sign In"
-                  onClick={() => {
-                    currentAuthStatusHandler('signIn');
-                    navigate('/auth');
-                  }}
-                />
-              </>
-            )}
             {isVisible && (
+              <OutlinedButton
+                unwrap={true}
+                buttonMainContainerStyle={classes.auth_button_main_container}
+                buttonStyle={classes.auth_button_container}
+                label="Sign In"
+                onClick={() => {
+                  currentAuthStatusHandler('signIn');
+                  navigate(`/auth?mode=${'signin'}`);
+                }}
+              />
+            )}
+            {!isVisible && (
               <CustomUserProfilePreview
                 METADATA={DUMMY_GUEST_USER_PROFILE}
                 username={'marcus'}
                 hideFollow={true}
                 hideEdit={false}
                 mainProfile={true}
+                profileMode={'me'}
               />
             )}
           </Nav>

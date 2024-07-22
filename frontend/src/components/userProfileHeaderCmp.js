@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import classes from './userProfileHeaderCmp.module.css';
-import Text from '../utils/TextSection';
-import { OutlinedButton, PlaneButton } from '../utils/ButtonSection';
+import { PlaneButton } from '../utils/ButtonSection';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faExclamationCircle, faUserLock } from '@fortawesome/free-solid-svg-icons';
 import CustomUserProfilePreview from './custom/CustomUserProfilePreviewCmp';
+
+// OTHER USERS PROFILE SECTION (POST OWNERS, ETC...)
 
 const DUMMY_GUEST_USER_PROFILE = [
   {
@@ -32,16 +33,19 @@ function UserProfileHeader({ username, profession, profileImg, hideFollow }) {
     <div className={classes.header_profile_container}>
       <CustomUserProfilePreview
         METADATA={DUMMY_GUEST_USER_PROFILE}
-        username={'marcus'}
+        username={username}
         hideFollow={false}
         hideEdit={true}
+        profileMode={username}
+        profileImg={profileImg}
+        profession={profession}
       />
       {!hideFollow && (
         <PlaneButton
           unwrap={true}
           label12Style={classes.follow_label12_style}
           onClick={handleFollowToggle}
-          label12={!isFollowing ? 'Follow' : 'Unfollow'}
+          label12={!isFollowing ? 'Follow' : 'Following'}
         />
       )}
     </div>

@@ -167,6 +167,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
               isHeaderOption={true}
               postTitle={data.title}
               postDescription={data.description}
+              postId={data.id}
             />
           ))}
         </VerticalScrollView>

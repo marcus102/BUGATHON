@@ -65,7 +65,7 @@ const CONTRIBUTIONS_OPTION = [
   { id: '5', icon: faExclamationCircle, label: 'Report (users only)', icon_2: faCaretDown },
 ];
 
-function HeaderOptions({ headerOptionMainContainer, contributions, img1, img2, img3 }) {
+function HeaderOptions({ contributions, img1, img2, img3 }) {
   return (
     <DropdownMenu
       dropDownMenuStyle={classes.header_option_menu}
@@ -74,26 +74,25 @@ function HeaderOptions({ headerOptionMainContainer, contributions, img1, img2, i
           <Text
             unwrap={true}
             label10Style={classes.contrib_label10_style}
-            label10={'10K Contributions'}
+            label10={contributions ? contributions : 'No Contribution'}
           />
           <div className={classes.options_img_container}>
             <Image
               imgContainerStyle={classes.contrib_img_container}
               imgStyle={classes.contrib_img}
-              src={images}
+              src={img1 ? img1 : images}
             />
             <Image
               imgContainerStyle={classes.contrib_img_container}
               imgStyle={classes.contrib_img}
-              src={images}
+              src={img2 ? img2 : images}
             />
             <Image
               imgContainerStyle={classes.contrib_img_container}
               imgStyle={classes.contrib_img}
-              src={images}
+              src={img3 ? img3 : images}
             />
           </div>
-          {/* <Text label16Style={classes.contrib_label16_style} label16={'...'} /> */}
         </div>
       }
       children={

@@ -9,11 +9,12 @@ import Text from '../../utils/TextSection';
 import Icon from '../../utils/IconSection';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import Link from '../../utils/LinkSection';
+import { Form } from 'react-router-dom';
 
 function SignUp() {
   const { currentAuthStatusHandler } = useContext(ManagmentSystem);
   return (
-    <form action="">
+    <Form method="post" className={classes.signUpForm}>
       <Text textStyle={classes.sign_up_title_container} h1={'Sign Up'} />
       <>
         <div className="row">
@@ -77,11 +78,11 @@ function SignUp() {
       </div>
 
       <SolidButton
-        onClick={() => currentAuthStatusHandler('codeConfirm')}
         buttonMainContainerStyle={classes.sign_up_button_container}
+        buttonStyle={classes.sign_up_button}
         label={'Sign Up'}
       />
-    </form>
+    </Form>
   );
 }
 

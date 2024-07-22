@@ -22,7 +22,6 @@ import Notification from './second_navabar_options/NotificationCmp';
 import Adjust from './second_navabar_options/AdjustCmp';
 import Inbox from './second_navabar_options/InboxCmp';
 import Search from '../../utils/SearchSection';
-import { Link } from 'react-router-dom';
 
 const MENU_OPTIONS = [
   { id: '1', icon: faBug, label: 'Assigned Bug', icon_2: null },
@@ -37,62 +36,62 @@ const CREATE_MENU = [
   { id: 'blog_post', icon: faNewspaper, label: 'Blog Post', icon_2: null, href: null },
 ];
 
-const SEARCH_DROP_DOWN = [
-  {
-    id: 'Quick Actions',
-    children: [
-      { id: '1', title: 'Home', icon: faHome },
-      { id: '2', title: 'Settings', icon: faGear },
-      { id: '3', title: 'Help', icon: faQuestionCircle },
-    ],
-  },
-  {
-    id: 'Theme',
-    children: [
-      { id: '1', title: 'Light Mode', icon: faSun },
-      { id: '2', title: 'Night Mode', icon: faMoon },
-      { id: '3', title: 'System Mode', icon: faDesktop },
-    ],
-  },
-  {
-    id: 'APIs',
-    children: [
-      { id: '1', title: 'API 1', icon: ApiIcon },
-      { id: '2', title: 'API 2', icon: ApiIcon },
-      { id: '3', title: 'API 3', icon: ApiIcon },
-    ],
-  },
-  {
-    id: 'Docs',
-    children: [
-      { id: '1', title: 'Doc 1', icon: faFile },
-      { id: '2', title: 'Doc 2', icon: faFile },
-      { id: '3', title: 'Doc 3', icon: faFile },
-    ],
-  },
-  {
-    id: 'Account',
-    children: [{ id: '1', title: '@marcus ', icon: faUser }],
-  },
-  {
-    id: 'Services',
-    children: [
-      { id: '1', title: 'Service 1', icon: ServiceIcon },
-      { id: '2', title: 'Service 2', icon: ServiceIcon },
-      { id: '3', title: 'Service 3', icon: ServiceIcon },
-    ],
-  },
-  {
-    id: 'Other',
-    children: [
-      { id: '1', title: 'Other 1', icon: null },
-      { id: '2', title: 'Other 2', icon: null },
-      { id: '3', title: 'Other 3', icon: null },
-    ],
-  },
-];
+// const SEARCH_DROP_DOWN = [
+//   {
+//     id: 'Quick Actions',
+//     children: [
+//       { id: '1', title: 'Home', icon: faHome },
+//       { id: '2', title: 'Settings', icon: faGear },
+//       { id: '3', title: 'Help', icon: faQuestionCircle },
+//     ],
+//   },
+//   {
+//     id: 'Theme',
+//     children: [
+//       { id: '1', title: 'Light Mode', icon: faSun },
+//       { id: '2', title: 'Night Mode', icon: faMoon },
+//       { id: '3', title: 'System Mode', icon: faDesktop },
+//     ],
+//   },
+//   {
+//     id: 'APIs',
+//     children: [
+//       { id: '1', title: 'API 1', icon: ApiIcon },
+//       { id: '2', title: 'API 2', icon: ApiIcon },
+//       { id: '3', title: 'API 3', icon: ApiIcon },
+//     ],
+//   },
+//   {
+//     id: 'Docs',
+//     children: [
+//       { id: '1', title: 'Doc 1', icon: faFile },
+//       { id: '2', title: 'Doc 2', icon: faFile },
+//       { id: '3', title: 'Doc 3', icon: faFile },
+//     ],
+//   },
+//   {
+//     id: 'Account',
+//     children: [{ id: '1', title: '@marcus ', icon: faUser }],
+//   },
+//   {
+//     id: 'Services',
+//     children: [
+//       { id: '1', title: 'Service 1', icon: ServiceIcon },
+//       { id: '2', title: 'Service 2', icon: ServiceIcon },
+//       { id: '3', title: 'Service 3', icon: ServiceIcon },
+//     ],
+//   },
+//   {
+//     id: 'Other',
+//     children: [
+//       { id: '1', title: 'Other 1', icon: null },
+//       { id: '2', title: 'Other 2', icon: null },
+//       { id: '3', title: 'Other 3', icon: null },
+//     ],
+//   },
+// ];
 
-const INBOX_DATA = [];
+// const INBOX_DATA = [];
 
 const renderChildComponent = (id) => {
   switch (id) {

@@ -81,7 +81,6 @@ function ExpandedBugFix() {
       SUGESTION_BUTTON_META_DATA={SUGESTION_BUTTON_DATA}
       title={'Bug Fix Title'}
       potentialTitle={'Related Bug Reports'}
-      postType={'bug_fix'}
     />
   );
 }

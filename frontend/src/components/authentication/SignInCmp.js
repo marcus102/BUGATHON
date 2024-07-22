@@ -2,24 +2,27 @@ import React, { useContext } from 'react';
 import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
 import classes from './SignInCmp.module.css';
 import { Input } from '../../utils/InputSection';
-import { SolidButton } from '../../utils/ButtonSection';
+import { SolidButton, PlaneButton } from '../../utils/ButtonSection';
 import Text from '../../utils/TextSection';
-import Link from '../../utils/LinkSection';
+import { Form } from 'react-router-dom';
 
 function SignIn() {
-  const { overlayHandler } = useContext(ManagmentSystem);
+  // const { overlayHandler } = useContext(ManagmentSystem);
   return (
-    <form action="">
+    <Form  method="post" className={classes.signInForm}>
       <Text textStyle={classes.sign_in_title_container} h1={'Sign In'} />
       <Input placeholder={'required'} label={'Email Address/Username'} />
       <Input placeholder={'*******'} label={'Password'} type={'password'} />
-      <Link linkStyle={classes.forgot_password_container} children12={'forgot password'} />
+      <PlaneButton
+        buttonContainerMainContainer={classes.forgot_password_container}
+        label12={'forgot password'}
+      />
       <SolidButton
-        onClick={() => overlayHandler('auth')}
         buttonMainContainerStyle={classes.sign_in_button_container}
+        buttonStyle={classes.sign_in_button}
         label={'Sign In'}
       />
-    </form>
+    </Form>
   );
 }
 

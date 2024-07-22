@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
 import classes from './HomeCardView.module.css';
 import Colors from '../../constants/colors';
-import {
-  IconTextButton,
-  ButtonContainer,
-  IconButton,
-  DropdownMenu,
-  PlaneButton,
-} from '../../utils/ButtonSection';
+import { IconTextButton, IconButton, DropdownMenu, PlaneButton } from '../../utils/ButtonSection';
 import Text from '../../utils/TextSection';
 import {
   faHeart,
@@ -52,10 +46,10 @@ const DUMMY_TAG_DATA = [
 
 const REACTIONS_DATA = [
   { id: 'likes', icon: faHeart, text: '10K', activeColor: Colors.red_FF2B2B },
-  { id: 'comments', icon: faComment, text: '5K', activeColor: Colors.blue_0075FF },
+  { id: 'comments', icon: faComment, text: '5K', activeColor: null },
   { id: 'pin', icon: faThumbTack, text: null, activeColor: Colors.yellow_ },
-  { id: 'share', icon: faArrowUpFromBracket, text: null, activeColor: Colors.green_039000 },
-  { id: 'impression', icon: faChartSimple, text: '50K', activeColor: Colors.orange_ff7811 },
+  { id: 'share', icon: faArrowUpFromBracket, text: null, activeColor: null },
+  { id: 'impression', icon: faChartSimple, text: '50K', activeColor: null },
 ];
 
 const CARD_VIEW_OPTION = [
@@ -86,6 +80,7 @@ function HomeCard({
   postDescription,
   children,
   CUSTOM_REACTIONS_DATA,
+  postId,
 }) {
   const REACTIONS = CUSTOM_REACTIONS_DATA ? CUSTOM_REACTIONS_DATA : REACTIONS_DATA;
 
@@ -97,8 +92,6 @@ function HomeCard({
   );
 
   const navigate = useNavigate();
-
-  // const { overlayHandler } = useContext(ManagmentSystem);
 
   return (
     <div
@@ -142,9 +135,13 @@ function HomeCard({
         label={'Click for more'}
         icon_={faArrowUpRightFromSquare}
         onClick={() => {
-          cardButtonState === 'bug_report' && navigate('/detail/bug_report');
-          cardButtonState === 'bug_fix' && navigate('/detail/bug_fix');
-          cardButtonState === 'reusable_code' && navigate('/detail/reusable_code');
+          if (cardButtonState === 'bug_report') {
+            navigate(`${postId}/?post=${'bug_report'}`);
+          } else if (cardButtonState === 'bug_fix') {
+            navigate(`${postId}/?post=${'bug_fix'}`);
+          } else if (cardButtonState === 'reusable_code') {
+            navigate(`${postId}/?post=${'reusable_code'}`);
+          }
         }}
       />
       {/* FOOTER */}
@@ -157,7 +154,7 @@ function HomeCard({
               tooltipMessage={data.about}
             />
           ))}
-          <Text textStyle={classes.timestamp_container} label10={'1mn ago'} />
+          <Text textStyle={classes.timestamp_container} label10={titmestamp} />
         </div>
         <div className={classes.footer_reaction_container}>
           {REACTIONS.map((data) => (

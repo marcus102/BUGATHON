@@ -5,7 +5,6 @@ import {
   faThumbTack,
   faArrowUpFromBracket,
   faPen,
-  faClipboard,
   faComment,
   faUser,
   faShareNodes,
@@ -87,7 +86,6 @@ function ExpandedReusableCode() {
       SUGESTION_BUTTON_META_DATA={SUGESTION_BUTTON_DATA}
       title={'Reusable Code'}
       potentialTitle={'Potential Reusable Codes'}
-      postType={'reusable_code'}
     />
   );
 }

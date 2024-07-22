@@ -8,15 +8,12 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Colors from '../constants/colors';
 import Link from './LinkSection';
 import { faPlusCircle, faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import ToolTip from './toolTipSection';
 import { HorizontalScrollView } from './ScrollViewsSection';
 import { Image, Audio, Video } from './MediaSection';
-
 import { Editor, EditorState, RichUtils, Modifier, AtomicBlockUtils } from 'draft-js';
 import { useDropzone } from 'react-dropzone';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
-
 import prismPlugin from './syntaxHighlightPlugin';
 
 const plugins = [prismPlugin];
@@ -88,6 +85,8 @@ export function Input({
   label,
   instructionLabel,
   type,
+  id,
+  name,
   placeholder,
   value,
   onChange,
@@ -105,15 +104,15 @@ export function Input({
     setIsPasswordVisible(!isPasswordVisible);
   };
 
-  const inputType = type === 'password' && !isPasswordVisible ? 'password' : 'text';
-
   return (
     <div className={[classes.input_main_container, inputMainContainerStyle].join(' ')}>
       {label && <Text unwrap={unwrap} label14={label} />}
       <div className={[classes.input_second_container, inputSecondContainerStyle].join(' ')}>
         <div className={`${classes.input_container} ${inputStyle}`}>
           <input
-            type={inputType}
+            type={type === 'password' && !isPasswordVisible ? 'password' : 'text'}
+            id={id}
+            name={name}
             placeholder={placeholder}
             value={value}
             onChange={onChange}
