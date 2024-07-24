@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './InboxCmp.module.css';
+// import classes from './InboxCmp.module.css';
 import Text from '../../../utils/TextSection';
 
 function Inbox() {

@@ -73,7 +73,7 @@ const HomeCardFooter = ({ TAGS, timestamp, REACTIONSMETADATA, isActive, setIsAct
               colorOnMouseUp={isActive[data.id] ? data.activeColor : undefined}
               icon={data.icon}
             >
-              <Text label12Style={classes.reaction_label12_style} label12={data.text} />
+              <Text label12Style={classes.reaction_label12_style} label12={data.count} />
             </IconTextButton>
           </ToolTip>
         ))}

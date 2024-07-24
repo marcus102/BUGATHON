@@ -86,24 +86,20 @@ const Reactions = ({ REACTIONS_META_DATA, isActive, setIsActive, commentSections
     <Image imgContainerStyle={classes.img_container} imgStyle={classes.img} src={images} />
     <div className={classes.reactions_list_container}>
       {REACTIONS_META_DATA.map((data) => (
-        <ToolTip
-          key={data.id}
-          children={
-            <IconTextButton
-              inconTextButtonStyle={classes.list_icon_text_container}
-              icon={data.icon}
-              label={data.text}
-              colorOnMouseUp={isActive[data.id] ? data.activeColor : undefined}
-              onClick={() =>
-                setIsActive((prev) => ({
-                  ...prev,
-                  [data.id]: !prev[data.id],
-                }))
-              }
-            />
-          }
-          tooltipMessage={data.id}
-        />
+        <ToolTip key={data.id} tooltipMessage={data.id}>
+          <IconTextButton
+            inconTextButtonStyle={classes.list_icon_text_container}
+            icon={data.icon}
+            label={data.count}
+            colorOnMouseUp={isActive[data.id] ? data.activeColor : undefined}
+            onClick={() =>
+              setIsActive((prev) => ({
+                ...prev,
+                [data.id]: !prev[data.id],
+              }))
+            }
+          />
+        </ToolTip>
       ))}
       <IconTextButton
         icon={faComment}

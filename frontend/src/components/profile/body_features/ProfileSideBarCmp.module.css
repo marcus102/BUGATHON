@@ -24,6 +24,12 @@
   gap: 5px;
 }
 
+/*  */
+
+.colored_text {
+  color: var(--red_FF2B2B);
+}
+
 .side_bar_profile_edit_button {
   flex-direction: row;
   gap: 5px;
@@ -37,4 +43,3 @@
 .side_bar_icon_text_button_container:hover {
   background-color: var(--gray_50505066);
 }
-

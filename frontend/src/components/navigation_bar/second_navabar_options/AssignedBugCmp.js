@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { ManagmentSystem } from '../../../store/AppGeneralManagmentSystem';
-import classes from './AssignedBugCmp.module.css';
+// import classes from './AssignedBugCmp.module.css';
 import Colors from '../../../constants/colors';
 import {
   faThumbTack,
@@ -83,18 +83,21 @@ function AssignedBug() {
   const { assigned_bug } = dropDownDefault;
 
   return (
-    <CustomMenu
-      title={'Assigned Bugs'}
-      dropDown={ASSIGNMENT_DROP_DOWN}
-      dataList={DUMMY_ASSIGNED_BUG}
-      option={ASSIGNMENT_OPTION}
-      button={ASSIGNMENT_BUG_BUTTON}
-      reactionData={ASSIGNMENT_REACTIONS_DATA}
-      solidButtonDataType={'received'}
-      emptyContentLabel={'No Assigned Bugs'}
-      buttonLabel={assigned_bug}
-      my_key={'assigned_bug'}
-    />
+    <>
+      {' '}
+      <CustomMenu
+        title={'Assigned Bugs'}
+        dropDown={ASSIGNMENT_DROP_DOWN}
+        METADATA={DUMMY_ASSIGNED_BUG}
+        option={ASSIGNMENT_OPTION}
+        button={ASSIGNMENT_BUG_BUTTON}
+        reactionData={ASSIGNMENT_REACTIONS_DATA}
+        solidButtonDataType={'received'}
+        emptyContentLabel={'No Assigned Bugs'}
+        buttonLabel={assigned_bug}
+        my_key={'assigned_bug'}
+      />
+    </>
   );
 }
 

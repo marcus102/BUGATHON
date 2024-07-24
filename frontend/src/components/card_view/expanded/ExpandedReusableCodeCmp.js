@@ -1,7 +1,15 @@
 import React from 'react';
 import ExpandedCard from '../ExpandedCardView';
+import Colors from '../../../constants/colors';
 import { DUMMY_REUSABLE_CODE_DATA, CARD_VIEW_OPTION } from '../../../data/Database';
 import { useSearchParams } from 'react-router-dom';
+import {
+  faArrowUpFromBracket,
+  faChartSimple,
+  faComment,
+  faHeart,
+  faThumbTack,
+} from '@fortawesome/free-solid-svg-icons';
 
 const SUGESTION_BUTTON_DATA = [
   { id: '1', label: 'View People Contributions', children: null },
@@ -38,7 +46,23 @@ function ExpandedReusableCode() {
 
   return (
     <ExpandedCard
-      REACTIONS_META_DATA={postData.reactions}
+      REACTIONS_META_DATA={[
+        {
+          id: 'likes',
+          icon: faHeart,
+          count: postData.likeCount,
+          activeColor: Colors.red_FF2B2B,
+        },
+        { id: 'comments', icon: faComment, count: postData.totalComments, activeColor: null },
+        { id: 'pin', icon: faThumbTack, count: null, activeColor: Colors.yellow_ },
+        {
+          id: 'share',
+          icon: faArrowUpFromBracket,
+          count: postData.shareCount,
+          activeColor: null,
+        },
+        { id: 'impression', icon: faChartSimple, count: postData.viewCount, activeColor: null },
+      ]}
       contributionsArray={postData.contributions}
       contributionsCount={postData.totalAttempts}
       CARD_VIEW_OPTION_META_DATA={CARD_VIEW_OPTION}

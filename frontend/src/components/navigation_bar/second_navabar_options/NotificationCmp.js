@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { ManagmentSystem } from '../../../store/AppGeneralManagmentSystem';
-import classes from './NotificationCmp.module.css';
+// import classes from './NotificationCmp.module.css';
 import { faTrashCan, faExclamation, faCheckDouble } from '@fortawesome/free-solid-svg-icons';
 import { faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import profile_1 from '../../../assets/images/study.jpg';
@@ -58,7 +58,7 @@ function Notification() {
     <CustomMenu
       title={'Notifications'}
       dropDown={NOTIFICATION_DROP_DOWN}
-      dataList={DUMMY_NOTIFICATIONS}
+      METADATA={DUMMY_NOTIFICATIONS}
       option={NOTIFICATION_OPTION}
       button={NOTIFICATION_BUTTON}
       headerOption={NOTIFICATION_HEADER}

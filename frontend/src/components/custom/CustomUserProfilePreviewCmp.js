@@ -10,7 +10,7 @@ import {
   OutlinedButton,
 } from '../../utils/ButtonSection';
 import Icon from '../../utils/IconSection';
-import images from '../../assets/images/people.jpg';
+import defaultProfile from '../../assets/images/general_profile.svg';
 import VerifiedBadge from '../../assets/icons/verified_badge.svg';
 import { faArrowUpRightFromSquare, faChevronDown, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
@@ -23,11 +23,14 @@ const ProfileDropdownButton = ({ mainProfile, username, profession, profileImg }
       {profession && (
         <Text label10Style={classes.profession_label10_style} label10={`${profession}`} />
       )}
+      {!profession && (
+        <Text label10Style={classes.profession_label10_style} label10={`undefined`} />
+      )}
     </div>
     <Image
       imgContainerStyle={classes.img_container}
       imgStyle={classes.img}
-      src={profileImg ? profileImg : images}
+      src={profileImg ? profileImg : defaultProfile}
     />
   </>
 );
@@ -46,7 +49,7 @@ const GuestUserInfo = ({
       <Image
         imgContainerStyle={classes.profile_image_container}
         imgStyle={classes.profile_image}
-        src={images}
+        src={defaultProfile}
         alt="Profile"
       />
       <div className={classes.full_name_container}>
