@@ -333,7 +333,7 @@ export function DropdownMenu({
                 label={data.label}
                 icon={data.icon}
                 onClick={() => {
-                  post && navigate(`/${post}/${data.id}`);
+                  post && navigate(`/${post}/?type=${data.id}`);
                   setIsOpen(false);
                 }}
               />

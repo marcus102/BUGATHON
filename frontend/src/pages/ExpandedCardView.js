@@ -2,7 +2,7 @@ import React from 'react';
 import ExpandedBugFix from '../components/card_view/expanded/ExpandedBugFixCmp';
 import ExpandedBugReport from '../components/card_view/expanded/ExpandedBugReportCmp';
 import ExpandedReusableCode from '../components/card_view/expanded/ExpandedReusableCodeCmp';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 function ExpandedCardView() {
   const [searchParams] = useSearchParams();

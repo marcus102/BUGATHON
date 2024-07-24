@@ -61,10 +61,9 @@ function Footer() {
       </div>
       <div className={classes.footer_icon_button_container}>
         {ICON_LINK_DATA.map((data) => (
-          <ToolTip
-            children={<Link key={data.id} icon_link={data.icon} href={data.icon_link} />}
-            tooltipMessage={data.tool_tip}
-          />
+          <ToolTip key={data.id} tooltipMessage={data.tool_tip}>
+            <Link icon_link={data.icon} href={data.icon_link} />
+          </ToolTip>
         ))}
       </div>
       <Text label12={'© Bugathon 2024 powered by soft all right reserved'} />

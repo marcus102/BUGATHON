@@ -10,6 +10,7 @@ import SettingsPage from './pages/SettingsPage.js';
 import ProfilePage from './pages/ProfilePageCmp.js';
 import ExpandedCardView, { action as expandedCardViewAction } from './pages/ExpandedCardView.js';
 import CreatePage from './pages/CreatePage.js';
+import ContributionPage from './pages/ContributionPage.js';
 import SecondNavBarRoot from './pages/SecondNavBarRootPage.js';
 import AuthenticationPage, { action as authAction } from './pages/AuthenticationPage.js';
 
@@ -35,14 +36,8 @@ const router = createBrowserRouter([
             element: <SettingsPage />,
           },
           {
-            path: ':postId',
+            path: 'detail',
             element: <ExpandedCardView />,
-            children: [
-              {
-                path: 'contribute',
-                element: <CreatePage />
-              },
-            ],
           },
         ],
       },

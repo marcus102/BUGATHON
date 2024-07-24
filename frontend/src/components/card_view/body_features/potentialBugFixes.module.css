@@ -5,8 +5,7 @@
   flex-direction: column;
 }
 
-.recommendation_potentials_title_container {
-}
+.recommendation_potentials_title_container {}
 
 .recommendation_potentials_content_container {
   display: flex;

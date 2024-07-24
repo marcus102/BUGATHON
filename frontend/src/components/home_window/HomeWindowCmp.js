@@ -7,121 +7,122 @@ import HomeHeader from './home_window_options/HeaderCmp';
 import Pagination from '../../utils/PaginationSection';
 import usePagination from '../../custom_hooks/usePaginationHook';
 import { VerticalScrollView } from '../../utils/ScrollViewsSection';
+import { DUMMY_POST_DATA } from '../../data/Database';
 
-const DUMMY_POST_DATA = [
-  {
-    id: '1',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_report',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '2',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '3',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'reusable_code',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '4',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '5',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_report',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '6',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_report',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '7',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'reusable code',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '8',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_report',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '9',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_report',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '10',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '11',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_report',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '12',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_report',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '13',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'reusable_code',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '14',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '15',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_report',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '16',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_report',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-];
+// const DUMMY_POST_DATA = [
+//   {
+//     id: '1',
+//     title: 'Lorem ipsum dolor sit amet.',
+//     state: 'bug_report',
+//     description:
+//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+//   },
+//   {
+//     id: '2',
+//     title: 'Lorem ipsum dolor sit amet.',
+//     state: 'bug_fix',
+//     description:
+//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+//   },
+//   {
+//     id: '3',
+//     title: 'Lorem ipsum dolor sit amet.',
+//     state: 'reusable_code',
+//     description:
+//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+//   },
+//   {
+//     id: '4',
+//     title: 'Lorem ipsum dolor sit amet.',
+//     state: 'bug_fix',
+//     description:
+//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+//   },
+//   {
+//     id: '5',
+//     title: 'Lorem ipsum dolor sit amet.',
+//     state: 'bug_report',
+//     description:
+//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+//   },
+//   {
+//     id: '6',
+//     title: 'Lorem ipsum dolor sit amet.',
+//     state: 'bug_report',
+//     description:
+//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+//   },
+//   {
+//     id: '7',
+//     title: 'Lorem ipsum dolor sit amet.',
+//     state: 'reusable code',
+//     description:
+//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+//   },
+//   {
+//     id: '8',
+//     title: 'Lorem ipsum dolor sit amet.',
+//     state: 'bug_report',
+//     description:
+//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+//   },
+//   {
+//     id: '9',
+//     title: 'Lorem ipsum dolor sit amet.',
+//     state: 'bug_report',
+//     description:
+//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+//   },
+//   {
+//     id: '10',
+//     title: 'Lorem ipsum dolor sit amet.',
+//     state: 'bug_fix',
+//     description:
+//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+//   },
+//   {
+//     id: '11',
+//     title: 'Lorem ipsum dolor sit amet.',
+//     state: 'bug_report',
+//     description:
+//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+//   },
+//   {
+//     id: '12',
+//     title: 'Lorem ipsum dolor sit amet.',
+//     state: 'bug_report',
+//     description:
+//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+//   },
+//   {
+//     id: '13',
+//     title: 'Lorem ipsum dolor sit amet.',
+//     state: 'reusable_code',
+//     description:
+//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+//   },
+//   {
+//     id: '14',
+//     title: 'Lorem ipsum dolor sit amet.',
+//     state: 'bug_fix',
+//     description:
+//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+//   },
+//   {
+//     id: '15',
+//     title: 'Lorem ipsum dolor sit amet.',
+//     state: 'bug_report',
+//     description:
+//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+//   },
+//   {
+//     id: '16',
+//     title: 'Lorem ipsum dolor sit amet.',
+//     state: 'bug_report',
+//     description:
+//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
+//   },
+// ];
 
 function HomeWindow({ homeWindowMainContainerStyle }) {
   const { sideBar } = useContext(ManagmentSystem);
@@ -166,8 +167,13 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
               key={data.id}
               isHeaderOption={true}
               postTitle={data.title}
-              postDescription={data.description}
+              postDescription={data.description.content}
+              username={data.user}
               postId={data.id}
+              TAGS={data.tags}
+              REACTIONSMETADATA={data.reactions}
+              contributionsArray={data.contributions}
+              contributionsCount={data.totalAttempts}
             />
           ))}
         </VerticalScrollView>

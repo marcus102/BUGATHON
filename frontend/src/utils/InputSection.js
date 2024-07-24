@@ -94,7 +94,6 @@ export function Input({
   inputSecondContainerStyle,
   inputStyle,
   onKeyDown,
-  defaultValue,
   unwrap,
   unwrap_,
 }) {
@@ -117,7 +116,6 @@ export function Input({
             value={value}
             onChange={onChange}
             onKeyDown={onKeyDown}
-            defaultValue={defaultValue ? defaultValue : ''}
           />
           {type === 'password' && (
             <IconButton

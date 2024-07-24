@@ -5,7 +5,7 @@ import NewBugFix from '../components/new/body_features/newBugFixCmp';
 import NewReusableCode from '../components/new/body_features/newReusableCodeCmp';
 import { useSearchParams } from 'react-router-dom';
 
-function CreatePage() {
+function ContributionPage() {
   const [searchParams] = useSearchParams();
   const post_type = searchParams.get('type');
   return (
@@ -17,4 +17,4 @@ function CreatePage() {
   );
 }
 
-export default CreatePage;
+export default ContributionPage;

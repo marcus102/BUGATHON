@@ -38,8 +38,10 @@ const Header = ({
   isExpanded,
   setIsExpanded,
   CARD_VIEW_OPTION_META_DATA,
+  contributionsArray,
   handleNavigation,
   postType,
+  contributionsCount,
 }) => (
   <div className={classes.implentation_header_container}>
     <div className={classes.header_options_container}>
@@ -50,7 +52,7 @@ const Header = ({
       <SolidButton
         unwrap
         buttonStyle={classes.options_button_container}
-        label={'Make An Attempt'}
+        label={'Contribute'}
         onClick={() =>
           handleNavigation(
             postType === 'bug_report' || postType === 'bug_fix' ? 'bug_fix' : 'reusable_code'
@@ -61,19 +63,20 @@ const Header = ({
     </div>
     <div className={classes.header_options_container}>
       <div className="d-none d-md-block">
-        <HeaderOptions headerOptionMainContainer="d-none d-xl-block" />
+        <HeaderOptions
+          headerOptionMainContainer="d-none d-xl-block"
+          contributionsArray={contributionsArray}
+          contributionsCount={contributionsCount}
+        />
       </div>
       <DropdownMenu buttonIcon={faEllipsisVertical} menuItems={CARD_VIEW_OPTION_META_DATA} />
-      <ToolTip
-        children={
-          <IconButton
-            inconButtonStyle="d-none d-xl-block"
-            icon={isExpanded ? faChevronRight : faChevronLeft}
-            onClick={() => setIsExpanded(!isExpanded)}
-          />
-        }
-        tooltipMessage={isExpanded ? 'Close Insight' : 'Open Insight'}
-      />
+      <ToolTip tooltipMessage={isExpanded ? 'Close Insight' : 'Open Insight'}>
+        <IconButton
+          inconButtonStyle="d-none d-xl-block"
+          icon={isExpanded ? faChevronRight : faChevronLeft}
+          onClick={() => setIsExpanded(!isExpanded)}
+        />
+      </ToolTip>
     </div>
   </div>
 );
@@ -136,20 +139,17 @@ const ImplementationSection = ({
         {!isCollapsed[data.id] && (
           <div className={classes.body_solution_content_container}>
             <div className={classes.body_solution_icon_button}>
-              <ToolTip
-                children={
-                  <IconButton
-                    icon={!isCopied[data.id] ? faCopy : faCheck}
-                    onClick={() =>
-                      setIsCopied((prev) => ({
-                        ...prev,
-                        [data.id]: !prev[data.id],
-                      }))
-                    }
-                  />
-                }
-                tooltipMessage={!isCopied[data.id] ? 'Copy' : 'Copied'}
-              />
+              <ToolTip tooltipMessage={!isCopied[data.id] ? 'Copy' : 'Copied'}>
+                <IconButton
+                  icon={!isCopied[data.id] ? faCopy : faCheck}
+                  onClick={() =>
+                    setIsCopied((prev) => ({
+                      ...prev,
+                      [data.id]: !prev[data.id],
+                    }))
+                  }
+                />
+              </ToolTip>
             </div>
             <hr className={classes.body_horizontal_line_container} />
             <Text textStyle={classes.body_solution_text_content_container} p16={data.content} />
@@ -193,6 +193,8 @@ const ExpandedCard = ({
   SUGESTION_BUTTON_META_DATA,
   title,
   potentialTitle,
+  contributionsArray,
+  contributionsCount,
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [isCopied, setIsCopied] = useState(
@@ -218,15 +220,15 @@ const ExpandedCard = ({
   const commentSectionsRef = useRef(null);
   const navigate = useNavigate();
 
-  const handleNavigation = (id) => {
-    id === 'home' && navigate('/');
-    id === 'bug_report' && navigate('/new/bug_fix');
-    id === 'bug_fix' && navigate('/new/bug_fix');
-    id === 'reusable_code' && navigate('/new/reusable_code');
-  };
-
   const [searchParams] = useSearchParams();
   const current_post = searchParams.get('post');
+
+  const handleNavigation = (id) => {
+    id === 'home' && navigate('/');
+    id === 'bug_report' && navigate(`contribute/?type=${'bug_fix'}`);
+    id === 'bug_fix' && navigate(`contribute/?type=${'bug_fix'}`);
+    id === 'reusable_code' && navigate(`contribute/?type=${'reusable_code'}`);
+  };
 
   return (
     <div className={classes.expanded_container}>
@@ -238,6 +240,8 @@ const ExpandedCard = ({
             CARD_VIEW_OPTION_META_DATA={CARD_VIEW_OPTION_META_DATA}
             handleNavigation={handleNavigation}
             postType={current_post}
+            contributionsArray={contributionsArray}
+            contributionsCount={contributionsCount}
           />
           <Text textStyle={classes.implentation_second_header_container} h5={title} />
           <div className={classes.implentation_body_main_container}>

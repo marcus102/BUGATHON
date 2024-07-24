@@ -128,7 +128,7 @@ const OptionContent = ({ data, option, button, solidButtonDataType, reactionData
 function CustomMenu({
   title,
   dropDown,
-  dataList,
+  METADATA,
   option,
   button,
   reactionData,
@@ -148,8 +148,8 @@ function CustomMenu({
         my_key={my_key}
       />
       <div className={classes.header_option_content_root_container}>
-        {dataList?.length > 0 ? (
-          dataList.map((data) => (
+        {METADATA ? (
+          METADATA.map((data) => (
             <OptionContent
               key={data.id}
               data={data}
