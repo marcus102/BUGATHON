@@ -28,6 +28,8 @@ export const ManagmentSystem = createContext({
     device,
     severity,
   }) => {},
+  currentProfileId: '',
+  currentProfileIdHandler: (parameters) => {},
 });
 
 export default function ManagmentSystemProvider({ children }) {
@@ -47,6 +49,7 @@ export default function ManagmentSystemProvider({ children }) {
       device: 'Desktop',
       severity: 'Low',
     },
+    currentProfileId: '',
   };
 
   function reducer(state, action) {
@@ -121,6 +124,11 @@ export default function ManagmentSystemProvider({ children }) {
             }),
           },
         };
+      case 'SET_CURRENT_PROFILE_ID':
+        return {
+          ...state,
+          currentProfileId: action.payload,
+        };
       default:
         return state;
     }
@@ -167,6 +175,10 @@ export default function ManagmentSystemProvider({ children }) {
     });
   };
 
+  const currentProfileIdHandler = (parameters) => {
+    dispatch({ type: 'SET_CURRENT_PROFILE_ID', payload: parameters });
+  };
+
   const value = {
     overlay: state.overlay,
     overlayHandler: overlayHandler,
@@ -182,6 +194,8 @@ export default function ManagmentSystemProvider({ children }) {
     settingSideBarButtonHandler: settingSideBarButtonHandler,
     dropDownDefault: state.dropDownDefault,
     dropDownDefaultHandler: dropDownDefaultHandler,
+    currentProfileId: state.currentProfileId,
+    currentProfileIdHandler: currentProfileIdHandler,
   };
 
   return <ManagmentSystem.Provider value={value}>{children}</ManagmentSystem.Provider>;

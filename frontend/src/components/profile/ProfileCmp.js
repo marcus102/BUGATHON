@@ -10,6 +10,7 @@ import UserBugReport from './body_features/UserBugReportCmp';
 import UserReusableCode from './body_features/UserReusableCodeCmp';
 import Analytics from './body_features/AnalyticsCmp';
 import UserBlogPost from './body_features/UserBlogPostCmp';
+import AdminDashBoard from './body_features/AdminDashBoardCmp';
 import { VerticalScrollView } from '../../utils/ScrollViewsSection';
 
 function Profile() {
@@ -30,6 +31,7 @@ function Profile() {
               {profileSideBarButton === 'Bug Fixes' && <UserBugFix />}
               {profileSideBarButton === 'Bug Reports' && <UserBugReport />}
               {profileSideBarButton === 'Reusable Code' && <UserReusableCode />}
+              {profileSideBarButton === 'Admin Dashboard' && <AdminDashBoard />}
             </>
           }
         />

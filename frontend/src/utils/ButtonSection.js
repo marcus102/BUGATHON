@@ -287,8 +287,8 @@ export function DropdownMenu({
   menuItems,
   children,
   buttonChildren,
-  onClick,
   post,
+  profileId,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -307,6 +307,8 @@ export function DropdownMenu({
     };
   }, []);
 
+  const { currentProfileIdHandler } = useContext(ManagmentSystem);
+
   return (
     <div
       className={`${classes.dropdown_menu_container} ${dropDownMainContainerStyle}`}
@@ -319,6 +321,7 @@ export function DropdownMenu({
         children={buttonChildren}
         onClick={() => {
           setIsOpen(!isOpen);
+          profileId && currentProfileIdHandler(profileId);
         }}
       />
 

@@ -11,18 +11,19 @@ import UserProfileHeader from '../userProfileHeaderCmp';
 import HeaderOptions from '../headerOptionsCmp';
 import ToolTip from '../../utils/toolTipSection';
 import { useNavigate } from 'react-router-dom';
-import { CARD_VIEW_OPTION } from '../../data/Database';
+import { CARD_VIEW_OPTION, DUMMY_USERS } from '../../data/Database';
 
 // Header component
 const HomeCardHeader = ({
   username,
   profession,
+  profileImg,
   isHeaderOption,
   contributionsCount,
   contributionsArray,
 }) => (
   <div className={classes.home_card_header_container}>
-    <UserProfileHeader username={username} profession={profession} />
+    <UserProfileHeader username={username} profession={profession} profileImg={profileImg} />
     <div className={classes.header_options_container}>
       {isHeaderOption ? (
         <HeaderOptions
@@ -107,6 +108,8 @@ function HomeCard({
 
   const navigate = useNavigate();
 
+  const currentUser = DUMMY_USERS.find((user) => user.username === username);
+
   return (
     <div
       className={`${classes.home_card} ${
@@ -121,8 +124,9 @@ function HomeCard({
     >
       {/* HEADER */}
       <HomeCardHeader
-        username={username}
-        profession={profession}
+        username={currentUser.username}
+        profession={currentUser.profession}
+        profileImg={currentUser.profile}
         isHeaderOption={isHeaderOption}
         contributionsCount={contributionsCount}
         contributionsArray={contributionsArray}
@@ -139,11 +143,11 @@ function HomeCard({
         icon_={faArrowUpRightFromSquare}
         onClick={() => {
           if (cardButtonState === 'bug_report') {
-            navigate(`/detail/?username=${username}/&postId=${postId}&post=${'bug_report'}`);
+            navigate(`/detail/?username=${username}&postId=${postId}&post=${'bug_report'}`);
           } else if (cardButtonState === 'bug_fix') {
-            navigate(`/detail/?username=${username}/&postId=${postId}&post=${'bug_fix'}`);
+            navigate(`/detail/?username=${username}&postId=${postId}&post=${'bug_fix'}`);
           } else if (cardButtonState === 'reusable_code') {
-            navigate(`/detail/?username=${username}/&postId=${postId}&post=${'reusable_code'}`);
+            navigate(`/detail/?username=${username}&postId=${postId}&post=${'reusable_code'}`);
           }
         }}
       />

@@ -33,6 +33,7 @@ import RelatedReviews from './body_features/relatedReviewsCmp';
 import RelatedResults from './body_features/relatedResultCmp';
 import Line from '../../utils/LineSection';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { DUMMY_USERS } from '../../data/Database';
 
 const Header = ({
   isExpanded,
@@ -42,6 +43,9 @@ const Header = ({
   handleNavigation,
   postType,
   contributionsCount,
+  username,
+  profession,
+  profileImg,
 }) => (
   <div className={classes.implentation_header_container}>
     <div className={classes.header_options_container}>
@@ -59,7 +63,7 @@ const Header = ({
           )
         }
       />
-      <UserProfileHeader />
+      <UserProfileHeader username={username} profession={profession} profileImg={profileImg} />
     </div>
     <div className={classes.header_options_container}>
       <div className="d-none d-md-block">
@@ -218,6 +222,7 @@ const ExpandedCard = ({
 
   const [searchParams] = useSearchParams();
   const current_post = searchParams.get('post');
+  const current_username = searchParams.get('username');
 
   const handleNavigation = (id) => {
     id === 'home' && navigate('/');
@@ -225,6 +230,8 @@ const ExpandedCard = ({
     id === 'bug_fix' && navigate(`contribute/?type=${'bug_fix'}`);
     id === 'reusable_code' && navigate(`contribute/?type=${'reusable_code'}`);
   };
+
+  const currentUser = DUMMY_USERS.find((user) => user.username === current_username);
 
   return (
     <div className={classes.expanded_container}>
@@ -238,6 +245,9 @@ const ExpandedCard = ({
             postType={current_post}
             contributionsArray={contributionsArray}
             contributionsCount={contributionsCount}
+            username={currentUser.username}
+            profession={currentUser.profession}
+            profileImg={currentUser.profile}
           />
           <Text textStyle={classes.implentation_second_header_container} h5={title} />
           <div className={classes.implentation_body_main_container}>
