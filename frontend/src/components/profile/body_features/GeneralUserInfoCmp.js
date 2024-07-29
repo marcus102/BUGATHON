@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import classes from './GeneralUserInfoCmp.module.css';
+import Colors from '../../../constants/colors';
 import { IconTextButton, ButtonContainer } from '../../../utils/ButtonSection';
 import Text from '../../../utils/TextSection';
 import HomeCard from '../../card_view/HomeCardView';
 import {
+  faArrowUpFromBracket,
   faAt,
+  faChartSimple,
   faChevronDown,
   faChevronUp,
   faLocationDot,
   faPhone,
+  faThumbTack,
+  faComment,
+  faHeart,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faGithub,
@@ -17,235 +23,189 @@ import {
   faXTwitter,
   faYoutube,
 } from '@fortawesome/free-brands-svg-icons';
+import {
+  DUMMY_BUG_FIX_DATA,
+  DUMMY_BUG_REPORT_DATA,
+  DUMMY_REUSABLE_CODE_DATA,
+} from '../../../data/Database';
+import { useSearchParams } from 'react-router-dom';
 
-const DUMMY_POST_DATA = [
-  {
-    id: 'Trending',
-    children: [
-      {
-        id: '1',
-        title: 'Lorem ipsum dolor sit amet.',
-        state: 'bug_fix',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-      },
-      {
-        id: '2',
-        title: 'Lorem ipsum dolor sit amet.',
-        state: 'bug_report',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-      },
-      {
-        id: '3',
-        title: 'Lorem ipsum dolor sit amet.',
-        state: 'reusable_code',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-      },
-      {
-        id: '4',
-        title: 'Lorem ipsum dolor sit amet.',
-        state: 'bug_fix',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-      },
-    ],
-  },
-  {
-    id: 'Top Bug Report',
-    children: [
-      {
-        id: '1',
-        title: 'Lorem ipsum dolor sit amet.',
-        state: 'bug_report',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-      },
-      {
-        id: '2',
-        title: 'Lorem ipsum dolor sit amet.',
-        state: 'bug_report',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-      },
-      {
-        id: '3',
-        title: 'Lorem ipsum dolor sit amet.',
-        state: 'bug_report',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-      },
-      {
-        id: '4',
-        title: 'Lorem ipsum dolor sit amet.',
-        state: 'bug_report',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-      },
-    ],
-  },
-  {
-    id: 'Top Bug Fix',
-    children: [
-      {
-        id: '1',
-        title: 'Lorem ipsum dolor sit amet.',
-        state: 'bug_fix',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-      },
-      {
-        id: '2',
-        title: 'Lorem ipsum dolor sit amet.',
-        state: 'bug_fix',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-      },
-      {
-        id: '3',
-        title: 'Lorem ipsum dolor sit amet.',
-        state: 'bug_fix',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-      },
-      {
-        id: '4',
-        title: 'Lorem ipsum dolor sit amet.',
-        state: 'bug_fix',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-      },
-    ],
-  },
-  {
-    id: 'Top Reusable Code',
-    children: [
-      {
-        id: '1',
-        title: 'Lorem ipsum dolor sit amet.',
-        state: 'reusable_code',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-      },
-      {
-        id: '2',
-        title: 'Lorem ipsum dolor sit amet.',
-        state: 'reusable_code',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-      },
-      {
-        id: '3',
-        title: 'Lorem ipsum dolor sit amet.',
-        state: 'reusable_code',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-      },
-      {
-        id: '4',
-        title: 'Lorem ipsum dolor sit amet.',
-        state: 'reusable_code',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-      },
-    ],
-  },
-];
+const categorizeLinks = (links) => {
+  const categories = {
+    GitHub: '',
+    StackOverflow: '',
+    LinkedIn: '',
+    Twitter: '',
+    YouTube: '',
+  };
 
-const SOCIAL_DATA = [
-  {
-    id: 'Social',
-    children: [
-      { id: 'GitHub', icon: faGithub },
-      { id: 'Stack Overflow', icon: faStackOverflow },
-      { id: 'LinkedIn', icon: faLinkedin },
-      { id: '@marcus', icon: faXTwitter },
-      { id: 'YouTube', icon: faYoutube },
-    ],
-  },
-  {
-    id: 'Contact',
-    children: [
-      { id: 'Email Address', icon: faAt },
-      { id: 'Tel Number', icon: faPhone },
-      { id: 'Located At', icon: faLocationDot },
-    ],
-  },
-];
+  links?.forEach((link) => {
+    if (link.includes('github.com')) categories.GitHub = link;
+    else if (link.includes('stackoverflow.com')) categories.StackOverflow = link;
+    else if (link.includes('linkedin.com')) categories.LinkedIn = link;
+    else if (link.includes('twitter.com')) categories.Twitter = link;
+    else if (link.includes('youtube.com')) categories.YouTube = link;
+  });
 
-function GeneralUserInfo() {
+  return categories;
+};
+
+const SocialSection = ({ socialData }) => {
+  return (
+    <div className={classes.bio_contact_container}>
+      {socialData.map((data) => (
+        <div key={data.id} className={classes.contact_social_container}>
+          <Text h5={data.id} />
+          <div className={classes.social_container}>
+            {data.children.map((subData) => (
+              <IconTextButton
+                key={subData.id}
+                inconTextButtonStyle={classes.social_icon_text_button_container}
+                label={subData.address}
+                icon={subData.icon}
+              />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const BioSection = ({ bio }) => {
+  return (
+    bio && (
+      <div className={classes.bio_container}>
+        <Text h5="Bio" />
+        <Text p16={bio} />
+      </div>
+    )
+  );
+};
+
+const PostSection = ({ postData }) => {
   const [isExpanded, setIsExpanded] = useState(
-    DUMMY_POST_DATA.reduce((acc, reaction) => {
-      acc[reaction.id] = false;
+    postData.reduce((acc, post) => {
+      acc[post.id] = false;
       return acc;
     }, {})
   );
 
+  const handleToggleExpand = (id) => {
+    setIsExpanded((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
   return (
-    <div className={classes.general_user_info_content_overview_main_container}>
-      {/* BIO */}
-      <div className={classes.content_user_bio_main_container}>
-        <div className={classes.bio_contact_container}>
-          {SOCIAL_DATA.map((data) => (
-            <div key={data.id} className={classes.contact_social_container}>
-              <Text h5={data.id} />
-              <div className={classes.social_container}>
-                {data.children.map((subData) => (
-                  <IconTextButton
-                    key={subData.id}
-                    inconTextButtonStyle={classes.social_icon_text_button_container}
-                    label={subData.id}
-                    icon={subData.icon}
-                  />
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className={classes.bio_container}>
-          <Text h5={'Bio'} />
-          <Text
-            p16={
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.'
-            }
+    <div className={classes.content_user_post_overview_main_container}>
+      {postData.map((data) => (
+        <div key={data.id}>
+          <IconTextButton
+            inconTextButtonStyle={classes.user_post_overview_container}
+            label={data.id}
+            icon_={!isExpanded[data.id] ? faChevronDown : faChevronUp}
+            onClick={() => handleToggleExpand(data.id)}
           />
-        </div>
-      </div>
-      {/* TRENDING - BUG REPORT - BUG FIX - REUSABLE CODE */}
-      <div className={classes.content_user_post_overview_main_container}>
-        {DUMMY_POST_DATA.map((data) => (
-          <div key={data.id}>
-            <IconTextButton
-              inconTextButtonStyle={classes.user_post_overview_container}
-              label={data.id}
-              icon_={!isExpanded[data.id] ? faChevronDown : faChevronUp}
-              onClick={() => {
-                setIsExpanded((prev) => ({
-                  ...prev,
-                  [data.id]: !prev[data.id],
-                }));
-              }}
-            />
-            {isExpanded[data.id] && (
-              <>
-                {data.children.map((subData) => (
+          {isExpanded[data.id] && (
+            <>
+              {data.children.length > 0 ? (
+                data.children.map((subData) => (
                   <div key={subData.id} className={classes.post_card_overview_main_container}>
                     <HomeCard
-                      isHeaderOption={true}
-                      key={subData.id}
-                      postTitle={subData.title}
-                      postDescription={subData.description}
                       cardButtonState={subData.state}
+                      key={subData.id}
+                      isHeaderOption
+                      postTitle={subData.title}
+                      postDescription={subData.description.content}
+                      username={subData.user}
+                      postId={subData.id}
+                      TAGS={subData.tags}
+                      REACTIONSMETADATA={[
+                        {
+                          id: 'likes',
+                          icon: faHeart,
+                          count: subData.likeCount,
+                          activeColor: Colors.red_FF2B2B,
+                        },
+                        { id: 'comments', icon: faComment, count: subData.totalComments },
+                        { id: 'pin', icon: faThumbTack, activeColor: Colors.yellow_ },
+                        { id: 'share', icon: faArrowUpFromBracket, count: subData.shareCount },
+                        { id: 'impression', icon: faChartSimple, count: subData.viewCount },
+                      ]}
+                      contributionsArray={subData.contributions}
+                      contributionsCount={subData.totalAttempts}
                     />
                   </div>
-                ))}
-                <ButtonContainer children={<Text label14={'Click here for more...'} />} />
-              </>
-            )}
-          </div>
-        ))}
+                ))
+              ) : (
+                <Text label14="No posts yet" />
+              )}
+              <ButtonContainer>
+                <Text label14="Click here for more..." />
+              </ButtonContainer>
+            </>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const filterDataByUser = (data, username) => {
+  return data.filter((item) => item.user === username);
+};
+
+function GeneralUserInfo({ userLinks, emails, telNumber, location, bio }) {
+  const [searchParams] = useSearchParams();
+  const currentUsername = searchParams.get('username');
+
+  const currentUserBugReports = filterDataByUser(DUMMY_BUG_REPORT_DATA, currentUsername);
+  const currentUserBugFixes = filterDataByUser(DUMMY_BUG_FIX_DATA, currentUsername);
+  const currentUserReusableCodes = filterDataByUser(DUMMY_REUSABLE_CODE_DATA, currentUsername);
+
+  const DUMMY_POST_DATA = [
+    { id: 'Trending', children: [] },
+    { id: 'Top Bug Report', children: currentUserBugReports },
+    { id: 'Top Bug Fix', children: currentUserBugFixes },
+    { id: 'Top Reusable Code', children: currentUserReusableCodes },
+  ];
+
+  const categorizedUserLinks = categorizeLinks(userLinks);
+
+  const SOCIAL_DATA = [
+    {
+      id: 'Social',
+      children: [
+        { id: 'GitHub', icon: faGithub, address: categorizedUserLinks.GitHub },
+        {
+          id: 'Stack Overflow',
+          icon: faStackOverflow,
+          address: categorizedUserLinks.StackOverflow,
+        },
+        { id: 'LinkedIn', icon: faLinkedin, address: categorizedUserLinks.LinkedIn },
+        { id: 'Twitter', icon: faXTwitter, address: categorizedUserLinks.Twitter },
+        { id: 'YouTube', icon: faYoutube, address: categorizedUserLinks.YouTube },
+      ],
+    },
+    {
+      id: 'Contact',
+      children: [
+        { id: 'Email Address', icon: faAt, address: emails },
+        { id: 'Tel Number', icon: faPhone, address: telNumber },
+        { id: 'Location', icon: faLocationDot, address: location },
+      ],
+    },
+  ];
+
+  return (
+    <div className={classes.general_user_info_content_overview_main_container}>
+      <div className={classes.content_user_bio_main_container}>
+        <SocialSection socialData={SOCIAL_DATA} />
+        <BioSection bio={bio} />
       </div>
+      <PostSection postData={DUMMY_POST_DATA} />
     </div>
   );
 }

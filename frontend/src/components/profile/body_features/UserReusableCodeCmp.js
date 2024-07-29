@@ -1,82 +1,25 @@
 import React from 'react';
 // import classes from './UserReusableCodeCmp.module.css';
 import CustomBugList from '../../custom/CustomBugListCmp';
+import { DUMMY_REUSABLE_CODE_DATA } from '../../../data/Database';
+import { useSearchParams } from 'react-router-dom';
 
-const DUMMY_REUSABLE_CODE_DATA = [
-  {
-    id: '1',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'reusable_code',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '2',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'reusable_code',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '3',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'reusable_code',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '4',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'reusable_code',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '5',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'reusable_code',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '6',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'reusable_code',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '7',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'reusable_code',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '8',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'reusable_code',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '9',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'reusable_code',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '10',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'reusable_code',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-];
+const filterDataByUser = (data, username) => {
+  return data.filter((item) => item.user === username);
+};
 
 function UserReusableCode() {
-  return <CustomBugList DATA={DUMMY_REUSABLE_CODE_DATA} title={'Reusable Code'} count={'2k'} />;
+  const [searchParams] = useSearchParams();
+  const currentUsername = searchParams.get('username');
+
+  const currentUserReusableCodes = filterDataByUser(DUMMY_REUSABLE_CODE_DATA, currentUsername);
+  return (
+    <CustomBugList
+      DATA={currentUserReusableCodes}
+      title={'Reusable Code'}
+      count={currentUserReusableCodes.length}
+    />
+  );
 }
 
 export default UserReusableCode;

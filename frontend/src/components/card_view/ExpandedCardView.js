@@ -49,10 +49,9 @@ const Header = ({
 }) => (
   <div className={classes.implentation_header_container}>
     <div className={classes.header_options_container}>
-      <ToolTip
-        children={<IconButton icon={faArrowLeft} onClick={() => handleNavigation('home')} />}
-        tooltipMessage={'Go Back Home'}
-      />
+      <ToolTip tooltipMessage={'Go Back Home'}>
+        <IconButton icon={faArrowLeft} onClick={() => handleNavigation('home')} />
+      </ToolTip>
       <SolidButton
         unwrap
         buttonStyle={classes.options_button_container}
@@ -96,21 +95,19 @@ const Reactions = ({ REACTIONS_META_DATA, isActive, setIsActive, commentSections
             icon={data.icon}
             label={data.count}
             colorOnMouseUp={isActive[data.id] ? data.activeColor : undefined}
-            onClick={() =>
+            onClick={() => {
               setIsActive((prev) => ({
                 ...prev,
                 [data.id]: !prev[data.id],
-              }))
-            }
+              }));
+
+              if (data.id === 'comments') {
+                commentSectionsRef.current.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
           />
         </ToolTip>
       ))}
-      <IconTextButton
-        icon={faComment}
-        inconTextButtonStyle={classes.list_comment_icon_text_container}
-        label="Comment"
-        onClick={() => commentSectionsRef.current.scrollIntoView({ behavior: 'smooth' })}
-      />
     </div>
   </div>
 );
@@ -226,16 +223,16 @@ const ExpandedCard = ({
 
   const handleNavigation = (id) => {
     id === 'home' && navigate('/');
-    id === 'bug_report' && navigate(`contribute/?type=${'bug_fix'}`);
-    id === 'bug_fix' && navigate(`contribute/?type=${'bug_fix'}`);
-    id === 'reusable_code' && navigate(`contribute/?type=${'reusable_code'}`);
+    id === 'bug_report' && navigate(`/new/?type=${'bug_fix'}`);
+    id === 'bug_fix' && navigate(`/new/?type=${'bug_fix'}`);
+    id === 'reusable_code' && navigate(`/new/?type=${'reusable_code'}`);
   };
 
   const currentUser = DUMMY_USERS.find((user) => user.username === current_username);
 
   return (
     <div className={classes.expanded_container}>
-      <div className={classes.expanded_card_main_container}>
+      <div className={classes.expanded_card_second_container}>
         <div className={classes.expanded_card_implentation_main_container}>
           <Header
             isExpanded={isExpanded}

@@ -9,7 +9,7 @@ import CustomMenu from '../../custom/CustomMenuCmp';
 
 const NOTIFICATION_HEADER = [
   { id: '1', icon: faCheckDouble, label: 'Marl All As Read' },
-  { id: '1', icon: faTrashCan, label: 'Clear All' },
+  { id: '2', icon: faTrashCan, label: 'Clear All' },
 ];
 
 const DUMMY_NOTIFICATIONS = [

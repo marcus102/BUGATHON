@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { ManagmentSystem } from '../../../store/AppGeneralManagmentSystem';
 import classes from './ProfileSideBarCmp.module.css';
 import { Image } from '../../../utils/MediaSection';
-import images from '../../../assets/images/people.jpg';
 import { IconTextButton } from '../../../utils/ButtonSection';
 import { faArrowPointer, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { HorizontalScrollView, VerticalScrollView } from '../../../utils/ScrollViewsSection';
@@ -22,13 +21,13 @@ const SIDE_BAR_DATA = [
   { id: 'Block This Account ', icon_: null, is_my_profile: false, isColored: true },
 ];
 
-export function ProfileSideBar({ isMyProfile }) {
+export function ProfileSideBar({ isMyProfile, profileImg }) {
   const { profileSideBarButtonHandler, profileSideBarButton } = useContext(ManagmentSystem);
   return (
     <div className={`d-none d-xl-flex ${classes.profile_page_side_bar_main_container}`}>
       <VerticalScrollView>
         <Image
-          src={images}
+          src={profileImg}
           alt={'user profile picture'}
           imgContainerStyle={classes.profile_images_container}
           imgStyle={classes.profile_images}

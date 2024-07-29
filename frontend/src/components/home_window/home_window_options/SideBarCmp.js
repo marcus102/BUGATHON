@@ -4,7 +4,6 @@ import classes from './SideBarCmp.module.css';
 import Colors from '../../../constants/colors';
 import {
   IconButton,
-  DropdownMenu,
   PlaneButton,
   SolidButton,
   IconTextButton,
@@ -16,11 +15,7 @@ import {
   faDesktop,
   faFilter,
   faMoon,
-  faPlus,
   faSun,
-  faBug,
-  faInbox,
-  faNewspaper,
   faGears,
   faAngleUp,
   faAngleDown,
@@ -153,10 +148,9 @@ export function HomeExpandedSideBar() {
                       key={subData.id}
                       buttonMainContainerStyle={classes.tag_button_main_container}
                       buttonStyle={classes.tag_button}
-                      children={
-                        <Text label12Style={classes.filter_tag_text} label12={subData.data} />
-                      }
-                    />
+                    >
+                      <Text label12Style={classes.filter_tag_text} label12={subData.data} />
+                    </SolidButton>
                   ))}
                 </div>
               )}
@@ -188,17 +182,13 @@ export function HomeExpandedSideBar() {
               {isThemeExpanded && (
                 <div className={classes.theme_icon_container}>
                   {THEME_DATA.map((data) => (
-                    <ToolTip
-                      children={
-                        <IconButton
-                          key={data.id}
-                          icon={data.icon}
-                          inconButtonStyle={theme === data.active && classes.active_icon_button}
-                          onClick={() => sideBarHandler({ theme: data.active })}
-                        />
-                      }
-                      tooltipMessage={data.tool_tip}
-                    />
+                    <ToolTip key={data.id} tooltipMessage={data.tool_tip}>
+                      <IconButton
+                        icon={data.icon}
+                        inconButtonStyle={theme === data.active && classes.active_icon_button}
+                        onClick={() => sideBarHandler({ theme: data.active })}
+                      />
+                    </ToolTip>
                   ))}
                 </div>
               )}
@@ -232,41 +222,32 @@ export function HomeCollapsedSideBar() {
 
   return (
     <>
-      <ToolTip
-        toolTipStyle={classes.side_bar_tool_tip_container}
-        children={<IconButton icon={faFilter} />}
-        tooltipMessage={'Filtering'}
-      />
-      <ToolTip
-        toolTipStyle={classes.side_bar_tool_tip_container}
-        children={<IconButton icon={faArrowUpWideShort} />}
-        tooltipMessage={'Sorting'}
-      />
+      <ToolTip toolTipStyle={classes.side_bar_tool_tip_container} tooltipMessage={'Filtering'}>
+        <IconButton icon={faFilter} />
+      </ToolTip>
+      <ToolTip toolTipStyle={classes.side_bar_tool_tip_container} tooltipMessage={'Sorting'}>
+        <IconButton icon={faArrowUpWideShort} />
+      </ToolTip>
       {THEME_DATA.map((data) => (
         <ToolTip
+          key={data.id}
           toolTipStyle={classes.side_bar_tool_tip_container}
-          children={
-            <IconButton
-              key={data.id}
-              icon={data.icon}
-              inconButtonStyle={theme === data.active && classes.active_icon_button}
-              onClick={() => sideBarHandler({ theme: data.active })}
-            />
-          }
           tooltipMessage={data.tool_tip}
-        />
-      ))}
-      <ToolTip
-        toolTipStyle={classes.side_bar_tool_tip_container}
-        children={
+        >
           <IconButton
-            colorOnMouseUp={Colors.red_FF2B2B}
-            colorOnMouseDown={Colors.red_ff3c3c}
-            icon={faArrowRightFromBracket}
+            icon={data.icon}
+            inconButtonStyle={theme === data.active && classes.active_icon_button}
+            onClick={() => sideBarHandler({ theme: data.active })}
           />
-        }
-        tooltipMessage={'Logout'}
-      />
+        </ToolTip>
+      ))}
+      <ToolTip toolTipStyle={classes.side_bar_tool_tip_container} tooltipMessage={'Logout'}>
+        <IconButton
+          colorOnMouseUp={Colors.red_FF2B2B}
+          colorOnMouseDown={Colors.red_ff3c3c}
+          icon={faArrowRightFromBracket}
+        />
+      </ToolTip>
     </>
   );
 }

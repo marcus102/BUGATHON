@@ -1,5 +1,4 @@
-import React, { useState, useContext } from 'react';
-import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
+import React, { useState } from 'react';
 import classes from './FirstNavbarCmp.module.css';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { OutlinedButton } from '../../utils/ButtonSection';
@@ -30,8 +29,6 @@ function FirstNavBar() {
   const [isVisible, setIsVisible] = useState(false);
 
   const navigate = useNavigate();
-
-  const { overlayHandler, currentAuthStatusHandler } = useContext(ManagmentSystem);
 
   return (
     <Navbar expand="lg" className={classes.fixedNavbar}>
@@ -81,19 +78,18 @@ function FirstNavBar() {
             </Nav.Item>
           </Nav>
           <Nav className={classes.buttons_container}>
-            {isVisible && (
+            {!isVisible && (
               <OutlinedButton
                 unwrap={true}
                 buttonMainContainerStyle={classes.auth_button_main_container}
                 buttonStyle={classes.auth_button_container}
                 label="Sign In"
                 onClick={() => {
-                  currentAuthStatusHandler('signIn');
                   navigate(`/auth?mode=${'signin'}`);
                 }}
               />
             )}
-            {!isVisible && (
+            {isVisible && (
               <CustomUserProfilePreview
                 METADATA={DUMMY_GUEST_USER_PROFILE}
                 username={'marcus'}

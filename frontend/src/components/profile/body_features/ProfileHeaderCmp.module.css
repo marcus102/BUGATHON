@@ -69,6 +69,14 @@
   background-color: var(--orange_ff7811);
 }
 
+.moderator_bg {
+  background-color: #5d00ff;
+}
+
+.collaborator_bg {
+  background-color: #44c200;
+}
+
 .gold_bg {
   background-color: #ffd700;
 }

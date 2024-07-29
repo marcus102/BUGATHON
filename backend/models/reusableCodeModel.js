@@ -6,6 +6,10 @@ const reusableCodeSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Please! provide a tile to your code snippet.']
     },
+    state: {
+      type: String,
+      default: 'reusable_code'
+    },
     description: {
       type: String,
       required: [true, 'For users underdanding, a description must be defined']

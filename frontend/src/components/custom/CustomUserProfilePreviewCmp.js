@@ -47,7 +47,7 @@ const GuestUserInfo = ({
   handleFollowToggle,
   METADATA,
   handleNavigation,
-  profileMode,
+  username,
   userFullName,
   profession,
   userRole,
@@ -113,7 +113,7 @@ const GuestUserInfo = ({
             inconTextButtonStyle={classes.profile_overview_icon_text_button}
             label={'Visit profile'}
             icon_={faArrowUpRightFromSquare}
-            onClick={() => handleNavigation('profile', profileMode)}
+            onClick={() => handleNavigation('profile', username)}
           />
           {data.buttons.map((btnData) => (
             <IconTextButton
@@ -140,7 +140,6 @@ function CustomUserProfilePreview({
   hideFollow,
   hideEdit,
   mainProfile,
-  profileMode,
   userRole,
 }) {
   const [isFollowing, setIsFollowing] = useState(false);
@@ -150,9 +149,9 @@ function CustomUserProfilePreview({
     setIsFollowing(!isFollowing);
   };
 
-  const handleNavigation = (id, profileMode) => {
+  const handleNavigation = (id, username) => {
     id === 'settings' && navigate(`/settings`);
-    id === 'profile' && navigate(`/profile?mode=${profileMode}`);
+    id === 'profile' && navigate(`/profile?username=${username}`);
   };
 
   return (
@@ -177,7 +176,7 @@ function CustomUserProfilePreview({
         handleFollowToggle={handleFollowToggle}
         handleNavigation={handleNavigation}
         METADATA={METADATA}
-        profileMode={profileMode}
+        username={username}
         userFullName={userFullName}
         profession={profession}
         userRole={userRole}

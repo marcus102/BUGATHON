@@ -20,14 +20,14 @@ exports.setRequiredIds = (req, res, next) => {
 };
 
 exports.createBugFix = catchAsync(async (req, res, next) => {
-  const { solution, description, result, user, frameworkVersions } = req.body;
+  const { title, solution, description, result, user, frameworkVersions } = req.body;
 
   const bugFix = await BugFixes.findById(req.params.id);
 
   const { bugReport } = bugFix;
-  const bugReport_ = bugReport.valueOf();
+  const bugReportValue = bugReport.valueOf();
 
-  const targetBugReport = await BugReport.findById(bugReport_);
+  const targetBugReport = await BugReport.findById(bugReportValue);
 
   if (!targetBugReport) {
     return next(appError('Bug does not exist!', 404));
@@ -42,11 +42,12 @@ exports.createBugFix = catchAsync(async (req, res, next) => {
   }
 
   const newBugFix = await BugFixes.create({
+    title: title,
     solution: solution,
     description: description,
     result: result,
     user: user,
-    bugReport: bugReport_,
+    bugReport: bugReportValue,
     parentSolution: req.params.id,
     frameworkVersions: frameworkVersions
   });
@@ -56,7 +57,7 @@ exports.createBugFix = catchAsync(async (req, res, next) => {
   await Contributor.create({
     user: user,
     bugFix: _id,
-    bugReport: bugReport_
+    bugReport: bugReportValue
   });
 
   await User.findByIdAndUpdate(req.user.id, { $inc: { bugFixesCount: 1 } });

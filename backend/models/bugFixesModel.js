@@ -3,6 +3,14 @@ const BugReport = require('./bugReportModel');
 
 const bugFixSchema = new mongoose.Schema(
   {
+    title: {
+      type: String,
+      required: [true, 'Title is required']
+    },
+    state: {
+      type: String,
+      default: 'bug_fix'
+    },
     solution: {
       type: String,
       required: [true, 'Solution is required']

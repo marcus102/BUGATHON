@@ -12,19 +12,44 @@ import Analytics from './body_features/AnalyticsCmp';
 import UserBlogPost from './body_features/UserBlogPostCmp';
 import AdminDashBoard from './body_features/AdminDashBoardCmp';
 import { VerticalScrollView } from '../../utils/ScrollViewsSection';
+import { DUMMY_USERS } from '../../data/Database';
+import { useSearchParams } from 'react-router-dom';
 
 function Profile() {
   const { profileSideBarButton } = useContext(ManagmentSystem);
+
+  const [searchParams] = useSearchParams();
+  const currentUsername = searchParams.get('username');
+
+  const currentUser = DUMMY_USERS.find((user) => user.username === currentUsername);
+
   return (
     <div className={classes.profile_page_main_container}>
-      <ProfileSideBar isMyProfile={true} />
+      <ProfileSideBar isMyProfile={true} profileImg={currentUser?.profile} />
       <div className={`${classes.profile_page_second_container}`}>
         <ProfileSideBar2 />
         <VerticalScrollView
           children={
             <>
-              <ProfileHeader />
-              {profileSideBarButton === 'General' && <GeneralUserInfo />}
+              <ProfileHeader
+                userFullName={`${currentUser?.firstName} ${currentUser?.lastName}`}
+                followerCount={currentUser?.followersCount}
+                followingCount={currentUser?.followingCount}
+                starCount={currentUser?.starCount}
+                username={currentUser?.username}
+                profession={currentUser?.profession}
+                profileImg={currentUser?.profile}
+                role={currentUser?.role}
+              />
+              {profileSideBarButton === 'General' && (
+                <GeneralUserInfo
+                  userLinks={currentUser?.links}
+                  location={currentUser?.location}
+                  telNumber={currentUser?.phone}
+                  emails={currentUser?.email[0].address}
+                  bio={currentUser?.bio}
+                />
+              )}
               {profileSideBarButton === 'Analytics' && <Analytics />}
               {profileSideBarButton === 'Blog' && <UserBlogPost />}
               {profileSideBarButton === 'Ranking' && <Ranking />}

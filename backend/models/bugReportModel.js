@@ -7,6 +7,10 @@ const bugReportSchema = new mongoose.Schema(
       type: String,
       required: [true, 'A title must be given the the bug!']
     },
+    state: {
+      type: String,
+      default: 'bug_report'
+    },
     description: {
       type: String,
       required: [true, 'Description is required for user undersdanding']

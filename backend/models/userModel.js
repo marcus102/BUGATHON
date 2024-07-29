@@ -3,6 +3,30 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 
+const emailSchema = new mongoose.Schema({
+  address: {
+    type: String,
+    required: [true, 'User must have an email address!'],
+    unique: [true, 'Sorry, email already exists! Try another one!'],
+    trim: true,
+    lowercase: true,
+    validate: {
+      validator: validator.isEmail,
+      message: 'Please provide a valid email!'
+    }
+  },
+  visibility: {
+    type: String,
+    enum: ['public', 'private'],
+    required: [true, 'Email visibility must be specified!']
+  },
+  type: {
+    type: String,
+    enum: ['default', 'backup'],
+    required: [true, 'Email type must be specified!']
+  }
+});
+
 const userSchema = new mongoose.Schema(
   {
     firstName: {
@@ -20,19 +44,15 @@ const userSchema = new mongoose.Schema(
       unique: [true, 'Sorry, the username is already in use. Please choose another one!'],
       trim: true
     },
-    email: [
-      {
-        type: String,
-        required: [true, 'User must have an email address!'],
-        unique: [true, 'Sorry email already exist!! try another one!'],
-        trim: true,
-        lowercase: true,
-        validate: {
-          validator: validator.isEmail,
-          message: 'Please provide a valid email!'
-        }
+    email: {
+      type: [emailSchema],
+      validate: {
+        validator: function(value) {
+          return value.length <= 4;
+        },
+        message: 'User can have a maximum of 4 email addresses!'
       }
-    ],
+    },
     phone: {
       type: String,
       validate: {
@@ -55,7 +75,7 @@ const userSchema = new mongoose.Schema(
       enum: ['user', 'moderator', 'collaborator', 'admin'],
       default: 'user'
     },
-    profession: [
+    professions: [
       {
         type: String
       }

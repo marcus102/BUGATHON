@@ -1,82 +1,26 @@
 import React from 'react';
-import classes from './UserBugFixCmp.module.css';
+// import classes from './UserBugFixCmp.module.css';
 import CustomBugList from '../../custom/CustomBugListCmp';
+import { DUMMY_BUG_FIX_DATA } from '../../../data/Database';
+import { useSearchParams } from 'react-router-dom';
 
-const DUMMY_BUG_FIXES_DATA = [
-  {
-    id: '1',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '2',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '3',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '4',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '5',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '6',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '7',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '8',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '9',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-  {
-    id: '10',
-    title: 'Lorem ipsum dolor sit amet.',
-    state: 'bug_fix',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-  },
-];
+const filterDataByUser = (data, username) => {
+  return data.filter((item) => item.user === username);
+};
 
 function UserBugFix() {
-  return <CustomBugList DATA={DUMMY_BUG_FIXES_DATA} title={'Bug Fixes'} count={'10k'} />;
+  const [searchParams] = useSearchParams();
+  const currentUsername = searchParams.get('username');
+
+  const currentUserBugFixes = filterDataByUser(DUMMY_BUG_FIX_DATA, currentUsername);
+
+  return (
+    <CustomBugList
+      DATA={currentUserBugFixes}
+      title={'Bug Fixes'}
+      count={currentUserBugFixes.length}
+    />
+  );
 }
 
 export default UserBugFix;
