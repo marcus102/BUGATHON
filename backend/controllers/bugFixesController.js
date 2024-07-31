@@ -19,55 +19,6 @@ exports.setRequiredIds = (req, res, next) => {
   next();
 };
 
-// exports.createBugFix = catchAsync(async (req, res, next) => {
-//   const { title, solution, description, result, user, bugReport_, frameworkVersions } = req.body;
-
-//   const bugFix = await BugFixes.findById(req.params.id);
-
-//   const { bugReport } = bugFix;
-//   const bugReportValue = bugReport.valueOf();
-
-//   const targetBugReport = await BugReport.findById(bugReportValue);
-
-//   if (!targetBugReport) {
-//     return next(appError('Bug does not exist!', 404));
-//   }
-
-//   if (req.params.id) {
-//     if (!bugFix) {
-//       return next(appError('Bug fix does not exist!', 404));
-//     }
-
-//     await BugFixes.findByIdAndUpdate(req.user.id, { $inc: { totalAttempts: 1 } });
-//   }
-
-//   const newBugFix = await BugFixes.create({
-//     title: title,
-//     solution: solution,
-//     description: description,
-//     result: result,
-//     user: user,
-//     bugReport: bugReportValue,
-//     parentSolution: req.params.id,
-//     frameworkVersions: frameworkVersions
-//   });
-
-//   const { _id } = newBugFix;
-
-//   await Contributor.create({
-//     user: user,
-//     bugFix: _id,
-//     bugReport: bugReportValue
-//   });
-
-//   await User.findByIdAndUpdate(req.user.id, { $inc: { bugFixesCount: 1 } });
-
-//   res.status(201).json({
-//     status: 'success',
-//     data: newBugFix
-//   });
-// });
-
 exports.createBugFix = catchAsync(async (req, res, next) => {
   const { title, solution, description, result, user, bugReport_, frameworkVersions } = req.body;
 
@@ -94,8 +45,10 @@ exports.createBugFix = catchAsync(async (req, res, next) => {
   }
 
   if (req.params.id) {
-    await BugFixes.findByIdAndUpdate(req.user.id, { $inc: { totalAttempts: 1 } });
+    await BugFixes.findByIdAndUpdate(req.params.id, { $inc: { totalAttempts: 1 } });
   }
+
+  await BugReport.findByIdAndUpdate(bugReportValue, { $inc: { totalAttempts: 1 } });
 
   const newBugFix = await BugFixes.create({
     title: title,
@@ -160,14 +113,29 @@ exports.updateBugFix = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteBugFix = catchAsync(async (req, res, next) => {
-  const doc = await BugFixes.findByIdAndDelete(req.params.id);
+  const doc = await BugFixes.findById(req.params.id);
 
   if (!doc) {
     return next(appError('No document found with that ID! ', 404));
   }
 
-  await User.findByIdAndUpdate(req.user.id, { $inc: { bugReportCount: -1 } });
-  await BugFixes.findByIdAndUpdate(req.user.id, { $inc: { totalAttempts: -1 } });
+  const { parentSolution, bugReport } = doc;
+  const parentSolutionValue = parentSolution.valueOf();
+  const bugReportValue = bugReport.valueOf();
+
+  const parrentBugFix = await BugFixes.findById(parentSolutionValue);
+
+  const { _id } = parrentBugFix;
+  const parentBugFixIdValue = _id.valueOf();
+
+  if (parrentBugFix) {
+    await BugFixes.findByIdAndUpdate(parentBugFixIdValue, { $inc: { totalAttempts: -1 } });
+  }
+
+  await BugReport.findByIdAndUpdate(bugReportValue, { $inc: { totalAttempts: -1 } });
+  await User.findByIdAndUpdate(req.user.id, { $inc: { bugFixesCount: -1 } });
+
+  await BugFixes.findByIdAndDelete(req.params.id);
 
   res.status(200).json({
     status: 'success',

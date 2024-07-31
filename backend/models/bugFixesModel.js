@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const BugReport = require('./bugReportModel');
+// const BugReport = require('./bugReportModel');
 
 const bugFixSchema = new mongoose.Schema(
   {
@@ -102,7 +102,7 @@ bugFixSchema.pre('findOneAndUpdate', function(next) {
 });
 
 bugFixSchema.pre('save', function(next) {
-  const fieldsToCheck = ['solution', 'description', 'result', 'frameworkVersions', 'contributors', 'status'];
+  const fieldsToCheck = ['title', 'solution', 'description', 'result', 'frameworkVersions', 'contributors', 'status'];
 
   const isFieldsUnmodified = !fieldsToCheck.some(field => this.isModified(field));
 
@@ -180,38 +180,38 @@ bugFixSchema.virtual('childSolutions', {
   foreignField: 'parentSolution'
 });
 
-bugFixSchema.statics.updateBugReportStats = async function(bugID) {
-  const stats = await this.aggregate([
-    {
-      $match: { bugReport: bugID }
-    },
-    {
-      $group: {
-        _id: '$bugReport',
-        nAttempts: { $sum: 1 }
-      }
-    }
-  ]);
+// bugFixSchema.statics.updateBugReportStats = async function(bugID) {
+//   const stats = await this.aggregate([
+//     {
+//       $match: { bugReport: bugID }
+//     },
+//     {
+//       $group: {
+//         _id: '$bugReport',
+//         nAttempts: { $sum: 1 }
+//       }
+//     }
+//   ]);
 
-  if (stats.length > 0) {
-    const { nAttempts } = stats[0];
-    await BugReport.findOneAndUpdate(
-      { _id: bugID },
-      {
-        $set: {
-          totalAttempts: nAttempts
-        }
-      },
-      { new: true }
-    );
-  } else {
-    await BugReport.findOneAndUpdate({ _id: bugID }, { $set: { totalAttempts: 0 } }, { new: true });
-  }
-};
+//   if (stats.length > 0) {
+//     const { nAttempts } = stats[0];
+//     await BugReport.findOneAndUpdate(
+//       { _id: bugID },
+//       {
+//         $set: {
+//           totalAttempts: nAttempts
+//         }
+//       },
+//       { new: true }
+//     );
+//   } else {
+//     await BugReport.findOneAndUpdate({ _id: bugID }, { $set: { totalAttempts: 0 } }, { new: true });
+//   }
+// };
 
-bugFixSchema.post('save', function() {
-  this.constructor.updateBugReportStats(this.bugReport);
-});
+// bugFixSchema.post('save', function() {
+//   this.constructor.updateBugReportStats(this.bugReport);
+// });
 
 const BugFixes = mongoose.model('BugFixes', bugFixSchema);
 

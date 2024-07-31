@@ -33,7 +33,7 @@ const storage = multer.diskStorage({
       imgDestination = 'images';
     }
 
-    cb(null, `./../BUGATON/assets/${imgDestination}`);
+    cb(null, `./../backend/assets/${imgDestination}`);
   },
   filename: function(req, file, cb) {
     // Use the current timestamp as the file name to make it unique
@@ -72,17 +72,6 @@ exports.checkInfo = catchAsync(async (req, res, next) => {
 
   next();
 });
-
-// exports.checkUserProfile = catchAsync(async (req, res, next) => {
-//   const { user, username } = req.body;
-//   const userDoc = await User.findById(user);
-
-//   if (!userDoc && userDoc !== username) {
-//     return next(appError('User does not exist!', 405));
-//   }
-
-//   next();
-// });
 
 exports.createImage = catchAsync(async (req, res, next) => {
   const {
@@ -140,7 +129,16 @@ exports.createImage = catchAsync(async (req, res, next) => {
 });
 
 exports.updateImage = catchAsync(async (req, res, next) => {
-  const imageData = await Image.findById(req.params.id);
+  const { username } = req.body;
+
+  let imageData;
+
+  if (req.params.id) {
+    imageData = await Image.findById(req.params.id);
+  } else {
+    imageData = await Image.findOne({ username: username });
+  }
+
   if (!imageData) {
     return next(appError('Image not found', 404));
   }
@@ -203,10 +201,7 @@ exports.deleteImage = catchAsync(async (req, res, next) => {
 });
 
 exports.deletMultipleBugFixesImagesById = factory.deleteManyImages(Image, 'bugFix');
-
 exports.deletMultipleBugReportsImagesById = factory.deleteManyImages(Image, 'bugReport');
-
 exports.deletMultipleBugFixesImagesByArraysOfIds = factory.deleteArrayImages(Image, 'bugFix');
-
 exports.getAllImages = factory.getAll(Image);
 exports.getImage = factory.getOne(Image);
