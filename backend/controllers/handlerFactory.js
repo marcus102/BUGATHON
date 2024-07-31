@@ -196,11 +196,11 @@ exports.deleteMany = (Model, field, setIds, UserModel) =>
       }
     ]);
 
-    if (docToDelete.length === 0) {
+    const deletedCount = docToDelete.length;
+
+    if (deletedCount === 0) {
       return next();
     }
-
-    const deletedCount = docToDelete.length;
 
     if (setIds && setIds === true) {
       const bugFixIds = docToDelete.reduce((acc, doc) => {

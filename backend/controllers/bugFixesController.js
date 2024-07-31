@@ -14,18 +14,78 @@ exports.setRequiredIds = (req, res, next) => {
     if (!req.body[field]) req.body[field] = value;
   };
   setIfUndefined('user', req.user.id);
-  setIfUndefined('bugReport', req.params.bug_id);
+  setIfUndefined('bugReport_', req.params.bug_id);
 
   next();
 };
 
+// exports.createBugFix = catchAsync(async (req, res, next) => {
+//   const { title, solution, description, result, user, bugReport_, frameworkVersions } = req.body;
+
+//   const bugFix = await BugFixes.findById(req.params.id);
+
+//   const { bugReport } = bugFix;
+//   const bugReportValue = bugReport.valueOf();
+
+//   const targetBugReport = await BugReport.findById(bugReportValue);
+
+//   if (!targetBugReport) {
+//     return next(appError('Bug does not exist!', 404));
+//   }
+
+//   if (req.params.id) {
+//     if (!bugFix) {
+//       return next(appError('Bug fix does not exist!', 404));
+//     }
+
+//     await BugFixes.findByIdAndUpdate(req.user.id, { $inc: { totalAttempts: 1 } });
+//   }
+
+//   const newBugFix = await BugFixes.create({
+//     title: title,
+//     solution: solution,
+//     description: description,
+//     result: result,
+//     user: user,
+//     bugReport: bugReportValue,
+//     parentSolution: req.params.id,
+//     frameworkVersions: frameworkVersions
+//   });
+
+//   const { _id } = newBugFix;
+
+//   await Contributor.create({
+//     user: user,
+//     bugFix: _id,
+//     bugReport: bugReportValue
+//   });
+
+//   await User.findByIdAndUpdate(req.user.id, { $inc: { bugFixesCount: 1 } });
+
+//   res.status(201).json({
+//     status: 'success',
+//     data: newBugFix
+//   });
+// });
+
 exports.createBugFix = catchAsync(async (req, res, next) => {
-  const { title, solution, description, result, user, frameworkVersions } = req.body;
+  const { title, solution, description, result, user, bugReport_, frameworkVersions } = req.body;
 
-  const bugFix = await BugFixes.findById(req.params.id);
+  let bugFix;
+  let bugReportValue;
 
-  const { bugReport } = bugFix;
-  const bugReportValue = bugReport.valueOf();
+  if (req.params.id) {
+    bugFix = await BugFixes.findById(req.params.id);
+
+    if (!bugFix) {
+      return next(appError('Bug fix does not exist!', 404));
+    }
+
+    const { bugReport } = bugFix;
+    bugReportValue = bugReport.valueOf();
+  } else {
+    bugReportValue = bugReport_;
+  }
 
   const targetBugReport = await BugReport.findById(bugReportValue);
 
@@ -34,10 +94,6 @@ exports.createBugFix = catchAsync(async (req, res, next) => {
   }
 
   if (req.params.id) {
-    if (!bugFix) {
-      return next(appError('Bug fix does not exist!', 404));
-    }
-
     await BugFixes.findByIdAndUpdate(req.user.id, { $inc: { totalAttempts: 1 } });
   }
 
@@ -48,7 +104,7 @@ exports.createBugFix = catchAsync(async (req, res, next) => {
     result: result,
     user: user,
     bugReport: bugReportValue,
-    parentSolution: req.params.id,
+    parentSolution: req.params.id || null,
     frameworkVersions: frameworkVersions
   });
 
