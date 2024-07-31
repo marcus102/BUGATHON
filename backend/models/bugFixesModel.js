@@ -25,7 +25,7 @@ const bugFixSchema = new mongoose.Schema(
     },
     parentSolution: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'UserAttempt'
+      ref: 'BugFixes'
     },
     user: {
       type: mongoose.Schema.ObjectId,
@@ -175,7 +175,7 @@ bugFixSchema.virtual('comments', {
 });
 
 bugFixSchema.virtual('childSolutions', {
-  ref: 'UserAttempt',
+  ref: 'BugFixes',
   localField: '_id',
   foreignField: 'parentSolution'
 });

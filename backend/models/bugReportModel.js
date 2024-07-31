@@ -110,8 +110,8 @@ bugReportSchema.virtual('contributors', {
   foreignField: 'bugReport'
 });
 
-bugReportSchema.virtual('userAttempts', {
-  ref: 'UserAttempt',
+bugReportSchema.virtual('bugFixes', {
+  ref: 'BugFixes',
   localField: '_id',
   foreignField: 'bugReport'
 });

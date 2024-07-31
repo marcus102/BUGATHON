@@ -9,7 +9,7 @@ const likeSchema = new mongoose.Schema(
     },
     bugFix: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'UserAttempt'
+      ref: 'BugFixes'
     },
     reusableCode: {
       type: mongoose.Schema.Types.ObjectId,

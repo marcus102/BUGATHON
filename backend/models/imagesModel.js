@@ -120,7 +120,7 @@ const imageSchema = new mongoose.Schema(
     },
     bugFix: {
       type: mongoose.Schema.ObjectId,
-      ref: 'UserAttempt'
+      ref: 'BugFixes'
     },
     blogPost: {
       type: mongoose.Schema.ObjectId,

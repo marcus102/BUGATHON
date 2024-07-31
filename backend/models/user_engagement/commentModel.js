@@ -17,7 +17,7 @@ const commentSchema = new mongoose.Schema(
     },
     bugFix: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'UserAttempt'
+      ref: 'BugFixes'
     },
     bugReport: {
       type: mongoose.Schema.Types.ObjectId,

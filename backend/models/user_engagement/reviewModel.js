@@ -19,7 +19,7 @@ const reviewSchema = new mongoose.Schema(
     },
     bugFix: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'UserAttempt'
+      ref: 'BugFixes'
     },
     blogPost: {
       type: mongoose.Schema.Types.ObjectId,

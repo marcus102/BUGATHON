@@ -65,7 +65,7 @@ exports.filterBlockedBugs = factory.blocksHandler(BlockedUser, 'bug_ids');
 
 exports.getAllBugs = factory.getAll(BugReport, 'bug_ids');
 exports.getBug = factory.getOne(BugReport, [
-  { path: 'userAttempts' },
+  { path: 'bugFixes' },
   { path: 'image' },
   { path: 'contributors' },
   { path: 'comments' },
