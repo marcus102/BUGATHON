@@ -80,6 +80,7 @@ exports.createBugFix = catchAsync(async (req, res, next) => {
 exports.filterBlockedBugFixes = factory.blocksHandler(BlockedUser, 'bug_fix_ids');
 
 exports.getALLBugFixes = factory.getAll(BugFixes, 'bug_fix_ids');
+
 exports.getBugFix = factory.getOne(BugFixes, [
   { path: 'image' },
   { path: 'reviews' },

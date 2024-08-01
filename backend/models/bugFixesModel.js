@@ -117,7 +117,7 @@ bugFixSchema.pre('save', function(next) {
 bugFixSchema.pre(/^find/, function(next) {
   this.populate({
     path: 'user',
-    select: 'username profile'
+    select: 'username professions profile'
   }).populate({
     path: 'bugReport',
     select: 'title description'

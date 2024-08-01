@@ -1,3 +1,4 @@
+const validator = require('validator');
 const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const appError = require('../utils/appError');
@@ -65,16 +66,48 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     return next(appError('This route is not for password update!', 400));
   }
 
+  // Normalize and validate fields
+  const normalizeAndValidate = (field, validatorFn, errorMsg) => {
+    if (req.body[field] && !Array.isArray(req.body[field])) {
+      req.body[field] = [req.body[field]];
+    }
+    if (req.body[field]) {
+      const invalidItems = req.body[field].filter(item => !validatorFn(item));
+      if (invalidItems.length > 0) {
+        return next(appError(errorMsg, 400));
+      }
+    }
+  };
+
+  normalizeAndValidate('professions', item => typeof item === 'string', 'Professions should be an array of strings!');
+  normalizeAndValidate('links', validator.isURL, 'One or more links are invalid URLs!');
+
+  // Fetch the current user data if professions or links are provided
+  let user;
+  if (req.body.professions || req.body.links) {
+    user = await User.findById(req.user.id);
+  }
+
+  // Append professions and links to the existing arrays
+  if (req.body.professions) {
+    user.professions.push(...req.body.professions);
+  }
+  if (req.body.links) {
+    user.links.push(...req.body.links);
+  }
+
   const filteredBody = filterParams.allowedFields(
     req.body,
     'firstName',
     'lastName',
     'username',
+    'professions',
     'profile',
     'email',
     'website',
     'bio',
-    'location'
+    'location',
+    'links'
   );
 
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
