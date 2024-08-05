@@ -4,7 +4,7 @@ import classes from './AuthCmp.module.css';
 import SignUp from '../../components/authentication/SignUpCmp';
 import SignIn from '../../components/authentication/SignInCmp';
 import ConfirmationCode from '../../components/authentication/ConfirmationCodeCmp';
-import { OutlinedButton, IconButton, IconTextButton } from '../../utils/ButtonSection';
+import { OutlinedButton, IconTextButton } from '../../utils/ButtonSection';
 import { faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 

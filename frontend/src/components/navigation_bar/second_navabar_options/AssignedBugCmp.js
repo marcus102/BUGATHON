@@ -13,6 +13,7 @@ import {
 import profile_1 from '../../../assets/images/study.jpg';
 import profile_2 from '../../../assets/images/people.jpg';
 import CustomMenu from '../../custom/CustomMenuCmp';
+import { DUMMY_BUG_REPORT_DATA, DUMMY_USERS } from '../../../data/Database';
 
 const DUMMY_ASSIGNED_BUG = [
   {
@@ -82,9 +83,12 @@ function AssignedBug() {
   const { dropDownDefault } = useContext(ManagmentSystem);
   const { assigned_bug } = dropDownDefault;
 
+  const assignedBugsReports = DUMMY_BUG_REPORT_DATA.filter((bugReport) =>
+    bugReport.assignedTo.some((assignee) => assignee.username === DUMMY_USERS[0].username)
+  );
+
   return (
     <>
-      {' '}
       <CustomMenu
         title={'Assigned Bugs'}
         dropDown={ASSIGNMENT_DROP_DOWN}

@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classes from './generalProfileCmp.module.css';
-import { IconTextButton, SolidButton } from '../../../utils/ButtonSection';
+import { IconTextButton, SolidButton, IconButton } from '../../../utils/ButtonSection';
 import { Image } from '../../../utils/MediaSection';
-import profile from '../../../assets/images/globe.jpg';
-import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
+import userGeneralProfile from '../../../assets/images/general_profile.svg';
+import { faLightbulb, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+  faGithub,
+  faLinkedin,
+  faStackOverflow,
+  faXTwitter,
+  faYoutube,
+} from '@fortawesome/free-brands-svg-icons';
 import Text from '../../../utils/TextSection';
 import Icon from '../../../utils/IconSection';
 import { Input, TextArea } from '../../../utils/InputSection';
@@ -26,86 +33,62 @@ const TIPS_DATA = [
   },
 ];
 
-const PROFILE_EDIT_DATA = [
-  {
-    id: '1',
-    label: 'First Name',
-    placeholder: 'First Name',
-    description:
-      'It will be displayed on your profile and may be visible to other users depending on your privacy settings.',
-    inputType: 'input',
-  },
-  {
-    id: '2',
-    label: 'Last Name(s)',
-    placeholder: 'Last Name(s)',
-    description:
-      'It will appear alongside your first name on your profile and in certain interactions with other users.',
-    inputType: 'input',
-  },
-  {
-    id: '3',
-    label: 'Location',
-    placeholder: 'Location',
-    description:
-      'This could be your city, state, country, or any other relevant location information. It helps other users know where you are based.',
-    inputType: 'input',
-  },
-  {
-    id: '4',
-    label: 'Bio',
-    placeholder: 'Enter your bio',
-    description: null,
-    inputType: 'text_area',
-  },
-  {
-    id: '5',
-    label: 'GitHub',
-    placeholder: 'Add your GitHub URL...',
-    inputType: 'input',
-    description:
-      'This link will be visible on your profile and can provide additional context or ways for others to connect with you outside of the platform.',
-  },
-  {
-    id: '6',
-    label: 'Stack Overflow',
-    placeholder: 'Add your Stack Overflow URL...',
-    inputType: 'input',
-    description:
-      'This link will be visible on your profile and can provide additional context or ways for others to connect with you outside of the platform.',
-  },
-  {
-    id: '7',
-    label: 'LinkedIn',
-    placeholder: 'Add your LinkedIn profile URL...',
-    inputType: 'input',
-    description:
-      'This link will be visible on your profile and can provide additional context or ways for others to connect with you outside of the platform.',
-  },
-  {
-    id: '8',
-    label: 'X',
-    placeholder: 'Add your X URL...',
-    inputType: 'input',
-    description:
-      'This link will be visible on your profile and can provide additional context or ways for others to connect with you outside of the platform.',
-  },
-  {
-    id: '9',
-    label: 'YouTube',
-    placeholder: 'Add your YouTube channel URL...',
-    inputType: 'input',
-    description:
-      'This link will be visible on your profile and can provide additional context or ways for others to connect with you outside of the platform.',
-  },
-];
+const SectionTitle = ({ title }) => (
+  <>
+    <Text textStyle={classes.profile_edit_title_container} h5={title} />
+  </>
+);
 
-const GeneralProfile = () => {
+function GeneralProfile({ profileImg, firstName, lastName, location, bio, linksArray }) {
+  const PROFILE_EDIT_DATA = [
+    {
+      id: '1',
+      label: 'First Name',
+      placeholder: 'First Name',
+      value: firstName,
+      description:
+        'It will be displayed on your profile and may be visible to other users depending on your privacy settings.',
+      inputType: 'input',
+    },
+    {
+      id: '2',
+      label: 'Last Name(s)',
+      placeholder: 'Last Name(s)',
+      value: lastName,
+      description:
+        'It will appear alongside your first name on your profile and in certain interactions with other users.',
+      inputType: 'input',
+    },
+    {
+      id: '3',
+      label: 'Location',
+      placeholder: 'Location',
+      value: location,
+      description:
+        'This could be your city, state, country, or any other relevant location information. It helps other users know where you are based.',
+      inputType: 'input',
+    },
+    {
+      id: '4',
+      label: 'Bio',
+      placeholder: 'Enter your bio',
+      value: bio,
+      description: null,
+      inputType: 'text_area',
+    },
+  ];
+
+  const [socialLinks, setSocialLinks] = useState([{ id: 1, link: '' }]);
+
+  const addSocialLink = () => {
+    setSocialLinks([...socialLinks, { id: socialLinks.length + 1, link: '' }]);
+  };
+
   return (
     <div className={`${classes.general_profile_main_container} flex-column flex-md-row`}>
       <div className={`${classes.profile_main_container}`}>
         <Image
-          src={profile}
+          src={profileImg ? profileImg : userGeneralProfile}
           alt="User profile picture"
           imgContainerStyle={classes.profile_images_container}
           imgStyle={classes.profile_images}
@@ -137,25 +120,39 @@ const GeneralProfile = () => {
                   placeholder={data.placeholder}
                   label={data.label}
                   instructionLabel={data.description}
+                  defaultValue={data?.value}
                 />
               )}
               {data.inputType === 'text_area' && (
-                <TextArea placeholder={data.placeholder} label={data.label} />
+                <TextArea
+                  placeholder={data.placeholder}
+                  label={data.label}
+                  defaultValue={data?.value}
+                />
               )}
-              {data.id === '4' && <SectionTitle title="Social" />}
             </div>
           ))}
+          <SectionTitle title="Social" />
+          <div className={`${classes.link_main_container}`}>
+            <div className={`${classes.link_second_container}`}>
+              {socialLinks.map((socialLink) => (
+                <div key={socialLink.id} className={`${classes.link_container}`}>
+                  <Icon iconContainerStyle={classes.icon_container} icon={faGithub} />
+                  <Input placeholder={'Enter a link'} label={'Link'} />
+                </div>
+              ))}
+            </div>
+            <IconButton
+              inconButtonStyle={classes.icon_button}
+              icon={faPlusCircle}
+              onClick={addSocialLink}
+            />
+          </div>
         </div>
         <SolidButton buttonStyle={classes.profile_save_button} label="Save Changes" />
       </div>
     </div>
   );
-};
-
-const SectionTitle = ({ title }) => (
-  <>
-    <Text textStyle={classes.profile_edit_title_container} h5={title} />
-  </>
-);
+}
 
 export default GeneralProfile;

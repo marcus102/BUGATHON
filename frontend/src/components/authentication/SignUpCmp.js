@@ -19,28 +19,64 @@ function SignUp() {
       <>
         <div className="row">
           <div className="col-12 col-lg-6">
-            <Input placeholder={'required'} label={'First Name'} />
+            <Input
+              id="firstName"
+              type="text"
+              name="firstName"
+              placeholder={'required'}
+              label={'First Name'}
+            />
           </div>
           <div className="col-12 col-lg-6">
-            <Input placeholder={'required'} label={'Last Name'} />
+            <Input
+              id="lastName"
+              type="text"
+              name="lastName"
+              placeholder={'required'}
+              label={'Last Name'}
+            />
           </div>
         </div>
 
         <div className="row">
           <div className="col-12 col-lg-6">
-            <Input placeholder={'user@example.com'} label={'Email Address'} />
+            <Input
+              id="email"
+              type="email"
+              name="email"
+              placeholder={'user@example.com'}
+              label={'Email Address'}
+            />
           </div>
           <div className="col-12 col-lg-6">
-            <Input placeholder={'username'} label={'Username'} />
+            <Input
+              id="username"
+              type="text"
+              name="username"
+              placeholder={'username'}
+              label={'Username'}
+            />
           </div>
         </div>
 
         <div className="row">
           <div className="col-12 col-lg-6">
-            <Input placeholder={'*******'} label={'Password'} type={'password'} />
+            <Input
+              id="password"
+              type="password"
+              name="password"
+              placeholder={'*******'}
+              label={'Password'}
+            />
           </div>
           <div className="col-12 col-lg-6">
-            <Input placeholder={'*******'} label={'Confirm Password'} type={'password'} />
+            <Input
+              id="passwordConfirm"
+              type="password"
+              name="passwordConfirm"
+              placeholder={'*******'}
+              label={'Confirm Password'}
+            />
           </div>
         </div>
       </>

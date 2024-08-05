@@ -1,8 +1,8 @@
 import React, { createContext, useReducer } from 'react';
 
 export const ManagmentSystem = createContext({
-  overlay: { open: false, keyId: '', layout: '' },
-  overlayHandler: (key, layout) => {},
+  overlay: { open: false, keyId: '' },
+  overlayHandler: (key) => {},
   currentAuthStatus: '',
   currentAuthStatusHandler: (parameters) => {},
   headerTab: '',
@@ -18,6 +18,8 @@ export const ManagmentSystem = createContext({
     notification: 'All',
     comment: 'All',
     create_new: 'Bug Report',
+    email_visibility: '',
+    email_type: '',
   },
   dropDownDefaultHandler: ({
     assigned_bug,
@@ -27,6 +29,8 @@ export const ManagmentSystem = createContext({
     browser,
     device,
     severity,
+    email_visibility,
+    email_type,
   }) => {},
   currentProfileId: '',
   currentProfileIdHandler: (parameters) => {},
@@ -34,7 +38,7 @@ export const ManagmentSystem = createContext({
 
 export default function ManagmentSystemProvider({ children }) {
   const initialState = {
-    overlay: { open: false, keyId: '', layout: '' },
+    overlay: { open: false, keyId: '' },
     currentAuthStatus: 'signIn',
     headerTab: 'all',
     sideBar: { theme: 'dark', isOpen: true },
@@ -48,6 +52,8 @@ export default function ManagmentSystemProvider({ children }) {
       browser: 'Chrome',
       device: 'Desktop',
       severity: 'Low',
+      email_visibility: '',
+      email_type: '',
     },
     currentProfileId: '',
   };
@@ -61,7 +67,6 @@ export default function ManagmentSystemProvider({ children }) {
             ...state.overlay,
             open: !state.overlay.open,
             keyId: action.payload.keyId,
-            layout: action.payload.layout,
           },
         };
       case 'SET_AUTH_STATUS':
@@ -122,6 +127,12 @@ export default function ManagmentSystemProvider({ children }) {
             ...(action.payload.severity !== undefined && {
               severity: action.payload.severity,
             }),
+            ...(action.payload.email_visibility !== undefined && {
+              email_visibility: action.payload.email_visibility,
+            }),
+            ...(action.payload.email_type !== undefined && {
+              email_type: action.payload.email_type,
+            }),
           },
         };
       case 'SET_CURRENT_PROFILE_ID':
@@ -136,8 +147,8 @@ export default function ManagmentSystemProvider({ children }) {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const overlayHandler = (keyId, layout) => {
-    dispatch({ type: 'OVERLAY_TOGGLE', payload: { keyId, layout } });
+  const overlayHandler = (keyId) => {
+    dispatch({ type: 'OVERLAY_TOGGLE', payload: { keyId } });
   };
 
   const currentAuthStatusHandler = (parameters) => {
@@ -168,10 +179,22 @@ export default function ManagmentSystemProvider({ children }) {
     browser,
     device,
     severity,
+    email_visibility,
+    email_type,
   }) => {
     dispatch({
       type: 'SET_DROPDOWN_DEFAULT',
-      payload: { assigned_bug, notification, comment, create_new, browser, device, severity },
+      payload: {
+        assigned_bug,
+        notification,
+        comment,
+        create_new,
+        browser,
+        device,
+        severity,
+        email_visibility,
+        email_type,
+      },
     });
   };
 

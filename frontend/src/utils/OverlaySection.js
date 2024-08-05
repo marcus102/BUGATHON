@@ -20,9 +20,9 @@ export function Overlay({
 
   return (
     <>
-      {overlay.open && overlay.keyId === keyId && overlay.layout === 'overlay' && (
+      {overlay.open && overlay.keyId === keyId && (
         <div className={classes.overlay_container}>
-          <div className={[classes.overlay_second_container, overlayStyle].join(' ')}>
+          <div className={`${classes.overlay_second_container} ${overlayStyle}`}>
             {!header ? (
               <div className={classes.overlay_cancel_button_container}>
                 <IconButton
@@ -49,21 +49,21 @@ export function Overlay({
   );
 }
 
-export function MenuModal({ modalContainerStyle, children, keyId }) {
-  const { overlay, overlayHandler } = useContext(ManagmentSystem);
+// export function MenuModal({ modalContainerStyle, children, keyId }) {
+//   const { overlay, overlayHandler } = useContext(ManagmentSystem);
 
-  return (
-    <Modal
-      show={overlay.open && overlay.keyId === keyId && overlay.layout === 'menu'}
-      onHide={() => overlayHandler(null, null)}
-      className={`${classes.modal} ${modalContainerStyle}`}
-    >
-      <Modal.Body className={classes.modal_body}>
-        {children}
-        <Button variant="secondary" onClick={() => overlayHandler(null, null)}>
-          Close
-        </Button>
-      </Modal.Body>
-    </Modal>
-  );
-}
+//   return (
+//     <Modal
+//       show={overlay.open && overlay.keyId === keyId && overlay.layout === 'menu'}
+//       onHide={() => overlayHandler(null, null)}
+//       className={`${classes.modal} ${modalContainerStyle}`}
+//     >
+//       <Modal.Body className={classes.modal_body}>
+//         {children}
+//         <Button variant="secondary" onClick={() => overlayHandler(null, null)}>
+//           Close
+//         </Button>
+//       </Modal.Body>
+//     </Modal>
+//   );
+// }

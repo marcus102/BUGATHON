@@ -144,7 +144,7 @@ function Ranking() {
       <IconButton
         icon={faQuestionCircle}
         onClick={() => {
-          overlayHandler('rank_info', 'overlay');
+          overlayHandler('rank_info');
         }}
       />
       <div className={`${classes.ranking_container}`}>

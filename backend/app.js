@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const globalErrorHandler = require('./controllers/errorsController');
 const appError = require('./utils/appError');
@@ -39,6 +40,8 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use(bodyParser.json());
+
+app.use(cors());
 
 const rootUrl = '/api/v1';
 

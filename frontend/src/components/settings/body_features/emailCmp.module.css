@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
+  padding: 0 5px;
 }
 
 .email_list_container {
@@ -9,6 +10,7 @@
   width: 100%;
   justify-content: space-between;
   margin: 5px 0;
+  
 }
 
 .email_container {
@@ -56,4 +58,61 @@
 
 .solid_button_container {
   margin-bottom: 25px;
+}
+
+/* EDIT EMAIL */
+
+.overlay_root_container {
+  min-height: fit-content !important;
+}
+
+.overlay_main_container {
+  align-items: center;
+}
+
+.edit_email_container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  gap: 4rem;
+}
+
+.email_input_container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
+}
+
+.drop_down_container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.drop_dow_label {
+  border: 1px solid var(--gray_50505066);
+  margin-top: 1.6rem;
+  width: 7rem;
+  padding: 5px 15px;
+  border-radius: 5px;
+}
+
+.drop_down_menu {
+  left: 0;
+  width: 7rem;
+}
+
+.button_main_container {
+  width: 100%;
+  justify-content: center;
+}
+
+.button_container {
+  width: 10rem;
+}
+
+.delete_button_container {
+  background-color: var(--red_FF2B2B);
 }

@@ -5,6 +5,7 @@ import Icon from './IconSection';
 import Text from './TextSection';
 import { Image } from './MediaSection';
 import { useNavigate } from 'react-router-dom';
+import ToolTip from './toolTipSection';
 
 export function PlaneButton({
   children,
@@ -85,13 +86,14 @@ export function SolidButton({
   size,
   disabled,
   unwrap,
+  type,
 }) {
   return (
     <div className={`${classes.solid_button_container} ${buttonMainContainerStyle}`}>
       <button
         className={`${classes.solid_button} ${buttonStyle}`}
         disabled={disabled}
-        type="button"
+        type={type}
         onClick={onClick}
       >
         {label && (
@@ -153,7 +155,6 @@ export function IconButton({
   size,
   onClick,
   inconButtonStyle,
-  getPosition,
 }) {
   const [isPressed, setIsPressed] = useState(false);
 
@@ -396,7 +397,7 @@ export function DynamicLabelDropdownMenu({
       />
       {isOpen && (
         <div className={`${classes.dropdown_menu} ${dropDownMenuStyle}`}>
-          {menuItems.map((data) => (
+          {menuItems?.map((data) => (
             <IconTextButton
               key={data.id}
               unwrap={true}

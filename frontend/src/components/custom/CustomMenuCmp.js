@@ -10,6 +10,7 @@ import {
   IconTextButton,
 } from '../../utils/ButtonSection';
 import { Image } from '../../utils/MediaSection';
+import userProfile from '../../assets/images/general_profile.svg';
 import { faChevronDown, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import Line from '../../utils/LineSection';
 
@@ -49,23 +50,23 @@ const ProfileSection = ({ data }) => (
           <Image
             imgContainerStyle={classes.content_img_container}
             imgStyle={classes.content_img}
-            src={data.profile}
+            src={data.profile ? data.profile : userProfile}
             alt="profile_1"
           />
         )}
-        {data.profile_2 && (
+        {userProfile && (
           <Image
             imgContainerStyle={classes.content_img_container}
             imgStyle={classes.content_img}
-            src={data.profile_2}
-            alt="profile_2"
+            src={userProfile}
+            alt="currentUserProfile"
           />
         )}
       </div>
     )}
-    {(data.title || data.tag) && (
+    {(data.user || data.tag) && (
       <div className={classes.option_content_body_text_container}>
-        {data.title && <Text h6={data.title} />}
+        {data.user && <Text h6={`@${data.user} has contributed to your post`} />}
         {data.tag && (
           <Text textStyle={classes.content_body_critical_tag_container} label10={data.tag} />
         )}

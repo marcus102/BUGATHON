@@ -89,6 +89,7 @@ export function Input({
   name,
   placeholder,
   value,
+  defaultValue,
   onChange,
   inputMainContainerStyle,
   inputSecondContainerStyle,
@@ -114,6 +115,7 @@ export function Input({
             name={name}
             placeholder={placeholder}
             value={value}
+            defaultValue={defaultValue}
             onChange={onChange}
             onKeyDown={onKeyDown}
           />

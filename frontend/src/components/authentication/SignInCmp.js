@@ -9,10 +9,22 @@ import { Form } from 'react-router-dom';
 function SignIn() {
   // const { overlayHandler } = useContext(ManagmentSystem);
   return (
-    <Form  method="post" className={classes.signInForm}>
+    <Form method="post" className={classes.signInForm}>
       <Text textStyle={classes.sign_in_title_container} h1={'Sign In'} />
-      <Input placeholder={'required'} label={'Email Address/Username'} />
-      <Input placeholder={'*******'} label={'Password'} type={'password'} />
+      <Input
+        id="email"
+        type="email"
+        name="email"
+        placeholder={'required'}
+        label={'Email Address/Username'}
+      />
+      <Input
+        id="password"
+        type="password"
+        name="passwrod"
+        placeholder={'*******'}
+        label={'Password'}
+      />
       <PlaneButton
         buttonContainerMainContainer={classes.forgot_password_container}
         label12={'forgot password'}
