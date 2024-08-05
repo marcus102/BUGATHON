@@ -82,20 +82,27 @@
   gap: 5px;
 }
 
-.content_body_critical_tag_container {
+.critical_severity_post_container {
   background-color: var(--red_FF2B2B);
   height: fit-content;
   border-radius: 5px;
   padding: 0 2px;
 }
 
-.content_body_pending_tag_container {
+.high_severity_post_container {
+  background-color: var(--orange_954100);
+  height: fit-content;
+  border-radius: 5px;
+  padding: 0 2px;
+}
+
+.medium_severity_post_container {
   background-color: var(--orange_ff7811);
   border-radius: 5px;
   padding: 0 2px;
 }
 
-.content_body_stable_tag_container {
+.low_severity_post_container {
   background-color: var(--green_039000);
   border-radius: 5px;
   padding: 0 2px;

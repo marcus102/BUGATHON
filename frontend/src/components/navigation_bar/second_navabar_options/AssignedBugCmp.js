@@ -92,7 +92,7 @@ function AssignedBug() {
       <CustomMenu
         title={'Assigned Bugs'}
         dropDown={ASSIGNMENT_DROP_DOWN}
-        METADATA={DUMMY_ASSIGNED_BUG}
+        METADATA={assignedBugsReports}
         option={ASSIGNMENT_OPTION}
         button={ASSIGNMENT_BUG_BUTTON}
         reactionData={ASSIGNMENT_REACTIONS_DATA}

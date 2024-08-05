@@ -61,7 +61,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
               isHeaderOption={true}
               postTitle={data.title}
               postDescription={data.description.content}
-              username={data.user}
+              username={data.user.username}
               postId={data.id}
               TAGS={data.tags}
               REACTIONSMETADATA={[

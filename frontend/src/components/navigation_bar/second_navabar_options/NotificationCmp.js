@@ -15,7 +15,7 @@ const NOTIFICATION_HEADER = [
 const DUMMY_NOTIFICATIONS = [
   {
     id: '1',
-    profile: profile_1,
+    user: { username: 'user', profile: profile_1 },
     title: 'From @marcus 1mn ago',
     notification:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat. Mauris eleifend eros id metus volutpat',
@@ -23,7 +23,7 @@ const DUMMY_NOTIFICATIONS = [
   },
   {
     id: '2',
-    profile: profile_2,
+    user: { username: 'user', profile: profile_2 },
     title: 'From @marcus 1mn ago',
     notification:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat',

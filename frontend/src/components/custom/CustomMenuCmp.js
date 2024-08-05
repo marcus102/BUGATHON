@@ -44,16 +44,8 @@ const OptionHeader = ({ title, dropDown, headerOption, buttonLabel, my_key }) =>
 
 const ProfileSection = ({ data }) => (
   <div className={classes.option_content_profile_container}>
-    {(data.profile || data.profile_2) && (
+    {data.user.profile && (
       <div className={classes.option_content_img_main_container}>
-        {data.profile && (
-          <Image
-            imgContainerStyle={classes.content_img_container}
-            imgStyle={classes.content_img}
-            src={data.profile ? data.profile : userProfile}
-            alt="profile_1"
-          />
-        )}
         {userProfile && (
           <Image
             imgContainerStyle={classes.content_img_container}
@@ -62,13 +54,32 @@ const ProfileSection = ({ data }) => (
             alt="currentUserProfile"
           />
         )}
+        {data.user.profile && (
+          <Image
+            imgContainerStyle={classes.content_img_container}
+            imgStyle={classes.content_img}
+            src={data.user.profile ? data.user.profile : userProfile}
+            alt="user profile"
+          />
+        )}
       </div>
     )}
-    {(data.user || data.tag) && (
+    {(data.user.username || data.severity) && (
       <div className={classes.option_content_body_text_container}>
-        {data.user && <Text h6={`@${data.user} has contributed to your post`} />}
-        {data.tag && (
-          <Text textStyle={classes.content_body_critical_tag_container} label10={data.tag} />
+        {data.user.username && <Text h6={`@${data.user.username} has contributed to your post`} />}
+        {data.severity && (
+          <Text
+            textStyle={`${
+              data.severity === 'critical'
+                ? classes.critical_severity_post_container
+                : data.severity === 'high'
+                ? classes.high_severity_post_container
+                : data.severity === 'medium'
+                ? classes.medium_severity_post_container
+                : classes.low_severity_post_container
+            }`}
+            label10={data.severity}
+          />
         )}
       </div>
     )}
@@ -77,7 +88,7 @@ const ProfileSection = ({ data }) => (
 
 const OptionContent = ({ data, option, button, solidButtonDataType, reactionData }) => (
   <div className={classes.header_option_content_main_container}>
-    {(data.profile_2 || data.profile || data.title || data.tag || option) && (
+    {(data.profile || data.title || data.tag || option) && (
       <div className={classes.option_content_header_container}>
         <ProfileSection data={data} />
         {option && (

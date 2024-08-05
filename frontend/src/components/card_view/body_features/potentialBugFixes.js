@@ -6,30 +6,6 @@ import { ButtonContainer } from '../../../utils/ButtonSection';
 import Line from '../../../utils/LineSection';
 import { DUMMY_BUG_FIX_DATA } from '../../../data/Database';
 
-// const DUMMY_POST_DATA = [
-//   {
-//     id: '1',
-//     title: 'Lorem ipsum dolor sit amet.',
-//     state: 'bug_fix',
-//     description:
-//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-//   },
-//   {
-//     id: '2',
-//     title: 'Lorem ipsum dolor sit amet.',
-//     state: 'bug_fix',
-//     description:
-//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-//   },
-//   {
-//     id: '3',
-//     title: 'Lorem ipsum dolor sit amet.',
-//     state: 'bug_fix',
-//     description:
-//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat, id ultrices neque venenatis. Integer ut aliquet odio, a feugiat augue. In tristique magna sit amet.',
-//   },
-// ];
-
 function PotentialBugFixes({ potentialTitle }) {
   return (
     <div className={classes.recommendation_main_container}>
@@ -44,7 +20,7 @@ function PotentialBugFixes({ potentialTitle }) {
             isHeaderOption={true}
             postTitle={data.title}
             postDescription={data.description.content}
-            username={data.user}
+            username={data.user.username}
             postId={data.id}
             TAGS={data.tags}
             REACTIONSMETADATA={data.reactions}
