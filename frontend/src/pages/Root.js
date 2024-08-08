@@ -7,7 +7,6 @@ import ScrollToTop from '../components/scroll_to_top/ScrollToTopCmp';
 import BroadCast from '../components/broadcast/BroadCastCmp';
 
 function RootLayout() {
-  //   const navigation = useNavigation();
   return (
     <div className={classes.root_main_container}>
       <BroadCast

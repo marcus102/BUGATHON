@@ -5,7 +5,6 @@ import Icon from './IconSection';
 import Text from './TextSection';
 import { Image } from './MediaSection';
 import { useNavigate } from 'react-router-dom';
-import ToolTip from './toolTipSection';
 
 export function PlaneButton({
   children,
@@ -155,6 +154,7 @@ export function IconButton({
   size,
   onClick,
   inconButtonStyle,
+  type,
 }) {
   const [isPressed, setIsPressed] = useState(false);
 
@@ -189,6 +189,7 @@ export function IconTextButton({
   iconContainerStyle,
   label,
   unwrap,
+  type,
 }) {
   const [isPressed, setIsPressed] = useState(false);
 
@@ -203,6 +204,7 @@ export function IconTextButton({
       onClick={onClick}
       onMouseDown={handleMouseActivity}
       onMouseUp={handleMouseActivity}
+      type="button"
     >
       {icon && (
         <Icon iconContainerStyle={iconContainerStyle} icon={icon} color={iconColor} size={size} />
@@ -328,20 +330,19 @@ export function DropdownMenu({
 
       {isOpen && (
         <div className={`${classes.dropdown_menu} ${dropDownMenuStyle}`}>
-          {menuItems &&
-            menuItems.map((data, index) => (
-              <IconTextButton
-                key={data.id}
-                inconTextButtonStyle={`${classes.drop_down_item_link}`}
-                icon_={data.icon_2}
-                label={data.label}
-                icon={data.icon}
-                onClick={() => {
-                  post && navigate(`/${post}/?type=${data.id}`);
-                  setIsOpen(false);
-                }}
-              />
-            ))}
+          {menuItems?.map((data, index) => (
+            <IconTextButton
+              key={data.id}
+              inconTextButtonStyle={`${classes.drop_down_item_link}`}
+              icon_={data.icon_2}
+              label={data.label}
+              icon={data.icon}
+              onClick={() => {
+                post && navigate(`/${post}/?type=${data.id}`);
+                setIsOpen(false);
+              }}
+            />
+          ))}
 
           {children}
         </div>

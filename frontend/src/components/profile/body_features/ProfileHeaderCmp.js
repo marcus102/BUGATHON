@@ -3,12 +3,12 @@ import classes from './ProfileHeaderCmp.module.css';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Image } from '../../../utils/MediaSection';
-import images from '../../../assets/images/people.jpg';
 import Text from '../../../utils/TextSection';
 import { IconTextButton, ButtonContainer } from '../../../utils/ButtonSection';
 import Icon from '../../../utils/IconSection';
 import BronzeBadge from '../../../assets/icons/bronze_badge.svg';
 import VerifiedBadge from '../../../assets/icons/verified_badge.svg';
+import defaultProfile from '../../../assets/images/general_profile.svg';
 
 function ProfileHeader({
   userFullName,
@@ -40,7 +40,7 @@ function ProfileHeader({
       >
         <div className={`d-block d-xl-none`}>
           <Image
-            src={profileImg}
+            src={profileImg ? profileImg : defaultProfile}
             alt={'user profile picture'}
             imgContainerStyle={classes.profile_images_container}
             imgStyle={classes.profile_images}
@@ -57,50 +57,48 @@ function ProfileHeader({
             <Image src={VerifiedBadge} alt={'Verification Badge'} />
           </div>
           <div className={classes.full_name_overview_icon_text_button_container}>
-            {USER_BADGES &&
-              USER_BADGES.map((data) => (
-                <IconTextButton
-                  key={data.id}
-                  inconTextButtonStyle={`${classes.full_name_icon_text_button_overview} ${
-                    data.id === 'admin' && classes.admin_bg
-                  } ${data.id === 'user' && classes.user_bg} ${
-                    data.id === 'collaborator' && classes.collaborator_bg
-                  } ${data.id === 'moderator' && classes.moderator_bg} ${
-                    data.id === 'Bronze' && classes.bronze_bg
-                  } ${data.id === 'Silver' && classes.silver_bg} ${
-                    data.id === 'Gold' && classes.gold_bg
-                  } ${data.id === 'Novice' && classes.novice_bg} ${
-                    data.id === 'Advance' && classes.advance_bg
-                  } ${data.id === 'Intermediate' && classes.intermediate_bg} ${
-                    data.id === 'Expert' && classes.expert_bg
-                  }`}
-                >
-                  {data.image && <Image src={data.image} alt={'Badge'} />}
-                  <Text label12Style={classes.button_text} label12={data.id} />
-                </IconTextButton>
-              ))}
+            {USER_BADGES?.map((data, index) => (
+              <IconTextButton
+                key={`${data.id}-${index}`}
+                inconTextButtonStyle={`${classes.full_name_icon_text_button_overview} ${
+                  data.id === 'admin' && classes.admin_bg
+                } ${data.id === 'user' && classes.user_bg} ${
+                  data.id === 'collaborator' && classes.collaborator_bg
+                } ${data.id === 'moderator' && classes.moderator_bg} ${
+                  data.id === 'Bronze' && classes.bronze_bg
+                } ${data.id === 'Silver' && classes.silver_bg} ${
+                  data.id === 'Gold' && classes.gold_bg
+                } ${data.id === 'Novice' && classes.novice_bg} ${
+                  data.id === 'Advance' && classes.advance_bg
+                } ${data.id === 'Intermediate' && classes.intermediate_bg} ${
+                  data.id === 'Expert' && classes.expert_bg
+                }`}
+              >
+                {data.image && <Image src={data.image} alt={'Badge'} />}
+                <Text label12Style={classes.button_text} label12={data.id} />
+              </IconTextButton>
+            ))}
           </div>
         </div>
       </div>
 
       <div className={classes.full_info_popularity_overview_main_container}>
-        {USER_TOTAL &&
-          USER_TOTAL.map((data) => (
-            <div key={data.id} className={classes.popularity_overview_container}>
-              <ButtonContainer
-                buttonContainerMainContainer={classes.popularity_overview_button_container}
-              >
-                <div className={classes.popularity_button_overview_container}>
-                  <Text label15Style={classes.popularity_text_overview} label15={data.id} />
-                  {data.icon && <Icon icon={data.icon} />}
-                </div>
-                <Text
-                  label15Style={classes.popularity_text_overview}
-                  label15={data.total ? data.total : '0'}
-                />
-              </ButtonContainer>
-            </div>
-          ))}
+        {USER_TOTAL?.map((data, index) => (
+          <div key={`${data.id}-${index}`} className={classes.popularity_overview_container}>
+            <ButtonContainer
+              buttonContainerMainContainer={classes.popularity_overview_button_container}
+            >
+              <div className={classes.popularity_button_overview_container}>
+                <Text label15Style={classes.popularity_text_overview} label15={data.id} />
+                {data.icon && <Icon icon={data.icon} />}
+              </div>
+              <Text
+                label15Style={classes.popularity_text_overview}
+                label15={data.total ? data.total : '0'}
+              />
+            </ButtonContainer>
+          </div>
+        ))}
       </div>
     </div>
   );

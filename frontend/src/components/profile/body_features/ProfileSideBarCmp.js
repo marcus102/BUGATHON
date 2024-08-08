@@ -5,6 +5,7 @@ import { Image } from '../../../utils/MediaSection';
 import { IconTextButton } from '../../../utils/ButtonSection';
 import { faArrowPointer, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { HorizontalScrollView, VerticalScrollView } from '../../../utils/ScrollViewsSection';
+import defaultProfile from '../../../assets/images/general_profile.svg';
 
 const SIDE_BAR_DATA = [
   { id: 'General', icon_: faArrowPointer, is_my_profile: null, isColored: false },
@@ -27,7 +28,7 @@ export function ProfileSideBar({ isMyProfile, profileImg }) {
     <div className={`d-none d-xl-flex ${classes.profile_page_side_bar_main_container}`}>
       <VerticalScrollView>
         <Image
-          src={profileImg}
+          src={profileImg ? profileImg : defaultProfile}
           alt={'user profile picture'}
           imgContainerStyle={classes.profile_images_container}
           imgStyle={classes.profile_images}
@@ -40,7 +41,7 @@ export function ProfileSideBar({ isMyProfile, profileImg }) {
           />
         )}
 
-        {SIDE_BAR_DATA.map((data) => {
+        {SIDE_BAR_DATA?.map((data, index) => {
           const showButton =
             (isMyProfile && [null, true].includes(data.is_my_profile)) ||
             (!isMyProfile && [null, false].includes(data.is_my_profile));
@@ -48,7 +49,7 @@ export function ProfileSideBar({ isMyProfile, profileImg }) {
           return (
             showButton && (
               <IconTextButton
-                key={data.id}
+                key={`${data.id}-${index}`}
                 inconTextButtonStyle={`${classes.side_bar_icon_text_button_container}`}
                 inconTextLabel16Style={data.isColored && classes.colored_text}
                 label={data.id}

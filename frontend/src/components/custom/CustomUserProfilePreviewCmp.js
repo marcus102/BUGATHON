@@ -15,9 +15,8 @@ import VerifiedBadge from '../../assets/icons/verified_badge.svg';
 import { faArrowUpRightFromSquare, faChevronDown, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 
-const ProfileDropdownButton = ({ mainProfile, username, profession, profileImg }) => (
+const ProfileDropdownButton = ({ username, profession, profileImg }) => (
   <>
-    {mainProfile && <IconButton icon={faChevronDown} />}
     <div className={classes.username_button_container}>
       {username ? (
         <Text
@@ -63,7 +62,7 @@ const GuestUserInfo = ({
       />
       <div className={classes.full_name_container}>
         <div className={classes.full_name_overview_container}>
-          <Text unwrap={true} h6={userFullName.toUpperCase()} />
+          <Text unwrap={true} h6={userFullName?.toUpperCase()} />
           <Image
             imgContainerStyle={classes.verified_badge_container}
             src={VerifiedBadge}
@@ -91,42 +90,41 @@ const GuestUserInfo = ({
         {hideEdit ? <Text label10="Online" /> : <IconButton icon={faEdit} />}
       </div>
     </div>
-    {METADATA &&
-      METADATA.map((data) => (
-        <div key={data.id} className={classes.popularity_overview_main_container}>
-          <div className={classes.popularity_overview_container}>
-            {data.engagement.map((engData) => (
-              <ButtonContainer
-                key={engData.id}
-                buttonContainerMainContainer={classes.popularity_overview_button_container}
-              >
-                <div className={classes.popularity_button_overview_container}>
-                  <Text label15Style={classes.popularity_text_overview} label15={engData.title} />
-                  {engData.icon && <Icon icon={engData.icon} />}
-                </div>
-                <Text label15Style={classes.popularity_text_overview} label15={engData.total} />
-              </ButtonContainer>
-            ))}
-          </div>
-          <IconTextButton
-            unwrap={true}
-            inconTextButtonStyle={classes.profile_overview_icon_text_button}
-            label={'Visit profile'}
-            icon_={faArrowUpRightFromSquare}
-            onClick={() => handleNavigation('profile', username)}
-          />
-          {data.buttons.map((btnData) => (
-            <IconTextButton
-              inconTextButtonStyle={classes.popularity_overview_icon_text_button}
-              unwrap
-              key={btnData.id}
-              icon={btnData.icon}
-              label={btnData.title}
-              onClick={() => handleNavigation(btnData.id)}
-            />
+    {METADATA?.map((data) => (
+      <div key={data.id} className={classes.popularity_overview_main_container}>
+        <div className={classes.popularity_overview_container}>
+          {data.engagement?.map((engData) => (
+            <ButtonContainer
+              key={engData.id}
+              buttonContainerMainContainer={classes.popularity_overview_button_container}
+            >
+              <div className={classes.popularity_button_overview_container}>
+                <Text label15Style={classes.popularity_text_overview} label15={engData.title} />
+                {engData.icon && <Icon icon={engData.icon} />}
+              </div>
+              <Text label15Style={classes.popularity_text_overview} label15={engData.total} />
+            </ButtonContainer>
           ))}
         </div>
-      ))}
+        <IconTextButton
+          unwrap={true}
+          inconTextButtonStyle={classes.profile_overview_icon_text_button}
+          label={'Visit profile'}
+          icon_={faArrowUpRightFromSquare}
+          onClick={() => handleNavigation('profile', username)}
+        />
+        {data.buttons?.map((btnData) => (
+          <IconTextButton
+            inconTextButtonStyle={classes.popularity_overview_icon_text_button}
+            unwrap
+            key={btnData.id}
+            icon={btnData.icon}
+            label={btnData.title}
+            onClick={() => handleNavigation(btnData.id)}
+          />
+        ))}
+      </div>
+    ))}
     {!METADATA && <Text label12="Not available" />}
   </div>
 );
@@ -160,9 +158,9 @@ function CustomUserProfilePreview({
         mainProfile ? classes.create_drop_down_menu_2 : classes.create_drop_down_menu
       }
       profileId={username}
+      buttonIcon={mainProfile ? faChevronDown : null}
       buttonChildren={
         <ProfileDropdownButton
-          mainProfile={mainProfile}
           username={username}
           profession={profession}
           profileImg={profileImg}

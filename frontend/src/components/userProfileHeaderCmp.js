@@ -42,11 +42,10 @@ function UserProfileHeader({ username, profession, profileImg, hideFollow }) {
         METADATA={DUMMY_GUEST_USER_PROFILE}
         username={username}
         hideEdit={true}
-        // profileMode={username}
         profileImg={profileImg}
         profession={profession}
-        userRole={currentUser.role}
-        userFullName={`${currentUser.firstName} ${currentUser.lastName}`}
+        userRole={currentUser?.role}
+        userFullName={`${currentUser?.firstName} ${currentUser?.lastName}`}
       />
       {!hideFollow && (
         <PlaneButton

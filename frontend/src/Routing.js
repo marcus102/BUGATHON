@@ -13,11 +13,27 @@ import CreatePage from './pages/CreatePage.js';
 import ContributionPage from './pages/ContributionPage.js';
 import SecondNavBarRoot from './pages/SecondNavBarRootPage.js';
 import AuthenticationPage, { action as authAction } from './pages/AuthenticationPage.js';
+import { tokenLoader, checkAuthLoader } from './utils/authSection.js';
+import Error from './pages/ErrorPage.js';
+import { fetchDataLoader } from './utils/authSection.js';
+
+async function combinedLoader() {
+  const tokenData = await tokenLoader();
+  const fetchData = await fetchDataLoader();
+
+  return {
+    tokenData,
+    fetchData,
+  };
+}
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />,
+    // errorElement: <Error />,
+    id: 'root',
+    loader: combinedLoader,
     children: [
       {
         path: '/',

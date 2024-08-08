@@ -13,15 +13,17 @@ import UserBlogPost from './body_features/UserBlogPostCmp';
 import AdminDashBoard from './body_features/AdminDashBoardCmp';
 import { VerticalScrollView } from '../../utils/ScrollViewsSection';
 import { DUMMY_USERS } from '../../data/Database';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useRouteLoaderData } from 'react-router-dom';
 
 function Profile() {
   const { profileSideBarButton } = useContext(ManagmentSystem);
 
   const [searchParams] = useSearchParams();
   const currentUsername = searchParams.get('username');
+  const { tokenData, fetchData } = useRouteLoaderData('root');
+  const currentUser = fetchData.data;
 
-  const currentUser = DUMMY_USERS.find((user) => user.username === currentUsername);
+  // const currentUser = DUMMY_USERS.find((user) => user.username === currentUsername);
 
   return (
     <div className={classes.profile_page_main_container}>

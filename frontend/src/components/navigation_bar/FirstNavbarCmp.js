@@ -2,33 +2,32 @@ import React, { useState } from 'react';
 import classes from './FirstNavbarCmp.module.css';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { OutlinedButton } from '../../utils/ButtonSection';
-import { NavLink } from 'react-router-dom';
 import { faArrowRightFromBracket, faGear, faStar } from '@fortawesome/free-solid-svg-icons';
 import CustomUserProfilePreview from '../custom/CustomUserProfilePreviewCmp';
 import Text from '../../utils/TextSection';
-import { useNavigate } from 'react-router-dom';
-
-const DUMMY_GUEST_USER_PROFILE = [
-  {
-    id: '1',
-    engagement: [
-      { id: '1.1', title: 'Followers', total: '100K', icon: null },
-      { id: '1.2', title: 'Followings', total: '30K', icon: null },
-      { id: '1.3', title: 'Star', total: '10K', icon: faStar },
-    ],
-    buttons: [
-      { id: 'settings', title: 'Settings', icon: faGear },
-      { id: 'logout', title: 'Logout', icon: faArrowRightFromBracket },
-    ],
-  },
-];
+import { useNavigate, NavLink, useRouteLoaderData } from 'react-router-dom';
 
 function FirstNavBar() {
   const [showOverlay, setShowOverlay] = useState(false);
   const [activeKey, setActiveKey] = useState('/');
-  const [isVisible, setIsVisible] = useState(false);
-
+  const { tokenData, fetchData } = useRouteLoaderData('root');
+  const currentUser = fetchData.data;
   const navigate = useNavigate();
+
+  const DUMMY_GUEST_USER_PROFILE = [
+    {
+      id: '1',
+      engagement: [
+        { id: '1.1', title: 'Followers', total: `${currentUser.followersCount}`, icon: null },
+        { id: '1.2', title: 'Followings', total: `${currentUser.followingCount}`, icon: null },
+        { id: '1.3', title: 'Star', total: `${currentUser.starCount}`, icon: faStar },
+      ],
+      buttons: [
+        { id: 'settings', title: 'Settings', icon: faGear },
+        { id: 'logout', title: 'Logout', icon: faArrowRightFromBracket },
+      ],
+    },
+  ];
 
   return (
     <Navbar expand="lg" className={classes.fixedNavbar}>
@@ -41,7 +40,7 @@ function FirstNavBar() {
         <Navbar.Brand className={classes.brand_style} as={NavLink} to="/">
           BUGATHON
         </Navbar.Brand>
-        <Navbar.Collapse className={[classes.navbar_collapse_container].join(' ')}>
+        <Navbar.Collapse className={`${classes.navbar_collapse_container}`}>
           <Nav
             className={classes.nav_link_container}
             activeKey={activeKey}
@@ -78,7 +77,7 @@ function FirstNavBar() {
             </Nav.Item>
           </Nav>
           <Nav className={classes.buttons_container}>
-            {!isVisible && (
+            {tokenData && (
               <OutlinedButton
                 unwrap={true}
                 buttonMainContainerStyle={classes.auth_button_main_container}
@@ -89,12 +88,14 @@ function FirstNavBar() {
                 }}
               />
             )}
-            {isVisible && (
+            {tokenData && (
               <CustomUserProfilePreview
                 METADATA={DUMMY_GUEST_USER_PROFILE}
-                username={'marcus'}
+                username={currentUser.username}
+                userFullName={`${currentUser.firstName} ${currentUser.lastName}`}
+                userRole={currentUser.role}
+                profession={currentUser.profession}
                 hideFollow={true}
-                hideEdit={false}
                 mainProfile={true}
                 profileMode={'me'}
               />
