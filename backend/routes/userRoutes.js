@@ -10,7 +10,7 @@ const imageController = require('./../controllers/imagesController');
 const router = express.Router({ mergeParams: true });
 
 router.post('/signup', authenticatioController.signUp);
-router.post('/login', authenticatioController.logIn);
+router.post('/signin', authenticatioController.logIn);
 router.post('/forgotPassword', authenticatioController.forgotPassword);
 router.patch('/resetPassword/:token', authenticatioController.resetPassword);
 

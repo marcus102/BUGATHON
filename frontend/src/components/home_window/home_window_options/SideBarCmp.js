@@ -2,12 +2,7 @@ import React, { useContext, useState } from 'react';
 import { ManagmentSystem } from '../../../store/AppGeneralManagmentSystem';
 import classes from './SideBarCmp.module.css';
 import Colors from '../../../constants/colors';
-import {
-  IconButton,
-  PlaneButton,
-  SolidButton,
-  IconTextButton,
-} from '../../../utils/ButtonSection';
+import { IconButton, PlaneButton, SolidButton, IconTextButton } from '../../../utils/ButtonSection';
 import ToolTip from '../../../utils/toolTipSection';
 import {
   faArrowRightFromBracket,
@@ -21,7 +16,7 @@ import {
   faAngleDown,
 } from '@fortawesome/free-solid-svg-icons';
 import Text from '../../../utils/TextSection';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, redirect } from 'react-router-dom';
 import Line from '../../../utils/LineSection';
 
 const THEME_DATA = [
@@ -208,6 +203,11 @@ export function HomeExpandedSideBar() {
               colorOnMouseDown={Colors.red_ff3c3c}
               inconTextLabel16Style={classes.logout_text}
               label={'Logout'}
+              onClick={() => {
+                localStorage.removeItem('token');
+                localStorage.removeItem('expiration');
+                return redirect('/');
+              }}
             />
           </>
         )}

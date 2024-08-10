@@ -16,12 +16,12 @@ function SignIn() {
         type="email"
         name="email"
         placeholder={'required'}
-        label={'Email Address/Username'}
+        label={'Email Address'}
       />
       <Input
         id="password"
         type="password"
-        name="passwrod"
+        name="password"
         placeholder={'*******'}
         label={'Password'}
       />

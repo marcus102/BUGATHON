@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -40,6 +41,9 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use(bodyParser.json());
+
+// Serve static files from the 'assets' directory
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 app.use(cors());
 

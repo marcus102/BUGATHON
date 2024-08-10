@@ -41,7 +41,12 @@ export function checkAuthLoader() {
 
 export async function fetchDataLoader() {
   const token = getAuthToken();
-  
+
+  if (!token) {
+    console.error('No token available');
+    return null;
+  }
+
   const headers = {
     Authorization: `Bearer ${token}`,
   };

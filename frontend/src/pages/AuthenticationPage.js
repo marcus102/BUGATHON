@@ -34,17 +34,20 @@ export async function action({ request }) {
     if (mode === 'signin') {
       const authData = {
         email: data.get('email'),
-        username: data.get('username'),
         password: data.get('password'),
       };
 
-      const formData = authData.username
-        ? { username: authData.username, password: authData.password }
-        : { email: authData.email, password: authData.password };
+      // const formData = authData.username
+      //   ? { username: authData.username, password: authData.password }
+      //   : { email: authData.email, password: authData.password };
 
-      response = await axios.post(`${PORT}api/v1/users/${mode}`, formData, {
-        headers,
-      });
+      response = await axios.post(
+        `${PORT}api/v1/users/${mode}`,
+        { email: authData.email, password: authData.password },
+        {
+          headers,
+        }
+      );
     }
 
     if (mode === 'signup') {

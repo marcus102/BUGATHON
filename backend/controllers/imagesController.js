@@ -103,7 +103,7 @@ exports.createImage = catchAsync(async (req, res, next) => {
   }
 
   const newImage = await Image.create({
-    imageUrl: path.join(__dirname, '..', 'assets', imgDirectory, req.file.filename),
+    imageUrl: `${req.protocol}://${req.get('host')}/assets/${imgDirectory}/${req.file.filename}`,
     caption: caption,
     tags: tags,
     likes: likes,
@@ -162,7 +162,7 @@ exports.updateImage = catchAsync(async (req, res, next) => {
     if (err) throw err;
   });
 
-  imageData.imageUrl = path.join(__dirname, '..', 'assets', 'images', filename);
+  imageData.imageUrl = path.join(__dirname, '..', 'assets', imgDirectory, filename);
   imageData.caption = caption || imageData.caption;
   imageData.tags = tags || imageData.tags;
   imageData.likes = likes || imageData.likes;

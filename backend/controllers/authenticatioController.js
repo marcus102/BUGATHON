@@ -61,12 +61,23 @@ exports.signUp = catchAsync(async (req, res, next) => {
 
 exports.logIn = catchAsync(async (req, res, next) => {
   const { email, username, password } = req.body;
+
   // check if email or username and password exist
   if (!((email || username) && password)) {
     return next(appError('Please provide a valid username or email address and a password!', 400));
   }
+
+  const query = {};
+  if (email) {
+    query['email.address'] = email.toLowerCase();
+  }
+  if (username) {
+    query.username = username.toLowerCase();
+  }
+
+  const user = await User.findOne(query).select('+password');
   // check if user exists && password is correct
-  const user = await User.findOne({ $or: [{ email }, { username }] }).select('+password');
+  // const user = await User.findOne({ $or: [{ email }, { username }] }).select('+password');
 
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(appError('Incorrect credentials!', 401));

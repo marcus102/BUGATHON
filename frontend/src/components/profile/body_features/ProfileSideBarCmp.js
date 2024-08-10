@@ -1,11 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { ManagmentSystem } from '../../../store/AppGeneralManagmentSystem';
 import classes from './ProfileSideBarCmp.module.css';
 import { Image } from '../../../utils/MediaSection';
 import { IconTextButton } from '../../../utils/ButtonSection';
-import { faArrowPointer, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faArrowPointer } from '@fortawesome/free-solid-svg-icons';
 import { HorizontalScrollView, VerticalScrollView } from '../../../utils/ScrollViewsSection';
 import defaultProfile from '../../../assets/images/general_profile.svg';
+import FileUpload from '../../../utils/fileUploadManagerSection';
+import { useRouteLoaderData } from 'react-router-dom';
+import { createProfile } from '../../../http_requests/imageUploadHttp';
 
 const SIDE_BAR_DATA = [
   { id: 'General', icon_: faArrowPointer, is_my_profile: null, isColored: false },
@@ -24,21 +27,26 @@ const SIDE_BAR_DATA = [
 
 export function ProfileSideBar({ isMyProfile, profileImg }) {
   const { profileSideBarButtonHandler, profileSideBarButton } = useContext(ManagmentSystem);
+  const { tokenData } = useRouteLoaderData('root');
+  const [profile, setProfile] = useState(profileImg);
+
+  const handleEditProfileClick = async (file) => {
+    const myprofile = await createProfile(tokenData, file);
+    console.log('profile', myprofile.imageUrl);
+    setProfile(myprofile.imageUrl);
+  };
+
   return (
     <div className={`d-none d-xl-flex ${classes.profile_page_side_bar_main_container}`}>
       <VerticalScrollView>
         <Image
-          src={profileImg ? profileImg : defaultProfile}
+          src={profile ? profile : defaultProfile}
           alt={'user profile picture'}
           imgContainerStyle={classes.profile_images_container}
           imgStyle={classes.profile_images}
         />
         {isMyProfile && (
-          <IconTextButton
-            inconTextButtonStyle={classes.side_bar_profile_edit_button}
-            label={'Edit Pofile'}
-            icon_={faEdit}
-          />
+          <FileUpload btnType={'edit_profile'} type="image" onFileSelect={handleEditProfileClick} />
         )}
 
         {SIDE_BAR_DATA?.map((data, index) => {

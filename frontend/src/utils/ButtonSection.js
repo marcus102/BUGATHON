@@ -154,7 +154,6 @@ export function IconButton({
   size,
   onClick,
   inconButtonStyle,
-  type,
 }) {
   const [isPressed, setIsPressed] = useState(false);
 
@@ -204,7 +203,7 @@ export function IconTextButton({
       onClick={onClick}
       onMouseDown={handleMouseActivity}
       onMouseUp={handleMouseActivity}
-      type="button"
+      type={type}
     >
       {icon && (
         <Icon iconContainerStyle={iconContainerStyle} icon={icon} color={iconColor} size={size} />

@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classes from './ProfileHeaderCmp.module.css';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Image } from '../../../utils/MediaSection';
 import Text from '../../../utils/TextSection';
 import { IconTextButton, ButtonContainer } from '../../../utils/ButtonSection';
@@ -9,6 +8,9 @@ import Icon from '../../../utils/IconSection';
 import BronzeBadge from '../../../assets/icons/bronze_badge.svg';
 import VerifiedBadge from '../../../assets/icons/verified_badge.svg';
 import defaultProfile from '../../../assets/images/general_profile.svg';
+import FileUpload from '../../../utils/fileUploadManagerSection';
+import { useRouteLoaderData } from 'react-router-dom';
+import { createProfile } from '../../../http_requests/imageUploadHttp';
 
 function ProfileHeader({
   userFullName,
@@ -33,6 +35,15 @@ function ProfileHeader({
     { id: 'Novice', image: null },
     { id: 'Bronze', image: BronzeBadge },
   ];
+
+  const { tokenData } = useRouteLoaderData('root');
+  const [profile, setProfile] = useState(profileImg);
+
+  const handleEditProfileClick = async (file) => {
+    const myprofile = await createProfile(tokenData, file);
+    setProfile(myprofile.imageUrl);
+  };
+
   return (
     <div className={`${classes.content_user_info_overview_main_container} flex-column flex-xl-row`}>
       <div
@@ -40,16 +51,12 @@ function ProfileHeader({
       >
         <div className={`d-block d-xl-none`}>
           <Image
-            src={profileImg ? profileImg : defaultProfile}
+            src={profile ? profile : defaultProfile}
             alt={'user profile picture'}
             imgContainerStyle={classes.profile_images_container}
             imgStyle={classes.profile_images}
           />
-          <IconTextButton
-            inconTextButtonStyle={classes.side_bar_profile_edit_button}
-            label={'Edit Pofile'}
-            icon_={faEdit}
-          />
+          <FileUpload btnType={'edit_profile'} type="image" onFileSelect={handleEditProfileClick} />
         </div>
         <div className={classes.user_info_full_name_overview_main_container}>
           <div className={classes.full_name_overview_container}>

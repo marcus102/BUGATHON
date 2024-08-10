@@ -11,16 +11,16 @@ function FirstNavBar() {
   const [showOverlay, setShowOverlay] = useState(false);
   const [activeKey, setActiveKey] = useState('/');
   const { tokenData, fetchData } = useRouteLoaderData('root');
-  const currentUser = fetchData.data;
+  const currentUser = fetchData?.data;
   const navigate = useNavigate();
 
   const DUMMY_GUEST_USER_PROFILE = [
     {
       id: '1',
       engagement: [
-        { id: '1.1', title: 'Followers', total: `${currentUser.followersCount}`, icon: null },
-        { id: '1.2', title: 'Followings', total: `${currentUser.followingCount}`, icon: null },
-        { id: '1.3', title: 'Star', total: `${currentUser.starCount}`, icon: faStar },
+        { id: '1.1', title: 'Followers', total: `${currentUser?.followersCount}`, icon: null },
+        { id: '1.2', title: 'Followings', total: `${currentUser?.followingCount}`, icon: null },
+        { id: '1.3', title: 'Star', total: `${currentUser?.starCount}`, icon: faStar },
       ],
       buttons: [
         { id: 'settings', title: 'Settings', icon: faGear },
@@ -77,7 +77,7 @@ function FirstNavBar() {
             </Nav.Item>
           </Nav>
           <Nav className={classes.buttons_container}>
-            {tokenData && (
+            {!tokenData && (
               <OutlinedButton
                 unwrap={true}
                 buttonMainContainerStyle={classes.auth_button_main_container}
@@ -91,10 +91,10 @@ function FirstNavBar() {
             {tokenData && (
               <CustomUserProfilePreview
                 METADATA={DUMMY_GUEST_USER_PROFILE}
-                username={currentUser.username}
-                userFullName={`${currentUser.firstName} ${currentUser.lastName}`}
-                userRole={currentUser.role}
-                profession={currentUser.profession}
+                username={currentUser?.username}
+                userFullName={`${currentUser?.firstName} ${currentUser?.lastName}`}
+                userRole={currentUser?.role}
+                profession={currentUser?.profession}
                 hideFollow={true}
                 mainProfile={true}
                 profileMode={'me'}
