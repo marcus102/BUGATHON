@@ -53,6 +53,14 @@ const FileUpload = ({ type, onFileSelect, btnType }) => {
           onClick={handleClick}
         />
       )}
+      {btnType === 'add_profile' && (
+        <IconTextButton
+          inconTextButtonStyle={classes.side_bar_profile_edit_button}
+          label={'Add Pofile'}
+          icon_={faEdit}
+          onClick={handleClick}
+        />
+      )}
 
       <input
         type="file"

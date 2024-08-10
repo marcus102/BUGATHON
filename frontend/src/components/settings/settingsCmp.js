@@ -23,6 +23,7 @@ import { IconButton } from '../../utils/ButtonSection';
 import Text from '../../utils/TextSection';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { DUMMY_USERS } from '../../data/Database';
+import { useSearchParams, useRouteLoaderData } from 'react-router-dom';
 
 const Header = ({ title, titleIcon }) => {
   const { settingSideBarButton } = useContext(ManagmentSystem);
@@ -36,7 +37,14 @@ const Header = ({ title, titleIcon }) => {
 
 function Settings() {
   const { settingSideBarButton } = useContext(ManagmentSystem);
-  const currentUser = DUMMY_USERS[0];
+  // const currentUser = DUMMY_USERS[0];
+
+  const { fetchData } = useRouteLoaderData('root');
+  const currentUser = fetchData.data;
+
+  const profileImg = currentUser.image?.find(
+    (targetImg) => targetImg.username === currentUser.username
+  );
 
   return (
     <div className={`${classes.settings_main_container} flex-column flex-xl-row`}>
@@ -48,12 +56,12 @@ function Settings() {
         <VerticalScrollView>
           {settingSideBarButton === 'General Profile' && (
             <GeneralProfile
-              profileImg={currentUser.profile}
-              firstName={currentUser.firstName}
-              lastName={currentUser.lastName}
-              location={currentUser.location}
-              bio={currentUser.bio}
-              linksArray={currentUser.links}
+              profileImg={profileImg?.imageUrl}
+              firstName={currentUser?.firstName}
+              lastName={currentUser?.lastName}
+              location={currentUser?.location}
+              bio={currentUser?.bio}
+              linksArray={currentUser?.links}
             />
           )}
           {settingSideBarButton === 'Account Setting' && <AccountSettings />}

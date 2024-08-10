@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { ManagmentSystem } from '../../../store/AppGeneralManagmentSystem';
 import classes from './ProfileSideBarCmp.module.css';
 import { Image } from '../../../utils/MediaSection';
@@ -8,7 +8,7 @@ import { HorizontalScrollView, VerticalScrollView } from '../../../utils/ScrollV
 import defaultProfile from '../../../assets/images/general_profile.svg';
 import FileUpload from '../../../utils/fileUploadManagerSection';
 import { useRouteLoaderData } from 'react-router-dom';
-import { createProfile } from '../../../http_requests/imageUploadHttp';
+import { createProfile, editProfile } from '../../../http_requests/imageUploadHttp';
 
 const SIDE_BAR_DATA = [
   { id: 'General', icon_: faArrowPointer, is_my_profile: null, isColored: false },
@@ -26,14 +26,22 @@ const SIDE_BAR_DATA = [
 ];
 
 export function ProfileSideBar({ isMyProfile, profileImg }) {
-  const { profileSideBarButtonHandler, profileSideBarButton } = useContext(ManagmentSystem);
+  const { profileSideBarButtonHandler, profileSideBarButton, myProfileImgHandler, myProfileImg } =
+    useContext(ManagmentSystem);
   const { tokenData } = useRouteLoaderData('root');
-  const [profile, setProfile] = useState(profileImg);
+
+  let profile = profileImg;
+
+  const handleAddProfileClick = async (file) => {
+    const myProfile = await createProfile(tokenData, file);
+    myProfileImgHandler(myProfile.imageUrl);
+    profile = myProfileImg;
+  };
 
   const handleEditProfileClick = async (file) => {
-    const myprofile = await createProfile(tokenData, file);
-    console.log('profile', myprofile.imageUrl);
-    setProfile(myprofile.imageUrl);
+    const myProfile = await editProfile(tokenData, file);
+    myProfileImgHandler(myProfile.imageUrl);
+    profile = myProfileImg;
   };
 
   return (
@@ -46,7 +54,11 @@ export function ProfileSideBar({ isMyProfile, profileImg }) {
           imgStyle={classes.profile_images}
         />
         {isMyProfile && (
-          <FileUpload btnType={'edit_profile'} type="image" onFileSelect={handleEditProfileClick} />
+          <FileUpload
+            btnType={profile ? 'edit_profile' : 'add_profile'}
+            type="image"
+            onFileSelect={profile ? handleEditProfileClick : handleAddProfileClick}
+          />
         )}
 
         {SIDE_BAR_DATA?.map((data, index) => {

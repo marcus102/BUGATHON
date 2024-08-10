@@ -20,14 +20,16 @@ function Profile() {
 
   const [searchParams] = useSearchParams();
   const currentUsername = searchParams.get('username');
-  const { tokenData, fetchData } = useRouteLoaderData('root');
+  const { fetchData } = useRouteLoaderData('root');
   const currentUser = fetchData.data;
 
-  // const currentUser = DUMMY_USERS.find((user) => user.username === currentUsername);
+  const profileImg = currentUser.image?.find(
+    (targetImg) => targetImg.username === currentUser.username
+  );
 
   return (
     <div className={classes.profile_page_main_container}>
-      <ProfileSideBar isMyProfile={true} profileImg={currentUser?.profile} />
+      <ProfileSideBar isMyProfile={true} profileImg={profileImg?.imageUrl} />
       <div className={`${classes.profile_page_second_container}`}>
         <ProfileSideBar2 />
         <VerticalScrollView
@@ -40,7 +42,7 @@ function Profile() {
                 starCount={currentUser?.starCount}
                 username={currentUser?.username}
                 profession={currentUser?.profession}
-                profileImg={currentUser?.profile}
+                profileImg={profileImg?.imageUrl}
                 role={currentUser?.role}
               />
               {profileSideBarButton === 'General' && (

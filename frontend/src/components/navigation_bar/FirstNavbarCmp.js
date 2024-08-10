@@ -14,7 +14,7 @@ function FirstNavBar() {
   const currentUser = fetchData?.data;
   const navigate = useNavigate();
 
-  const DUMMY_GUEST_USER_PROFILE = [
+  const GUEST_USER_PROFILE = [
     {
       id: '1',
       engagement: [
@@ -28,6 +28,10 @@ function FirstNavBar() {
       ],
     },
   ];
+
+  const profileImg = currentUser.image?.find(
+    (targetImg) => targetImg.username === currentUser.username
+  );
 
   return (
     <Navbar expand="lg" className={classes.fixedNavbar}>
@@ -90,11 +94,12 @@ function FirstNavBar() {
             )}
             {tokenData && (
               <CustomUserProfilePreview
-                METADATA={DUMMY_GUEST_USER_PROFILE}
+                METADATA={GUEST_USER_PROFILE}
                 username={currentUser?.username}
                 userFullName={`${currentUser?.firstName} ${currentUser?.lastName}`}
                 userRole={currentUser?.role}
                 profession={currentUser?.profession}
+                profileImg={profileImg?.imageUrl}
                 hideFollow={true}
                 mainProfile={true}
                 profileMode={'me'}

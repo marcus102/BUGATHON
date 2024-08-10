@@ -34,6 +34,9 @@ export const ManagmentSystem = createContext({
   }) => {},
   currentProfileId: '',
   currentProfileIdHandler: (parameters) => {},
+
+  myProfileImg: '',
+  myProfileImgHandler: (parameters) => {},
 });
 
 export default function ManagmentSystemProvider({ children }) {
@@ -56,6 +59,7 @@ export default function ManagmentSystemProvider({ children }) {
       email_type: '',
     },
     currentProfileId: '',
+    myProfileImg: '',
   };
 
   function reducer(state, action) {
@@ -140,6 +144,12 @@ export default function ManagmentSystemProvider({ children }) {
           ...state,
           currentProfileId: action.payload,
         };
+
+      case 'SET_PROFILE_IMG':
+        return {
+          ...state,
+          myProfileImg: action.payload,
+        };
       default:
         return state;
     }
@@ -202,6 +212,10 @@ export default function ManagmentSystemProvider({ children }) {
     dispatch({ type: 'SET_CURRENT_PROFILE_ID', payload: parameters });
   };
 
+  const myProfileImgHandler = (parameters) => {
+    dispatch({ type: 'SET_PROFILE_IMG', payload: parameters });
+  };
+
   const value = {
     overlay: state.overlay,
     overlayHandler: overlayHandler,
@@ -219,6 +233,8 @@ export default function ManagmentSystemProvider({ children }) {
     dropDownDefaultHandler: dropDownDefaultHandler,
     currentProfileId: state.currentProfileId,
     currentProfileIdHandler: currentProfileIdHandler,
+    myProfileImg: state.myProfileImg,
+    myProfileImgHandler: myProfileImgHandler,
   };
 
   return <ManagmentSystem.Provider value={value}>{children}</ManagmentSystem.Provider>;

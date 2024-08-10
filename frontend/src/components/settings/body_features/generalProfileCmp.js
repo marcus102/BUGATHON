@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { ManagmentSystem } from '../../../store/AppGeneralManagmentSystem';
 import classes from './generalProfileCmp.module.css';
-import { IconTextButton, SolidButton, IconButton } from '../../../utils/ButtonSection';
+import { SolidButton, IconButton } from '../../../utils/ButtonSection';
 import { Image } from '../../../utils/MediaSection';
 import userGeneralProfile from '../../../assets/images/general_profile.svg';
 import { faLightbulb, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
@@ -14,7 +15,9 @@ import {
 import Text from '../../../utils/TextSection';
 import Icon from '../../../utils/IconSection';
 import { Input, TextArea } from '../../../utils/InputSection';
-import { faImage } from '@fortawesome/free-regular-svg-icons';
+import FileUpload from '../../../utils/fileUploadManagerSection';
+import { useRouteLoaderData, Form } from 'react-router-dom';
+import { createProfile, editProfile } from '../../../http_requests/imageUploadHttp';
 
 const TIPS_DATA = [
   {
@@ -79,6 +82,22 @@ function GeneralProfile({ profileImg, firstName, lastName, location, bio, linksA
   ];
 
   const [socialLinks, setSocialLinks] = useState([{ id: 1, link: '' }]);
+  const { tokenData } = useRouteLoaderData('root');
+  const { myProfileImgHandler, myProfileImg } = useContext(ManagmentSystem);
+
+  let profile = profileImg;
+
+  const handleAddProfileClick = async (file) => {
+    const myProfile = await createProfile(tokenData, file);
+    myProfileImgHandler(myProfile.imageUrl);
+    profile = myProfileImg;
+  };
+
+  const handleEditProfileClick = async (file) => {
+    const myProfile = await editProfile(tokenData, file);
+    myProfileImgHandler(myProfile.imageUrl);
+    profile = myProfileImg;
+  };
 
   const addSocialLink = () => {
     setSocialLinks([...socialLinks, { id: socialLinks.length + 1, link: '' }]);
@@ -88,16 +107,15 @@ function GeneralProfile({ profileImg, firstName, lastName, location, bio, linksA
     <div className={`${classes.general_profile_main_container} flex-column flex-md-row`}>
       <div className={`${classes.profile_main_container}`}>
         <Image
-          src={profileImg ? profileImg : userGeneralProfile}
+          src={profile ? profile : userGeneralProfile}
           alt="User profile picture"
           imgContainerStyle={classes.profile_images_container}
           imgStyle={classes.profile_images}
         />
-        <IconTextButton
-          unwrap={true}
-          inconTextButtonStyle={classes.profile_edit_button}
-          label="Edit Profile Picture"
-          icon={faImage}
+        <FileUpload
+          btnType={profile ? 'edit_profile' : 'add_profile'}
+          type="image"
+          onFileSelect={profile ? handleEditProfileClick : handleAddProfileClick}
         />
         <div className={classes.profile_tips_container}>
           <div className={classes.profile_tips_header}>
@@ -110,7 +128,7 @@ function GeneralProfile({ profileImg, firstName, lastName, location, bio, linksA
         </div>
       </div>
 
-      <div className={classes.profile_edit_main_container}>
+      <Form method="post" className={classes.profile_edit_main_container}>
         <div className={classes.profile_edit_container}>
           <SectionTitle title="Personal Info" />
           {PROFILE_EDIT_DATA.map((data) => (
@@ -150,7 +168,7 @@ function GeneralProfile({ profileImg, firstName, lastName, location, bio, linksA
           </div>
         </div>
         <SolidButton buttonStyle={classes.profile_save_button} label="Save Changes" />
-      </div>
+      </Form>
     </div>
   );
 }
