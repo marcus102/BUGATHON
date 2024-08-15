@@ -61,67 +61,71 @@ exports.getMe = catchAsync(async (req, res, next) => {
 });
 
 exports.updateMe = catchAsync(async (req, res, next) => {
-  // create error if user post password data
+  // Check for password update attempt
   if (req.body.password || req.body.passwordConfirm) {
     return next(appError('This route is not for password update!', 400));
   }
 
-  // Normalize and validate fields
-  const normalizeAndValidate = (field, validatorFn, errorMsg) => {
-    if (req.body[field] && !Array.isArray(req.body[field])) {
-      req.body[field] = [req.body[field]];
-    }
-    if (req.body[field]) {
-      const invalidItems = req.body[field].filter(item => !validatorFn(item));
-      if (invalidItems.length > 0) {
-        return next(appError(errorMsg, 400));
-      }
-    }
-  };
-
-  normalizeAndValidate('professions', item => typeof item === 'string', 'Professions should be an array of strings!');
-  normalizeAndValidate('links', validator.isURL, 'One or more links are invalid URLs!');
-
-  // Fetch the current user data if professions or links are provided
-  let user;
-  if (req.body.professions || req.body.links) {
-    user = await User.findById(req.user.id);
-  }
-
-  // Append professions and links to the existing arrays
-  if (req.body.professions) {
-    user.professions.push(...req.body.professions);
-  }
-  if (req.body.links) {
-    user.links.push(...req.body.links);
-  }
-
+  // Filter the fields from the request body
   const filteredBody = filterParams.allowedFields(
     req.body,
     'firstName',
     'lastName',
     'username',
-    'professions',
-    'profile',
     'email',
-    'website',
+    'professions',
     'bio',
     'location',
     'links'
   );
-
+  // Update the user with the filtered body
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
     runValidators: true
   });
 
+  // Respond with the updated user data
   res.status(200).json({
     status: 'success',
     data: {
-      user: updatedUser
+      updatedUser
     }
   });
 });
+
+// exports.updateMe = catchAsync(async (req, res, next) => {
+//   if (req.body.password || req.body.passwordConfirm) {
+//     return next(appError('This route is not for password update!', 400));
+//   }
+
+//   const filteredBody = filterParams.allowedFields(
+//     req.body,
+//     'firstName',
+//     'lastName',
+//     'username',
+//     'email',
+//     'professions',
+//     'bio',
+//     'location',
+//     'links'
+//   );
+
+//   const currentUser = User.findById(req.user.id);
+
+//   const { email } = currentUser;
+
+//   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
+//     new: true,
+//     runValidators: true
+//   });
+
+//   res.status(200).json({
+//     status: 'success',
+//     data: {
+//       updatedUser
+//     }
+//   });
+// });
 
 exports.deleteMe = catchAsync(async (req, res, next) => {
   await User.findByIdAndUpdate(req.user.id, { active: false });

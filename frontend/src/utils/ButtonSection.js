@@ -203,7 +203,7 @@ export function IconTextButton({
       onClick={onClick}
       onMouseDown={handleMouseActivity}
       onMouseUp={handleMouseActivity}
-      type={type}
+      type="button"
     >
       {icon && (
         <Icon iconContainerStyle={iconContainerStyle} icon={icon} color={iconColor} size={size} />
@@ -357,16 +357,11 @@ export function DynamicLabelDropdownMenu({
   dropDownMenuStyle,
   dropDownIconTextStyle,
   my_key,
+  onChange,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const { dropDownDefaultHandler } = useContext(ManagmentSystem);
-  // const { all, bug_report } = dropDownDefault;
-  // const [selectedLabel, setSelectedLabel] = useState('All');
   const dropdownRef = useRef(null);
-
-  // const toggleDropdown = () => {
-  //   setIsOpen(!isOpen);
-  // };
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -380,11 +375,6 @@ export function DynamicLabelDropdownMenu({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-
-  // const handleItemClick = (label) => {
-  //   dropDownDefaultHandler({ [my_key]: label });
-  //   setIsOpen(false);
-  // };
 
   return (
     <div className={classes.dropdown_menu_container} ref={dropdownRef}>
@@ -406,6 +396,10 @@ export function DynamicLabelDropdownMenu({
               label={data.label && data.label}
               icon={data.icon && data.icon}
               onClick={() => {
+                if (onChange) {
+                  onChange(data.label);
+                }
+                //////////////////////////
                 dropDownDefaultHandler({ [my_key]: data.label });
                 setIsOpen(false);
               }}

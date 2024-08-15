@@ -37,14 +37,10 @@ const createAndSendToken = (user, statusCode, res) => {
 
 exports.signUp = catchAsync(async (req, res, next) => {
   const { firstName, lastName, username, email, password, passwordConfirm } = req.body;
-  const signUpEmail = [
-    {
-      address: email,
-      visibility: 'public',
-      type: 'default'
-    }
-  ];
-
+  const signUpEmail = {
+    address: email,
+    visibility: 'public',
+  };
   const newUser = await User.create({
     firstName: firstName,
     lastName: lastName,

@@ -5,12 +5,18 @@
   padding: 0 5px;
 }
 
+.email_input_container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
 .email_list_container {
   display: flex;
   width: 100%;
   justify-content: space-between;
   margin: 5px 0;
-  
+
 }
 
 .email_container {
@@ -25,10 +31,6 @@
 
 .private_bg {
   background-color: var(--red_FF2B2B);
-}
-
-.default_bg {
-  background-color: var(--gray_50505066);
 }
 
 .icon_button_container {
@@ -78,7 +80,7 @@
   gap: 4rem;
 }
 
-.email_input_container {
+.email_input_container_2 {
   display: flex;
   width: 100%;
   align-items: center;
@@ -111,8 +113,4 @@
 
 .button_container {
   width: 10rem;
-}
-
-.delete_button_container {
-  background-color: var(--red_FF2B2B);
 }

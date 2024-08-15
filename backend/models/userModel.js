@@ -18,12 +18,8 @@ const emailSchema = new mongoose.Schema({
   visibility: {
     type: String,
     enum: ['public', 'private'],
-    required: [true, 'Email visibility must be specified!']
-  },
-  type: {
-    type: String,
-    enum: ['default', 'backup'],
-    required: [true, 'Email type must be specified!']
+    required: [true, 'Email visibility must be specified!'],
+    default: 'public'
   }
 });
 
@@ -44,15 +40,7 @@ const userSchema = new mongoose.Schema(
       unique: [true, 'Sorry, the username is already in use. Please choose another one!'],
       trim: true
     },
-    email: {
-      type: [emailSchema],
-      validate: {
-        validator: function(value) {
-          return value.length <= 4;
-        },
-        message: 'User can have a maximum of 4 email addresses!'
-      }
-    },
+    email: emailSchema,
     phone: {
       type: String,
       validate: {

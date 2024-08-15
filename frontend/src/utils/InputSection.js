@@ -56,11 +56,17 @@ export function TextArea({
   textAreaStyle,
   onKeyDown,
   defaultValue,
+  id,
+  name,
+  type,
 }) {
   return (
     <div className={`${classes.input_main_container} ${textAreaStyle}`}>
       {label && <Text label16={label} />}
       <textarea
+        id={id}
+        name={name}
+        type={type}
         placeholder={placeholder}
         value={value}
         onChange={onChange}

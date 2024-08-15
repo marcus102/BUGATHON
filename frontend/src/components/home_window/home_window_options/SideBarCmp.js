@@ -193,7 +193,7 @@ export function HomeExpandedSideBar() {
               inconTextButtonStyle={classes.more_settings_container}
               icon={faGears}
               label={'More Settings'}
-              onClick={() => navigate(`/settings`)}
+              onClick={() => navigate(`/settings?`)}
             />
 
             <IconTextButton
@@ -219,6 +219,7 @@ export function HomeExpandedSideBar() {
 export function HomeCollapsedSideBar() {
   const { sideBarHandler, sideBar } = useContext(ManagmentSystem);
   const { theme } = sideBar;
+  const navigate = useNavigate();
 
   return (
     <>
@@ -241,6 +242,14 @@ export function HomeCollapsedSideBar() {
           />
         </ToolTip>
       ))}
+      <ToolTip toolTipStyle={classes.side_bar_tool_tip_container} tooltipMessage={'Settings'}>
+        <IconButton
+          colorOnMouseUp={Colors.red_FF2B2B}
+          colorOnMouseDown={Colors.red_ff3c3c}
+          icon={faGears}
+          onClick={() => navigate(`/settings`)}
+        />
+      </ToolTip>
       <ToolTip toolTipStyle={classes.side_bar_tool_tip_container} tooltipMessage={'Logout'}>
         <IconButton
           colorOnMouseUp={Colors.red_FF2B2B}

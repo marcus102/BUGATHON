@@ -5,13 +5,7 @@ import { SolidButton, IconButton } from '../../../utils/ButtonSection';
 import { Image } from '../../../utils/MediaSection';
 import userGeneralProfile from '../../../assets/images/general_profile.svg';
 import { faLightbulb, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-import {
-  faGithub,
-  faLinkedin,
-  faStackOverflow,
-  faXTwitter,
-  faYoutube,
-} from '@fortawesome/free-brands-svg-icons';
+import { faLink } from '@fortawesome/free-solid-svg-icons';
 import Text from '../../../utils/TextSection';
 import Icon from '../../../utils/IconSection';
 import { Input, TextArea } from '../../../utils/InputSection';
@@ -42,65 +36,146 @@ const SectionTitle = ({ title }) => (
   </>
 );
 
-function GeneralProfile({ profileImg, firstName, lastName, location, bio, linksArray }) {
+function GeneralProfile({
+  profileImg,
+  firstName,
+  lastName,
+  location,
+  bio,
+  linksArray,
+  username,
+  professions,
+}) {
   const PROFILE_EDIT_DATA = [
     {
-      id: '1',
+      id: 'firstName',
+      type: 'text',
+      name: 'firstName',
       label: 'First Name',
       placeholder: 'First Name',
       value: firstName,
       description:
         'It will be displayed on your profile and may be visible to other users depending on your privacy settings.',
-      inputType: 'input',
+      inputMode: 'input',
     },
     {
-      id: '2',
+      id: 'lastName',
+      type: 'text',
+      name: 'lastName',
       label: 'Last Name(s)',
       placeholder: 'Last Name(s)',
       value: lastName,
       description:
         'It will appear alongside your first name on your profile and in certain interactions with other users.',
-      inputType: 'input',
+      inputMode: 'input',
     },
     {
-      id: '3',
+      id: 'username',
+      type: 'text',
+      name: 'username',
+      label: 'Username',
+      placeholder: 'Username',
+      value: username,
+      description:
+        'It will appear alongside your first name on your profile and in certain interactions with other users.',
+      inputMode: 'input',
+    },
+    {
+      id: 'profession',
+      type: 'text',
+      name: 'profession',
+      label: 'Profession',
+      placeholder: 'Profession',
+      value: professions[0],
+      description:
+        'It will appear alongside your first name on your profile and in certain interactions with other users.',
+      inputMode: 'input',
+    },
+    {
+      id: 'location',
+      type: 'text',
+      name: 'location',
       label: 'Location',
       placeholder: 'Location',
       value: location,
       description:
         'This could be your city, state, country, or any other relevant location information. It helps other users know where you are based.',
-      inputType: 'input',
+      inputMode: 'input',
     },
     {
-      id: '4',
+      id: 'bio',
+      type: 'text',
+      name: 'bio',
       label: 'Bio',
       placeholder: 'Enter your bio',
       value: bio,
       description: null,
-      inputType: 'text_area',
+      inputMode: 'text_area',
+    },
+    {
+      id: 'link1',
+      type: 'text',
+      name: 'link1',
+      label: null,
+      placeholder: 'link 1',
+      value: linksArray[0],
+      description: null,
+      inputMode: 'input',
+    },
+    {
+      id: 'link2',
+      type: 'text',
+      name: 'link2',
+      label: null,
+      placeholder: 'link 2',
+      value: linksArray[1],
+      description: null,
+      inputMode: 'input',
+    },
+    {
+      id: 'link3',
+      type: 'text',
+      name: 'link3',
+      label: null,
+      placeholder: 'link 3',
+      value: linksArray[2],
+      description: null,
+      inputMode: 'input',
+    },
+    {
+      id: 'link4',
+      type: 'text',
+      name: 'link4',
+      label: null,
+      placeholder: 'link 4',
+      value: linksArray[3],
+      description: null,
+      inputMode: 'input',
     },
   ];
-
-  const [socialLinks, setSocialLinks] = useState([{ id: 1, link: '' }]);
   const { tokenData } = useRouteLoaderData('root');
   const { myProfileImgHandler, myProfileImg } = useContext(ManagmentSystem);
 
   let profile = profileImg;
 
   const handleAddProfileClick = async (file) => {
-    const myProfile = await createProfile(tokenData, file);
-    myProfileImgHandler(myProfile.imageUrl);
-    profile = myProfileImg;
+    try {
+      const myProfile = await createProfile(tokenData, file);
+      myProfileImgHandler(myProfile.imageUrl);
+      profile = myProfileImg;
+    } catch (error) {
+      console.error('Error adding profile:', error);
+    }
   };
 
   const handleEditProfileClick = async (file) => {
-    const myProfile = await editProfile(tokenData, file);
-    myProfileImgHandler(myProfile.imageUrl);
-    profile = myProfileImg;
-  };
-
-  const addSocialLink = () => {
-    setSocialLinks([...socialLinks, { id: socialLinks.length + 1, link: '' }]);
+    try {
+      const myProfile = await editProfile(tokenData, file);
+      myProfileImgHandler(myProfile.imageUrl);
+      profile = myProfileImg;
+    } catch (error) {
+      console.error('Error editing profile:', error);
+    }
   };
 
   return (
@@ -133,39 +208,32 @@ function GeneralProfile({ profileImg, firstName, lastName, location, bio, linksA
           <SectionTitle title="Personal Info" />
           {PROFILE_EDIT_DATA.map((data) => (
             <div key={data.id} className={classes.profile_edit_input_container}>
-              {data.inputType === 'input' && (
-                <Input
-                  placeholder={data.placeholder}
-                  label={data.label}
-                  instructionLabel={data.description}
-                  defaultValue={data?.value}
-                />
-              )}
-              {data.inputType === 'text_area' && (
-                <TextArea
-                  placeholder={data.placeholder}
-                  label={data.label}
-                  defaultValue={data?.value}
-                />
-              )}
+              <div className={classes.profile_edit_input}>
+                {!data.label && <Icon iconContainerStyle={classes.icon_container} icon={faLink} />}
+                {data.inputMode === 'input' && (
+                  <Input
+                    id={data.id}
+                    type={data.type}
+                    name={data.name}
+                    placeholder={data.placeholder}
+                    label={data.label}
+                    instructionLabel={data.description}
+                    defaultValue={data?.value}
+                  />
+                )}
+                {data.inputMode === 'text_area' && (
+                  <TextArea
+                    id={data.id}
+                    type={data.type}
+                    name={data.name}
+                    placeholder={data.placeholder}
+                    label={data.label}
+                    defaultValue={data?.value}
+                  />
+                )}
+              </div>
             </div>
           ))}
-          <SectionTitle title="Social" />
-          <div className={`${classes.link_main_container}`}>
-            <div className={`${classes.link_second_container}`}>
-              {socialLinks.map((socialLink) => (
-                <div key={socialLink.id} className={`${classes.link_container}`}>
-                  <Icon iconContainerStyle={classes.icon_container} icon={faGithub} />
-                  <Input placeholder={'Enter a link'} label={'Link'} />
-                </div>
-              ))}
-            </div>
-            <IconButton
-              inconButtonStyle={classes.icon_button}
-              icon={faPlusCircle}
-              onClick={addSocialLink}
-            />
-          </div>
         </div>
         <SolidButton buttonStyle={classes.profile_save_button} label="Save Changes" />
       </Form>

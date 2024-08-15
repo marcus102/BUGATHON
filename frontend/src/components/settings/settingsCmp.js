@@ -15,15 +15,13 @@ import BugReport from './body_features/bugReportCmp';
 import ReusableCode from './body_features/reusableCodeCmp';
 import Authorization from './body_features/authorizationCmp';
 import Reminder from './body_features/reminderCmp';
-// import Header from './settingsHeaderCmp';
 import { SideBar, SideBar2 } from './settingsSideBarCmp';
 import Line from '../../utils/LineSection';
 import { VerticalScrollView } from '../../utils/ScrollViewsSection';
 import { IconButton } from '../../utils/ButtonSection';
 import Text from '../../utils/TextSection';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { DUMMY_USERS } from '../../data/Database';
-import { useSearchParams, useRouteLoaderData } from 'react-router-dom';
+import { useRouteLoaderData } from 'react-router-dom';
 
 const Header = ({ title, titleIcon }) => {
   const { settingSideBarButton } = useContext(ManagmentSystem);
@@ -37,7 +35,6 @@ const Header = ({ title, titleIcon }) => {
 
 function Settings() {
   const { settingSideBarButton } = useContext(ManagmentSystem);
-  // const currentUser = DUMMY_USERS[0];
 
   const { fetchData } = useRouteLoaderData('root');
   const currentUser = fetchData.data;
@@ -62,13 +59,17 @@ function Settings() {
               location={currentUser?.location}
               bio={currentUser?.bio}
               linksArray={currentUser?.links}
+              username={currentUser?.username}
+              professions={currentUser?.professions}
             />
           )}
           {settingSideBarButton === 'Account Setting' && <AccountSettings />}
           {settingSideBarButton === 'Appearance' && <Appearance />}
           {settingSideBarButton === 'Accessibility' && <Accessibility />}
           {settingSideBarButton === 'Notifications' && <Notification />}
-          {settingSideBarButton === 'Email' && <Email emailAddresses={currentUser.email} />}
+          {settingSideBarButton === 'Email' && (
+            <Email email={currentUser?.email} backupEmail={currentUser?.backupEmail} />
+          )}
           {settingSideBarButton === 'Authentication' && <Authentication />}
           {settingSideBarButton === 'Sessions' && <Session />}
           {settingSideBarButton === 'Moderation' && <Moderation />}
