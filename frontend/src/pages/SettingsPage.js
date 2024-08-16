@@ -24,17 +24,32 @@ export async function action({ request }) {
     Authorization: `Bearer ${token}`,
   };
 
+  const firstName = data.get('firstName');
+  const lastName = data.get('lastName');
+  const username = data.get('username');
+  const telephone = data.get('telephone');
+  const profession = data.get('profession');
+  const location = data.get('location');
+  const bio = data.get('bio');
+  const link1 = data.get('link1');
+  const link2 = data.get('link2');
+  const link3 = data.get('link3');
+  const link4 = data.get('link4');
+
   let userData;
   if (!data.get('email')) {
-    userData = {
-      firstName: data.get('firstName'),
-      lastName: data.get('lastName'),
-      username: data.get('username'),
-      professions: [data.get('profession')],
-      location: data.get('location'),
-      bio: data.get('bio'),
-      links: [data.get('link1'), data.get('link2'), data.get('link3'), data.get('link4')],
-    };
+    userData = {};
+    if (firstName !== '') userData.firstName = firstName;
+    if (lastName !== '') userData.lastName = lastName;
+    if (username !== '') userData.username = username;
+    if (telephone !== '') userData.phone = telephone;
+    if (profession !== '') userData.profession = profession;
+    if (location !== '') userData.location = location;
+    if (bio !== '') userData.bio = bio;
+    if (link1 !== '') userData.link1 = link1;
+    if (link2 !== '') userData.link2 = link2;
+    if (link3 !== '') userData.link3 = link3;
+    if (link4 !== '') userData.link4 = link4;
   } else {
     userData = {
       email: {
@@ -43,6 +58,8 @@ export async function action({ request }) {
       },
     };
   }
+
+  console.log('data: ', userData);
 
   try {
     const response = await axios.patch(`${PORT}api/v1/users/updateMe`, userData, {

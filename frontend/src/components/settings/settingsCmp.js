@@ -58,9 +58,13 @@ function Settings() {
               lastName={currentUser?.lastName}
               location={currentUser?.location}
               bio={currentUser?.bio}
-              linksArray={currentUser?.links}
+              link1={currentUser?.link1}
+              link2={currentUser?.link2}
+              link3={currentUser?.link3}
+              link4={currentUser?.link4}
               username={currentUser?.username}
-              professions={currentUser?.professions}
+              profession={currentUser?.profession}
+              telephone={currentUser?.phone}
             />
           )}
           {settingSideBarButton === 'Account Setting' && <AccountSettings />}

@@ -206,7 +206,7 @@ export function HomeExpandedSideBar() {
               onClick={() => {
                 localStorage.removeItem('token');
                 localStorage.removeItem('expiration');
-                return redirect('/');
+                navigate('/auth?mode=signin');
               }}
             />
           </>

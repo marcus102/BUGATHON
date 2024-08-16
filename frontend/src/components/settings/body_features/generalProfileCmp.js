@@ -1,10 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { ManagmentSystem } from '../../../store/AppGeneralManagmentSystem';
 import classes from './generalProfileCmp.module.css';
-import { SolidButton, IconButton } from '../../../utils/ButtonSection';
+import { SolidButton } from '../../../utils/ButtonSection';
 import { Image } from '../../../utils/MediaSection';
 import userGeneralProfile from '../../../assets/images/general_profile.svg';
-import { faLightbulb, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
 import Text from '../../../utils/TextSection';
 import Icon from '../../../utils/IconSection';
@@ -42,9 +42,13 @@ function GeneralProfile({
   lastName,
   location,
   bio,
-  linksArray,
+  link1,
+  link2,
+  link3,
+  link4,
   username,
-  professions,
+  telephone,
+  profession,
 }) {
   const PROFILE_EDIT_DATA = [
     {
@@ -81,12 +85,23 @@ function GeneralProfile({
       inputMode: 'input',
     },
     {
+      id: 'telephone',
+      type: 'text',
+      name: 'telephone',
+      label: 'Telephone',
+      placeholder: 'Telephone',
+      value: telephone,
+      description:
+        'It will appear alongside your first name on your profile and in certain interactions with other users.',
+      inputMode: 'input',
+    },
+    {
       id: 'profession',
       type: 'text',
       name: 'profession',
       label: 'Profession',
       placeholder: 'Profession',
-      value: professions[0],
+      value: profession,
       description:
         'It will appear alongside your first name on your profile and in certain interactions with other users.',
       inputMode: 'input',
@@ -118,7 +133,7 @@ function GeneralProfile({
       name: 'link1',
       label: null,
       placeholder: 'link 1',
-      value: linksArray[0],
+      value: link1,
       description: null,
       inputMode: 'input',
     },
@@ -128,7 +143,7 @@ function GeneralProfile({
       name: 'link2',
       label: null,
       placeholder: 'link 2',
-      value: linksArray[1],
+      value: link2,
       description: null,
       inputMode: 'input',
     },
@@ -138,7 +153,7 @@ function GeneralProfile({
       name: 'link3',
       label: null,
       placeholder: 'link 3',
-      value: linksArray[2],
+      value: link3,
       description: null,
       inputMode: 'input',
     },
@@ -148,7 +163,7 @@ function GeneralProfile({
       name: 'link4',
       label: null,
       placeholder: 'link 4',
-      value: linksArray[3],
+      value: link4,
       description: null,
       inputMode: 'input',
     },

@@ -63,20 +63,37 @@ const userSchema = new mongoose.Schema(
       enum: ['user', 'moderator', 'collaborator', 'admin'],
       default: 'user'
     },
-    professions: [
-      {
-        type: String
+    profession: {
+      type: String
+    },
+    link1: {
+      type: String,
+      validate: {
+        validator: validator.isURL,
+        message: 'Please provide a valid URL!'
       }
-    ],
-    links: [
-      {
-        type: String,
-        validate: {
-          validator: validator.isURL,
-          message: 'Please provide a valid URL!'
-        }
+    },
+    link2: {
+      type: String,
+      validate: {
+        validator: validator.isURL,
+        message: 'Please provide a valid URL!'
       }
-    ],
+    },
+    link3: {
+      type: String,
+      validate: {
+        validator: validator.isURL,
+        message: 'Please provide a valid URL!'
+      }
+    },
+    link4: {
+      type: String,
+      validate: {
+        validator: validator.isURL,
+        message: 'Please provide a valid URL!'
+      }
+    },
     bio: String,
     location: String,
     starCount: {

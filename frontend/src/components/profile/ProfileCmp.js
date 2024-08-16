@@ -47,10 +47,13 @@ function Profile() {
               />
               {profileSideBarButton === 'General' && (
                 <GeneralUserInfo
-                  userLinks={currentUser?.links}
+                  link1={currentUser?.link1}
+                  link2={currentUser?.link2}
+                  link3={currentUser?.link3}
+                  link4={currentUser?.link4}
                   location={currentUser?.location}
                   telNumber={currentUser?.phone}
-                  emails={currentUser?.email[0].address}
+                  emails={currentUser?.email?.address}
                   bio={currentUser?.bio}
                 />
               )}
