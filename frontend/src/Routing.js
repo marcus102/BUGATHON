@@ -7,7 +7,7 @@ import Services from './pages/ServicesPage.js';
 import Blog from './pages/BlogPage.js';
 import HomePage from './pages/HomePage.js';
 import SettingsPage, { action as settingsAction } from './pages/SettingsPage.js';
-import ProfilePage from './pages/ProfilePageCmp.js';
+import ProfilePage from './pages/Profile.js';
 import ExpandedCardView, { action as expandedCardViewAction } from './pages/ExpandedCardView.js';
 import CreatePage from './pages/CreatePage.js';
 import ContributionPage from './pages/ContributionPage.js';

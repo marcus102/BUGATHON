@@ -10,7 +10,18 @@ import { useRouteLoaderData } from 'react-router-dom';
 
 // OTHER USERS PROFILE SECTION (POST OWNERS, ETC...)
 
-function UserProfileHeader({ username, profession, profileImg, hideFollow }) {
+function UserProfileHeader({
+  firstName,
+  lastName,
+  username,
+  profession,
+  profileImg,
+  hideFollow,
+  followersCount,
+  followingCount,
+  starCount,
+  role,
+}) {
   const [isFollowing, setIsFollowing] = useState(false);
   // const { fetchData } = useRouteLoaderData('root');
   // const currentUser = fetchData.data;
@@ -28,13 +39,13 @@ function UserProfileHeader({ username, profession, profileImg, hideFollow }) {
   const currentUser =
     currentProfileId && DUMMY_USERS.find((user) => user.username === currentProfileId);
 
-  const DUMMY_GUEST_USER_PROFILE = currentUser && [
+  const DUMMY_GUEST_USER_PROFILE = [
     {
-      id: currentUser.id,
+      id: username,
       engagement: [
-        { id: '1.1', title: 'Followers', total: currentUser.followersCount, icon: null },
-        { id: '1.2', title: 'Followings', total: currentUser.followingCount, icon: null },
-        { id: '1.3', title: 'Star', total: currentUser.starCount, icon: faStar },
+        { id: '1.1', title: 'Followers', total: followersCount, icon: null },
+        { id: '1.2', title: 'Followings', total: followingCount, icon: null },
+        { id: '1.3', title: 'Star', total: starCount, icon: faStar },
       ],
       buttons: [
         { id: '1.4', title: 'Report This Account', icon: faExclamationCircle },
@@ -51,8 +62,8 @@ function UserProfileHeader({ username, profession, profileImg, hideFollow }) {
         hideEdit={true}
         profileImg={profileImg}
         profession={profession}
-        userRole={currentUser?.role}
-        userFullName={`${currentUser?.firstName} ${currentUser?.lastName}`}
+        userRole={role}
+        userFullName={`${firstName} ${lastName}`}
       />
       {!hideFollow && (
         <PlaneButton

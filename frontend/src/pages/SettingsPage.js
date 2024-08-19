@@ -59,8 +59,6 @@ export async function action({ request }) {
     };
   }
 
-  console.log('data: ', userData);
-
   try {
     const response = await axios.patch(`${PORT}api/v1/users/updateMe`, userData, {
       headers,

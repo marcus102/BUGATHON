@@ -9,6 +9,9 @@ import defaultProfile from '../../../assets/images/general_profile.svg';
 import FileUpload from '../../../utils/fileUploadManagerSection';
 import { useRouteLoaderData } from 'react-router-dom';
 import { createProfile, editProfile } from '../../../http_requests/imageUploadHttp';
+import axios from 'axios';
+import { getAuthToken } from '../../../utils/authSection';
+import { PORT } from '../../../http_requests/authentication';
 
 const SIDE_BAR_DATA = [
   { id: 'General', icon_: faArrowPointer, is_my_profile: null, isColored: false },
@@ -26,8 +29,13 @@ const SIDE_BAR_DATA = [
 ];
 
 export function ProfileSideBar({ isMyProfile, profileImg }) {
-  const { profileSideBarButtonHandler, profileSideBarButton, myProfileImgHandler, myProfileImg } =
-    useContext(ManagmentSystem);
+  const {
+    profileSideBarButtonHandler,
+    profileSideBarButton,
+    myProfileImgHandler,
+    myProfileImg,
+    usersListHandler,
+  } = useContext(ManagmentSystem);
   const { tokenData } = useRouteLoaderData('root');
 
   let profile = profileImg;
@@ -42,6 +50,33 @@ export function ProfileSideBar({ isMyProfile, profileImg }) {
     const myProfile = await editProfile(tokenData, file);
     myProfileImgHandler(myProfile.imageUrl);
     profile = myProfileImg;
+  };
+
+  const getAllUsers = async (id) => {
+    const token = getAuthToken();
+
+    if (!token) {
+      console.error('No token available');
+      return null;
+    }
+
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    };
+
+    try {
+      const response = await axios.get(`${PORT}api/v1/users`, {
+        headers,
+      });
+      console.log('Success!!', response.data);
+      usersListHandler(response.data);
+
+      profileSideBarButtonHandler(id);
+    } catch (error) {
+      console.error('Error updating settings:', error.response.data);
+      return null;
+    }
   };
 
   return (
@@ -74,7 +109,13 @@ export function ProfileSideBar({ isMyProfile, profileImg }) {
                 inconTextLabel16Style={data.isColored && classes.colored_text}
                 label={data.id}
                 icon_={profileSideBarButton === data.id ? data.icon_ : undefined}
-                onClick={() => profileSideBarButtonHandler(data.id)}
+                onClick={() => {
+                  if (data.id === 'Admin Dashboard') {
+                    getAllUsers(data.id);
+                  } else {
+                    profileSideBarButtonHandler(data.id);
+                  }
+                }}
               />
             )
           );

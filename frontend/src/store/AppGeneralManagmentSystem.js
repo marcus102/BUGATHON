@@ -34,7 +34,8 @@ export const ManagmentSystem = createContext({
   }) => {},
   currentProfileId: '',
   currentProfileIdHandler: (parameters) => {},
-
+  usersList: [],
+  usersListHandler: (parameters) => {},
   myProfileImg: '',
   myProfileImgHandler: (parameters) => {},
 });
@@ -60,6 +61,7 @@ export default function ManagmentSystemProvider({ children }) {
     },
     currentProfileId: '',
     myProfileImg: '',
+    usersList: [],
   };
 
   function reducer(state, action) {
@@ -150,6 +152,12 @@ export default function ManagmentSystemProvider({ children }) {
           ...state,
           myProfileImg: action.payload,
         };
+
+      case 'SET_USER':
+        return {
+          ...state,
+          usersList: action.payload,
+        };
       default:
         return state;
     }
@@ -216,6 +224,10 @@ export default function ManagmentSystemProvider({ children }) {
     dispatch({ type: 'SET_PROFILE_IMG', payload: parameters });
   };
 
+  const usersListHandler = (parameters) => {
+    dispatch({ type: 'SET_USER', payload: parameters });
+  };
+
   const value = {
     overlay: state.overlay,
     overlayHandler: overlayHandler,
@@ -233,6 +245,8 @@ export default function ManagmentSystemProvider({ children }) {
     dropDownDefaultHandler: dropDownDefaultHandler,
     currentProfileId: state.currentProfileId,
     currentProfileIdHandler: currentProfileIdHandler,
+    usersList: state.usersList,
+    usersListHandler: usersListHandler,
     myProfileImg: state.myProfileImg,
     myProfileImgHandler: myProfileImgHandler,
   };

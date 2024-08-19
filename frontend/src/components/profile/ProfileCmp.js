@@ -12,14 +12,13 @@ import Analytics from './body_features/AnalyticsCmp';
 import UserBlogPost from './body_features/UserBlogPostCmp';
 import AdminDashBoard from './body_features/AdminDashBoardCmp';
 import { VerticalScrollView } from '../../utils/ScrollViewsSection';
-import { DUMMY_USERS } from '../../data/Database';
-import { useSearchParams, useRouteLoaderData } from 'react-router-dom';
+import { useRouteLoaderData } from 'react-router-dom';
 
 function Profile() {
   const { profileSideBarButton } = useContext(ManagmentSystem);
 
-  const [searchParams] = useSearchParams();
-  const currentUsername = searchParams.get('username');
+  // const [searchParams] = useSearchParams();
+  // const currentUsername = searchParams.get('username');
   const { fetchData } = useRouteLoaderData('root');
   const currentUser = fetchData.data;
 
@@ -63,7 +62,9 @@ function Profile() {
               {profileSideBarButton === 'Bug Fixes' && <UserBugFix />}
               {profileSideBarButton === 'Bug Reports' && <UserBugReport />}
               {profileSideBarButton === 'Reusable Code' && <UserReusableCode />}
-              {profileSideBarButton === 'Admin Dashboard' && <AdminDashBoard />}
+              {profileSideBarButton === 'Admin Dashboard' && currentUser?.role === 'admin' && (
+                <AdminDashBoard />
+              )}
             </>
           }
         />

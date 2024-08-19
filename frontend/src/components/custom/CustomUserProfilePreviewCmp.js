@@ -102,7 +102,7 @@ const GuestUserInfo = ({
                 <Text label15Style={classes.popularity_text_overview} label15={engData.title} />
                 {engData.icon && <Icon icon={engData.icon} />}
               </div>
-              <Text label15Style={classes.popularity_text_overview} label15={engData.total} />
+              <Text label15Style={classes.popularity_text_overview} label15={`${engData.total}`} />
             </ButtonContainer>
           ))}
         </div>
