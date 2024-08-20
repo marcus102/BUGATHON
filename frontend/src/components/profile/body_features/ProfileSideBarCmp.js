@@ -14,21 +14,75 @@ import { getAuthToken } from '../../../utils/authSection';
 import { PORT } from '../../../http_requests/authentication';
 
 const SIDE_BAR_DATA = [
-  { id: 'General', icon_: faArrowPointer, is_my_profile: null, isColored: false },
-  { id: 'Analytics', icon_: faArrowPointer, is_my_profile: null, isColored: false },
-  { id: 'Ranking', icon_: faArrowPointer, is_my_profile: null, isColored: false },
-  { id: 'Bug Reports', icon_: faArrowPointer, is_my_profile: null, isColored: false },
-  { id: 'Bug Fixes', icon_: faArrowPointer, is_my_profile: null, isColored: false },
-  { id: 'Reusable Code', icon_: faArrowPointer, is_my_profile: null, isColored: false },
-  { id: 'Blog', icon_: faArrowPointer, is_my_profile: null, isColored: false },
-  { id: 'Admin Dashboard', icon_: faArrowPointer, is_my_profile: null, isColored: false },
-  { id: 'Delete Account', icon_: faArrowPointer, is_my_profile: true, isColored: true },
-  { id: 'Logout', icon_: null, is_my_profile: true, isColored: true },
-  { id: 'Settings', icon_: null, is_my_profile: true, isColored: false },
-  { id: 'Block This Account ', icon_: null, is_my_profile: false, isColored: true },
+  {
+    id: 'General',
+    icon_: faArrowPointer,
+    is_my_profile: null,
+    isColored: false,
+    allowed_to: 'all',
+  },
+  {
+    id: 'Analytics',
+    icon_: faArrowPointer,
+    is_my_profile: null,
+    isColored: false,
+    allowed_to: 'all',
+  },
+  {
+    id: 'Ranking',
+    icon_: faArrowPointer,
+    is_my_profile: null,
+    isColored: false,
+    allowed_to: 'all',
+  },
+  {
+    id: 'Bug Reports',
+    icon_: faArrowPointer,
+    is_my_profile: null,
+    isColored: false,
+    allowed_to: 'all',
+  },
+  {
+    id: 'Bug Fixes',
+    icon_: faArrowPointer,
+    is_my_profile: null,
+    isColored: false,
+    allowed_to: 'all',
+  },
+  {
+    id: 'Reusable Code',
+    icon_: faArrowPointer,
+    is_my_profile: null,
+    isColored: false,
+    allowed_to: 'all',
+  },
+  { id: 'Blog', icon_: faArrowPointer, is_my_profile: null, isColored: false, allowed_to: 'all' },
+  {
+    id: 'Admin Dashboard',
+    icon_: faArrowPointer,
+    is_my_profile: null,
+    isColored: false,
+    allowed_to: 'admin',
+  },
+  {
+    id: 'Delete Account',
+    icon_: faArrowPointer,
+    is_my_profile: true,
+    isColored: true,
+    allowed_to: [],
+  },
+  { id: 'Logout', icon_: null, is_my_profile: true, isColored: true, allowed_to: 'all' },
+  { id: 'Settings', icon_: null, is_my_profile: true, isColored: false, allowed_to: 'all' },
+  {
+    id: 'Block This Account ',
+    icon_: null,
+    is_my_profile: false,
+    isColored: true,
+    allowed_to: 'all',
+  },
 ];
 
-export function ProfileSideBar({ isMyProfile, profileImg }) {
+export function ProfileSideBar({ isMyProfile, profileImg, userRole }) {
   const {
     profileSideBarButtonHandler,
     profileSideBarButton,
@@ -80,6 +134,11 @@ export function ProfileSideBar({ isMyProfile, profileImg }) {
     }
   };
 
+    // Filter the sidebar data based on the user's role
+    const filteredSideBarData = SIDE_BAR_DATA.filter((item) =>
+      item.allowed_to === 'all' || item.allowed_to === userRole
+    );
+
   return (
     <div className={`d-none d-xl-flex ${classes.profile_page_side_bar_main_container}`}>
       <VerticalScrollView>
@@ -97,7 +156,7 @@ export function ProfileSideBar({ isMyProfile, profileImg }) {
           />
         )}
 
-        {SIDE_BAR_DATA?.map((data, index) => {
+        {filteredSideBarData?.map((data, index) => {
           const showButton =
             (isMyProfile && [null, true].includes(data.is_my_profile)) ||
             (!isMyProfile && [null, false].includes(data.is_my_profile));
@@ -132,7 +191,7 @@ export function ProfileSideBar({ isMyProfile, profileImg }) {
   );
 }
 
-export function ProfileSideBar2() {
+export function ProfileSideBar2({ userRole }) {
   const { profileSideBarButtonHandler, profileSideBarButton } = useContext(ManagmentSystem);
   return (
     <div className={`d-flex d-xl-none`}>

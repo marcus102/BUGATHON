@@ -28,9 +28,9 @@ function Profile() {
 
   return (
     <div className={classes.profile_page_main_container}>
-      <ProfileSideBar isMyProfile={true} profileImg={profileImg?.imageUrl} />
+      <ProfileSideBar isMyProfile={true} profileImg={profileImg?.imageUrl} userRole={currentUser?.role}/>
       <div className={`${classes.profile_page_second_container}`}>
-        <ProfileSideBar2 />
+        <ProfileSideBar2 userRole={currentUser?.role} />
         <VerticalScrollView
           children={
             <>

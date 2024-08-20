@@ -292,6 +292,7 @@ export function DropdownMenu({
   post,
   profileId,
 }) {
+  const { dropDownIsOpen, dropDownIsOpenHandler } = useContext(ManagmentSystem);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
@@ -308,6 +309,13 @@ export function DropdownMenu({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    if (!dropDownIsOpen) {
+      setIsOpen(false);
+      dropDownIsOpenHandler(true);
+    }
+  }, [dropDownIsOpen]);
 
   const { currentProfileIdHandler } = useContext(ManagmentSystem);
 

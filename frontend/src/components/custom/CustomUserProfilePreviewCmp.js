@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
 import classes from './CustomUserProfilePreviewCmp.module.css';
 import Text from '../../utils/TextSection';
 import { Image } from '../../utils/MediaSection';
@@ -140,6 +141,7 @@ function CustomUserProfilePreview({
   mainProfile,
   userRole,
 }) {
+  const { dropDownIsOpenHandler } = useContext(ManagmentSystem);
   const [isFollowing, setIsFollowing] = useState(false);
   const navigate = useNavigate();
 
@@ -148,12 +150,16 @@ function CustomUserProfilePreview({
   };
 
   const handleNavigation = (id, username) => {
-    id === 'settings' && navigate(`/settings`);
-    id === 'profile' && navigate(`/profile?username=${username}`);
     if (id === 'logout') {
       localStorage.removeItem('token');
       localStorage.removeItem('expiration');
       navigate('/auth?mode=signin');
+    } else if (id === 'profile') {
+      dropDownIsOpenHandler(false);
+      navigate(`/profile?username=${username}`);
+    } else if (id === 'settings') {
+      navigate(`/settings`);
+      dropDownIsOpenHandler(false);
     }
   };
 

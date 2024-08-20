@@ -38,6 +38,8 @@ export const ManagmentSystem = createContext({
   usersListHandler: (parameters) => {},
   myProfileImg: '',
   myProfileImgHandler: (parameters) => {},
+  dropDownIsOpen: '',
+  dropDownIsOpenHandler: (parameters) => {},
 });
 
 export default function ManagmentSystemProvider({ children }) {
@@ -62,6 +64,7 @@ export default function ManagmentSystemProvider({ children }) {
     currentProfileId: '',
     myProfileImg: '',
     usersList: [],
+    dropDownIsOpen: '',
   };
 
   function reducer(state, action) {
@@ -158,6 +161,12 @@ export default function ManagmentSystemProvider({ children }) {
           ...state,
           usersList: action.payload,
         };
+
+      case 'SET_DROPDOWN_IS_OPEN':
+        return {
+          ...state,
+          dropDownIsOpen: action.payload,
+        };
       default:
         return state;
     }
@@ -228,6 +237,10 @@ export default function ManagmentSystemProvider({ children }) {
     dispatch({ type: 'SET_USER', payload: parameters });
   };
 
+  const dropDownIsOpenHandler = (parameters) => {
+    dispatch({ type: 'SET_DROPDOWN_IS_OPEN', payload: parameters });
+  };
+
   const value = {
     overlay: state.overlay,
     overlayHandler: overlayHandler,
@@ -249,6 +262,8 @@ export default function ManagmentSystemProvider({ children }) {
     usersListHandler: usersListHandler,
     myProfileImg: state.myProfileImg,
     myProfileImgHandler: myProfileImgHandler,
+    dropDownIsOpen: state.dropDownIsOpen,
+    dropDownIsOpenHandler: dropDownIsOpenHandler,
   };
 
   return <ManagmentSystem.Provider value={value}>{children}</ManagmentSystem.Provider>;
