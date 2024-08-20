@@ -193,7 +193,7 @@ export function HomeExpandedSideBar() {
               inconTextButtonStyle={classes.more_settings_container}
               icon={faGears}
               label={'More Settings'}
-              onClick={() => navigate(`/settings?`)}
+              onClick={() => navigate(`/settings`)}
             />
 
             <IconTextButton

@@ -1,12 +1,12 @@
-import React, { useState, useContext } from 'react';
-import { ManagmentSystem } from '../store/AppGeneralManagmentSystem';
+import React, { useState } from 'react';
+// import { ManagmentSystem } from '../store/AppGeneralManagmentSystem';
 import classes from './userProfileHeaderCmp.module.css';
 import { PlaneButton } from '../utils/ButtonSection';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faExclamationCircle, faUserLock } from '@fortawesome/free-solid-svg-icons';
 import CustomUserProfilePreview from './custom/CustomUserProfilePreviewCmp';
-import { DUMMY_USERS } from '../data/Database';
-import { useRouteLoaderData } from 'react-router-dom';
+// import { DUMMY_USERS } from '../data/Database';
+// import { useRouteLoaderData } from 'react-router-dom';
 
 // OTHER USERS PROFILE SECTION (POST OWNERS, ETC...)
 
@@ -34,12 +34,12 @@ function UserProfileHeader({
     setIsFollowing(!isFollowing);
   };
 
-  const { currentProfileId } = useContext(ManagmentSystem);
+  // const { currentProfileId } = useContext(ManagmentSystem);
 
-  const currentUser =
-    currentProfileId && DUMMY_USERS.find((user) => user.username === currentProfileId);
+  // const currentUser =
+  //   currentProfileId && DUMMY_USERS.find((user) => user.username === currentProfileId);
 
-  const DUMMY_GUEST_USER_PROFILE = [
+  const GUEST_USER_PROFILE = [
     {
       id: username,
       engagement: [
@@ -57,7 +57,7 @@ function UserProfileHeader({
   return (
     <div className={classes.header_profile_container}>
       <CustomUserProfilePreview
-        METADATA={DUMMY_GUEST_USER_PROFILE}
+        METADATA={GUEST_USER_PROFILE}
         username={username}
         hideEdit={true}
         profileImg={profileImg}

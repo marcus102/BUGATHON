@@ -150,6 +150,11 @@ function CustomUserProfilePreview({
   const handleNavigation = (id, username) => {
     id === 'settings' && navigate(`/settings`);
     id === 'profile' && navigate(`/profile?username=${username}`);
+    if (id === 'logout') {
+      localStorage.removeItem('token');
+      localStorage.removeItem('expiration');
+      navigate('/auth?mode=signin');
+    }
   };
 
   return (

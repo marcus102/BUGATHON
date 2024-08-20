@@ -7,7 +7,7 @@ import { faArrowPointer } from '@fortawesome/free-solid-svg-icons';
 import { HorizontalScrollView, VerticalScrollView } from '../../../utils/ScrollViewsSection';
 import defaultProfile from '../../../assets/images/general_profile.svg';
 import FileUpload from '../../../utils/fileUploadManagerSection';
-import { useRouteLoaderData } from 'react-router-dom';
+import { useRouteLoaderData, useNavigate } from 'react-router-dom';
 import { createProfile, editProfile } from '../../../http_requests/imageUploadHttp';
 import axios from 'axios';
 import { getAuthToken } from '../../../utils/authSection';
@@ -37,6 +37,7 @@ export function ProfileSideBar({ isMyProfile, profileImg }) {
     usersListHandler,
   } = useContext(ManagmentSystem);
   const { tokenData } = useRouteLoaderData('root');
+  const navigate = useNavigate();
 
   let profile = profileImg;
 
@@ -112,6 +113,12 @@ export function ProfileSideBar({ isMyProfile, profileImg }) {
                 onClick={() => {
                   if (data.id === 'Admin Dashboard') {
                     getAllUsers(data.id);
+                  } else if (data.id === 'Settings') {
+                    navigate(`/settings`);
+                  } else if (data.id === 'Logout') {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('expiration');
+                    navigate('/auth?mode=signin');
                   } else {
                     profileSideBarButtonHandler(data.id);
                   }
