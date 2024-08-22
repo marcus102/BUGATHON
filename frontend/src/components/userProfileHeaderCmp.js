@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
-// import { ManagmentSystem } from '../store/AppGeneralManagmentSystem';
 import classes from './userProfileHeaderCmp.module.css';
 import { PlaneButton } from '../utils/ButtonSection';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faExclamationCircle, faUserLock } from '@fortawesome/free-solid-svg-icons';
 import CustomUserProfilePreview from './custom/CustomUserProfilePreviewCmp';
-// import { DUMMY_USERS } from '../data/Database';
-// import { useRouteLoaderData } from 'react-router-dom';
-
-// OTHER USERS PROFILE SECTION (POST OWNERS, ETC...)
 
 function UserProfileHeader({
   firstName,
@@ -23,21 +18,9 @@ function UserProfileHeader({
   role,
 }) {
   const [isFollowing, setIsFollowing] = useState(false);
-  // const { fetchData } = useRouteLoaderData('root');
-  // const currentUser = fetchData.data;
-
-  // const profileImg = currentUser.image?.find(
-  //   (targetImg) => targetImg.username === currentUser.username
-  // );
-
   const handleFollowToggle = () => {
     setIsFollowing(!isFollowing);
   };
-
-  // const { currentProfileId } = useContext(ManagmentSystem);
-
-  // const currentUser =
-  //   currentProfileId && DUMMY_USERS.find((user) => user.username === currentProfileId);
 
   const GUEST_USER_PROFILE = [
     {
