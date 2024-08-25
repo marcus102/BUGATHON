@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
+import React from 'react';
 import classes from './SignUpCmp.module.css';
 import Colors from '../../constants/colors';
 import { Input } from '../../utils/InputSection';
@@ -12,7 +11,6 @@ import Link from '../../utils/LinkSection';
 import { Form } from 'react-router-dom';
 
 function SignUp() {
-  const { currentAuthStatusHandler } = useContext(ManagmentSystem);
   return (
     <Form method="post" className={classes.signUpForm}>
       <Text textStyle={classes.sign_up_title_container} h1={'Sign Up'} />

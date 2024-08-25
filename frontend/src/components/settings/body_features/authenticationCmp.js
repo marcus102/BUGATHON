@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './authenticationCmp.module.css';
 import Text from '../../../utils/TextSection';
 import Link from '../../../utils/LinkSection';
-import { Input, CheckBox } from '../../../utils/InputSection';
+import { Input } from '../../../utils/InputSection';
 import {
   SolidButton,
   PlaneButton,
@@ -11,6 +11,7 @@ import {
 } from '../../../utils/ButtonSection';
 import { faChevronDown, faKey, faMobile } from '@fortawesome/free-solid-svg-icons';
 import Icon from '../../../utils/IconSection';
+import { Form } from 'react-router-dom';
 
 const AUTH_DATA = [
   {
@@ -19,24 +20,29 @@ const AUTH_DATA = [
     children: [
       {
         id: '1.1',
-        label: 'Old Password',
+        passwordId: 'currentPassword',
+        passwordName: 'currentPassword',
+        label: 'Current Password',
         placeholder: '*******',
         sub_button: 'I forgot my password',
       },
       {
         id: '1.2',
+        passwordId: 'newPassword',
+        passwordName: 'newPassword',
         label: 'New Password',
         placeholder: '*******',
         sub_button: null,
       },
       {
         id: '1.3',
+        passwordId: 'confirmPassword',
+        passwordName: 'confirmPassword',
         label: 'Confirm Password',
         placeholder: '*******',
         sub_button: null,
       },
     ],
-    check_box_label: 'Show password',
     description:
       'Ensure the password contains a minimum of 15 characters or, if it is at least 8 characters long, it must include at least one number and one lowercase letter.',
     description_link: 'Learn more about password changing',
@@ -91,29 +97,40 @@ const AUTH_DATA = [
 const Authentication = () => {
   return (
     <>
-      {AUTH_DATA.map((data) => (
-        <div key={data.id} className={classes.authentication_main_container}>
+      {AUTH_DATA.map((data, index) => (
+        <Form
+          method="post"
+          key={`${data.id}-${index}`}
+          className={classes.authentication_main_container}
+        >
           <Text h5={data.title} />
-          {renderChildren(data)}
-          {data.check_box_label && <CheckBox label12={data.check_box_label} />}
+          <RenderChildren data={data} />
+
           <div className={classes.authentication_description_container}>
             <Text label12={data.description} />
             <Link underline children12={data.description_link} />
           </div>
           {data.button && <SolidButton label={data.button} />}
-        </div>
+        </Form>
       ))}
     </>
   );
 };
 
-const renderChildren = (data) => {
+const RenderChildren = ({ data }) => {
   return data.children.map((sub_data) => {
     switch (data.id) {
       case '1':
         return (
           <div key={sub_data.id} className={classes.authentication_input_container}>
-            <Input label={sub_data.label} placeholder={sub_data.placeholder} />
+            <Input
+              label={sub_data.label}
+              placeholder={sub_data.placeholder}
+              type={'password'}
+              id={sub_data.passwordId}
+              name={sub_data.passwordName}
+            />
+
             {sub_data.sub_button && <PlaneButton label12={sub_data.sub_button} />}
           </div>
         );
@@ -158,3 +175,35 @@ const renderAuthMethods = (authMethods) =>
   ));
 
 export default Authentication;
+
+// function Authentication() {
+//   return (
+//     <Form method="post" className={classes.auth_form_container}>
+//       <Input
+//         label={'Current Password'}
+//         placeholder={'*******'}
+//         type={'password'}
+//         id={'currentPassword'}
+//         name={'currentPassword'}
+//       />
+//       <Input
+//         label={'  New Password'}
+//         placeholder={'*******'}
+//         type={'password'}
+//         id={'newPassword'}
+//         name={'newPassword'}
+//       />
+//       <Input
+//         label={'  Confirm Password'}
+//         placeholder={'*******'}
+//         type={'password'}
+//         id={'confirmPassword'}
+//         name={'confirmPassword'}
+//       />
+
+//       <SolidButton label={'Change Password'} />
+//     </Form>
+//   );
+// }
+
+// export default Authentication;

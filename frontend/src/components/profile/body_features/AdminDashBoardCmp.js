@@ -5,7 +5,13 @@ import Text from '../../../utils/TextSection';
 import UserProfileHeader from '../../userProfileHeaderCmp';
 import Line from '../../../utils/LineSection';
 import { IconTextButton } from '../../../utils/ButtonSection';
-import { faBan, faChartSimple, faChevronDown, faSquareCheck, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBan,
+  faChartSimple,
+  faChevronDown,
+  faSquareCheck,
+  faTrashCan,
+} from '@fortawesome/free-solid-svg-icons';
 import { CheckBox } from '../../../utils/InputSection';
 
 const AdminDashBoard = () => {
@@ -18,14 +24,49 @@ const AdminDashBoard = () => {
       }, {})
   );
 
+  const admins_list = usersList.data.filter((admins) => admins.role === 'admin');
+  const moderators_list = usersList.data.filter((moderators) => moderators.role === 'moderator');
+  const collaborators_list = usersList.data.filter(
+    (collaborators) => collaborators.role === 'collaborator'
+  );
+  const blocled_users_list = usersList.data.filter(
+    (blocled_users) => blocled_users.acountSatus === 'banned'
+  );
+  const reported_users_list = usersList.data.filter(
+    (reported_users) => reported_users.reportCount > 0
+  );
+  const deleted_accounts_list = usersList.data.filter(
+    (deleted_accounts) => deleted_accounts.active === false
+  );
+
   const ADMIN_DASHBOARD = [
     { id: '1', title: 'All Users', children: usersList.data, count: usersList.data.length },
-    { id: '2', title: 'Admins', children: usersList.data, count: usersList.data.length },
-    { id: '3', title: 'Moderators', children: usersList.data, count: usersList.data.length },
-    { id: '4', title: 'Collaborators', children: usersList.data, count: usersList.data.length },
-    { id: '5', title: 'Blocked Users', children: [], count: usersList.data.length },
-    { id: '6', title: 'Reported Users', children: usersList.data, count: usersList.data.length },
-    { id: '7', title: 'Deleted Accounts', children: usersList.data, count: usersList.data.length },
+    { id: '2', title: 'Admins', children: admins_list, count: admins_list.length },
+    { id: '3', title: 'Moderators', children: moderators_list, count: moderators_list.length },
+    {
+      id: '4',
+      title: 'Collaborators',
+      children: collaborators_list,
+      count: collaborators_list.length,
+    },
+    {
+      id: '5',
+      title: 'Blocked Users',
+      children: blocled_users_list,
+      count: blocled_users_list.length,
+    },
+    {
+      id: '6',
+      title: 'Reported Users',
+      children: reported_users_list,
+      count: reported_users_list.length,
+    },
+    {
+      id: '7',
+      title: 'Deleted Accounts',
+      children: deleted_accounts_list,
+      count: deleted_accounts_list.length,
+    },
   ];
 
   const USER_LIST_OPTIONS = [

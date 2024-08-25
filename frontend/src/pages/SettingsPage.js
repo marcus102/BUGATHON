@@ -3,7 +3,7 @@ import Settings from '../components/settings/settingsCmp';
 import { getAuthToken } from '../utils/authSection';
 import { PORT } from '../http_requests/authentication';
 import axios from 'axios';
-// import { link } from '../../../backend/app';
+import { redirect } from 'react-router-dom';
 
 function SettingsPage() {
   return <Settings />;
@@ -37,7 +37,17 @@ export async function action({ request }) {
   const link4 = data.get('link4');
 
   let userData;
-  if (!data.get('email')) {
+  let route;
+
+  if (data.get('currentPassword')) {
+    userData = {
+      passwordCurent: data.get('currentPassword'),
+      password: data.get('newPassword'),
+      passwordConfirm: data.get('confirmPassword'),
+    };
+    route = 'updateMyPassword';
+  } else if (data.get('firstName')) {
+    route = 'updateMe';
     userData = {};
     if (firstName !== '') userData.firstName = firstName;
     if (lastName !== '') userData.lastName = lastName;
@@ -50,20 +60,24 @@ export async function action({ request }) {
     if (link2 !== '') userData.link2 = link2;
     if (link3 !== '') userData.link3 = link3;
     if (link4 !== '') userData.link4 = link4;
-  } else {
+  } else if (data.get('email')) {
     userData = {
       email: {
-        address: data.get('email'),
+        address: data.get('visibility'),
         visibility: data.get('visibility'),
       },
     };
+    route = 'updateMe';
   }
 
   try {
-    const response = await axios.patch(`${PORT}api/v1/users/updateMe`, userData, {
+    const response = await axios.patch(`${PORT}api/v1/users/${route}`, userData, {
       headers,
     });
     console.log('Success!!');
+    if (route === 'updateMyPassword') {
+      return redirect('/auth?mode=signin');
+    }
     return response.data;
   } catch (error) {
     console.error('Error updating settings:', error.response.data);

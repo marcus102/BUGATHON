@@ -39,7 +39,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
   const { firstName, lastName, username, email, password, passwordConfirm } = req.body;
   const signUpEmail = {
     address: email,
-    visibility: 'public',
+    visibility: 'public'
   };
   const newUser = await User.create({
     firstName: firstName,
@@ -204,7 +204,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
   user.password = password;
   user.passwordConfirm = passwordConfirm;
-  user.save();
+  await user.save();
   // log back the user in by sending back token
   createAndSendToken(user, 200, res);
 });
