@@ -14,18 +14,18 @@ const reusableCodeSchema = new mongoose.Schema(
       type: String,
       required: [true, 'For users underdanding, a description must be defined']
     },
-    codeSnippet: {
-      type: String,
-      required: [true, 'Please! the code snippet is rerquired! provide it']
-    },
-    result: {
-      type: String,
-      required: [true, 'Please! the result is rerquired! provide it']
-    },
-    usageGuileline: {
-      type: String,
-      required: [true, 'Please! the usage guideline is rerquired! provide it']
-    },
+    // codeSnippet: {
+    //   type: String,
+    //   required: [true, 'Please! the code snippet is rerquired! provide it']
+    // },
+    // result: {
+    //   type: String,
+    //   required: [true, 'Please! the result is rerquired! provide it']
+    // },
+    // usageGuileline: {
+    //   type: String,
+    //   required: [true, 'Please! the usage guideline is rerquired! provide it']
+    // },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',

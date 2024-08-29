@@ -15,41 +15,19 @@ import {
   faPaperclip,
   faListOl,
 } from '@fortawesome/free-solid-svg-icons';
-
-import { TextEditor } from '../../../utils/InputSection';
+import TextEditor from '../form/formCmp';
 
 const NEW_BUG_REPORT_FORM_DATA = [
   {
     id: 'bug_report',
     title: 'Create A Bug Report',
     input_label: 'Title',
+    input_id: 'bug_report',
+    input_name: 'bug_report',
     input_placeholder: 'Enter Your Bug Report Title Here',
-    children: [
-      {
-        id: '1',
-        label: 'Description',
-      },
-      {
-        id: '2',
-        label: 'Code Base',
-      },
-      {
-        id: '3',
-        label: 'Bug Report',
-      },
-      {
-        id: '4',
-        label: 'Steps To Reproduce',
-      },
-      {
-        id: '5',
-        label: 'Expected Behavior',
-      },
-      {
-        id: '6',
-        label: 'Expected Behavior',
-      },
-    ],
+    input_label_2: 'Description',
+    input_id_2: 'description',
+    input_name_2: 'description',
     icon_buttons: [
       { id: '1', icon: faB, next: null },
       { id: '2', icon: faItalic, next: null },
@@ -67,40 +45,6 @@ const NEW_BUG_REPORT_FORM_DATA = [
       { id: '14', icon: faRotateRight, next: null },
     ],
     editor_placeholder: 'Description',
-    options: [
-      {
-        id: '1',
-        title: 'Browser (optional)',
-        label: 'Chrome',
-        menu: [
-          { id: '1', label: 'Chrome' },
-          { id: '2', label: 'Edge' },
-          { id: '3', label: 'Brave' },
-          { id: '4', label: 'FireFox' },
-          { id: '5', label: 'Opera' },
-        ],
-      },
-      {
-        id: '2',
-        title: 'Device(s) (optional)',
-        label: 'Desktop',
-        menu: [
-          { id: '1', label: 'Desktop' },
-          { id: '2', label: 'Modile' },
-          { id: '3', label: 'Other' },
-        ],
-      },
-      {
-        id: '3',
-        title: 'Severity (optional)',
-        label: 'Medium',
-        menu: [
-          { id: '1', label: 'High' },
-          { id: '2', label: 'Medium' },
-          { id: '3', label: 'Low' },
-        ],
-      },
-    ],
     check_box: 'By taking this action, you agree to our',
     check_box_link: 'terms & conditions.',
     button: 'Submit',

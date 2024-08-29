@@ -15,29 +15,19 @@ import {
   faPaperclip,
   faListOl,
 } from '@fortawesome/free-solid-svg-icons';
-
-import { TextEditor } from '../../../utils/InputSection';
+import TextEditor from '../form/formCmp';
 
 const NEW_BUG_REPORT_FORM_DATA = [
   {
-    id: 'bug_report',
+    id: 'bug_fix',
     title: 'Create A Bug Fix',
     input_label: 'Title',
+    input_id: 'bug_fix',
+    input_name: 'bug_fix',
     input_placeholder: 'Enter Your Bug Fix Title Here',
-    children: [
-      {
-        id: '1',
-        label: 'Solution',
-      },
-      {
-        id: '2',
-        label: 'Description',
-      },
-      {
-        id: '3',
-        label: 'Result',
-      },
-    ],
+    input_label_2: 'Solution',
+    input_id_2: 'solution',
+    input_name_2: 'solution',
     icon_buttons: [
       { id: '1', icon: faB, next: null },
       { id: '2', icon: faItalic, next: null },
@@ -55,7 +45,7 @@ const NEW_BUG_REPORT_FORM_DATA = [
       { id: '14', icon: faRotateRight, next: null },
     ],
     editor_placeholder: 'Description',
-    options: null,
+    // options: null,
     check_box: 'By taking this action, you agree to our',
     check_box_link: 'terms & conditions.',
     button: 'Submit',

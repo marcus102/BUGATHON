@@ -4,14 +4,10 @@ import { IconButton, IconTextButton } from '../../utils/ButtonSection';
 import { faArrowLeftLong, faEye } from '@fortawesome/free-solid-svg-icons';
 import ToolTip from '../../utils/toolTipSection';
 import Line from '../../utils/LineSection';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function CreateNew({ children }) {
   const navigation = useNavigate();
-
-  // const [searchParams] = useSearchParams();
-  // const current_post = searchParams.get('post');
-  // const current_username = searchParams.get('username');
 
   return (
     <div className={classes.main_container}>

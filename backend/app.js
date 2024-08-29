@@ -53,7 +53,7 @@ app.use(`${rootUrl}/users`, userRouter);
 app.use(`${rootUrl}/images`, imageRouter);
 app.use(`${rootUrl}/reviews`, reviewRouter);
 app.use(`${rootUrl}/comments`, commentRouter);
-app.use(`${rootUrl}/bugs`, bugReportRouter);
+app.use(`${rootUrl}/bug_reports`, bugReportRouter);
 app.use(`${rootUrl}/bug_fixes`, bugFixRouter);
 app.use(`${rootUrl}/reusable_codes`, reusableCodeRouter);
 app.use(`${rootUrl}/feedbacks`, feedbackRouter);

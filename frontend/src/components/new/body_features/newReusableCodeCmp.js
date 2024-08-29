@@ -15,33 +15,19 @@ import {
   faPaperclip,
   faListOl,
 } from '@fortawesome/free-solid-svg-icons';
-
-import { TextEditor } from '../../../utils/InputSection';
+import TextEditor from '../form/formCmp';
 
 const NEW_BUG_REPORT_FORM_DATA = [
   {
-    id: 'bug_report',
+    id: 'reusable_code',
     title: 'Create A Reusable Code',
     input_label: 'Title',
+    input_id: 'reusable_code',
+    input_name: 'reusable_code',
     input_placeholder: 'Enter Your Reusable Code Title Here',
-    children: [
-      {
-        id: '1',
-        label: 'Description',
-      },
-      {
-        id: '2',
-        label: 'Reusable Code',
-      },
-      {
-        id: '3',
-        label: 'Acghieved Result',
-      },
-      {
-        id: '4',
-        label: 'Usage Guideline',
-      },
-    ],
+    input_label_2: 'Description',
+    input_id_2: 'description',
+    input_name_2: 'description',
     icon_buttons: [
       { id: '1', icon: faB, next: null },
       { id: '2', icon: faItalic, next: null },
@@ -59,7 +45,6 @@ const NEW_BUG_REPORT_FORM_DATA = [
       { id: '14', icon: faRotateRight, next: null },
     ],
     editor_placeholder: 'Description',
-    options: null,
     check_box: 'By taking this action, you agree to our',
     check_box_link: 'terms & conditions.',
     button: 'Submit',

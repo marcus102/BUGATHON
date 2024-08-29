@@ -15,14 +15,14 @@ const bugFixSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Solution is required']
     },
-    description: {
-      type: String,
-      default: null
-    },
-    result: {
-      type: String,
-      required: [true, 'Result to the solution must be provided!']
-    },
+    // description: {
+    //   type: String,
+    //   default: null
+    // },
+    // result: {
+    //   type: String,
+    //   required: [true, 'Result to the solution must be provided!']
+    // },
     parentSolution: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'BugFixes'

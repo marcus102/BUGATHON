@@ -15,22 +15,22 @@ const bugReportSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Description is required for user undersdanding']
     },
-    stepsToReproduce: {
-      type: String,
-      required: [true, 'Please provide the steps that are leading to the bug!']
-    },
-    expectedBehavior: {
-      type: String,
-      required: [true, 'The expected behavior of the software is required! Please provide it']
-    },
-    actualBehavior: {
-      type: String,
-      required: [true, 'Provide the actual behavior to help users understand more']
-    },
-    codeSnippet: {
-      type: String,
-      required: [true, 'The bug is required!']
-    },
+    // stepsToReproduce: {
+    //   type: String,
+    //   required: [true, 'Please provide the steps that are leading to the bug!']
+    // },
+    // expectedBehavior: {
+    //   type: String,
+    //   required: [true, 'The expected behavior of the software is required! Please provide it']
+    // },
+    // actualBehavior: {
+    //   type: String,
+    //   required: [true, 'Provide the actual behavior to help users understand more']
+    // },
+    // codeSnippet: {
+    //   type: String,
+    //   required: [true, 'The bug is required!']
+    // },
     browser: {
       type: String,
       enum: ['Chrome', 'Firefox', 'Safari', 'Edge', 'Internet Explorer', 'Opera', 'Brave', 'Other'],

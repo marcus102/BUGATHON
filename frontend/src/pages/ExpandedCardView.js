@@ -18,4 +18,4 @@ function ExpandedCardView() {
 
 export default ExpandedCardView;
 
-export async function action({ request }) {}
+

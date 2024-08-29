@@ -8,12 +8,11 @@ import Blog from './pages/BlogPage.js';
 import HomePage from './pages/HomePage.js';
 import SettingsPage, { action as settingsAction } from './pages/SettingsPage.js';
 import ProfilePage from './pages/Profile.js';
-import ExpandedCardView, { action as expandedCardViewAction } from './pages/ExpandedCardView.js';
-import CreatePage from './pages/CreatePage.js';
-import ContributionPage from './pages/ContributionPage.js';
+import ExpandedCardView from './pages/ExpandedCardView.js';
+import CreatePage, { action as createAction } from './pages/CreatePage.js';
 import SecondNavBarRoot from './pages/SecondNavBarRootPage.js';
 import AuthenticationPage, { action as authAction } from './pages/AuthenticationPage.js';
-import { tokenLoader, checkAuthLoader } from './utils/authSection.js';
+import { tokenLoader } from './utils/authSection.js';
 import Error from './pages/ErrorPage.js';
 import { fetchDataLoader } from './utils/authSection.js';
 
@@ -64,7 +63,7 @@ const router = createBrowserRouter([
       },
       { path: 'services', element: <Services /> },
       { path: 'blog', element: <Blog /> },
-      { path: 'new', element: <CreatePage /> },
+      { path: 'new', element: <CreatePage />, action: createAction },
     ],
   },
   {
@@ -79,3 +78,5 @@ function Routing() {
 }
 
 export default Routing;
+
+export function action({ request }) {}
