@@ -20,6 +20,7 @@ const socialRouter = require('./routes/pending/socialRoutes');
 const trainingRouter = require('./routes/pending/trainingRoutes');
 const commentRouter = require('./routes/user_engagement/commentsRoutes');
 const imageRouter = require('./routes/imagesRoutes');
+const docRouter = require('./routes/docsRoutes');
 const reusableCodeRouter = require('./routes/reusableCodeRoutes');
 const bugFixRouter = require('./routes/bugFixesRoutes');
 const likesRouter = require('./routes/user_engagement/likeRoutes');
@@ -51,6 +52,7 @@ const rootUrl = '/api/v1';
 
 app.use(`${rootUrl}/users`, userRouter);
 app.use(`${rootUrl}/images`, imageRouter);
+app.use(`${rootUrl}/docs`, docRouter);
 app.use(`${rootUrl}/reviews`, reviewRouter);
 app.use(`${rootUrl}/comments`, commentRouter);
 app.use(`${rootUrl}/bug_reports`, bugReportRouter);

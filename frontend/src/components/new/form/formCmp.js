@@ -5,26 +5,60 @@ import Link from '../../../utils/LinkSection';
 import { IconButton, SolidButton } from '../../../utils/ButtonSection';
 import { HorizontalScrollView } from '../../../utils/ScrollViewsSection';
 import { Editor, EditorState, RichUtils, Modifier } from 'draft-js';
+import { stateToHTML } from 'draft-js-export-html';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import prismPlugin from '../../../utils/syntaxHighlightPlugin';
 import { Form } from 'react-router-dom';
 import Text from '../../../utils/TextSection';
 import { Input, CheckBox } from '../../../utils/InputSection';
+import {
+  faUnderline,
+  faItalic,
+  faB,
+  faCode,
+  faFaceSmile,
+  faAlignCenter,
+  faAlignJustify,
+  faAlignLeft,
+  faAlignRight,
+  faRotateLeft,
+  faRotateRight,
+  faHighlighter,
+  faPaperclip,
+  faListOl,
+  faLink,
+} from '@fortawesome/free-solid-svg-icons';
+import { File } from '../../../utils/MediaSection';
 
 const plugins = [prismPlugin];
 
-function IconButtons({
-  iconButtons,
-  editorState,
-  setEditorState,
-  showEmojiPicker,
-  setShowEmojiPicker,
-}) {
+function IconButtons({ editorState, setEditorState, showEmojiPicker, setShowEmojiPicker }) {
+  const ICON_BUTTONS = [
+    { id: '1', icon: faB, next: null },
+    { id: '2', icon: faItalic, next: null },
+    { id: '3', icon: faUnderline, next: null },
+    { id: '4', icon: faHighlighter, next: null },
+    { id: '5', icon: faCode, next: null },
+    { id: '6', icon: faFaceSmile, next: null },
+    { id: '7', icon: faPaperclip, next: null },
+    { id: '8', icon: faLink, next: null },
+    { id: '9', icon: faListOl, next: null },
+    { id: '10', icon: faAlignLeft, next: faAlignCenter },
+    { id: '11', icon: faAlignCenter, next: faAlignRight },
+    { id: '12', icon: faAlignRight, next: faAlignJustify },
+    { id: '13', icon: faAlignJustify, next: faAlignLeft },
+    { id: '14', icon: faRotateLeft, next: null },
+    { id: '15', icon: faRotateRight, next: null },
+  ];
+
   const toggleInlineStyle = (style) =>
     setEditorState(RichUtils.toggleInlineStyle(editorState, style));
-  const toggleBlockType = (blockType) =>
+
+  const toggleBlockType = (blockType) => {
     setEditorState(RichUtils.toggleBlockType(editorState, blockType));
+  };
+
   const handleUndo = () => setEditorState(EditorState.undo(editorState));
   const handleRedo = () => setEditorState(EditorState.redo(editorState));
   const toggleHighlight = () => {
@@ -49,13 +83,22 @@ function IconButtons({
     setEditorState(EditorState.push(editorState, newContentState, 'change-inline-style'));
   };
 
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0]; // Get the selected file
+    if (file) {
+      // Handle the file upload logic here
+      console.log('Selected file:', file);
+    }
+  };
+
   return (
     <HorizontalScrollView
       children={
         <>
-          {iconButtons.map((button) => (
+          <File id="attachment-upload-input" onChange={(e) => handleFileUpload(e)} />
+          {ICON_BUTTONS.map((button, index) => (
             <IconButton
-              key={button.id}
+              key={`${button.id}-${index}`}
               inconButtonStyle={classes.icon_button}
               icon={button.icon}
               onClick={() => {
@@ -66,14 +109,14 @@ function IconButtons({
                   4: () => toggleHighlight(),
                   5: () => toggleBlockType('code-block'),
                   6: () => setShowEmojiPicker(!showEmojiPicker),
-                  7: () => document.getElementById('attachement-upload-input').click(),
-                  8: () => toggleBlockType('ordered-list-item'),
-                  9: () => toggleBlockType('left'),
-                  10: () => toggleBlockType('center'),
-                  11: () => toggleBlockType('right'),
-                  12: () => toggleBlockType('justify'),
-                  13: () => handleUndo(),
-                  14: () => handleRedo(),
+                  7: () => document.getElementById('attachment-upload-input').click(),
+                  9: () => toggleBlockType('ordered-list-item'),
+                  10: () => toggleBlockType('left'),
+                  11: () => toggleBlockType('center'),
+                  12: () => toggleBlockType('right'),
+                  13: () => toggleBlockType('justify'),
+                  14: () => handleUndo(),
+                  15: () => handleRedo(),
                 };
 
                 const actionFunction = actionMap[button.id];
@@ -89,49 +132,6 @@ function IconButtons({
   );
 }
 
-// function EditorContainer({ editorState, setEditorState, inputId, inputName }) {
-//   const styleMap = {
-//     HIGHLIGHT: {
-//       backgroundColor: Colors.gray_aaaaaa5e,
-//       borderRadius: '5px',
-//       padding: '0 5px',
-//     },
-//   };
-
-//   return (
-//     // <div className={classes.editorContainer}>
-//     //   <Editor
-//     //     name={inputName}
-//     //     id={inputId}
-//     //     editorState={editorState}
-//     //     onChange={setEditorState}
-//     //     plugins={plugins}
-//     //     editorKey="editor"
-//     //     customStyleMap={styleMap}
-//     //     blockStyleFn={(contentBlock) => {
-//     //       const type = contentBlock.getType();
-//     //       return `${classes.editorBlock} ${classes[`text-${type}`]}`;
-//     //     }}
-//     //     className={classes.editor}
-//     //   />
-//     // </div>
-//     <div className={classes.editorContainer} id={inputId} name={inputName}>
-//       <Editor
-//         editorState={editorState}
-//         onChange={setEditorState}
-//         plugins={plugins}
-//         editorKey="editor"
-//         customStyleMap={styleMap}
-//         blockStyleFn={(contentBlock) => {
-//           const type = contentBlock.getType();
-//           return `${classes.editorBlock} ${classes[`text-${type}`]}`;
-//         }}
-//         className={classes.editor}
-//       />
-//     </div>
-//   );
-// }
-
 function EditorContainer({ editorState, setEditorState, onContentChange }) {
   const styleMap = {
     HIGHLIGHT: {
@@ -143,8 +143,9 @@ function EditorContainer({ editorState, setEditorState, onContentChange }) {
 
   const handleEditorChange = (newState) => {
     setEditorState(newState);
-    const plainText = newState.getCurrentContent().getPlainText();
-    onContentChange(plainText);
+    const contentState = newState.getCurrentContent();
+    const htmlContent = stateToHTML(contentState);
+    onContentChange(htmlContent);
   };
 
   return (
@@ -219,7 +220,6 @@ function TextEditor({ META_DATA }) {
             <div className={classes.editor_container}>
               <Text h6={data.input_label_2} />
               <IconButtons
-                iconButtons={data.icon_buttons}
                 editorState={editorState}
                 setEditorState={setEditorState}
                 showEmojiPicker={showEmojiPicker}
@@ -241,11 +241,14 @@ function TextEditor({ META_DATA }) {
             </div>
 
             {showEmojiPicker && <EmojiPicker onSelect={addEmoji(editorState, setEditorState)} />}
-            <CheckBoxWithLink label={data.check_box} link={data.check_box_link} />
+            <CheckBoxWithLink
+              label={'By taking this action, you agree to our'}
+              link={'terms & conditions.'}
+            />
             <SolidButton
               buttonMainContainerStyle={classes.solid_button_container}
               buttonStyle={classes.solid_button}
-              label={data.button}
+              label={'Submit'}
             />
           </Form>
         ))

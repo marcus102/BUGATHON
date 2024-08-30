@@ -1,8 +1,7 @@
 node_modules
 
 config.env
-images
-profiles
+assets
 .vscode
 coverage
 __test__

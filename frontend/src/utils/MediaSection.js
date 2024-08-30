@@ -24,3 +24,7 @@ export function Audio({ src, audioContainerStyle, audioStyle }) {
     </div>
   );
 }
+
+export function File({ id, onChange }) {
+  return <input type="file" id={id} style={{ display: 'none' }} onChange={onChange} />;
+}
