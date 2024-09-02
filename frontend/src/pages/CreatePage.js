@@ -23,6 +23,10 @@ function CreatePage() {
 
 export default CreatePage;
 
+export async function loader() {
+  return null;
+}
+
 export async function action({ request }) {
   const searchParams = new URL(request.url).searchParams;
   const type = searchParams.get('type');

@@ -11,10 +11,16 @@ import UserProfileHeader from '../userProfileHeaderCmp';
 import HeaderOptions from '../headerOptionsCmp';
 import ToolTip from '../../utils/toolTipSection';
 import { useNavigate } from 'react-router-dom';
-import { CARD_VIEW_OPTION, DUMMY_USERS } from '../../data/Database';
+import { CARD_VIEW_OPTION } from '../../data/Database';
 
 // Header component
 const HomeCardHeader = ({
+  firstName,
+  lastName,
+  role,
+  followersCount,
+  followingCount,
+  starCount,
   username,
   profession,
   profileImg,
@@ -23,7 +29,17 @@ const HomeCardHeader = ({
   contributionsArray,
 }) => (
   <div className={classes.home_card_header_container}>
-    <UserProfileHeader username={username} profession={profession} profileImg={profileImg} />
+    <UserProfileHeader
+      firstName={firstName}
+      lastName={lastName}
+      role={role}
+      followersCount={followersCount}
+      followingCount={followingCount}
+      starCount={starCount}
+      username={username}
+      profession={profession}
+      profileImg={profileImg}
+    />
     <div className={classes.header_options_container}>
       {isHeaderOption ? (
         <HeaderOptions
@@ -39,13 +55,28 @@ const HomeCardHeader = ({
 );
 
 // Body component
-const HomeCardBody = ({ postTitle, postDescription, children }) => (
-  <div className={classes.home_card_body_container}>
-    {postTitle && <Text h4={postTitle} />}
-    {postDescription && <Text p16Style={classes.body_paragraph_text} p16={postDescription} />}
-    {children}
-  </div>
-);
+const stripHtml = (html) => {
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  return div.textContent || div.innerText || '';
+};
+
+const truncateText = (text, wordLimit) => {
+  const words = text.split(' ');
+  return words.slice(0, wordLimit).join(' ') + (words.length > wordLimit ? '...' : '');
+};
+
+const HomeCardBody = ({ postTitle, postDescription, children }) => {
+  const textContent = stripHtml(postDescription);
+  const truncatedText = truncateText(textContent, 20);
+  return (
+    <div className={classes.home_card_body_container}>
+      {postTitle && <Text h4={postTitle} />}
+      {postDescription && <div className={classes.body_paragraph_text}>{truncatedText}</div>}
+      {children}
+    </div>
+  );
+};
 
 // Footer component
 const HomeCardFooter = ({ TAGS, timestamp, REACTIONSMETADATA, isActive, setIsActive }) => (
@@ -87,10 +118,17 @@ function HomeCard({
   cardButtonState,
   isHeaderOption,
   username,
+  profession,
+  role,
+  profileImg,
+  followersCount,
+  followingCount,
+  starCount,
+  firstName,
+  lastName,
   contributionsCount,
   timestamp,
   TAGS,
-  profession,
   postTitle,
   postDescription,
   children,
@@ -108,8 +146,6 @@ function HomeCard({
 
   const navigate = useNavigate();
 
-  const currentUser = DUMMY_USERS.find((user) => user.username === username);
-
   return (
     <div
       className={`${classes.home_card} ${
@@ -124,9 +160,15 @@ function HomeCard({
     >
       {/* HEADER */}
       <HomeCardHeader
-        username={currentUser.username}
-        profession={currentUser.profession}
-        profileImg={currentUser.profile}
+        firstName={firstName}
+        lastName={lastName}
+        role={role}
+        followersCount={followersCount}
+        followingCount={followingCount}
+        starCount={starCount}
+        username={username}
+        profession={profession}
+        profileImg={profileImg}
         isHeaderOption={isHeaderOption}
         contributionsCount={contributionsCount}
         contributionsArray={contributionsArray}

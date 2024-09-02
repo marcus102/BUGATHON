@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
 import Colors from '../../constants/colors';
 import classes from './HomeWindowCmp.module.css';
@@ -16,15 +16,85 @@ import {
   faHeart,
   faThumbTack,
 } from '@fortawesome/free-solid-svg-icons';
+import { useLoaderData } from 'react-router-dom';
+import axios from 'axios';
+import { PORT } from '../../http_requests/authentication';
+import { getAuthToken } from '../../utils/authSection';
+import Text from '../../utils/TextSection';
 
 function HomeWindow({ homeWindowMainContainerStyle }) {
   const { sideBar } = useContext(ManagmentSystem);
+  // const ITEMS_PER_PAGE = 5;
+  // const { currentPage, totalPages, paginatedData, handlePageChange } = usePagination(
+  //   DUMMY_POST_DATA,
+  //   ITEMS_PER_PAGE
+  // );
+  /////////////////////////
 
-  const ITEMS_PER_PAGE = 5;
-  const { currentPage, totalPages, paginatedData, handlePageChange } = usePagination(
-    DUMMY_POST_DATA,
-    ITEMS_PER_PAGE
-  );
+  const initialPosts = useLoaderData(); // The initial data fetched by the loader
+  const [visiblePosts, setVisiblePosts] = useState(initialPosts);
+  const [page, setPage] = useState(2); // Start from page 2 since page 1 data is already loaded
+  const [loading, setLoading] = useState(false);
+
+  const loadMorePosts = useCallback(async () => {
+    if (loading) return;
+
+    setLoading(true);
+    const token = getAuthToken(); // Function to get the auth token, assumed to be available
+
+    if (!token) {
+      console.error('No token available');
+      return;
+    }
+
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    };
+
+    try {
+      const response1 = await axios.get(`${PORT}api/v1/bug_report?page=${page}&limit=5`, {
+        headers,
+      });
+      const response2 = await axios.get(`${PORT}api/v1/bug_fixes?page=${page}&limit=5`, {
+        headers,
+      });
+      const response3 = await axios.get(`${PORT}api/v1/reusable_codes?page=${page}&limit=5`, {
+        headers,
+      });
+
+      const shuffleArray = (array) => {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      };
+
+      const newPosts = shuffleArray([...response1.data, ...response2.data, ...response3.data]);
+
+      setVisiblePosts((prevPosts) => [...prevPosts, ...newPosts]);
+      setPage((prevPage) => prevPage + 1);
+    } catch (error) {
+      console.error('Error fetching data:', error.response?.data || error.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [page, loading]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop >=
+        document.documentElement.offsetHeight - 10
+      ) {
+        loadMorePosts();
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [loadMorePosts]);
 
   return (
     <div className={`${classes.home_window_main_container} ${homeWindowMainContainerStyle}`}>
@@ -54,45 +124,64 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
 
         {/* BODY */}
         <VerticalScrollView>
-          {paginatedData.map((data) => (
-            <HomeCard
-              cardButtonState={data.state}
-              key={data.id}
-              isHeaderOption={true}
-              postTitle={data.title}
-              postDescription={data.description.content}
-              username={data.user.username}
-              postId={data.id}
-              TAGS={data.tags}
-              REACTIONSMETADATA={[
-                {
-                  id: 'likes',
-                  icon: faHeart,
-                  count: data.likeCount,
-                  activeColor: Colors.red_FF2B2B,
-                },
-                { id: 'comments', icon: faComment, count: data.totalComments, activeColor: null },
-                { id: 'pin', icon: faThumbTack, count: null, activeColor: Colors.yellow_ },
-                {
-                  id: 'share',
-                  icon: faArrowUpFromBracket,
-                  count: data.shareCount,
-                  activeColor: null,
-                },
-                { id: 'impression', icon: faChartSimple, count: data.viewCount, activeColor: null },
-              ]}
-              contributionsArray={data.contributions}
-              contributionsCount={data.totalAttempts}
-            />
-          ))}
+          {visiblePosts.length > 0 ? (
+            visiblePosts.map((data) => (
+              <HomeCard
+                cardButtonState={data.state}
+                key={data.id}
+                isHeaderOption={true}
+                postTitle={data.title}
+                firstName={data.user?.firstName}
+                lastName={data.user?.lastName}
+                followersCount={data.user?.followersCount}
+                followingCount={data.user?.followingCount}
+                starCount={data.user?.starCount}
+                postDescription={data?.description}
+                username={data.user?.username}
+                profession={data.user?.profession}
+                role={data.user?.role}
+                profileImg={data.user.image[0]?.imageUrl}
+                timestamp={data.createdAt}
+                postId={data.id}
+                TAGS={data.tags}
+                REACTIONSMETADATA={[
+                  {
+                    id: 'likes',
+                    icon: faHeart,
+                    count: `${data.likeCount}`,
+                    activeColor: Colors.red_FF2B2B,
+                  },
+                  { id: 'comments', icon: faComment, count: `${data.totalComments}`, activeColor: null },
+                  { id: 'pin', icon: faThumbTack, count: null, activeColor: Colors.yellow_ },
+                  {
+                    id: 'share',
+                    icon: faArrowUpFromBracket,
+                    count: `${data.shareCount}`,
+                    activeColor: null,
+                  },
+                  {
+                    id: 'impression',
+                    icon: faChartSimple,
+                    count: `${data.viewCount}`,
+                    activeColor: null,
+                  },
+                ]}
+                contributionsArray={data.contributions}
+                contributionsCount={data.totalAttempts}
+              />
+            ))
+          ) : (
+            <Text h4={'No posts found'} />
+          )}
+          {loading && <p>Loading more posts...</p>}
         </VerticalScrollView>
 
         {/* PAGINATION */}
-        <Pagination
+        {/* <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={handlePageChange}
-        />
+        /> */}
       </div>
     </div>
   );

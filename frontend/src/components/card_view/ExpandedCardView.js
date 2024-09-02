@@ -183,7 +183,7 @@ const Comments = ({ commentSectionsRef }) => (
   </div>
 );
 
-const ExpandedCard = ({
+function ExpandedCard({
   REACTIONS_META_DATA,
   IMPLEMENTATION_META_DATA,
   CARD_VIEW_OPTION_META_DATA,
@@ -192,7 +192,7 @@ const ExpandedCard = ({
   potentialTitle,
   contributionsArray,
   contributionsCount,
-}) => {
+}) {
   const [isExpanded, setIsExpanded] = useState(true);
   const [isCopied, setIsCopied] = useState(
     IMPLEMENTATION_META_DATA.reduce((acc, item) => {
@@ -296,6 +296,6 @@ const ExpandedCard = ({
       </div>
     </div>
   );
-};
+}
 
 export default ExpandedCard;

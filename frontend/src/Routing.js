@@ -5,16 +5,15 @@ import RootLayout from './pages/Root.js';
 import ChronoBug from './pages/ChronoBugPage.js';
 import Services from './pages/ServicesPage.js';
 import Blog from './pages/BlogPage.js';
-import HomePage from './pages/HomePage.js';
+import HomePage, { loader as homeLoader } from './pages/HomePage.js';
 import SettingsPage, { action as settingsAction } from './pages/SettingsPage.js';
 import ProfilePage from './pages/Profile.js';
 import ExpandedCardView from './pages/ExpandedCardView.js';
-import CreatePage, { action as createAction } from './pages/CreatePage.js';
+import CreatePage, { action as createAction, loader as createLoader } from './pages/CreatePage.js';
 import SecondNavBarRoot from './pages/SecondNavBarRootPage.js';
 import AuthenticationPage, { action as authAction } from './pages/AuthenticationPage.js';
-import { tokenLoader } from './utils/authSection.js';
+import { tokenLoader, fetchDataLoader } from './utils/authSection.js';
 import Error from './pages/ErrorPage.js';
-import { fetchDataLoader } from './utils/authSection.js';
 
 async function combinedLoader() {
   const tokenData = await tokenLoader();
@@ -41,6 +40,7 @@ const router = createBrowserRouter([
           {
             path: '/',
             element: <HomePage />,
+            loader: homeLoader,
           },
           {
             path: 'profile',
@@ -61,9 +61,20 @@ const router = createBrowserRouter([
         path: '/chronobug',
         element: <ChronoBug />,
       },
-      { path: 'services', element: <Services /> },
-      { path: 'blog', element: <Blog /> },
-      { path: 'new', element: <CreatePage />, action: createAction },
+      { 
+        path: 'services', 
+        element: <Services /> 
+      },
+      {
+        path: 'blog',
+        element: <Blog />,
+      },
+      {
+        path: 'new',
+        element: <CreatePage />,
+        action: createAction,
+        loader: createLoader,
+      },
     ],
   },
   {

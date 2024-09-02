@@ -98,6 +98,12 @@ const bugReportSchema = new mongoose.Schema(
   }
 );
 
+bugReportSchema.virtual('image', {
+  ref: 'Image',
+  localField: 'user',
+  foreignField: 'user'
+});
+
 bugReportSchema.pre('findOneAndUpdate', function(next) {
   this.getUpdate().updatedAt = Date.now();
 
@@ -155,10 +161,18 @@ bugReportSchema.virtual('zoneOfInterests', {
 bugReportSchema.pre(/^find/, function(next) {
   this.populate({
     path: 'user',
-    select: 'username profile'
+    select: 'username profession role firstName lastName followersCount followingCount starCount',
+    populate: {
+      path: 'image',
+      select: 'imageUrl'
+    }
   }).populate({
     path: 'assignedTo',
-    select: 'username profile'
+    select: 'username profession role firstName lastName followersCount followingCount starCount',
+    populate: {
+      path: 'image',
+      select: 'imageUrl'
+    }
   });
 
   next();

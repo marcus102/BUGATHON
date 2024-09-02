@@ -51,7 +51,7 @@ class APIFeatures {
   }
 
   pagination() {
-    // http:IP:PORT/url?page=2&limit=50 let's we have 1000 documents, page=2&limit=50 will limit each page with 50 documents and them we will have 10 pages and currently we are at page 2 out of the 10 pages
+    // http:IP:PORT/url?page=2&limit=50 let's asume we have 1000 documents, page=2&limit=50 will limit each page with 50 documents and them we will have 10 pages and currently we are at page 2 out of the 10 pages
     const page = this.queryString.page * 1 || 1;
     const limit = this.queryString.limit * 1 || 100;
     const skip = (page - 1) * limit;
