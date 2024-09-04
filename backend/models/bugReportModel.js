@@ -62,6 +62,14 @@ const bugReportSchema = new mongoose.Schema(
         ref: 'User'
       }
     ],
+    likeCount: {
+      type: Number,
+      default: 0
+    },
+    commentCount: {
+      type: Number,
+      default: 0
+    },
     viewCount: {
       type: Number,
       default: 0
@@ -71,6 +79,10 @@ const bugReportSchema = new mongoose.Schema(
       default: 0
     },
     shareCount: {
+      type: Number,
+      default: 0
+    },
+    downloadCount: {
       type: Number,
       default: 0
     },
@@ -113,7 +125,7 @@ bugReportSchema.pre('findOneAndUpdate', function(next) {
 bugReportSchema.virtual('contributors', {
   ref: 'Contributor',
   localField: '_id',
-  foreignField: 'bugReport'
+  foreignField: 'bugReport',
 });
 
 bugReportSchema.virtual('bugFixes', {

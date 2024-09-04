@@ -30,9 +30,10 @@ export async function loader({ request }) {
 
   try {
     const response1 = await axios.get(`${PORT}api/v1/bug_reports?page=1&limit=5`, { headers });
-    const response2 = await axios.get(`${PORT}api/v1/bug_fixes?page=1&limit=5`, { headers });
-    const response3 = await axios.get(`${PORT}api/v1/reusable_codes?page=1&limit=5`, { headers });
 
+    const response2 = await axios.get(`${PORT}api/v1/bug_fixes?page=1&limit=5`, { headers });
+
+    const response3 = await axios.get(`${PORT}api/v1/reusable_codes?page=1&limit=5`, { headers });
 
     const allData = [];
 

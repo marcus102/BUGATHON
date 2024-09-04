@@ -20,7 +20,7 @@ exports.setRequiredIds = (req, res, next) => {
 };
 
 exports.createBugFix = catchAsync(async (req, res, next) => {
-  const { title, solution, description, result, user, bugReport_, frameworkVersions } = req.body;
+  const { title, description, user, bugReport_, frameworkVersions } = req.body;
 
   let bugFix;
   let bugReportValue;
@@ -52,9 +52,7 @@ exports.createBugFix = catchAsync(async (req, res, next) => {
 
   const newBugFix = await BugFixes.create({
     title: title,
-    solution: solution,
     description: description,
-    result: result,
     user: user,
     bugReport: bugReportValue,
     parentSolution: req.params.id || null,
@@ -66,6 +64,7 @@ exports.createBugFix = catchAsync(async (req, res, next) => {
   await Contributor.create({
     user: user,
     bugFix: _id,
+    parentBugFix: req.params.id,
     bugReport: bugReportValue
   });
 
@@ -79,7 +78,17 @@ exports.createBugFix = catchAsync(async (req, res, next) => {
 
 exports.filterBlockedBugFixes = factory.blocksHandler(BlockedUser, 'bug_fix_ids');
 
-exports.getALLBugFixes = factory.getAll(BugFixes, 'bug_fix_ids');
+exports.getALLBugFixes = factory.getAll(BugFixes, 'bug_fix_ids', [
+  { path: 'image' },
+  { path: 'reviews' },
+  { path: 'comments' },
+  { path: 'childSolutions' },
+  { path: 'contributors' },
+  { path: 'categories' },
+  { path: 'operatingSystem' },
+  { path: 'programmingLanguages' },
+  { path: 'zoneOfInterests' }
+]);
 
 exports.getBugFix = factory.getOne(BugFixes, [
   { path: 'image' },

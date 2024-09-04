@@ -63,7 +63,16 @@ exports.deleteBug = catchAsync(async (req, res, next) => {
 
 exports.filterBlockedBugs = factory.blocksHandler(BlockedUser, 'bug_ids');
 
-exports.getAllBugs = factory.getAll(BugReport, 'bug_ids');
+exports.getAllBugs = factory.getAll(BugReport, 'bug_ids', [
+  { path: 'bugFixes' },
+  { path: 'image' },
+  { path: 'contributors' },
+  { path: 'comments' },
+  { path: 'categories' },
+  { path: 'operatingSystem' },
+  { path: 'programmingLanguages' },
+  { path: 'zoneOfInterests' }
+]);
 exports.getBug = factory.getOne(BugReport, [
   { path: 'bugFixes' },
   { path: 'image' },

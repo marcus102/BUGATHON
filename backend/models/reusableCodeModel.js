@@ -14,6 +14,10 @@ const reusableCodeSchema = new mongoose.Schema(
       type: String,
       required: [true, 'For users underdanding, a description must be defined']
     },
+    parentSolution: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'ReusableCode'
+    },
     // codeSnippet: {
     //   type: String,
     //   required: [true, 'Please! the code snippet is rerquired! provide it']
@@ -36,6 +40,10 @@ const reusableCodeSchema = new mongoose.Schema(
       default: 0
     },
     likeCount: {
+      type: Number,
+      default: 0
+    },
+    commentCount: {
       type: Number,
       default: 0
     },
@@ -84,6 +92,22 @@ const reusableCodeSchema = new mongoose.Schema(
     toObject: { virtuals: true }
   }
 );
+
+reusableCodeSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'user',
+    select: 'username profession role firstName lastName followersCount followingCount starCount',
+    populate: {
+      path: 'image',
+      select: 'imageUrl'
+    }
+  }).populate({
+    path: 'ReusableCode',
+    select: 'title'
+  });
+
+  next();
+});
 
 reusableCodeSchema.virtual('image', {
   ref: 'Image',

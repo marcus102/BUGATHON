@@ -69,7 +69,7 @@ exports.getOne = (Model, populateOptions) =>
     });
   });
 
-exports.getAll = (Model, excludedIdsParam) =>
+exports.getAll = (Model, excludedIdsParam, populateOptions) =>
   catchAsync(async (req, res, next) => {
     let filter = null;
     const excludedIds = req.body[excludedIdsParam];
@@ -80,16 +80,49 @@ exports.getAll = (Model, excludedIdsParam) =>
       };
     }
 
-    const features = new APIFeatures(Model.find(filter), req.query)
+    let query = Model.find(filter);
+
+    if (populateOptions) {
+      if (Array.isArray(populateOptions)) {
+        populateOptions.forEach(option => {
+          query = query.populate(option);
+        });
+      } else {
+        query = query.populate(populateOptions);
+      }
+    }
+
+    // Populate the virtual field 'contributors' with all data
+    if (Model.schema.virtuals.contributors) {
+      query = query.populate({
+        path: 'contributors',
+        populate: [
+          {
+            path: 'user',
+            model: 'User',
+            select: '-password -__v'
+          },
+          {
+            path: 'bugFix',
+            model: 'BugFixes',
+            select: '-__v'
+          },
+          {
+            path: 'bugReport',
+            model: 'BugReport',
+            select: '-__v'
+          }
+        ]
+      });
+    }
+
+    const features = new APIFeatures(query, req.query)
       .filter()
       .sort()
       .limitFields()
       .pagination();
 
-    // const doc = await features.query.explain();
     const doc = await features.query;
-
-    // SEND RESPONSE
 
     res.status(200).json({
       status: 'success',
@@ -98,6 +131,36 @@ exports.getAll = (Model, excludedIdsParam) =>
       data: doc
     });
   });
+
+// exports.getAll = (Model, excludedIdsParam) =>
+//   catchAsync(async (req, res, next) => {
+//     let filter = null;
+//     const excludedIds = req.body[excludedIdsParam];
+
+//     if (excludedIds && excludedIds.length > 0) {
+//       filter = {
+//         user: { $nin: excludedIds }
+//       };
+//     }
+
+//     const features = new APIFeatures(Model.find(filter), req.query)
+//       .filter()
+//       .sort()
+//       .limitFields()
+//       .pagination();
+
+//     // const doc = await features.query.explain();
+//     const doc = await features.query;
+
+//     // SEND RESPONSE
+
+//     res.status(200).json({
+//       status: 'success',
+//       requested_at: req.requestTime,
+//       result: doc.length,
+//       data: doc
+//     });
+//   });
 
 exports.blocksHandler = (Model, target) =>
   catchAsync(async (req, res, next) => {

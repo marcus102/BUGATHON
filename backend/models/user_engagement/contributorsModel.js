@@ -7,6 +7,10 @@ const contributorSchema = new mongoose.Schema(
       ref: 'User',
       required: true
     },
+    parentBugFix: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'BugFixes'
+    },
     bugFix: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'BugFixes'

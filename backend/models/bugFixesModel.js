@@ -11,18 +11,10 @@ const bugFixSchema = new mongoose.Schema(
       type: String,
       default: 'bug_fix'
     },
-    solution: {
+    description: {
       type: String,
-      required: [true, 'Solution is required']
+      required: [true, 'Description is required']
     },
-    // description: {
-    //   type: String,
-    //   default: null
-    // },
-    // result: {
-    //   type: String,
-    //   required: [true, 'Result to the solution must be provided!']
-    // },
     parentSolution: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'BugFixes'
@@ -42,6 +34,10 @@ const bugFixSchema = new mongoose.Schema(
       default: 0
     },
     likeCount: {
+      type: Number,
+      default: 0
+    },
+    commentCount: {
       type: Number,
       default: 0
     },
@@ -117,11 +113,20 @@ bugFixSchema.pre('save', function(next) {
 bugFixSchema.pre(/^find/, function(next) {
   this.populate({
     path: 'user',
-    select: 'username professions profile'
-  }).populate({
-    path: 'bugReport',
-    select: 'title description'
-  });
+    select: 'username profession role firstName lastName followersCount followingCount starCount',
+    populate: {
+      path: 'image',
+      select: 'imageUrl'
+    }
+  })
+    .populate({
+      path: 'bugReport',
+      select: 'title'
+    })
+    .populate({
+      path: 'parentSolution',
+      select: 'title'
+    });
 
   next();
 });
@@ -129,7 +134,7 @@ bugFixSchema.pre(/^find/, function(next) {
 bugFixSchema.virtual('contributors', {
   ref: 'Contributor',
   localField: '_id',
-  foreignField: 'bugFix'
+  foreignField: 'parentBugFix'
 });
 
 bugFixSchema.virtual('reviews', {

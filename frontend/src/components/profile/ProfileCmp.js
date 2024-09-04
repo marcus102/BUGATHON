@@ -16,9 +16,6 @@ import { useRouteLoaderData } from 'react-router-dom';
 
 function Profile() {
   const { profileSideBarButton } = useContext(ManagmentSystem);
-
-  // const [searchParams] = useSearchParams();
-  // const currentUsername = searchParams.get('username');
   const { fetchData } = useRouteLoaderData('root');
   const currentUser = fetchData.data;
 

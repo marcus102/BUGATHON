@@ -49,7 +49,8 @@ export async function action({ request }) {
     route = 'bug_fixes';
     userData = {
       title: data.get('bug_fix'),
-      soloution: data.get('solution'),
+      bugReport_: data.get('bug_report_'),
+      description: data.get('solution'),
     };
   } else if (type === 'reusable_code') {
     route = 'reusable_codes';
@@ -58,6 +59,8 @@ export async function action({ request }) {
       description: data.get('description'),
     };
   }
+
+  console.log('Here!!!', userData);
 
   const headers = {
     'Content-Type': 'application/json',

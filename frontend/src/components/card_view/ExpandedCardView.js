@@ -33,7 +33,6 @@ import RelatedReviews from './body_features/relatedReviewsCmp';
 import RelatedResults from './body_features/relatedResultCmp';
 import Line from '../../utils/LineSection';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { DUMMY_USERS } from '../../data/Database';
 
 const Header = ({
   isExpanded,
@@ -43,6 +42,12 @@ const Header = ({
   handleNavigation,
   postType,
   contributionsCount,
+  firstName,
+  lastName,
+  role,
+  followersCount,
+  followingCount,
+  starCount,
   username,
   profession,
   profileImg,
@@ -62,7 +67,17 @@ const Header = ({
           )
         }
       />
-      <UserProfileHeader username={username} profession={profession} profileImg={profileImg} />
+      <UserProfileHeader
+        firstName={firstName}
+        lastName={lastName}
+        role={role}
+        followersCount={followersCount}
+        followingCount={followingCount}
+        starCount={starCount}
+        username={username}
+        profession={profession}
+        profileImg={profileImg}
+      />
     </div>
     <div className={classes.header_options_container}>
       <div className="d-none d-md-block">
@@ -112,48 +127,37 @@ const Reactions = ({ REACTIONS_META_DATA, isActive, setIsActive, commentSections
   </div>
 );
 
-const ImplementationSection = ({
-  IMPLEMENTATION_META_DATA,
-  isCollapsed,
-  setIsCollapsed,
-  isCopied,
-  setIsCopied,
-}) => (
+const ImplementationSection = ({ isCopied, setIsCopied, description, parentPosts, postType }) => (
   <div className={classes.body_solution_container}>
-    {IMPLEMENTATION_META_DATA.map((data) => (
-      <div key={data.id}>
-        <IconTextButton
-          inconTextButtonStyle={classes.body_solution_title_container}
-          label={data.title}
-          icon_={faChevronDown}
-          onClick={() =>
-            setIsCollapsed((prev) => ({
-              ...prev,
-              [data.id]: !prev[data.id],
-            }))
-          }
-        />
-        {!isCollapsed[data.id] && (
-          <div className={classes.body_solution_content_container}>
-            <div className={classes.body_solution_icon_button}>
-              <ToolTip tooltipMessage={!isCopied[data.id] ? 'Copy' : 'Copied'}>
-                <IconButton
-                  icon={!isCopied[data.id] ? faCopy : faCheck}
-                  onClick={() =>
-                    setIsCopied((prev) => ({
-                      ...prev,
-                      [data.id]: !prev[data.id],
-                    }))
-                  }
-                />
-              </ToolTip>
-            </div>
-            <hr className={classes.body_horizontal_line_container} />
-            <Text textStyle={classes.body_solution_text_content_container} p16={data.content} />
-          </div>
+    <div>
+      <Text inconTextButtonStyle={classes.body_solution_title_container} h5={'Description'} />
+
+      <div className={classes.body_solution_content_container}>
+        <div className={classes.body_solution_icon_button}>
+          <ToolTip tooltipMessage={!isCopied ? 'Copy' : 'Copied'}>
+            <IconButton
+              icon={!isCopied ? faCopy : faCheck}
+              onClick={() => setIsCopied((prev) => !prev)}
+            />
+          </ToolTip>
+        </div>
+        <hr className={classes.body_horizontal_line_container} />
+
+        {postType === 'bug_fix' && parentPosts[0] !== undefined && (
+          <IconTextButton label={`Main Post: ${parentPosts[0]}`} />
+        )}
+        {postType === ('bug_fix' || 'reusable_code') && parentPosts[1] !== undefined && (
+          <IconTextButton label={`Parent Post: ${parentPosts[1]}`} />
+        )}
+
+        {description && (
+          <div
+            className={classes.body_solution_text_content_container}
+            dangerouslySetInnerHTML={{ __html: description }}
+          />
         )}
       </div>
-    ))}
+    </div>
   </div>
 );
 
@@ -185,27 +189,27 @@ const Comments = ({ commentSectionsRef }) => (
 
 function ExpandedCard({
   REACTIONS_META_DATA,
-  IMPLEMENTATION_META_DATA,
   CARD_VIEW_OPTION_META_DATA,
   SUGESTION_BUTTON_META_DATA,
+  firstName,
+  lastName,
+  role,
+  followersCount,
+  followingCount,
+  starCount,
+  username,
+  profession,
+  profileImg,
   title,
   potentialTitle,
   contributionsArray,
   contributionsCount,
+  description,
+  postId,
+  parentPosts,
 }) {
   const [isExpanded, setIsExpanded] = useState(true);
-  const [isCopied, setIsCopied] = useState(
-    IMPLEMENTATION_META_DATA.reduce((acc, item) => {
-      acc[item.id] = false;
-      return acc;
-    }, {})
-  );
-  const [isCollapsed, setIsCollapsed] = useState(
-    IMPLEMENTATION_META_DATA.reduce((acc, item) => {
-      acc[item.id] = false;
-      return acc;
-    }, {})
-  );
+  const [isCopied, setIsCopied] = useState(false);
   const [isActive, setIsActive] = useState(
     REACTIONS_META_DATA.reduce((acc, reaction) => {
       acc[reaction.id] = false;
@@ -218,17 +222,16 @@ function ExpandedCard({
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
-  const current_post = searchParams.get('post');
-  const current_username = searchParams.get('username');
+  const currentPost = searchParams.get('post');
 
   const handleNavigation = (id) => {
     id === 'home' && navigate('/');
-    id === 'bug_report' && navigate(`/new/?type=${'bug_fix'}`);
-    id === 'bug_fix' && navigate(`/new/?type=${'bug_fix'}`);
-    id === 'reusable_code' && navigate(`/new/?type=${'reusable_code'}`);
+    id === 'bug_report' && navigate(`/new/?type=${'bug_fix'}&postId=${postId}`);
+    id === 'bug_fix' && navigate(`/new/?type=${'bug_fix'}&postId=${postId}`);
+    id === 'reusable_code' && navigate(`/new/?type=${'reusable_code'}&postId=${postId}`);
   };
 
-  const currentUser = DUMMY_USERS.find((user) => user.username === current_username);
+  console.log('parentPosts', parentPosts);
 
   return (
     <div className={classes.expanded_container}>
@@ -239,12 +242,18 @@ function ExpandedCard({
             setIsExpanded={setIsExpanded}
             CARD_VIEW_OPTION_META_DATA={CARD_VIEW_OPTION_META_DATA}
             handleNavigation={handleNavigation}
-            postType={current_post}
+            postType={currentPost}
             contributionsArray={contributionsArray}
             contributionsCount={contributionsCount}
-            username={currentUser.username}
-            profession={currentUser.profession}
-            profileImg={currentUser.profile}
+            firstName={firstName}
+            lastName={lastName}
+            role={role}
+            followersCount={followersCount}
+            followingCount={followingCount}
+            starCount={starCount}
+            username={username}
+            profession={profession}
+            profileImg={profileImg}
           />
           <Text textStyle={classes.implentation_second_header_container} h5={title} />
           <div className={classes.implentation_body_main_container}>
@@ -256,11 +265,11 @@ function ExpandedCard({
             />
             <Line direction={'horizontal'} />
             <ImplementationSection
-              IMPLEMENTATION_META_DATA={IMPLEMENTATION_META_DATA}
-              isCollapsed={isCollapsed}
-              setIsCollapsed={setIsCollapsed}
               isCopied={isCopied}
+              postType={currentPost}
               setIsCopied={setIsCopied}
+              description={description}
+              parentPosts={parentPosts}
             />
             <FooterButtons SUGESTION_BUTTON_META_DATA={SUGESTION_BUTTON_META_DATA} />
 

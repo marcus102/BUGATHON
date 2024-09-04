@@ -117,8 +117,9 @@
   width: 100%;
 }
 
-/* .body_solution_text_content_container {
-} */
+.body_solution_text_content_container {
+  color: white;
+}
 
 .body_suggestion_container {
   display: flex;

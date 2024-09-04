@@ -159,10 +159,10 @@ function CustomMenu({
         my_key={my_key}
       />
       <div className={classes.header_option_content_root_container}>
-        {METADATA ? (
-          METADATA.map((data) => (
+        {METADATA.lentgh > 0 ? (
+          METADATA.map((data, index) => (
             <OptionContent
-              key={data.id}
+              key={`${data.id}-${index}`}
               data={data}
               option={option}
               button={button}

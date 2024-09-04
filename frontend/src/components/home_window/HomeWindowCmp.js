@@ -5,10 +5,7 @@ import classes from './HomeWindowCmp.module.css';
 import HomeCard from '../card_view/HomeCardView';
 import { HomeCollapsedSideBar, HomeExpandedSideBar } from './home_window_options/SideBarCmp';
 import HomeHeader from './home_window_options/HeaderCmp';
-import Pagination from '../../utils/PaginationSection';
-import usePagination from '../../custom_hooks/usePaginationHook';
 import { VerticalScrollView } from '../../utils/ScrollViewsSection';
-import { DUMMY_POST_DATA } from '../../data/Database';
 import {
   faArrowUpFromBracket,
   faChartSimple,
@@ -24,23 +21,17 @@ import Text from '../../utils/TextSection';
 
 function HomeWindow({ homeWindowMainContainerStyle }) {
   const { sideBar } = useContext(ManagmentSystem);
-  // const ITEMS_PER_PAGE = 5;
-  // const { currentPage, totalPages, paginatedData, handlePageChange } = usePagination(
-  //   DUMMY_POST_DATA,
-  //   ITEMS_PER_PAGE
-  // );
-  /////////////////////////
 
-  const initialPosts = useLoaderData(); // The initial data fetched by the loader
+  const initialPosts = useLoaderData();
   const [visiblePosts, setVisiblePosts] = useState(initialPosts);
-  const [page, setPage] = useState(2); // Start from page 2 since page 1 data is already loaded
+  const [page, setPage] = useState(2);
   const [loading, setLoading] = useState(false);
 
   const loadMorePosts = useCallback(async () => {
     if (loading) return;
 
     setLoading(true);
-    const token = getAuthToken(); // Function to get the auth token, assumed to be available
+    const token = getAuthToken();
 
     if (!token) {
       console.error('No token available');
@@ -125,12 +116,12 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
         {/* BODY */}
         <VerticalScrollView>
           {visiblePosts.length > 0 ? (
-            visiblePosts.map((data) => (
+            visiblePosts.map((data, index) => (
               <HomeCard
-                cardButtonState={data.state}
-                key={data.id}
+                cardButtonState={data?.state}
+                key={`${data.id}-${index}`}
                 isHeaderOption={true}
-                postTitle={data.title}
+                postTitle={data?.title}
                 firstName={data.user?.firstName}
                 lastName={data.user?.lastName}
                 followersCount={data.user?.followersCount}
@@ -140,10 +131,10 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
                 username={data.user?.username}
                 profession={data.user?.profession}
                 role={data.user?.role}
-                profileImg={data.user.image[0]?.imageUrl}
-                timestamp={data.createdAt}
-                postId={data.id}
-                TAGS={data.tags}
+                profileImg={data.user.image && data.user.image[0]?.imageUrl}
+                timestamp={data?.createdAt}
+                postId={data?._id}
+                TAGS={data?.tags}
                 REACTIONSMETADATA={[
                   {
                     id: 'likes',
@@ -151,7 +142,12 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
                     count: `${data.likeCount}`,
                     activeColor: Colors.red_FF2B2B,
                   },
-                  { id: 'comments', icon: faComment, count: `${data.totalComments}`, activeColor: null },
+                  {
+                    id: 'comments',
+                    icon: faComment,
+                    count: `${data.totalComments !== undefined ? data.totalComments : '0'}`,
+                    activeColor: null,
+                  },
                   { id: 'pin', icon: faThumbTack, count: null, activeColor: Colors.yellow_ },
                   {
                     id: 'share',
@@ -175,13 +171,6 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
           )}
           {loading && <p>Loading more posts...</p>}
         </VerticalScrollView>
-
-        {/* PAGINATION */}
-        {/* <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        /> */}
       </div>
     </div>
   );

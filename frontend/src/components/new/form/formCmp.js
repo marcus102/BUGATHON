@@ -4,7 +4,7 @@ import Colors from '../../../constants/colors';
 import Link from '../../../utils/LinkSection';
 import { IconButton, SolidButton } from '../../../utils/ButtonSection';
 import { HorizontalScrollView } from '../../../utils/ScrollViewsSection';
-import { Editor, EditorState, RichUtils, Modifier, ContentState } from 'draft-js';
+import { Editor, EditorState, RichUtils, Modifier } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
@@ -30,6 +30,8 @@ import {
   faLink,
 } from '@fortawesome/free-solid-svg-icons';
 import { File } from '../../../utils/MediaSection';
+import DOMPurify from 'dompurify';
+import { useSearchParams } from 'react-router-dom';
 
 const plugins = [prismPlugin];
 
@@ -132,40 +134,6 @@ function IconButtons({ editorState, setEditorState, showEmojiPicker, setShowEmoj
   );
 }
 
-// function EditorContainer({ editorState, setEditorState, onContentChange }) {
-//   const styleMap = {
-//     HIGHLIGHT: {
-//       backgroundColor: Colors.gray_aaaaaa5e,
-//       borderRadius: '5px',
-//       padding: '0 5px',
-//     },
-//   };
-
-//   const handleEditorChange = (newState) => {
-//     setEditorState(newState);
-//     const contentState = newState.getCurrentContent();
-//     const htmlContent = stateToHTML(contentState);
-//     onContentChange(htmlContent);
-//   };
-
-//   return (
-//     <div className={classes.editorContainer}>
-//       <Editor
-//         editorState={editorState}
-//         onChange={handleEditorChange}
-//         plugins={plugins}
-//         editorKey="editor"
-//         customStyleMap={styleMap}
-//         blockStyleFn={(contentBlock) => {
-//           const type = contentBlock.getType();
-//           return `${classes.editorBlock} ${classes[`text-${type}`]}`;
-//         }}
-//         className={classes.editor}
-//       />
-//     </div>
-//   );
-// }
-
 // Function to automatically detect and convert links
 function EditorContainer({ editorState, setEditorState, onContentChange }) {
   const styleMap = {
@@ -176,40 +144,43 @@ function EditorContainer({ editorState, setEditorState, onContentChange }) {
     },
   };
 
+  // Function to safely replace URLs with anchor tags
   const handleEditorChange = (newState) => {
-    let contentState = newState.getCurrentContent();
-    const selectionState = newState.getSelection();
-    const text = contentState.getPlainText();
-
-    // Detect links using a simple regex
-    const linkPattern = /https?:\/\/[^\s]+/g;
-    let matchArr;
-    while ((matchArr = linkPattern.exec(text)) !== null) {
-      const start = matchArr.index;
-      const end = start + matchArr[0].length;
-
-      // Apply the link entity
-      contentState = contentState.createEntity('LINK', 'MUTABLE', { url: matchArr[0] });
-      const entityKey = contentState.getLastCreatedEntityKey();
-
-      const updatedSelection = selectionState.merge({
-        anchorOffset: start,
-        focusOffset: end,
-      });
-
-      newState = RichUtils.toggleLink(
-        EditorState.forceSelection(newState, updatedSelection),
-        updatedSelection,
-        entityKey
-      );
-    }
-
     setEditorState(newState);
 
     // Convert the content state to HTML
-    const htmlContent = stateToHTML(newState.getCurrentContent());
-    onContentChange(htmlContent);
+    let htmlContent = stateToHTML(newState.getCurrentContent());
+
+    // Safely replace detected URLs with anchor tags
+    const linkPattern = /https?:\/\/[^\s<>"']+/g;
+    htmlContent = htmlContent.replace(linkPattern, (url) => {
+      // Properly format the URL to prevent HTML injection and maintain structure
+      const sanitizedUrl = DOMPurify.sanitize(url);
+      return `<a href="${sanitizedUrl}" target="_blank">${sanitizedUrl}</a>`;
+    });
+
+    // Ensure the final HTML is sanitized
+    const sanitizedHtmlContent = DOMPurify.sanitize(htmlContent);
+
+    // Pass the sanitized HTML to your content change handler
+    onContentChange(sanitizedHtmlContent);
   };
+
+  // const handleEditorChange = (newState) => {
+  //   setEditorState(newState);
+
+  //   // Convert the content state to HTML
+  //   const contentState = newState.getCurrentContent();
+  //   const htmlContent = stateToHTML(contentState);
+
+  //   // Optionally, process the HTML to detect and modify links if needed
+  //   const processedHTML = htmlContent.replace(/https?:\/\/[^\s]+/g, (url) => {
+  //     return `<a href="${url}" target="_blank">${url}</a>`;
+  //   });
+
+  //   // Pass the processed HTML to your content change handler
+  //   onContentChange(processedHTML);
+  // };
 
   return (
     <div className={classes.editorContainer}>
@@ -262,6 +233,8 @@ function TextEditor({ META_DATA }) {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [editorContent, setEditorContent] = useState('');
+  const [searchParams] = useSearchParams();
+  const postId = searchParams.get('postId');
 
   return (
     <>
@@ -301,6 +274,7 @@ function TextEditor({ META_DATA }) {
                 name={data.input_name_2}
                 value={editorContent}
               />
+              <input type="hidden" id={'bug_report_'} name={'bug_report_'} value={postId} />
             </div>
 
             {showEmojiPicker && <EmojiPicker onSelect={addEmoji(editorState, setEditorState)} />}

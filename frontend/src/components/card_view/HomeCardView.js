@@ -55,24 +55,11 @@ const HomeCardHeader = ({
 );
 
 // Body component
-const stripHtml = (html) => {
-  const div = document.createElement('div');
-  div.innerHTML = html;
-  return div.textContent || div.innerText || '';
-};
-
-const truncateText = (text, wordLimit) => {
-  const words = text.split(' ');
-  return words.slice(0, wordLimit).join(' ') + (words.length > wordLimit ? '...' : '');
-};
 
 const HomeCardBody = ({ postTitle, postDescription, children }) => {
-  const textContent = stripHtml(postDescription);
-  const truncatedText = truncateText(textContent, 20);
   return (
     <div className={classes.home_card_body_container}>
       {postTitle && <Text h4={postTitle} />}
-      {postDescription && <div className={classes.body_paragraph_text}>{truncatedText}</div>}
       {children}
     </div>
   );

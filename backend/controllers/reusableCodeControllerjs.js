@@ -51,7 +51,10 @@ exports.createReusableCode = catchAsync(async (req, res, next) => {
 
 exports.filterReusableCodes = factory.blocksHandler(BlockedUser, 'reusable_code_ids');
 
-exports.getAllReusableCodes = factory.getAll(ReusableCode, 'reusable_code_ids');
+exports.getAllReusableCodes = factory.getAll(ReusableCode, 'reusable_code_ids', [
+  { path: 'image' },
+  { path: 'comments' }
+]);
 exports.getReusableCode = factory.getOne(ReusableCode, [{ path: 'image' }, { path: 'comments' }]);
 exports.updateReusableCode = factory.updateOne(ReusableCode);
 
