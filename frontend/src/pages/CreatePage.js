@@ -50,6 +50,7 @@ export async function action({ request }) {
     userData = {
       title: data.get('bug_fix'),
       bugReport_: data.get('bug_report_'),
+      bugFix_: data.get('bug_fix_'),
       description: data.get('solution'),
     };
   } else if (type === 'reusable_code') {

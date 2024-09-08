@@ -1,6 +1,6 @@
-const ReusableCode = require('./../models/reusableCodeModel');
+const ReusableCode = require('../models/reusableCodeModel');
 const User = require('./../models/userModel');
-const BlockedUser = require('./../models/restrictions/blockedUserModel');
+const BlockedUser = require('../models/restrictions/blockedUserModel');
 const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
 const appError = require('../utils/appError');
@@ -53,9 +53,10 @@ exports.filterReusableCodes = factory.blocksHandler(BlockedUser, 'reusable_code_
 
 exports.getAllReusableCodes = factory.getAll(ReusableCode, 'reusable_code_ids', [
   { path: 'image' },
+  { path: 'likedBy' },
   { path: 'comments' }
 ]);
-exports.getReusableCode = factory.getOne(ReusableCode, [{ path: 'image' }, { path: 'comments' }]);
+exports.getReusableCode = factory.getOne(ReusableCode, [{ path: 'image' }, { path: 'likedBy' }, { path: 'comments' }]);
 exports.updateReusableCode = factory.updateOne(ReusableCode);
 
 exports.deleteReusableCode = catchAsync(async (req, res, next) => {

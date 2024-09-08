@@ -21,7 +21,6 @@ import Text from '../../utils/TextSection';
 
 function HomeWindow({ homeWindowMainContainerStyle }) {
   const { sideBar } = useContext(ManagmentSystem);
-
   const initialPosts = useLoaderData();
   const [visiblePosts, setVisiblePosts] = useState(initialPosts);
   const [page, setPage] = useState(2);
@@ -44,16 +43,31 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
     };
 
     try {
-      const response1 = await axios.get(`${PORT}api/v1/bug_report?page=${page}&limit=5`, {
-        headers,
-      });
-      const response2 = await axios.get(`${PORT}api/v1/bug_fixes?page=${page}&limit=5`, {
-        headers,
-      });
-      const response3 = await axios.get(`${PORT}api/v1/reusable_codes?page=${page}&limit=5`, {
-        headers,
-      });
+      const response1 = await axios.get(`${PORT}api/v1/bug_reports?page=1&limit=5`, { headers });
 
+      const response2 = await axios.get(`${PORT}api/v1/bug_fixes?page=1&limit=5`, { headers });
+
+      const response3 = await axios.get(`${PORT}api/v1/reusable_codes?page=1&limit=5`, { headers });
+
+      const allData = [];
+
+      // Add non-empty response data to the array
+      if (response1.data.data.length > 0) {
+        allData.push(...response1.data.data);
+      }
+      if (response2.data.data.length > 0) {
+        allData.push(...response2.data.data);
+      }
+      if (response3.data.data.length > 0) {
+        allData.push(...response3.data.data);
+      }
+
+      if (allData.length === 0) {
+        console.log('No data available');
+        return [];
+      }
+
+      // Shuffle the combined array
       const shuffleArray = (array) => {
         for (let i = array.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
@@ -62,12 +76,14 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
         return array;
       };
 
-      const newPosts = shuffleArray([...response1.data, ...response2.data, ...response3.data]);
+      const shuffledData = shuffleArray(allData);
 
-      setVisiblePosts((prevPosts) => [...prevPosts, ...newPosts]);
-      setPage((prevPage) => prevPage + 1);
+      console.log('Success', shuffledData);
+
+      return shuffledData;
     } catch (error) {
       console.error('Error fetching data:', error.response?.data || error.message);
+      return [];
     } finally {
       setLoading(false);
     }
@@ -111,7 +127,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
 
       <div className={classes.home_window_list_main_container}>
         {/* HEADER */}
-        <HomeHeader />
+        <HomeHeader totalPosts={`${visiblePosts.length}`} />
 
         {/* BODY */}
         <VerticalScrollView>
@@ -162,8 +178,10 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
                     activeColor: null,
                   },
                 ]}
-                contributionsArray={data.contributions}
-                contributionsCount={data.totalAttempts}
+                contributionsArray={data?.contributors}
+                contributionsCount={data?.totalAttempts}
+                likedBy={data?.likedBy}
+                pinMode={data?.pinMode}
               />
             ))
           ) : (

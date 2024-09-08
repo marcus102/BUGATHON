@@ -11,7 +11,13 @@ import {
   CONTRIBUTIONS_OPTION,
 } from '../data/Database';
 
-function HeaderOptions({ contributionsCount, img1, img2, img3, contributionsArray }) {
+function HeaderOptions({
+  contributionsCount,
+  img1,
+  img2,
+  img3,
+  contributionsArray,
+}) {
   return (
     <DropdownMenu
       dropDownMenuStyle={classes.header_option_menu}

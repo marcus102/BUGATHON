@@ -19,6 +19,7 @@ const categoriesController = require('./../controllers/filtering/categoriesContr
 const operatingSystemController = require('../controllers/filtering/operatingSystemController');
 const programmingLanguagesController = require('./../controllers/filtering/programmingLanguagesController');
 const zoneOfInterestController = require('./../controllers/filtering/zoneOfInterestController');
+const likesRouter = require('./user_engagement/likeRoutes');
 
 const router = express.Router({ mergeParams: true });
 
@@ -26,6 +27,7 @@ const router = express.Router({ mergeParams: true });
 router.use('/:bug_id/comments', commentsRouter);
 router.use('/:bug_id/image', imageRouter);
 router.use('/:bug_id/bug_fix', bugFixRouter);
+router.use('/:bug_reports_id/likes', likesRouter);
 //filtering
 router.use('/:bug_id/category', categoriesRouter);
 router.use('/:bug_id/operating_system', operatingSystemRouter);

@@ -7,6 +7,10 @@ const likeSchema = new mongoose.Schema(
       ref: 'User',
       required: true
     },
+    bugReport: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'BugReport'
+    },
     bugFix: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'BugFixes'

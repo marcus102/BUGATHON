@@ -20,13 +20,14 @@ exports.setRequiredIds = (req, res, next) => {
 };
 
 exports.createBugFix = catchAsync(async (req, res, next) => {
-  const { title, description, user, bugReport_, frameworkVersions } = req.body;
+  const { title, description, user, bugReport_, bugFix_, frameworkVersions } = req.body;
 
   let bugFix;
   let bugReportValue;
 
-  if (req.params.id) {
-    bugFix = await BugFixes.findById(req.params.id);
+  if (bugFix_) {
+    console.log(bugFix_)
+    bugFix = await BugFixes.findById(bugFix_);
 
     if (!bugFix) {
       return next(appError('Bug fix does not exist!', 404));
@@ -44,8 +45,8 @@ exports.createBugFix = catchAsync(async (req, res, next) => {
     return next(appError('Bug does not exist!', 404));
   }
 
-  if (req.params.id) {
-    await BugFixes.findByIdAndUpdate(req.params.id, { $inc: { totalAttempts: 1 } });
+  if (bugFix_) {
+    await BugFixes.findByIdAndUpdate(bugFix_, { $inc: { totalAttempts: 1 } });
   }
 
   await BugReport.findByIdAndUpdate(bugReportValue, { $inc: { totalAttempts: 1 } });
@@ -55,7 +56,7 @@ exports.createBugFix = catchAsync(async (req, res, next) => {
     description: description,
     user: user,
     bugReport: bugReportValue,
-    parentSolution: req.params.id || null,
+    parentSolution: bugFix_ || null,
     frameworkVersions: frameworkVersions
   });
 
@@ -64,11 +65,11 @@ exports.createBugFix = catchAsync(async (req, res, next) => {
   await Contributor.create({
     user: user,
     bugFix: _id,
-    parentBugFix: req.params.id,
+    parentBugFix: bugFix_,
     bugReport: bugReportValue
   });
 
-  await User.findByIdAndUpdate(req.user.id, { $inc: { bugFixesCount: 1 } });
+  await User.findByIdAndUpdate(bugFix_, { $inc: { bugFixesCount: 1 } });
 
   res.status(201).json({
     status: 'success',
@@ -81,6 +82,7 @@ exports.filterBlockedBugFixes = factory.blocksHandler(BlockedUser, 'bug_fix_ids'
 exports.getALLBugFixes = factory.getAll(BugFixes, 'bug_fix_ids', [
   { path: 'image' },
   { path: 'reviews' },
+  { path: 'likedBy' },
   { path: 'comments' },
   { path: 'childSolutions' },
   { path: 'contributors' },
@@ -93,6 +95,7 @@ exports.getALLBugFixes = factory.getAll(BugFixes, 'bug_fix_ids', [
 exports.getBugFix = factory.getOne(BugFixes, [
   { path: 'image' },
   { path: 'reviews' },
+  { path: 'likedBy' },
   { path: 'comments' },
   { path: 'childSolutions' },
   { path: 'contributors' },

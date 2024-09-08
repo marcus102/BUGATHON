@@ -40,6 +40,11 @@ export const ManagmentSystem = createContext({
   myProfileImgHandler: (parameters) => {},
   dropDownIsOpen: '',
   dropDownIsOpenHandler: (parameters) => {},
+  headerOption: {
+    viewMoreClick: '',
+    clickedButton: '',
+  },
+  headerOptionHandler: (parameters) => {},
 });
 
 export default function ManagmentSystemProvider({ children }) {
@@ -65,6 +70,10 @@ export default function ManagmentSystemProvider({ children }) {
     myProfileImg: '',
     usersList: [],
     dropDownIsOpen: '',
+    headerOption: {
+      viewMoreClick: '',
+      clickedButton: '',
+    },
   };
 
   function reducer(state, action) {
@@ -149,23 +158,33 @@ export default function ManagmentSystemProvider({ children }) {
           ...state,
           currentProfileId: action.payload,
         };
-
       case 'SET_PROFILE_IMG':
         return {
           ...state,
           myProfileImg: action.payload,
         };
-
       case 'SET_USER':
         return {
           ...state,
           usersList: action.payload,
         };
-
       case 'SET_DROPDOWN_IS_OPEN':
         return {
           ...state,
           dropDownIsOpen: action.payload,
+        };
+      case 'SET_HEADER_OPTION':
+        return {
+          ...state,
+          headerOption: {
+            ...state.headerOption,
+            ...(action.payload.viewMoreClick !== undefined && {
+              viewMoreClick: action.payload.viewMoreClick,
+            }),
+            ...(action.payload.clickedButton !== undefined && {
+              clickedButton: action.payload.clickedButton,
+            }),
+          },
         };
       default:
         return state;
@@ -241,6 +260,10 @@ export default function ManagmentSystemProvider({ children }) {
     dispatch({ type: 'SET_DROPDOWN_IS_OPEN', payload: parameters });
   };
 
+  const headerOptionHandler = ({ viewMoreClick, clickedButton }) => {
+    dispatch({ type: 'SET_HEADER_OPTION', payload: { viewMoreClick, clickedButton } });
+  };
+
   const value = {
     overlay: state.overlay,
     overlayHandler: overlayHandler,
@@ -264,6 +287,8 @@ export default function ManagmentSystemProvider({ children }) {
     myProfileImgHandler: myProfileImgHandler,
     dropDownIsOpen: state.dropDownIsOpen,
     dropDownIsOpenHandler: dropDownIsOpenHandler,
+    headerOption: state.headerOption,
+    headerOptionHandler: headerOptionHandler,
   };
 
   return <ManagmentSystem.Provider value={value}>{children}</ManagmentSystem.Provider>;

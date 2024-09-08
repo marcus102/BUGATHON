@@ -173,6 +173,12 @@ bugFixSchema.virtual('zoneOfInterests', {
   foreignField: 'bugReport'
 });
 
+bugFixSchema.virtual('likedBy', {
+  ref: 'Like',
+  localField: '_id',
+  foreignField: 'bugFix'
+});
+
 bugFixSchema.virtual('comments', {
   ref: 'Comment',
   localField: '_id',

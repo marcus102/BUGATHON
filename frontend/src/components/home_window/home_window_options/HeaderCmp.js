@@ -73,7 +73,7 @@ const HEADER_BUTTON = [
   },
 ];
 
-function HomeHeader() {
+function HomeHeader({ totalPosts }) {
   const { sideBarHandler, sideBar, headerTabHandler, headerTab } = useContext(ManagmentSystem);
   const { isOpen } = sideBar;
 
@@ -111,7 +111,7 @@ function HomeHeader() {
       </div>
       <div className={`${classes.header_results_container}`}>
         <ToolTip
-          children={<Text label14={`Result: 10.000.000 Posts`} />}
+          children={<Text label14={`Result: ${totalPosts ? totalPosts : '0'} Posts`} />}
           tooltipMessage={`total posts`}
         />
         <ToolTip

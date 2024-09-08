@@ -89,6 +89,10 @@ function ExpandedBugReport() {
       SUGESTION_BUTTON_META_DATA={SUGESTION_BUTTON_DATA}
       contributionsArray={data?.contributions}
       contributionsCount={data?.totalAttempts}
+      likesCount={data?.likeCount}
+      commentsCount={data?.commentCount}
+      sharesCount={data?.shareCount}
+      viewsCount={data?.viewCount}
       title={data?.title}
       potentialTitle={'Potential Bug Fixes'}
       description={data.description}

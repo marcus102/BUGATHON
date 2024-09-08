@@ -32,7 +32,7 @@ router
 
 router
   .route('/:id')
-  .post(bugFixesController.setRequiredIds, bugFixesController.createBugFix)
+  // .post(bugFixesController.setRequiredIds, bugFixesController.createBugFix)
   .get(bugFixesController.getBugFix)
   .patch(bugFixesController.updateBugFix)
   .delete(

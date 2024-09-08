@@ -63,7 +63,11 @@ const Header = ({
         label={'Contribute'}
         onClick={() =>
           handleNavigation(
-            postType === 'bug_report' || postType === 'bug_fix' ? 'bug_fix' : 'reusable_code'
+            postType === 'bug_report'
+              ? 'bug_report'
+              : postType === 'bug_fix'
+              ? 'bug_fix'
+              : 'reusable_code'
           )
         }
       />
@@ -204,6 +208,10 @@ function ExpandedCard({
   potentialTitle,
   contributionsArray,
   contributionsCount,
+  likesCount,
+  commentsCount,
+  sharesCount,
+  viewsCount,
   description,
   postId,
   parentPosts,
@@ -227,7 +235,7 @@ function ExpandedCard({
   const handleNavigation = (id) => {
     id === 'home' && navigate('/');
     id === 'bug_report' && navigate(`/new/?type=${'bug_fix'}&postId=${postId}`);
-    id === 'bug_fix' && navigate(`/new/?type=${'bug_fix'}&postId=${postId}`);
+    id === 'bug_fix' && navigate(`/new/?id=${postId}&type=${'bug_fix'}&postId=${postId}`);
     id === 'reusable_code' && navigate(`/new/?type=${'reusable_code'}&postId=${postId}`);
   };
 
@@ -276,13 +284,25 @@ function ExpandedCard({
             {!isExpanded && (
               <div className={classes.body_analytics_container}>
                 <div className={`d-none d-xl-flex ${classes.analytics_analytic_container_2}`}>
-                  <Analytics2 />
+                  <Analytics2
+                    likesCount={likesCount}
+                    commentsCount={commentsCount}
+                    sharesCount={sharesCount}
+                    viewsCount={viewsCount}
+                    contributionsCount={contributionsCount}
+                  />
                 </div>
               </div>
             )}
             <div className={classes.body_analytics_container}>
               <div className={`d-flex d-xl-none ${classes.analytics_analytic_container_2}`}>
-                <Analytics2 />
+                <Analytics2
+                  likesCount={likesCount}
+                  commentsCount={commentsCount}
+                  sharesCount={sharesCount}
+                  viewsCount={viewsCount}
+                  contributionsCount={contributionsCount}
+                />
               </div>
             </div>
             <Comments commentSectionsRef={commentSectionsRef} />
@@ -292,7 +312,13 @@ function ExpandedCard({
           <div
             className={`col-5 d-none d-xl-block ${classes.expanded_card_analytics_main_container}`}
           >
-            <Analytics />
+            <Analytics
+              likesCount={likesCount}
+              commentsCount={commentsCount}
+              sharesCount={sharesCount}
+              viewsCount={viewsCount}
+              contributionsCount={contributionsCount}
+            />
             <PotentialBugFixes potentialTitle={potentialTitle} />
           </div>
         )}

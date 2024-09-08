@@ -68,7 +68,7 @@ commentSchema.virtual('childComments', {
   foreignField: 'parentComment'
 });
 
-commentSchema.virtual('likes', {
+commentSchema.virtual('likedBy', {
   ref: 'Like',
   localField: '_id',
   foreignField: 'comment'
@@ -83,7 +83,11 @@ commentSchema.virtual('images', {
 commentSchema.pre(/^find/, function(next) {
   this.populate({
     path: 'user',
-    select: 'username profile'
+    select: 'username',
+    populate: {
+      path: 'image',
+      select: 'imageUrl'
+    }
   })
     .populate({
       path: 'bugReport',

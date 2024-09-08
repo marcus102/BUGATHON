@@ -18,18 +18,6 @@ const reusableCodeSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'ReusableCode'
     },
-    // codeSnippet: {
-    //   type: String,
-    //   required: [true, 'Please! the code snippet is rerquired! provide it']
-    // },
-    // result: {
-    //   type: String,
-    //   required: [true, 'Please! the result is rerquired! provide it']
-    // },
-    // usageGuileline: {
-    //   type: String,
-    //   required: [true, 'Please! the usage guideline is rerquired! provide it']
-    // },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
@@ -56,6 +44,10 @@ const reusableCodeSchema = new mongoose.Schema(
       default: 0
     },
     reportCount: {
+      type: Number,
+      default: 0
+    },
+    totalAttempts: {
       type: Number,
       default: 0
     },
@@ -101,16 +93,23 @@ reusableCodeSchema.pre(/^find/, function(next) {
       path: 'image',
       select: 'imageUrl'
     }
-  }).populate({
-    path: 'ReusableCode',
-    select: 'title'
   });
+  // .populate({
+  //   path: 'ReusableCode',
+  //   select: 'title'
+  // });
 
   next();
 });
 
 reusableCodeSchema.virtual('image', {
   ref: 'Image',
+  localField: '_id',
+  foreignField: 'reusableCode'
+});
+
+reusableCodeSchema.virtual('likedBy', {
+  ref: 'Like',
   localField: '_id',
   foreignField: 'reusableCode'
 });

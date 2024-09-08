@@ -56,6 +56,30 @@ exports.getOne = (Model, populateOptions) =>
       }
     }
 
+    // Populate the virtual field 'contributors' with all data
+    if (Model.schema.virtuals.contributors) {
+      query = query.populate({
+        path: 'contributors',
+        populate: [
+          {
+            path: 'user',
+            model: 'User',
+            select: '-password -__v'
+          },
+          {
+            path: 'bugFix',
+            model: 'BugFixes',
+            select: '-__v'
+          },
+          {
+            path: 'bugReport',
+            model: 'BugReport',
+            select: '-__v'
+          }
+        ]
+      });
+    }
+
     const doc = await query;
 
     if (!doc) {

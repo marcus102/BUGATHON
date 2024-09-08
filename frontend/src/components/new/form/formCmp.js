@@ -235,6 +235,7 @@ function TextEditor({ META_DATA }) {
   const [editorContent, setEditorContent] = useState('');
   const [searchParams] = useSearchParams();
   const postId = searchParams.get('postId');
+  const id = searchParams.get('id');
 
   return (
     <>
@@ -274,7 +275,12 @@ function TextEditor({ META_DATA }) {
                 name={data.input_name_2}
                 value={editorContent}
               />
-              <input type="hidden" id={'bug_report_'} name={'bug_report_'} value={postId} />
+              {postId && !id && (
+                <input type="hidden" id={'bug_report_'} name={'bug_report_'} value={postId} />
+              )}
+              {postId && id && (
+                <input type="hidden" id={'bug_fix_'} name={'bug_fix_'} value={postId} />
+              )}
             </div>
 
             {showEmojiPicker && <EmojiPicker onSelect={addEmoji(editorState, setEditorState)} />}

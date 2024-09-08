@@ -78,6 +78,10 @@ function ExpandedReusableCode() {
       ]}
       contributionsArray={data?.contributions}
       contributionsCount={data?.totalAttempts}
+      likesCount={data?.likeCount}
+      commentsCount={data?.commentCount}
+      sharesCount={data?.shareCount}
+      viewsCount={data?.viewCount}
       CARD_VIEW_OPTION_META_DATA={CARD_VIEW_OPTION}
       SUGESTION_BUTTON_META_DATA={SUGESTION_BUTTON_DATA}
       title={data?.title}

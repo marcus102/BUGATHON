@@ -1,6 +1,7 @@
 const Like = require('../../models/user_engagement/likesModel');
 const BugFixes = require('../../models/bugFixesModel');
 const ReusableCode = require('../../models/reusableCodeModel');
+const BugReport = require('../../models/bugReportModel');
 const Blog = require('./../../models/blogPostModel');
 const Comment = require('./../../models/user_engagement/commentModel');
 const catchAsync = require('../../utils/catchAsync');
@@ -22,8 +23,8 @@ exports.setRequiredIds = (req, res, next) => {
 };
 
 exports.toggleLike = catchAsync(async (req, res, next) => {
-  const { bugFix, reusableCode, blogPost, user, comment } = req.body;
-  if (!(bugFix || reusableCode || blogPost || comment)) {
+  const { bugFix, reusableCode, blogPost, bugReport, user, comment } = req.body;
+  if (!(bugFix || reusableCode || blogPost || bugReport || comment)) {
     return next(appError('This operation cannot be performed!', 401));
   }
 
@@ -36,6 +37,9 @@ exports.toggleLike = catchAsync(async (req, res, next) => {
   } else if (reusableCode) {
     dataField = 'reusableCode';
     DB = ReusableCode;
+  } else if (bugReport) {
+    dataField = 'bugReport';
+    DB = BugReport;
   } else if (blogPost) {
     dataField = 'blogPost';
     DB = Blog;
