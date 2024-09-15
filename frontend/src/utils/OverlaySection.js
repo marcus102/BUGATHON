@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import Colors from '../constants/colors';
 import classes from './OverlaySection.module.css';
 import { ManagmentSystem } from '../store/AppGeneralManagmentSystem';
-import { Modal, Button } from 'react-bootstrap';
 import { IconButton } from './ButtonSection';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
@@ -48,22 +47,3 @@ export function Overlay({
     </>
   );
 }
-
-// export function MenuModal({ modalContainerStyle, children, keyId }) {
-//   const { overlay, overlayHandler } = useContext(ManagmentSystem);
-
-//   return (
-//     <Modal
-//       show={overlay.open && overlay.keyId === keyId && overlay.layout === 'menu'}
-//       onHide={() => overlayHandler(null, null)}
-//       className={`${classes.modal} ${modalContainerStyle}`}
-//     >
-//       <Modal.Body className={classes.modal_body}>
-//         {children}
-//         <Button variant="secondary" onClick={() => overlayHandler(null, null)}>
-//           Close
-//         </Button>
-//       </Modal.Body>
-//     </Modal>
-//   );
-// }

@@ -8,10 +8,10 @@ import HomeHeader from './home_window_options/HeaderCmp';
 import { VerticalScrollView } from '../../utils/ScrollViewsSection';
 import {
   faArrowUpFromBracket,
+  faBookmark,
   faChartSimple,
   faComment,
   faHeart,
-  faThumbTack,
 } from '@fortawesome/free-solid-svg-icons';
 import { useLoaderData } from 'react-router-dom';
 import axios from 'axios';
@@ -155,33 +155,34 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
                   {
                     id: 'likes',
                     icon: faHeart,
-                    count: `${data.likeCount}`,
+                    count: `${data?.likeCount}`,
                     activeColor: Colors.red_FF2B2B,
                   },
                   {
                     id: 'comments',
                     icon: faComment,
-                    count: `${data.totalComments !== undefined ? data.totalComments : '0'}`,
+                    count: `${data?.commentCount}`,
                     activeColor: null,
                   },
-                  { id: 'pin', icon: faThumbTack, count: null, activeColor: Colors.yellow_ },
+                  { id: 'save', icon: faBookmark, count: null, activeColor: Colors.yellow_ },
                   {
                     id: 'share',
                     icon: faArrowUpFromBracket,
-                    count: `${data.shareCount}`,
+                    count: `${data?.shareCount}`,
                     activeColor: null,
                   },
                   {
                     id: 'impression',
                     icon: faChartSimple,
-                    count: `${data.viewCount}`,
+                    count: `${data?.viewCount}`,
                     activeColor: null,
                   },
                 ]}
                 contributionsArray={data?.contributors}
                 contributionsCount={data?.totalAttempts}
                 likedBy={data?.likedBy}
-                pinMode={data?.pinMode}
+                saveMode={data?.saveMode}
+                commentsArray={data?.comments}
               />
             ))
           ) : (

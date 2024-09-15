@@ -8,6 +8,7 @@ import Text from '../../../utils/TextSection';
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
 import {
   faAngleRight,
+  faBookmark,
   faChevronLeft,
   faChevronRight,
   faFire,
@@ -17,10 +18,10 @@ import {
 const HEADER_BUTTON = [
   {
     id: '1',
-    button: 'Pinned',
-    icon: faThumbTack,
-    color: Colors.orange_ff7811,
-    data: 'pinned',
+    button: 'Saved',
+    icon: faBookmark,
+    color: Colors.yellow_,
+    data: 'saved',
     style: 'd-none d-lg-block',
   },
   {
@@ -93,9 +94,9 @@ function HomeHeader({ totalPosts }) {
       />
 
       <div className={`${classes.header_buttons_container}`}>
-        {HEADER_BUTTON.map((data) => (
+        {HEADER_BUTTON.map((data, index) => (
           <SolidButton
-            key={data.id}
+            key={`${data.id}-${index}`}
             buttonMainContainerStyle={`${classes.buttons_main_container} ${data.style}`}
             buttonStyle={
               headerTab === data.data ? classes.active_buttons_container : classes.buttons_style

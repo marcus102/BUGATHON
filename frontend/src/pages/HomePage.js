@@ -72,3 +72,5 @@ export async function loader({ request }) {
     return [];
   }
 }
+
+export async function action() {}

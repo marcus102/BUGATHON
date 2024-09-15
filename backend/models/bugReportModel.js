@@ -78,7 +78,7 @@ const bugReportSchema = new mongoose.Schema(
       type: Date,
       default: Date.now()
     },
-    pinMode: {
+    saveMode: {
       type: Boolean,
       default: false
     },
@@ -179,11 +179,6 @@ bugReportSchema.pre(/^find/, function(next) {
 
   next();
 });
-
-// bugReportSchema.pre(/^find/, async function(next) {
-//   const myBlocks = await BlockedUser.findById(this.user);
-//   next();
-// });
 
 const BugReport = mongoose.model('BugReport', bugReportSchema);
 

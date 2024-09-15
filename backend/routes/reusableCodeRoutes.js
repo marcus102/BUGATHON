@@ -24,7 +24,7 @@ const router = express.Router({ mergeParams: true });
 
 //engagement
 router.use('/:reusable_code_id/image', imageRouter);
-router.use('/:reusable_code_id/comment', commentRouter);
+router.use('/:reusable_code_id/comments', commentRouter);
 router.use('/:reusable_code_id/likes', likesRouter);
 router.use('/:reusable_code_id/review', reviewRouter);
 //filtering

@@ -18,6 +18,7 @@ exports.setRequiredIds = (req, res, next) => {
 
 exports.createComment = catchAsync(async (req, res, next) => {
   const { user, bugReport_, bugFix_, reusableCode_, comment, blogPost_ } = req.body;
+  // id is the parent comment unique identifier
   const { id } = req.params;
   if (!id) {
     let dataField;
@@ -38,7 +39,6 @@ exports.createComment = catchAsync(async (req, res, next) => {
 
     const createComment = await Comment.create({
       comment: comment,
-      parentComment: id,
       user: user,
       bugReport: bugReport_,
       bugFix: bugFix_,
@@ -78,12 +78,8 @@ exports.createComment = catchAsync(async (req, res, next) => {
   }
 });
 
-exports.getAllComments = factory.getAll(Comment, { path: 'childComments' }, [
-  { path: 'childComments' },
-  { path: 'likedBy' },
-  { path: 'images' }
-]);
-exports.getComment = factory.getOne(Comment, [{ path: 'childComments' }, { path: 'likedBy' }, { path: 'images' }]);
+exports.getAllComments = factory.getAll(Comment, null, [({ path: 'likedBy' }, { path: 'images' })]);
+exports.getComment = factory.getOne(Comment, [{ path: 'likedBy' }, { path: 'images' }]);
 
 exports.getPostComment = catchAsync(async (req, res, next) => {});
 

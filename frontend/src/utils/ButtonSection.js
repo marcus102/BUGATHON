@@ -223,10 +223,10 @@ export function IconTextButton({
   );
 }
 
-export function ImageButton({ onClick, src, alt, imageButtonStyle, imageStyle }) {
+export function ImageButton({ onClick, src, alt, imageButtonStyle, imageStyle, type }) {
   return (
     <button
-      type="button"
+      type={type}
       className={`${classes.image_button_container} ${imageButtonStyle}`}
       onClick={onClick}
     >
@@ -247,10 +247,11 @@ export function ImageTextButton({
   imageTextLabel16Style,
   children,
   unwrap,
+  buttonType,
 }) {
   return (
     <button
-      type="button"
+      type={buttonType}
       className={`${classes.image_text_button_container} ${imageTextButtonStyle}`}
       onClick={onClick}
     >

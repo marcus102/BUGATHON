@@ -10,12 +10,11 @@ import {
 import UserProfileHeader from '../userProfileHeaderCmp';
 import HeaderOptions from '../headerOptionsCmp';
 import ToolTip from '../../utils/toolTipSection';
-import { useNavigate } from 'react-router-dom';
 import { CARD_VIEW_OPTION } from '../../data/Database';
 import axios from 'axios';
 import { PORT } from '../../http_requests/authentication';
 import { getAuthToken } from '../../utils/authSection';
-import { useRouteLoaderData } from 'react-router-dom';
+import { useRouteLoaderData, useNavigate } from 'react-router-dom';
 
 // Header component
 const HomeCardHeader = ({
@@ -73,31 +72,33 @@ const HomeCardBody = ({ postTitle, postDescription, children }) => {
 const HomeCardFooter = ({
   TAGS,
   timestamp,
-  REACTIONSMETADATA,
+  reactionsData,
   postId,
+  username,
   likedBy,
   cardButtonState,
-  pinMode,
+  saveMode,
+  commentsArray,
 }) => {
   const { fetchData } = useRouteLoaderData('root');
   const currentUserId = fetchData?.data.id;
   const isActiveRef = useRef({});
   const token = getAuthToken();
+  const navigate = useNavigate();
 
-  const initialLikesCount =
-    REACTIONSMETADATA.find((reaction) => reaction.id === 'likes')?.count || 0;
+  const initialLikesCount = reactionsData?.find((reaction) => reaction.id === 'likes')?.count || 0;
   const [totalLikes, setTotalLikes] = useState(initialLikesCount);
 
   const [isActive, setIsActive] = useState(
-    REACTIONSMETADATA &&
-      REACTIONSMETADATA.reduce((acc, reaction) => {
+    reactionsData &&
+      reactionsData.reduce((acc, reaction) => {
         acc[reaction.id] = false;
         return acc;
       }, {})
   );
 
   useEffect(() => {
-    if (likedBy.some((like) => like.user === currentUserId)) {
+    if (likedBy?.some((like) => like.user === currentUserId)) {
       setIsActive((prev) => ({ ...prev, likes: true }));
     }
   }, [likedBy, currentUserId]);
@@ -151,32 +152,36 @@ const HomeCardFooter = ({
       }
     }
 
-    if (isActiveRef.current[id] === true && id === 'pin') {
+    if (isActiveRef.current[id] === true && id === 'save') {
       try {
         await axios.patch(
           `${PORT}api/v1/${state}/${postId}`,
-          { pinMode: true },
+          { saveMode: true },
           {
             headers,
           }
         );
-        console.log('pinned👍');
+        console.log('saved');
       } catch (error) {
-        console.error('Error liking post:', error.response.data);
+        console.error('Error saving post:', error.response.data);
       }
-    } else if (isActiveRef.current[id] === false && id === 'pin') {
+    } else if (isActiveRef.current[id] === false && id === 'save') {
       try {
         await axios.patch(
           `${PORT}api/v1/${state}/${postId}`,
-          { pinMode: false },
+          { saveMode: false },
           {
             headers,
           }
         );
-        console.log('pinned👍');
+        console.log('unsaved');
       } catch (error) {
-        console.error('Error liking post:', error.response.data);
+        console.error('Error unsaving post:', error.response.data);
       }
+    }
+
+    if (id === 'comments') {
+      navigate(`/comments/?username=${username}&postId=${postId}&post=${cardButtonState}`);
     }
   };
   return (
@@ -191,15 +196,15 @@ const HomeCardFooter = ({
         <Text textStyle={classes.timestamp_container} label10={timestamp} />
       </div>
       <div className={classes.footer_reaction_container}>
-        {REACTIONSMETADATA &&
-          REACTIONSMETADATA.map((data, index) => (
+        {reactionsData &&
+          reactionsData.map((data, index) => (
             <ToolTip tooltipMessage={data.id} key={`${data.id}-${index}`}>
               <IconTextButton
                 onClick={() => reactionsHandler(data.id)}
                 inconTextButtonStyle={classes.reaction_icon_text_button_container}
                 colorOnMouseUp={
                   (data.id === 'likes' && likedBy.some((like) => like.user.id === currentUserId)) ||
-                  (data.id === 'pin' && pinMode === true) ||
+                  (data.id === 'save' && saveMode === true) ||
                   isActive[data.id]
                     ? data.activeColor
                     : undefined
@@ -214,6 +219,9 @@ const HomeCardFooter = ({
             </ToolTip>
           ))}
       </div>
+      {/* <Overlay keyId={'comments'}>
+        <CommentSection commentsArray={commentsArray} cardButtonState={cardButtonState} />
+      </Overlay> */}
     </div>
   );
 };
@@ -241,7 +249,8 @@ function HomeCard({
   contributionsArray,
   postId,
   likedBy,
-  pinMode,
+  saveMode,
+  commentsArray,
 }) {
   const navigate = useNavigate();
 
@@ -283,13 +292,7 @@ function HomeCard({
         label={'Click for more'}
         icon_={faArrowUpRightFromSquare}
         onClick={() => {
-          if (cardButtonState === 'bug_report') {
-            navigate(`/detail/?username=${username}&postId=${postId}&post=${'bug_report'}`);
-          } else if (cardButtonState === 'bug_fix') {
-            navigate(`/detail/?username=${username}&postId=${postId}&post=${'bug_fix'}`);
-          } else if (cardButtonState === 'reusable_code') {
-            navigate(`/detail/?username=${username}&postId=${postId}&post=${'reusable_code'}`);
-          }
+          navigate(`/detail/?username=${username}&postId=${postId}&post=${cardButtonState}`);
         }}
       />
 
@@ -297,11 +300,13 @@ function HomeCard({
       <HomeCardFooter
         TAGS={TAGS}
         timestamp={timestamp}
-        REACTIONSMETADATA={REACTIONSMETADATA}
+        reactionsData={REACTIONSMETADATA}
         postId={postId}
         likedBy={likedBy}
         cardButtonState={cardButtonState}
-        pinMode={pinMode}
+        saveMode={saveMode}
+        commentsArray={commentsArray}
+        username={username}
       />
     </div>
   );

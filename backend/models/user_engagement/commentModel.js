@@ -39,9 +39,13 @@ const commentSchema = new mongoose.Schema(
       type: Number,
       default: 0
     },
+    pinMode: {
+      type: Boolean,
+      default: false
+    },
     createdAt: {
       type: Date,
-      default: Date.now
+      default: Date.now()
     },
     updatedAt: {
       type: Date,
@@ -58,15 +62,14 @@ commentSchema.post('save', function(doc, next) {
   if (!this.parentComment) {
     this.parentComment = this._id;
   }
-
   next();
 });
 
-commentSchema.virtual('childComments', {
-  ref: 'Comment',
-  localField: '_id',
-  foreignField: 'parentComment'
-});
+// commentSchema.virtual('childComments', {
+//   ref: 'Comment',
+//   localField: '_id',
+//   foreignField: 'parentComment'
+// });
 
 commentSchema.virtual('likedBy', {
   ref: 'Like',
@@ -83,28 +86,28 @@ commentSchema.virtual('images', {
 commentSchema.pre(/^find/, function(next) {
   this.populate({
     path: 'user',
-    select: 'username',
+    select: 'username profession role firstName lastName followersCount followingCount starCount',
     populate: {
       path: 'image',
       select: 'imageUrl'
     }
   })
-    .populate({
-      path: 'bugReport',
-      select: 'title description'
-    })
-    .populate({
-      path: 'bugFix',
-      select: 'user solution status'
-    })
-    .populate({
-      path: 'parentComment',
-      select: 'comment'
-    })
-    .populate({
-      path: 'reusableCode',
-      select: 'title description'
-    });
+    // .populate({
+    //   path: 'bugReport',
+    //   select: 'title description'
+    // })
+    // .populate({
+    //   path: 'bugFix',
+    //   select: 'title description'
+    // })
+    // .populate({
+    //   path: 'parentComment',
+    //   select: 'comment'
+    // })
+    // .populate({
+    //   path: 'reusableCode',
+    //   select: 'title description'
+    // });
 
   next();
 });

@@ -70,7 +70,7 @@ const reusableCodeSchema = new mongoose.Schema(
       type: Date,
       default: Date.now()
     },
-    pinMode: {
+    saveMode: {
       type: Boolean,
       default: false
     },
@@ -94,10 +94,6 @@ reusableCodeSchema.pre(/^find/, function(next) {
       select: 'imageUrl'
     }
   });
-  // .populate({
-  //   path: 'ReusableCode',
-  //   select: 'title'
-  // });
 
   next();
 });

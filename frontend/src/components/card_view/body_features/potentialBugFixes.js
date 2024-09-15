@@ -23,7 +23,7 @@ function PotentialBugFixes({ potentialTitle }) {
             username={data.user.username}
             postId={data.id}
             TAGS={data.tags}
-            REACTIONSMETADATA={data.reactions}
+            // REACTIONSMETADATA={data.reactions}
             contributionsArray={data.contributions}
             contributionsCount={data.totalAttempts}
           />

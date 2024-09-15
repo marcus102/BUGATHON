@@ -76,7 +76,7 @@ const bugFixSchema = new mongoose.Schema(
       type: Date,
       default: Date.now()
     },
-    pinMode: {
+    saveMode: {
       type: Boolean,
       default: false
     },
@@ -190,39 +190,6 @@ bugFixSchema.virtual('childSolutions', {
   localField: '_id',
   foreignField: 'parentSolution'
 });
-
-// bugFixSchema.statics.updateBugReportStats = async function(bugID) {
-//   const stats = await this.aggregate([
-//     {
-//       $match: { bugReport: bugID }
-//     },
-//     {
-//       $group: {
-//         _id: '$bugReport',
-//         nAttempts: { $sum: 1 }
-//       }
-//     }
-//   ]);
-
-//   if (stats.length > 0) {
-//     const { nAttempts } = stats[0];
-//     await BugReport.findOneAndUpdate(
-//       { _id: bugID },
-//       {
-//         $set: {
-//           totalAttempts: nAttempts
-//         }
-//       },
-//       { new: true }
-//     );
-//   } else {
-//     await BugReport.findOneAndUpdate({ _id: bugID }, { $set: { totalAttempts: 0 } }, { new: true });
-//   }
-// };
-
-// bugFixSchema.post('save', function() {
-//   this.constructor.updateBugReportStats(this.bugReport);
-// });
 
 const BugFixes = mongoose.model('BugFixes', bugFixSchema);
 
