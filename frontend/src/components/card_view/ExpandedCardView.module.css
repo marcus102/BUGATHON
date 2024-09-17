@@ -56,6 +56,10 @@
   flex-direction: column;
 }
 
+.button_text {
+  cursor: pointer;
+}
+
 .body_reactions_container {
   display: flex;
   justify-content: space-between;

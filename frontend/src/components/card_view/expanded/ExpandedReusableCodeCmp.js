@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ExpandedCard from '../ExpandedCardView';
 import Colors from '../../../constants/colors';
 import { CARD_VIEW_OPTION } from '../../../data/Database';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useLoaderData } from 'react-router-dom';
 import {
   faArrowUpFromBracket,
+  faBookmark,
   faChartSimple,
   faComment,
   faHeart,
-  faThumbTack,
 } from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
-import { PORT } from '../../../http_requests/authentication';
-import { getAuthToken } from '../../../utils/authSection';
 
 const SUGESTION_BUTTON_DATA = [
   { id: '1', label: 'View People Contributions', children: null },
@@ -21,32 +18,8 @@ const SUGESTION_BUTTON_DATA = [
 
 function ExpandedReusableCode() {
   const [searchParams] = useSearchParams();
-  const postId = searchParams.get('postId');
-  const [data, setData] = useState();
-  const [id, setId] = useState(postId);
-  const token = getAuthToken();
-
-  useEffect(() => {
-    const getBugReport = async () => {
-      if (!postId) return;
-      const headers = {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      };
-
-      try {
-        const response = await axios.get(`${PORT}api/v1/reusable_codes/${postId}`, { headers });
-        console.log('Success!!', response.data.data);
-        setData(response.data.data);
-      } catch (error) {
-        console.error('Error fetching data:', error.response.data);
-        return null;
-      }
-    };
-
-    getBugReport();
-    setId(null);
-  }, [id, token]);
+  const post = searchParams.get('post');
+  const data = useLoaderData();
 
   if (!data) {
     return <div>No data found</div>;
@@ -54,28 +27,6 @@ function ExpandedReusableCode() {
 
   return (
     <ExpandedCard
-      REACTIONS_META_DATA={[
-        {
-          id: 'likes',
-          icon: faHeart,
-          count: `${data?.likeCount}`,
-          activeColor: Colors.red_FF2B2B,
-        },
-        {
-          id: 'comments',
-          icon: faComment,
-          count: `${data?.commentCount}`,
-          activeColor: null,
-        },
-        { id: 'pin', icon: faThumbTack, count: null, activeColor: Colors.yellow_ },
-        {
-          id: 'share',
-          icon: faArrowUpFromBracket,
-          count: `${data?.shareCount}`,
-          activeColor: null,
-        },
-        { id: 'impression', icon: faChartSimple, count: `${data?.viewCount}`, activeColor: null },
-      ]}
       contributionsArray={data?.contributions}
       contributionsCount={data?.totalAttempts}
       likesCount={data?.likeCount}
@@ -98,6 +49,46 @@ function ExpandedReusableCode() {
       profileImg={data.user.image && data.user.image[0]?.profileImg}
       postId={data?._id}
       parentPosts={[data?.parentSolution?.title]}
+      post={post}
+      likedBy={data?.likedBy}
+      saveMode={data?.saveMode}
+      REACTIONS_META_DATA={[
+        {
+          id: 'likes',
+          icon: faHeart,
+          count: `${data?.likeCount}`,
+          state: null,
+          activeColor: Colors.red_FF2B2B,
+        },
+        {
+          id: 'comments',
+          icon: faComment,
+          count: `${data?.comments.length}`,
+          state: null,
+          activeColor: null,
+        },
+        {
+          id: 'save',
+          icon: faBookmark,
+          count: null,
+          state: data?.saveMode,
+          activeColor: Colors.yellow_,
+        },
+        {
+          id: 'share',
+          icon: faArrowUpFromBracket,
+          count: `${data?.shareCount}`,
+          state: null,
+          activeColor: null,
+        },
+        {
+          id: 'impression',
+          icon: faChartSimple,
+          count: `${data?.viewCount}`,
+          state: null,
+          activeColor: null,
+        },
+      ]}
     />
   );
 }

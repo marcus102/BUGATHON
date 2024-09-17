@@ -99,8 +99,7 @@ const OptionContent = ({
   const { headerOptionHandler, headerOption } = useContext(ManagmentSystem);
   const navigate = useNavigate();
 
-  // Use reduce to create rooms for each data object
-  const rooms = contributions.reduce((acc, item) => {
+  const rooms = contributions?.reduce((acc, item) => {
     acc[item.id] = item.id;
     return acc;
   }, {});

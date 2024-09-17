@@ -95,7 +95,7 @@ const Comment = ({
     {
       id: 'reply',
       icon: faReply,
-      count: `${repliesCount}`,
+      count: `Reply`,
       activeColor: null,
     },
   ];
@@ -158,7 +158,7 @@ const Comment = ({
               {showMore ? comment.comment : `${comment.comment.slice(0, 50)}...`}
               {comment.comment.length > 50 && (
                 <ButtonContainer
-                  children={showMore ? 'less' : 'more'}
+                  children={showMore ? 'less' : 'more...'}
                   onClick={toggleShowMore}
                   buttonContainerMainContainer={classes.more_button}
                 />
@@ -235,7 +235,7 @@ const Comment = ({
                 />
               ))
             : replies
-                .slice(0, 1)
+                .slice(0, 0)
                 .map((reply) => (
                   <Comment
                     key={reply.id}

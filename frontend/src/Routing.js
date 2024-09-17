@@ -8,7 +8,7 @@ import Blog from './pages/BlogPage.js';
 import HomePage, { loader as homeLoader, action as homeAction } from './pages/HomePage.js';
 import SettingsPage, { action as settingsAction } from './pages/SettingsPage.js';
 import ProfilePage from './pages/Profile.js';
-import ExpandedCardView from './pages/ExpandedCardView.js';
+import ExpandedCardView, { loader as expandedLoader } from './pages/ExpandedCardView.js';
 import CreatePage, { action as createAction, loader as createLoader } from './pages/CreatePage.js';
 import SecondNavBarRoot from './pages/SecondNavBarRootPage.js';
 import AuthenticationPage, { action as authAction } from './pages/AuthenticationPage.js';
@@ -59,6 +59,7 @@ const router = createBrowserRouter([
           {
             path: 'detail',
             element: <ExpandedCardView />,
+            loader: expandedLoader,
           },
           {
             path: 'comments',

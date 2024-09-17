@@ -44,9 +44,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
 
     try {
       const response1 = await axios.get(`${PORT}api/v1/bug_reports?page=1&limit=5`, { headers });
-
       const response2 = await axios.get(`${PORT}api/v1/bug_fixes?page=1&limit=5`, { headers });
-
       const response3 = await axios.get(`${PORT}api/v1/reusable_codes?page=1&limit=5`, { headers });
 
       const allData = [];
@@ -77,10 +75,9 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
       };
 
       const shuffledData = shuffleArray(allData);
-
+      setVisiblePosts((prevPosts) => [...prevPosts, ...shuffledData]);
+      setPage((prevPage) => prevPage + 1);
       console.log('Success', shuffledData);
-
-      return shuffledData;
     } catch (error) {
       console.error('Error fetching data:', error.response?.data || error.message);
       return [];
@@ -156,25 +153,35 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
                     id: 'likes',
                     icon: faHeart,
                     count: `${data?.likeCount}`,
+                    state: null,
                     activeColor: Colors.red_FF2B2B,
                   },
                   {
                     id: 'comments',
                     icon: faComment,
-                    count: `${data?.commentCount}`,
+                    count: `${data?.comments?.length}`,
+                    state: null,
                     activeColor: null,
                   },
-                  { id: 'save', icon: faBookmark, count: null, activeColor: Colors.yellow_ },
+                  {
+                    id: 'save',
+                    icon: faBookmark,
+                    count: null,
+                    state: data?.saveMode,
+                    activeColor: Colors.yellow_,
+                  },
                   {
                     id: 'share',
                     icon: faArrowUpFromBracket,
                     count: `${data?.shareCount}`,
+                    state: null,
                     activeColor: null,
                   },
                   {
                     id: 'impression',
                     icon: faChartSimple,
                     count: `${data?.viewCount}`,
+                    state: null,
                     activeColor: null,
                   },
                 ]}

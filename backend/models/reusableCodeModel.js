@@ -98,6 +98,12 @@ reusableCodeSchema.pre(/^find/, function(next) {
   next();
 });
 
+reusableCodeSchema.virtual('contributors', {
+  ref: 'Contributor',
+  localField: '_id',
+  foreignField: 'reusableCode'
+});
+
 reusableCodeSchema.virtual('image', {
   ref: 'Image',
   localField: '_id',

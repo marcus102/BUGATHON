@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
+import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
 import classes from './HomeCardView.module.css';
 import { IconTextButton, IconButton, DropdownMenu, PlaneButton } from '../../utils/ButtonSection';
 import Text from '../../utils/TextSection';
@@ -77,7 +78,6 @@ const HomeCardFooter = ({
   username,
   likedBy,
   cardButtonState,
-  saveMode,
   commentsArray,
 }) => {
   const { fetchData } = useRouteLoaderData('root');
@@ -87,7 +87,10 @@ const HomeCardFooter = ({
   const navigate = useNavigate();
 
   const initialLikesCount = reactionsData?.find((reaction) => reaction.id === 'likes')?.count || 0;
+  const initialSaveStatus =
+    reactionsData?.find((reaction) => reaction.id === 'save')?.state || false;
   const [totalLikes, setTotalLikes] = useState(initialLikesCount);
+  const [isSaved, setIsSaved] = useState(initialSaveStatus);
 
   const [isActive, setIsActive] = useState(
     reactionsData &&
@@ -144,7 +147,7 @@ const HomeCardFooter = ({
       }
     } else if (isActiveRef.current[id] === false && id === 'likes') {
       try {
-        await axios.post(`${PORT}api/v1/bug_fixes/${postId}/likes`, {}, { headers });
+        await axios.post(`${PORT}api/v1/${state}/${postId}/likes`, {}, { headers });
         setTotalLikes((prevLikes) => prevLikes - 1);
         console.log('unliked👎');
       } catch (error) {
@@ -161,6 +164,7 @@ const HomeCardFooter = ({
             headers,
           }
         );
+        setIsSaved(true);
         console.log('saved');
       } catch (error) {
         console.error('Error saving post:', error.response.data);
@@ -174,6 +178,7 @@ const HomeCardFooter = ({
             headers,
           }
         );
+        setIsSaved(false);
         console.log('unsaved');
       } catch (error) {
         console.error('Error unsaving post:', error.response.data);
@@ -204,7 +209,7 @@ const HomeCardFooter = ({
                 inconTextButtonStyle={classes.reaction_icon_text_button_container}
                 colorOnMouseUp={
                   (data.id === 'likes' && likedBy.some((like) => like.user.id === currentUserId)) ||
-                  (data.id === 'save' && saveMode === true) ||
+                  (data.id === 'save' && isSaved === true) ||
                   isActive[data.id]
                     ? data.activeColor
                     : undefined
@@ -219,9 +224,6 @@ const HomeCardFooter = ({
             </ToolTip>
           ))}
       </div>
-      {/* <Overlay keyId={'comments'}>
-        <CommentSection commentsArray={commentsArray} cardButtonState={cardButtonState} />
-      </Overlay> */}
     </div>
   );
 };
