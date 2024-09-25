@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
 import Colors from '../../constants/colors';
 import classes from './HomeWindowCmp.module.css';
@@ -18,6 +18,7 @@ import axios from 'axios';
 import { PORT } from '../../http_requests/authentication';
 import { getAuthToken } from '../../utils/authSection';
 import Text from '../../utils/TextSection';
+import { PlaneButton } from '../../utils/ButtonSection';
 
 function HomeWindow({ homeWindowMainContainerStyle }) {
   const { sideBar } = useContext(ManagmentSystem);
@@ -43,9 +44,15 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
     };
 
     try {
-      const response1 = await axios.get(`${PORT}api/v1/bug_reports?page=1&limit=5`, { headers });
-      const response2 = await axios.get(`${PORT}api/v1/bug_fixes?page=1&limit=5`, { headers });
-      const response3 = await axios.get(`${PORT}api/v1/reusable_codes?page=1&limit=5`, { headers });
+      const response1 = await axios.get(`${PORT}api/v1/bug_reports?page=${page}&limit=26`, {
+        headers,
+      });
+      const response2 = await axios.get(`${PORT}api/v1/bug_fixes?page=${page}&limit=26`, {
+        headers,
+      });
+      const response3 = await axios.get(`${PORT}api/v1/reusable_codes?page=${page}&limit=26`, {
+        headers,
+      });
 
       const allData = [];
 
@@ -85,20 +92,6 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
       setLoading(false);
     }
   }, [page, loading]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.offsetHeight - 10
-      ) {
-        loadMorePosts();
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [loadMorePosts]);
 
   return (
     <div className={`${classes.home_window_main_container} ${homeWindowMainContainerStyle}`}>
@@ -195,7 +188,12 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
           ) : (
             <Text h4={'No posts found'} />
           )}
-          {loading && <p>Loading more posts...</p>}
+          {visiblePosts.length > 20 && (
+            <PlaneButton
+              label14={loading ? 'Loading more posts...' : 'Load More Posts...'}
+              onClick={loadMorePosts}
+            />
+          )}
         </VerticalScrollView>
       </div>
     </div>

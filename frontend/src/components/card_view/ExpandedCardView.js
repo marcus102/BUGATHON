@@ -28,7 +28,7 @@ import { Image } from '../../utils/MediaSection';
 import images from '../../assets/images/blog.jpg';
 import ToolTip from '../../utils/toolTipSection';
 import { Analytics, Analytics2 } from './body_features/analyticsCmp';
-import PotentialBugFixes from './body_features/potentialBugFixes';
+// import PotentialBugFixes from './body_features/potentialBugFixes';
 import RelatedReviews from './body_features/relatedReviewsCmp';
 import RelatedResults from './body_features/relatedResultCmp';
 import Line from '../../utils/LineSection';
@@ -56,6 +56,8 @@ const Header = ({
   postId,
 }) => {
   const navigate = useNavigate();
+  const { fetchData } = useRouteLoaderData('root');
+  const currentUserUsername = fetchData?.data.username;
 
   const handleNavigation = (id) => {
     id === 'home' && navigate('/');
@@ -87,6 +89,7 @@ const Header = ({
           username={username}
           profession={profession}
           profileImg={profileImg}
+          hideFollow={currentUserUsername === username ? true : false}
         />
       </div>
       <div className={classes.header_options_container}>
@@ -444,16 +447,16 @@ function ExpandedCard({
               viewsCount={viewsCount}
               contributionsCount={contributionsCount}
             />
-            <PotentialBugFixes potentialTitle={potentialTitle} />
+            {/* <PotentialBugFixes potentialTitle={potentialTitle} /> */}
           </div>
         )}
       </div>
-      <RelatedReviews
+      {/* <RelatedReviews
         onClick={() => relatedResultsRef.current.scrollIntoView({ behavior: 'smooth' })}
-      />
-      <div ref={relatedResultsRef} className={classes.expanded_card_related_results_main_container}>
+      /> */}
+      {/* <div className={classes.expanded_card_related_results_main_container}>
         <RelatedResults />
-      </div>
+      </div> */}
     </div>
   );
 }

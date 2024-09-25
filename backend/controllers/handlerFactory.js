@@ -93,14 +93,14 @@ exports.getOne = (Model, populateOptions) =>
     });
   });
 
-exports.getAll = (Model, excludedIdsParam, populateOptions) =>
+exports.getAll = (Model, excludedUsersIdParams, populateOptions) =>
   catchAsync(async (req, res, next) => {
     let filter = null;
-    const excludedIds = req.body[excludedIdsParam];
+    const excludedUsersId = req.body[excludedUsersIdParams];
 
-    if (excludedIds && excludedIds.length > 0) {
+    if (excludedUsersId && excludedUsersId.length > 0) {
       filter = {
-        user: { $nin: excludedIds }
+        user: { $nin: excludedUsersId }
       };
     }
 
@@ -155,36 +155,6 @@ exports.getAll = (Model, excludedIdsParam, populateOptions) =>
       data: doc
     });
   });
-
-// exports.getAll = (Model, excludedIdsParam) =>
-//   catchAsync(async (req, res, next) => {
-//     let filter = null;
-//     const excludedIds = req.body[excludedIdsParam];
-
-//     if (excludedIds && excludedIds.length > 0) {
-//       filter = {
-//         user: { $nin: excludedIds }
-//       };
-//     }
-
-//     const features = new APIFeatures(Model.find(filter), req.query)
-//       .filter()
-//       .sort()
-//       .limitFields()
-//       .pagination();
-
-//     // const doc = await features.query.explain();
-//     const doc = await features.query;
-
-//     // SEND RESPONSE
-
-//     res.status(200).json({
-//       status: 'success',
-//       requested_at: req.requestTime,
-//       result: doc.length,
-//       data: doc
-//     });
-//   });
 
 exports.blocksHandler = (Model, target) =>
   catchAsync(async (req, res, next) => {
@@ -367,7 +337,8 @@ exports.deleteArray = (Model, field) =>
     const { ids } = req.body;
 
     if (!ids || !Array.isArray(ids) || ids.length === 0) {
-      return next(appError('Invalid or empty array of IDs provided!', 400));
+      // return next(appError('Invalid or empty array of IDs provided!', 400));
+      return next();
     }
 
     const docToDelete = await Model.aggregate([
@@ -400,7 +371,8 @@ exports.deleteArrayImages = (Model, field) =>
     const { ids } = req.body;
 
     if (!ids || !Array.isArray(ids) || ids.length === 0) {
-      return next(appError('Invalid or empty array of IDs provided!', 400));
+      // return next(appError('Invalid or empty array of IDs provided!', 400));
+      return next();
     }
 
     const imageToDelete = await Model.aggregate([
@@ -430,58 +402,3 @@ exports.deleteArrayImages = (Model, field) =>
 
     next();
   });
-
-// const deleteArrayItems = (Model, field, additionalDeleteAction) =>
-//   catchAsync(async (req, res, next) => {
-//     const { ids } = req.body;
-
-//     if (!ids || !Array.isArray(ids) || ids.length === 0) {
-//       return next(appError('Invalid or empty array of IDs provided!', 400));
-//     }
-
-//     const itemsToDelete = await Model.aggregate([
-//       {
-//         $match: {
-//           [field]: { $in: ids.map(id => new mongoose.Types.ObjectId(id)) }
-//         }
-//       }
-//     ]);
-
-//     if (itemsToDelete.length === 0) {
-//       return next();
-//     }
-
-//     const itemIdsToDelete = itemsToDelete.map(item => item._id);
-
-//     try {
-//       if (additionalDeleteAction) {
-//         await additionalDeleteAction(itemsToDelete);
-//       }
-
-//       const deletionResult = await Model.deleteMany({
-//         _id: { $in: itemIdsToDelete }
-//       });
-
-//       if (!deletionResult.deletedCount > 0) {
-//         return next(appError('Failed to delete documents!', 500));
-//       }
-
-//       next();
-//     } catch (error) {
-//       return next(appError('Failed to delete items!', 500));
-//     }
-//   });
-
-// exports.deleteArray = (Model, field) => deleteArrayItems(Model, field, null);
-
-// exports.deleteArrayImages = (Model, field) =>
-//   deleteArrayItems(Model, field, async imageToDelete => {
-//     await Promise.all(
-//       imageToDelete.map(async image => {
-//         await fs.unlink(image.imageUrl, err => {
-//           if (err) throw err;
-//         });
-//         await Model.findByIdAndDelete(image._id);
-//       })
-//     );
-//   });

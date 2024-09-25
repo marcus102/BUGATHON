@@ -4,6 +4,7 @@ const reviewRouter = require('./user_engagement/reviewsRoutes');
 const imageRouter = require('./imagesRoutes');
 const likesRouter = require('./user_engagement/likeRoutes');
 const reportHubRouter = require('./restrictions/reportHubRoutes');
+const blockedPostRouter = require('./restrictions/blockedPostRoutes');
 const commentsController = require('../controllers/user_engagement/commentsControllers');
 const authenticatioController = require('../controllers/authenticatioController');
 const bugFixesController = require('../controllers/bugFixesController');
@@ -20,10 +21,16 @@ router.use('/:bug_fixes_id/image', imageRouter);
 router.use('/:bug_fixes_id/likes', likesRouter);
 //restricitions
 router.use('/:bug_fixes_id/report_bug_fix', reportHubRouter);
+router.use('/:bug_fixes_id/blocked_bug_fix', blockedPostRouter);
 
 router.use(authenticatioController.protect);
 
-router.get('/userTotalAttempts', bugFixesController.setRequiredIds, bugFixesController.getUserTotalBugFixes);
+router.get(
+  '/userTotalAttempts',
+  bugFixesController.setRequiredIds,
+  bugFixesController.filterBlockedBugFixes,
+  bugFixesController.getUserTotalBugFixes
+);
 
 router
   .route('/')

@@ -27,6 +27,22 @@
   border-bottom: 1px solid var(--orange_ff7811);
 }
 
+.overlay {
+  min-width: 30rem !important;
+  min-height: 20rem !important;
+}
+
+.overlay_child{
+  align-items: start;
+}
+
+.overlay_button_container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  gap: 5rem;
+}
+
 /* OPTION */
 
 .header_options_container {
@@ -54,7 +70,7 @@
 
 .more_button {
   flex-direction: row;
-  min-width: 100%;
+  min-width: fit-content;
   justify-content: flex-start;
 }
 

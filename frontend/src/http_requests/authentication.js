@@ -1,2 +1,2 @@
 // config.js
-export const PORT = 'http://192.168.43.204:8000/';
+export const PORT = 'http://192.168.204.26:8000/';

@@ -2,6 +2,7 @@ const express = require('express');
 const commentsController = require('../../controllers/user_engagement/commentsControllers');
 const authenticatioController = require('../../controllers/authenticatioController');
 const reportHubRouter = require('./../restrictions/reportHubRoutes');
+const blockedPostRouter = require('./../restrictions/blockedPostRoutes');
 const likesRouter = require('./../user_engagement/likeRoutes');
 
 const router = express.Router({ mergeParams: true });
@@ -10,6 +11,7 @@ const router = express.Router({ mergeParams: true });
 router.use('/:comment_id/likes', likesRouter);
 //restrictions
 router.use('/:comment_id/report_comment', reportHubRouter);
+router.use('/:comment_id/blocked_comment', blockedPostRouter);
 
 router.use(authenticatioController.protect);
 

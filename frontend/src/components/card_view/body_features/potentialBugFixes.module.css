@@ -1,4 +1,4 @@
-/* POTENTIAL BUG FIXES */
+/* POTENTIAL BUG FIXES
 
 .recommendation_main_container {
   display: flex;
@@ -30,4 +30,4 @@
 
 .content_button_container:active {
   color: var(--white_ffffff);
-}
+} */

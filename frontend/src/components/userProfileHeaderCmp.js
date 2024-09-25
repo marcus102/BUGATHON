@@ -4,6 +4,7 @@ import { PlaneButton } from '../utils/ButtonSection';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faExclamationCircle, faUserLock } from '@fortawesome/free-solid-svg-icons';
 import CustomUserProfilePreview from './custom/CustomUserProfilePreviewCmp';
+import { useRouteLoaderData } from 'react-router-dom';
 
 function UserProfileHeader({
   firstName,
@@ -18,6 +19,8 @@ function UserProfileHeader({
   role,
 }) {
   const [isFollowing, setIsFollowing] = useState(false);
+  const { fetchData } = useRouteLoaderData('root');
+  const currentUserUsername = fetchData?.data.username;
   const handleFollowToggle = () => {
     setIsFollowing(!isFollowing);
   };
@@ -47,6 +50,7 @@ function UserProfileHeader({
         profession={profession}
         userRole={role}
         userFullName={`${firstName} ${lastName}`}
+        hideFollow={currentUserUsername === username ? true : false}
       />
       {!hideFollow && (
         <PlaneButton

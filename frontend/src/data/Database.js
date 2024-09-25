@@ -64,18 +64,13 @@ const DUMMY_TAG_DATA = [
 ];
 
 export const CARD_VIEW_OPTION = [
-  { id: '1', icon: faPen, label: 'Edit bug report (owner)', icon_2: null, href: null },
-  { id: '2', icon: faPen, label: 'Edit bug Fix (owner)', icon_2: null, href: null },
-  { id: '3', icon: faPen, label: 'Edit Reusable Code (owner)', icon_2: null, href: null },
-  { id: '4', icon: faClipboard, label: 'Assign bug to', icon_2: faCaretRight, href: null },
-  { id: '5', icon: faComment, label: 'Comment', icon_2: null, href: null },
-  { id: '6', icon: faUser, label: 'Contributions', icon_2: faCaretRight, href: null },
-  { id: '7', icon: faShareNodes, label: 'Share', icon_2: null, href: null },
-  { id: '8', icon: faThumbTack, label: 'Pin', icon_2: null, href: null },
-  { id: '9', icon: faFaceGrinStars, label: 'Make a Review', icon_2: null, href: null },
-  { id: '10', icon: faEyeSlash, label: 'I do not want to see this', icon_2: null, href: null },
-  { id: '11', icon: faTrashCan, label: 'Delete bug report (owner)', icon_2: null, href: null },
-  { id: '12', icon: faExclamation, label: 'Report', icon_2: faCaretRight, href: null },
+  { id: '1', icon: faPen, label: 'Edit (owner)', icon_2: null, href: null },
+  { id: '2', icon: faClipboard, label: 'Assign bug to', icon_2: faCaretRight, href: null },
+  { id: '3', icon: faComment, label: 'Comment', icon_2: null, href: null },
+  { id: '4', icon: faShareNodes, label: 'Share', icon_2: null, href: null },
+  { id: '5', icon: faEyeSlash, label: 'I do not want to see this', icon_2: null, href: null },
+  { id: '6', icon: faTrashCan, label: 'Delete (owner)', icon_2: null, href: null },
+  { id: '7', icon: faExclamation, label: 'Report', icon_2: faCaretRight, href: null },
 ];
 
 export const CONTRIBUTION_REACTIONS_DATA = [

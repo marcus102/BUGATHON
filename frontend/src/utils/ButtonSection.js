@@ -292,6 +292,7 @@ export function DropdownMenu({
   buttonChildren,
   post,
   profileId,
+  clickManager,
 }) {
   const { dropDownIsOpen, dropDownIsOpenHandler } = useContext(ManagmentSystem);
   const [isOpen, setIsOpen] = useState(false);
@@ -340,13 +341,14 @@ export function DropdownMenu({
         <div className={`${classes.dropdown_menu} ${dropDownMenuStyle}`}>
           {menuItems?.map((data, index) => (
             <IconTextButton
-              key={data.id}
+              key={`${data.id}${index}`}
               inconTextButtonStyle={`${classes.drop_down_item_link}`}
               icon_={data.icon_2}
               label={data.label}
               icon={data.icon}
               onClick={() => {
                 post && navigate(`/${post}/?type=${data.id}`);
+                !post && clickManager(data.id);
                 setIsOpen(false);
               }}
             />

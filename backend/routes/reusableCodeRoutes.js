@@ -8,6 +8,7 @@ const operatingSystemRouter = require('./filtering/operatingSystemRoutes');
 const programmingLanguagesRouter = require('./filtering/programmingLanguagesRoutes');
 const zoneOfInterestRouter = require('./filtering/zoneOfInterestRoutes');
 const reportHubRouter = require('./restrictions/reportHubRoutes');
+const blockedPostRouter = require('./restrictions/blockedPostRoutes');
 const reusableCodeController = require('./../controllers/reusableCodeControllerjs');
 const contributorsController = require('../controllers/user_engagement/contributorsController');
 const imagesController = require('./../controllers/imagesController');
@@ -34,12 +35,13 @@ router.use('/:reusable_code_id/language', programmingLanguagesRouter);
 router.use('/:reusable_code_id/zone_of_interest', zoneOfInterestRouter);
 //restrictions
 router.use('/:reusable_code_id/report_reusable_code', reportHubRouter);
+router.use('/:reusable_code_id/blocked_reusable_code', blockedPostRouter);
 
 router.use(authenticatioController.protect);
 
 router
   .route('/')
-  .get(reusableCodeController.getAllReusableCodes)
+  .get(reusableCodeController.filterReusableCodes, reusableCodeController.getAllReusableCodes)
   .post(reusableCodeController.createReusableCode);
 router
   .route('/:id')

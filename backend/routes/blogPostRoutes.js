@@ -8,6 +8,7 @@ const programmingLanguagesRouter = require('./filtering/programmingLanguagesRout
 const zoneOfInterestRouter = require('./filtering/zoneOfInterestRoutes');
 const categoriesRouter = require('./../routes/filtering/categoriesRoutes');
 const reportHubRouter = require('./restrictions/reportHubRoutes');
+const blockedPostRouter = require('./restrictions/blockedPostRoutes');
 const commentsController = require('../controllers/user_engagement/commentsControllers');
 const authenticatioController = require('../controllers/authenticatioController');
 const likesController = require('../controllers/user_engagement/likesController');
@@ -33,13 +34,14 @@ router.use('/:blog_post_id/language', programmingLanguagesRouter);
 router.use('/:blog_post_id/zone_of_interest', zoneOfInterestRouter);
 //restricitions
 router.use('/:blog_post_id/report_blog_post', reportHubRouter);
+router.use('/:blog_post_id/blocked_blog_post', blockedPostRouter);
 
 router.use(authenticatioController.protect);
 
 router
   .route('/')
   .post(blogPostController.createBlogPost)
-  .get(blogPostController.getAllBlogPosts);
+  .get(blogPostController.filterBlockedBlogPosts, blogPostController.getAllBlogPosts);
 
 router
   .route('/:id')

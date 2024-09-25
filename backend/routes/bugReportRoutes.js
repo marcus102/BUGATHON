@@ -7,6 +7,7 @@ const operatingSystemRouter = require('./filtering/operatingSystemRoutes');
 const programmingLanguagesRouter = require('./filtering/programmingLanguagesRoutes');
 const zoneOfInterestRouter = require('./filtering/zoneOfInterestRoutes');
 const reportHubRouter = require('./restrictions/reportHubRoutes');
+const blockedPostRouter = require('./restrictions/blockedPostRoutes');
 const bugFixesController = require('../controllers/bugFixesController');
 const contributorsController = require('../controllers/user_engagement/contributorsController');
 const imagesController = require('./../controllers/imagesController');
@@ -35,12 +36,13 @@ router.use('/:bug_id/language', programmingLanguagesRouter);
 router.use('/:bug_id/zone_of_interest', zoneOfInterestRouter);
 //restrictions
 router.use('/:bug_id/report_bug_report', reportHubRouter);
+router.use('/:bug_id/blocked_bug_report', blockedPostRouter);
 
 router.use(authenticatioController.protect);
 
 router
   .route('/')
-  .get(bugReportController.filterBlockedBugs, bugReportController.getAllBugs)
+  .get(bugReportController.filterBlockedBugReports, bugReportController.getAllBugs)
   .post(bugReportController.createBug);
 
 router

@@ -61,7 +61,7 @@ exports.deleteBug = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.filterBlockedBugs = factory.blocksHandler(BlockedUser, 'bug_ids');
+exports.filterBlockedBugReports = factory.blocksHandler(BlockedUser, 'bug_ids');
 
 exports.getAllBugs = factory.getAll(BugReport, 'bug_ids', [
   { path: 'bugFixes' },

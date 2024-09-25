@@ -23,7 +23,7 @@ exports.createBlogPost = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.filterBlockedBugFixes = factory.blocksHandler(BlockedUser, 'blog_post_ids');
+exports.filterBlockedBlogPosts = factory.blocksHandler(BlockedUser, 'blog_post_ids');
 
 exports.getAllBlogPosts = factory.getAll(Blog, 'blog_post_ids');
 
