@@ -41,7 +41,11 @@ router.use(authenticatioController.protect);
 router
   .route('/')
   .post(blogPostController.createBlogPost)
-  .get(blogPostController.filterBlockedBlogPosts, blogPostController.getAllBlogPosts);
+  .get(
+    blogPostController.filterBlockedPosts,
+    blogPostController.filterBlockedUsers,
+    blogPostController.getAllBlogPosts
+  );
 
 router
   .route('/:id')

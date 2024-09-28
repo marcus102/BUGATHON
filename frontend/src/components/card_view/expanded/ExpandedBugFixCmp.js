@@ -1,6 +1,5 @@
 import React from 'react';
 import ExpandedCard from '../ExpandedCardView';
-import { CARD_VIEW_OPTION } from '../../../data/Database';
 import Colors from '../../../constants/colors';
 import { useSearchParams, useLoaderData } from 'react-router-dom';
 import {
@@ -28,9 +27,8 @@ function ExpandedBugFix() {
 
   return (
     <ExpandedCard
-      CARD_VIEW_OPTION_META_DATA={CARD_VIEW_OPTION}
       SUGESTION_BUTTON_META_DATA={SUGESTION_BUTTON_DATA}
-      contributionsArray={data?.contributions}
+      contributionsArray={data?.contributors}
       contributionsCount={data?.totalAttempts}
       likesCount={data?.likeCount}
       commentsCount={data?.commentCount}

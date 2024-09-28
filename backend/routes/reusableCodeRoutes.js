@@ -41,7 +41,11 @@ router.use(authenticatioController.protect);
 
 router
   .route('/')
-  .get(reusableCodeController.filterReusableCodes, reusableCodeController.getAllReusableCodes)
+  .get(
+    reusableCodeController.filterBlockedPosts,
+    reusableCodeController.filterBlockedUsers,
+    reusableCodeController.getAllReusableCodes
+  )
   .post(reusableCodeController.createReusableCode);
 router
   .route('/:id')

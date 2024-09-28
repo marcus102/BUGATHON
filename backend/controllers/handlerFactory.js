@@ -93,14 +93,33 @@ exports.getOne = (Model, populateOptions) =>
     });
   });
 
-exports.getAll = (Model, excludedUsersIdParams, populateOptions) =>
+exports.getAll = (Model, excludedUsersIdParams, excludedPostsIdParams, populateOptions) =>
   catchAsync(async (req, res, next) => {
     let filter = null;
     const excludedUsersId = req.body[excludedUsersIdParams];
+    const excludedPotsId = req.body[excludedPostsIdParams];
 
     if (excludedUsersId && excludedUsersId.length > 0) {
       filter = {
         user: { $nin: excludedUsersId }
+      };
+    }
+
+    if (excludedPotsId && excludedPotsId.length > 0) {
+      let field;
+      if (excludedPostsIdParams === 'bug_repord_ids') {
+        field = 'bugReport';
+      } else if (excludedPostsIdParams === 'bug_fix_ids') {
+        field = 'bugFix';
+      } else if (excludedPostsIdParams === 'reusable_code_ids') {
+        field = 'reusableCode';
+      } else if (excludedPostsIdParams === 'blog_post_ids') {
+        field = 'blogPost';
+      } else if (excludedPostsIdParams === 'comment_ids') {
+        field = 'comment';
+      }
+      filter = {
+        [field]: { $nin: excludedPotsId }
       };
     }
 
@@ -158,41 +177,77 @@ exports.getAll = (Model, excludedUsersIdParams, populateOptions) =>
 
 exports.blocksHandler = (Model, target) =>
   catchAsync(async (req, res, next) => {
-    const blockers = await Model.aggregate([
-      {
-        $match: {
-          blockedUser: new mongoose.Types.ObjectId(req.user.id)
+    if (Model.modelName === 'BlockedUser') {
+      const blockers = await Model.aggregate([
+        {
+          $match: {
+            blockedUser: new mongoose.Types.ObjectId(req.user.id)
+          }
         }
-      }
-    ]);
+      ]);
 
-    const blocked = await Model.aggregate([
-      {
-        $match: {
-          blockedBy: new mongoose.Types.ObjectId(req.user.id)
+      const blocked = await Model.aggregate([
+        {
+          $match: {
+            blockedBy: new mongoose.Types.ObjectId(req.user.id)
+          }
         }
-      }
-    ]);
+      ]);
 
-    if ((blockers.length || blocked.length) === 0) {
-      return next();
+      if ((blockers.length || blocked.length) === 0) {
+        return next();
+      }
+
+      const blockersIds = blockers.reduce((acc, doc) => {
+        if (doc.blockedBy) {
+          acc.push(doc.blockedBy.valueOf());
+        }
+        return acc;
+      }, []);
+
+      const blokedIds = blocked.reduce((acc, doc) => {
+        if (doc.blockedUser) {
+          acc.push(doc.blockedUser.valueOf());
+        }
+        return acc;
+      }, []);
+
+      req.body[target] = [...blockersIds, ...blokedIds];
+    } else if (Model.modelName === 'BlockedPost') {
+      let field;
+      if (target === 'bug_repord_ids') {
+        field = 'bugReport';
+      } else if (target === 'bug_fix_ids') {
+        field = 'bugFix';
+      } else if (target === 'reusable_code_ids') {
+        field = 'reusableCode';
+      } else if (target === 'blog_post_ids') {
+        field = 'blogPost';
+      } else if (target === 'comment_ids') {
+        field = 'comment';
+      }
+
+      const blockedBy = await Model.aggregate([
+        {
+          $match: {
+            user: new mongoose.Types.ObjectId(req.user.id)
+          }
+        }
+      ]);
+
+      if (blockedBy.length === 0) {
+        return next();
+      }
+
+      const blockedPostsIds = blockedBy.reduce((acc, doc) => {
+        if (doc[field]) {
+          acc.push(doc[field].valueOf());
+        }
+        return acc;
+      }, []);
+
+      req.body[target] = [...blockedPostsIds];
     }
-
-    const blockersIds = blockers.reduce((acc, doc) => {
-      if (doc.blockedBy) {
-        acc.push(doc.blockedBy.valueOf());
-      }
-      return acc;
-    }, []);
-
-    const blokedIds = blocked.reduce((acc, doc) => {
-      if (doc.blockedUser) {
-        acc.push(doc.blockedUser.valueOf());
-      }
-      return acc;
-    }, []);
-
-    req.body[target] = [...blockersIds, ...blokedIds];
 
     next();
   });

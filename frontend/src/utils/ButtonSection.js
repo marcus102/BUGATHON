@@ -342,10 +342,13 @@ export function DropdownMenu({
           {menuItems?.map((data, index) => (
             <IconTextButton
               key={`${data.id}${index}`}
-              inconTextButtonStyle={`${classes.drop_down_item_link}`}
+              inconTextButtonStyle={`${classes.drop_down_item_link} ${
+                data.style ? data.style : null
+              }`}
               icon_={data.icon_2}
               label={data.label}
               icon={data.icon}
+              colorOnMouseUp={data.color}
               onClick={() => {
                 post && navigate(`/${post}/?type=${data.id}`);
                 !post && clickManager(data.id);

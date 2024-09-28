@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
+import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
 import classes from './ExpandedCardView.module.css';
 import HeaderOptions from '../headerOptionsCmp';
 import UserProfileHeader from '../userProfileHeaderCmp';
@@ -19,7 +20,6 @@ import {
   faChevronRight,
   faCheck,
   faCaretDown,
-  faChevronDown,
 } from '@fortawesome/free-solid-svg-icons';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import Text from '../../utils/TextSection';
@@ -28,19 +28,18 @@ import { Image } from '../../utils/MediaSection';
 import images from '../../assets/images/blog.jpg';
 import ToolTip from '../../utils/toolTipSection';
 import { Analytics, Analytics2 } from './body_features/analyticsCmp';
-// import PotentialBugFixes from './body_features/potentialBugFixes';
-import RelatedReviews from './body_features/relatedReviewsCmp';
-import RelatedResults from './body_features/relatedResultCmp';
 import Line from '../../utils/LineSection';
-import { useNavigate, useSearchParams, useRouteLoaderData } from 'react-router-dom';
+import { useNavigate, useSearchParams, useRouteLoaderData, redirect } from 'react-router-dom';
 import { getAuthToken } from '../../utils/authSection';
 import axios from 'axios';
 import { PORT } from '../../http_requests/authentication';
+import { CARD_VIEW_OPTION, CARD_VIEW_OPTION_2 } from '../../data/Database';
+import { Overlay } from '../../utils/OverlaySection';
+import { TextArea, Input } from '../../utils/InputSection';
 
 const Header = ({
   isExpanded,
   setIsExpanded,
-  CARD_VIEW_OPTION_META_DATA,
   contributionsArray,
   postType,
   contributionsCount,
@@ -54,10 +53,20 @@ const Header = ({
   profession,
   profileImg,
   postId,
+  state,
 }) => {
   const navigate = useNavigate();
+  const { overlayHandler } = useContext(ManagmentSystem);
   const { fetchData } = useRouteLoaderData('root');
   const currentUserUsername = fetchData?.data.username;
+  const [assignmentOverlayChildren, setAssignmentOverlayChildren] = useState('');
+  const [deletionOverlayChildren, setDeletionOverlayChildren] = useState('');
+  const [reportOverlayChildren, setReportOverlayChildren] = useState('');
+  const [blockPostOverlayChildren, setBlockPostOverlayChildren] = useState('');
+  const [shouldDelete, setShouldDelete] = useState(false);
+  const [shouldBlockPost, setShouldBlockPost] = useState(false);
+
+  const token = getAuthToken();
 
   const handleNavigation = (id) => {
     id === 'home' && navigate('/');
@@ -65,6 +74,92 @@ const Header = ({
     id === 'bug_fix' && navigate(`/new/?id=${postId}&type=${'bug_fix'}&postId=${postId}`);
     id === 'reusable_code' &&
       navigate(`/new/?id=${postId}&type=${'reusable_code'}&postId=${postId}`);
+  };
+
+  const deletePost = async () => {
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    };
+
+    let myUrl;
+
+    state === 'bug_report'
+      ? (myUrl = 'bug_reports')
+      : state === 'bug_fix'
+      ? (myUrl = 'bug_fixes')
+      : (myUrl = 'reusable_codes');
+
+    try {
+      const response = await axios.delete(`${PORT}api/v1/${myUrl}/${postId}`, { headers });
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const blockPost = async () => {
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    };
+
+    let myUrl;
+
+    state === 'bug_report'
+      ? (myUrl = 'blocked_bug_report')
+      : state === 'bug_fix'
+      ? (myUrl = 'blocked_bug_fix')
+      : state === 'reusable_code'
+      ? (myUrl = 'blocked_reusable_code')
+      : (myUrl = 'blocked_reusable_comment');
+
+    try {
+      const response = await axios.post(
+        `${PORT}api/v1/blocked_posts/${postId}/${myUrl}`,
+        {
+          reason: '',
+        },
+        {
+          headers,
+        }
+      );
+      redirect('/');
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  if (shouldDelete) {
+    deletePost();
+  }
+
+  if (shouldBlockPost) {
+    blockPost();
+  }
+
+  const clickManager = (id) => {
+    if (id === '1') {
+      console.log('edit');
+    } else if (id === '2') {
+      overlayHandler('2');
+      setAssignmentOverlayChildren('Are you sure you want to assign this post?');
+    } else if (id === '3') {
+      navigate(`/comments/?username=${username}&postId=${postId}&post=${state}`);
+    } else if (id === '4') {
+      console.log('share');
+    } else if (id === '5') {
+      overlayHandler('5');
+      setBlockPostOverlayChildren('Why do you want to hide this post?');
+    } else if (id === '6') {
+      overlayHandler('6');
+      setDeletionOverlayChildren('Are you sure you want to delete this post?');
+    } else if (id === '7') {
+      console.log('report');
+      overlayHandler('7');
+      setReportOverlayChildren('Why do you want to report this post?');
+    }
   };
 
   return (
@@ -100,7 +195,11 @@ const Header = ({
             contributionsCount={contributionsCount}
           />
         </div>
-        <DropdownMenu buttonIcon={faEllipsisVertical} menuItems={CARD_VIEW_OPTION_META_DATA} />
+        <DropdownMenu
+          buttonIcon={faEllipsisVertical}
+          menuItems={currentUserUsername === username ? CARD_VIEW_OPTION_2 : CARD_VIEW_OPTION}
+          clickManager={clickManager}
+        />
         <ToolTip tooltipMessage={isExpanded ? 'Close Insight' : 'Open Insight'}>
           <IconButton
             inconButtonStyle="d-none d-xl-block"
@@ -109,6 +208,74 @@ const Header = ({
           />
         </ToolTip>
       </div>
+
+      {/* OVERLAY FOR ASSIGN BUG REPORT */}
+      {assignmentOverlayChildren && (
+        <Overlay
+          overlayStyle={classes.overlay}
+          overlayChildStyle={classes.overlay_child}
+          keyId={'2'}
+        >
+          <Text h4={'Users'} />
+          <PlaneButton label16={'user1'} />
+          <PlaneButton label16={'user2'} />
+          <PlaneButton label16={'user3'} />
+          <PlaneButton label16={'user4'} />
+        </Overlay>
+      )}
+
+      {blockPostOverlayChildren && (
+        <Overlay
+          overlayStyle={classes.overlay}
+          overlayChildStyle={classes.overlay_child}
+          keyId={'5'}
+        >
+          <Text h4={'Hide Content'} />
+          <Text label16={blockPostOverlayChildren} />
+          <Input label={'Reason(optional)'} />
+          <PlaneButton label16={'Continue'} onClick={() => setShouldBlockPost(true)} />
+        </Overlay>
+      )}
+
+      {deletionOverlayChildren && (
+        <Overlay
+          overlayStyle={classes.overlay}
+          overlayChildStyle={classes.overlay_child}
+          keyId={'6'}
+        >
+          <Text h4={'Warning!!!'} />
+          <Text label16={deletionOverlayChildren} />
+          <div className={classes.overlay_button_container}>
+            <PlaneButton
+              label16={'Yes'}
+              onClick={() => {
+                setShouldDelete(true);
+                overlayHandler('');
+              }}
+            />
+            <PlaneButton
+              label16={'No'}
+              onClick={() => {
+                setShouldDelete(false);
+                overlayHandler('');
+              }}
+            />
+          </div>
+        </Overlay>
+      )}
+
+      {reportOverlayChildren && (
+        <Overlay
+          overlayStyle={classes.overlay}
+          overlayChildStyle={classes.overlay_child}
+          keyId={'7'}
+        >
+          <Text h4={'Report'} />
+          <Text label16={reportOverlayChildren} />
+          <TextArea label={'Reason(optional)'} />
+          <PlaneButton label16={'Submit'} />
+        </Overlay>
+      )}
     </div>
   );
 };
@@ -325,7 +492,6 @@ const Comments = ({ commentSectionsRef, username, postId, post }) => {
 
 function ExpandedCard({
   REACTIONS_META_DATA,
-  CARD_VIEW_OPTION_META_DATA,
   SUGESTION_BUTTON_META_DATA,
   firstName,
   lastName,
@@ -337,7 +503,6 @@ function ExpandedCard({
   profession,
   profileImg,
   title,
-  potentialTitle,
   contributionsArray,
   contributionsCount,
   likesCount,
@@ -350,113 +515,100 @@ function ExpandedCard({
   parentPosts,
   likedBy,
   saveMode,
+  state,
 }) {
   const [isExpanded, setIsExpanded] = useState(true);
   const [isCopied, setIsCopied] = useState(false);
-
-  const relatedResultsRef = useRef(null);
   const commentSectionsRef = useRef(null);
-
   const [searchParams] = useSearchParams();
   const currentPost = searchParams.get('post');
 
   return (
     <div className={classes.expanded_container}>
-      <div className={classes.expanded_card_second_container}>
-        <div className={classes.expanded_card_implentation_main_container}>
-          <Header
-            isExpanded={isExpanded}
-            setIsExpanded={setIsExpanded}
-            CARD_VIEW_OPTION_META_DATA={CARD_VIEW_OPTION_META_DATA}
+      <div className={classes.expanded_card_implentation_main_container}>
+        <Header
+          isExpanded={isExpanded}
+          setIsExpanded={setIsExpanded}
+          postId={postId}
+          postType={currentPost}
+          contributionsArray={contributionsArray}
+          contributionsCount={contributionsCount}
+          firstName={firstName}
+          lastName={lastName}
+          role={role}
+          followersCount={followersCount}
+          followingCount={followingCount}
+          starCount={starCount}
+          username={username}
+          profession={profession}
+          profileImg={profileImg}
+          state={state}
+        />
+        <Text textStyle={classes.implentation_second_header_container} h5={title} />
+        <div className={classes.implentation_body_main_container}>
+          <Reactions
+            REACTIONS_META_DATA={REACTIONS_META_DATA}
+            commentSectionsRef={commentSectionsRef}
+            likedBy={likedBy}
+            saveMode={saveMode}
+            cardButtonState={post}
             postId={postId}
-            postType={currentPost}
-            contributionsArray={contributionsArray}
-            contributionsCount={contributionsCount}
-            firstName={firstName}
-            lastName={lastName}
-            role={role}
-            followersCount={followersCount}
-            followingCount={followingCount}
-            starCount={starCount}
             username={username}
-            profession={profession}
-            profileImg={profileImg}
           />
-          <Text textStyle={classes.implentation_second_header_container} h5={title} />
-          <div className={classes.implentation_body_main_container}>
-            <Reactions
-              REACTIONS_META_DATA={REACTIONS_META_DATA}
-              commentSectionsRef={commentSectionsRef}
-              likedBy={likedBy}
-              saveMode={saveMode}
-              cardButtonState={post}
-              postId={postId}
-              username={username}
-            />
-            <Line direction={'horizontal'} />
-            <ImplementationSection
-              isCopied={isCopied}
-              postType={currentPost}
-              setIsCopied={setIsCopied}
-              description={description}
-              parentPosts={parentPosts}
-            />
-            <FooterButtons SUGESTION_BUTTON_META_DATA={SUGESTION_BUTTON_META_DATA} />
+          <Line direction={'horizontal'} />
+          <ImplementationSection
+            isCopied={isCopied}
+            postType={currentPost}
+            setIsCopied={setIsCopied}
+            description={description}
+            parentPosts={parentPosts}
+          />
+          <FooterButtons SUGESTION_BUTTON_META_DATA={SUGESTION_BUTTON_META_DATA} />
 
-            {!isExpanded && (
-              <div className={classes.body_analytics_container}>
-                <div className={`d-none d-xl-flex ${classes.analytics_analytic_container_2}`}>
-                  <Analytics2
-                    likesCount={likesCount}
-                    commentsCount={commentsCount}
-                    sharesCount={sharesCount}
-                    viewsCount={viewsCount}
-                    contributionsCount={contributionsCount}
-                  />
-                </div>
-              </div>
-            )}
+          <Comments
+            commentSectionsRef={commentSectionsRef}
+            postId={postId}
+            post={post}
+            username={username}
+          />
+
+          {!isExpanded && (
             <div className={classes.body_analytics_container}>
-              <div className={`d-flex d-xl-none ${classes.analytics_analytic_container_2}`}>
-                <Analytics2
-                  likesCount={likesCount}
-                  commentsCount={commentsCount}
-                  sharesCount={sharesCount}
-                  viewsCount={viewsCount}
-                  contributionsCount={contributionsCount}
-                />
-              </div>
+              <Analytics2
+                likesCount={likesCount}
+                commentsCount={commentsCount}
+                sharesCount={sharesCount}
+                viewsCount={viewsCount}
+                contributionsCount={contributionsCount}
+              />
             </div>
-
-            <Comments
-              commentSectionsRef={commentSectionsRef}
-              postId={postId}
-              post={post}
-              username={username}
-            />
+          )}
+          <div className={classes.body_analytics_container}>
+            <div className={`d-block d-xl d-none ${classes.analytics2_container}`}>
+              <Analytics2
+                likesCount={likesCount}
+                commentsCount={commentsCount}
+                sharesCount={sharesCount}
+                viewsCount={viewsCount}
+                contributionsCount={contributionsCount}
+              />
+            </div>
           </div>
         </div>
-        {isExpanded && (
-          <div
-            className={`col-5 d-none d-xl-block ${classes.expanded_card_analytics_main_container}`}
-          >
-            <Analytics
-              likesCount={likesCount}
-              commentsCount={commentsCount}
-              sharesCount={sharesCount}
-              viewsCount={viewsCount}
-              contributionsCount={contributionsCount}
-            />
-            {/* <PotentialBugFixes potentialTitle={potentialTitle} /> */}
-          </div>
-        )}
       </div>
-      {/* <RelatedReviews
-        onClick={() => relatedResultsRef.current.scrollIntoView({ behavior: 'smooth' })}
-      /> */}
-      {/* <div className={classes.expanded_card_related_results_main_container}>
-        <RelatedResults />
-      </div> */}
+      {isExpanded && (
+        <div
+          className={`col-5 d-none d-xl-block ${classes.expanded_card_analytics_main_container}`}
+        >
+          <Analytics
+            likesCount={likesCount}
+            commentsCount={commentsCount}
+            sharesCount={sharesCount}
+            viewsCount={viewsCount}
+            contributionsCount={contributionsCount}
+          />
+        </div>
+      )}
     </div>
   );
 }

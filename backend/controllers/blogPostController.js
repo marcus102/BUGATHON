@@ -1,6 +1,7 @@
 const Blog = require('../models/blogPostModel');
-const User = require('./../models/userModel');
-const BlockedUser = require('./../models/restrictions/blockedUserModel');
+const User = require('../models/userModel');
+const BlockedUser = require('../models/restrictions/blockedUserModel');
+const BlockedPost = require('../models/restrictions/blockedPostModel');
 const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
 const appError = require('../utils/appError');
@@ -23,9 +24,10 @@ exports.createBlogPost = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.filterBlockedBlogPosts = factory.blocksHandler(BlockedUser, 'blog_post_ids');
+exports.filterBlockedUsers = factory.blocksHandler(BlockedUser, 'user_ids');
+exports.filterBlockedPosts = factory.blocksHandler(BlockedPost,'blog_post_ids');
 
-exports.getAllBlogPosts = factory.getAll(Blog, 'blog_post_ids');
+exports.getAllBlogPosts = factory.getAll(Blog, 'user_ids', 'blog_post_ids');
 
 exports.getBlogPost = factory.getOne(Blog, [
   { path: 'reviews' },

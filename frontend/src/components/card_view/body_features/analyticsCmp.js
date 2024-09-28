@@ -150,8 +150,8 @@ export function Analytics2({
     },
   ];
   return (
-    <>
-      <Text textStyle={classes.analytic_container} h6={'Analytics'} />
+    <div className={classes.analytics_container}>
+      <Text h5={'Analytics'} />
       <Line direction={'horizontal'} />
       <div className={classes.analytic_content_container}>
         <div className={classes.analytic_summaries_container_2}>
@@ -171,6 +171,6 @@ export function Analytics2({
         </div>
         <ActivityChart />
       </div>
-    </>
+    </div>
   );
 }

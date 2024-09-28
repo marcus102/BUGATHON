@@ -28,7 +28,8 @@ router.use(authenticatioController.protect);
 router.get(
   '/userTotalAttempts',
   bugFixesController.setRequiredIds,
-  bugFixesController.filterBlockedBugFixes,
+  bugFixesController.filterBlockedPosts,
+  bugFixesController.filterBlockedUsers,
   bugFixesController.getUserTotalBugFixes
 );
 

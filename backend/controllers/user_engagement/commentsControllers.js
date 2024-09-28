@@ -1,5 +1,6 @@
 const appError = require('../../utils/appError');
 const Comment = require('../../models/user_engagement/commentModel');
+const BlockedPost = require('../../models/restrictions/blockedPostModel');
 const factory = require('../handlerFactory');
 const catchAsync = require('../../utils/catchAsync');
 
@@ -78,6 +79,7 @@ exports.createComment = catchAsync(async (req, res, next) => {
   }
 });
 
+exports.filterBlockedComments = factory.blocksHandler(BlockedPost, 'blog_post_ids');
 exports.getAllComments = factory.getAll(Comment, null, [({ path: 'likedBy' }, { path: 'images' })]);
 exports.getComment = factory.getOne(Comment, [{ path: 'likedBy' }, { path: 'images' }]);
 

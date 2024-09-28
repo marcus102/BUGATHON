@@ -64,13 +64,19 @@ const DUMMY_TAG_DATA = [
 ];
 
 export const CARD_VIEW_OPTION = [
-  { id: '1', icon: faPen, label: 'Edit (owner)', icon_2: null, href: null },
   { id: '2', icon: faClipboard, label: 'Assign bug to', icon_2: faCaretRight, href: null },
   { id: '3', icon: faComment, label: 'Comment', icon_2: null, href: null },
   { id: '4', icon: faShareNodes, label: 'Share', icon_2: null, href: null },
   { id: '5', icon: faEyeSlash, label: 'I do not want to see this', icon_2: null, href: null },
-  { id: '6', icon: faTrashCan, label: 'Delete (owner)', icon_2: null, href: null },
   { id: '7', icon: faExclamation, label: 'Report', icon_2: faCaretRight, href: null },
+];
+
+export const CARD_VIEW_OPTION_2 = [
+  { id: '1', icon: faPen, label: 'Edit', icon_2: null, href: null },
+  { id: '2', icon: faClipboard, label: 'Assign bug to', icon_2: faCaretRight, href: null },
+  { id: '3', icon: faComment, label: 'Comment', icon_2: null, href: null },
+  { id: '4', icon: faShareNodes, label: 'Share', icon_2: null, href: null },
+  { id: '6', icon: faTrashCan, label: 'Delete', icon_2: null, href: null },
 ];
 
 export const CONTRIBUTION_REACTIONS_DATA = [

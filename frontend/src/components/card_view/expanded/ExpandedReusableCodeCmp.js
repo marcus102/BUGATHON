@@ -1,7 +1,6 @@
 import React from 'react';
 import ExpandedCard from '../ExpandedCardView';
 import Colors from '../../../constants/colors';
-import { CARD_VIEW_OPTION } from '../../../data/Database';
 import { useSearchParams, useLoaderData } from 'react-router-dom';
 import {
   faArrowUpFromBracket,
@@ -27,13 +26,13 @@ function ExpandedReusableCode() {
 
   return (
     <ExpandedCard
-      contributionsArray={data?.contributions}
+      state={data?.state}
+      contributionsArray={data?.contributors}
       contributionsCount={data?.totalAttempts}
       likesCount={data?.likeCount}
       commentsCount={data?.commentCount}
       sharesCount={data?.shareCount}
       viewsCount={data?.viewCount}
-      CARD_VIEW_OPTION_META_DATA={CARD_VIEW_OPTION}
       SUGESTION_BUTTON_META_DATA={SUGESTION_BUTTON_DATA}
       title={data?.title}
       potentialTitle={'Potential Reusable Codes'}

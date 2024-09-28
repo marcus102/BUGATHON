@@ -17,7 +17,7 @@ router.use(authenticatioController.protect);
 
 router
   .route('/')
-  .get(commentsController.getAllComments)
+  .get(commentsController.filterBlockedComments, commentsController.getAllComments)
   .post(commentsController.setRequiredIds, commentsController.createComment);
 router
   .route('/:id')

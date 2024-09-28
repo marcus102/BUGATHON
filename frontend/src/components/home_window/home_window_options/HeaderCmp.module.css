@@ -46,6 +46,11 @@
   height: 100%;
 }
 
+.itemMenuStyle {
+  left: 0;
+  width: 12rem;
+}
+
 /* ACTIVE BUTTON */
 
 .active_buttons_container {

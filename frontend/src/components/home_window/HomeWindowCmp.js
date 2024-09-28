@@ -21,7 +21,7 @@ import Text from '../../utils/TextSection';
 import { PlaneButton } from '../../utils/ButtonSection';
 
 function HomeWindow({ homeWindowMainContainerStyle }) {
-  const { sideBar } = useContext(ManagmentSystem);
+  const { sideBar, headerTab } = useContext(ManagmentSystem);
   const initialPosts = useLoaderData();
   const [visiblePosts, setVisiblePosts] = useState(initialPosts);
   const [page, setPage] = useState(2);
@@ -93,6 +93,24 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
     }
   }, [page, loading]);
 
+
+
+  // Filter posts based on the current tab
+  const filteredPosts = visiblePosts.filter((post) => {
+    if (headerTab === 'saved') {
+      return post.saveMode === true;
+    } else if (headerTab === 'bug_fix') {
+      return post.state === 'bug_fix';
+    } else if (headerTab === 'bug_report') {
+      return post.state === 'bug_report';
+    } else if (headerTab === 'reusable_code') {
+      return post.state === 'reusable_code';
+    } else if (headerTab === 'blog_post') {
+      return post.state === 'blog_post';
+    }
+    return true; // Show all posts if no specific filter
+  });
+
   return (
     <div className={`${classes.home_window_main_container} ${homeWindowMainContainerStyle}`}>
       {/* SIDE BAR */}
@@ -117,12 +135,12 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
 
       <div className={classes.home_window_list_main_container}>
         {/* HEADER */}
-        <HomeHeader totalPosts={`${visiblePosts.length}`} />
+        <HomeHeader totalPosts={`${filteredPosts.length}`} />
 
         {/* BODY */}
         <VerticalScrollView>
-          {visiblePosts.length > 0 ? (
-            visiblePosts.map((data, index) => (
+          {filteredPosts?.length > 0 ? (
+            filteredPosts.map((data, index) => (
               <HomeCard
                 cardButtonState={data?.state}
                 key={`${data.id}-${index}`}
@@ -188,7 +206,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
           ) : (
             <Text h4={'No posts found'} />
           )}
-          {visiblePosts.length > 20 && (
+          {filteredPosts.length > 20 && (
             <PlaneButton
               label14={loading ? 'Loading more posts...' : 'Load More Posts...'}
               onClick={loadMorePosts}

@@ -1,23 +1,22 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
-import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
+import React, { useState, useRef, useEffect } from 'react';
 import classes from './HomeCardView.module.css';
-import { IconTextButton, IconButton, DropdownMenu, PlaneButton } from '../../utils/ButtonSection';
+import { IconTextButton, IconButton, PlaneButton } from '../../utils/ButtonSection';
 import Text from '../../utils/TextSection';
 import {
   faArrowUpRightFromSquare,
+  faClipboard,
+  faComment,
   faEllipsis,
   faEllipsisVertical,
+  faPen,
 } from '@fortawesome/free-solid-svg-icons';
 import UserProfileHeader from '../userProfileHeaderCmp';
 import HeaderOptions from '../headerOptionsCmp';
 import ToolTip from '../../utils/toolTipSection';
-import { CARD_VIEW_OPTION } from '../../data/Database';
 import axios from 'axios';
 import { PORT } from '../../http_requests/authentication';
 import { getAuthToken } from '../../utils/authSection';
 import { useRouteLoaderData, useNavigate } from 'react-router-dom';
-import { Overlay } from '../../utils/OverlaySection';
-import { TextArea } from '../../utils/InputSection';
 
 // Header component
 const HomeCardHeader = ({
@@ -36,63 +35,9 @@ const HomeCardHeader = ({
   postId,
   cardButtonState,
 }) => {
-  const navigate = useNavigate();
-  const { overlayHandler } = useContext(ManagmentSystem);
   const { fetchData } = useRouteLoaderData('root');
   const currentUserUsername = fetchData?.data.username;
-  const token = getAuthToken();
-  const [assignmentOverlayChildren, setAssignmentOverlayChildren] = useState('');
-  const [deletionOverlayChildren, setDeletionOverlayChildren] = useState('');
-  const [reportOverlayChildren, setReportOverlayChildren] = useState('');
-  const [shouldDelete, setShouldDelete] = useState(false);
 
-  const deletePost = async () => {
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
-
-    let myUrl;
-
-    cardButtonState === 'bug_report'
-      ? (myUrl = 'bug_reports')
-      : cardButtonState === 'bug_fix'
-      ? (myUrl = 'bug_fixes')
-      : (myUrl = 'reusable_codes');
-
-    try {
-      const response = await axios.delete(`${PORT}api/v1/${myUrl}/${postId}`, { headers });
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  if (shouldDelete) {
-    deletePost();
-  }
-
-  const clickManager = (id) => {
-    if (id === '1') {
-      console.log('edit');
-    } else if (id === '2') {
-      overlayHandler('2');
-      setAssignmentOverlayChildren('Are you sure you want to assign this post?');
-    } else if (id === '3') {
-      navigate(`/comments/?username=${username}&postId=${postId}&post=${cardButtonState}`);
-    } else if (id === '4') {
-      console.log('share');
-    } else if (id === '5') {
-      console.log('idontwanttosee');
-    } else if (id === '6') {
-      overlayHandler('6');
-      setDeletionOverlayChildren('Are you sure you want to delete this post?');
-    } else if (id === '7') {
-      console.log('report');
-      overlayHandler('7');
-      setReportOverlayChildren('Why do you want to report this post?');
-    }
-  };
   return (
     <div className={classes.home_card_header_container}>
       <UserProfileHeader
@@ -116,67 +61,7 @@ const HomeCardHeader = ({
         ) : (
           <IconButton iconButtonStyle={classes.header_options_icon_container} icon={faEllipsis} />
         )}
-
-        <DropdownMenu
-          buttonIcon={faEllipsisVertical}
-          menuItems={CARD_VIEW_OPTION}
-          clickManager={clickManager}
-        />
       </div>
-
-      {/* OVERLAY FOR ASSIGN BUG REPORT */}
-      {assignmentOverlayChildren && (
-        <Overlay
-          overlayStyle={classes.overlay}
-          overlayChildStyle={classes.overlay_child}
-          keyId={'2'}
-        >
-          <Text h4={'Users'} />
-          <PlaneButton label16={'user1'} />
-          <PlaneButton label16={'user2'} />
-          <PlaneButton label16={'user3'} />
-          <PlaneButton label16={'user4'} />
-        </Overlay>
-      )}
-      {deletionOverlayChildren && (
-        <Overlay
-          overlayStyle={classes.overlay}
-          overlayChildStyle={classes.overlay_child}
-          keyId={'6'}
-        >
-          <Text h4={'Warning!!!'} />
-          <Text label16={deletionOverlayChildren} />
-          <div className={classes.overlay_button_container}>
-            <PlaneButton
-              label16={'Yes'}
-              onClick={() => {
-                setShouldDelete(true);
-                overlayHandler('');
-              }}
-            />
-            <PlaneButton
-              label16={'No'}
-              onClick={() => {
-                setShouldDelete(false);
-                overlayHandler('');
-              }}
-            />
-          </div>
-        </Overlay>
-      )}
-
-      {reportOverlayChildren && (
-        <Overlay
-          overlayStyle={classes.overlay}
-          overlayChildStyle={classes.overlay_child}
-          keyId={'7'}
-        >
-          <Text h4={'Report'} />
-          <Text label16={reportOverlayChildren} />
-          <TextArea label={'Reason(optional)'} />
-          <PlaneButton label16={'Submit'} />
-        </Overlay>
-      )}
     </div>
   );
 };

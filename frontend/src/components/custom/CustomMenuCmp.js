@@ -106,9 +106,9 @@ const OptionContent = ({
 
   return (
     <>
-      {contributions.length > 0 ? (
+      {contributions?.length > 0 ? (
         <>
-          {contributions.map((data, index) => (
+          {contributions?.map((data, index) => (
             <div
               key={`${data._id}-${index}`}
               className={classes.header_option_content_main_container}

@@ -42,7 +42,7 @@ router.use(authenticatioController.protect);
 
 router
   .route('/')
-  .get(bugReportController.filterBlockedBugReports, bugReportController.getAllBugs)
+  .get(bugReportController.filterBlockedPosts, bugReportController.filterBlockedUsers, bugReportController.getAllBugs)
   .post(bugReportController.createBug);
 
 router

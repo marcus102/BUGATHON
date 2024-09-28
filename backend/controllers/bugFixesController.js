@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
 const appError = require('../utils/appError');
-const BugFixes = require('./../models/bugFixesModel');
-const BugReport = require('./../models/bugReportModel');
-const Contributor = require('./../models/user_engagement/contributorsModel');
+const BugFixes = require('../models/bugFixesModel');
+const BugReport = require('../models/bugReportModel');
+const Contributor = require('../models/user_engagement/contributorsModel');
 const User = require('./../models/userModel');
-const BlockedUser = require('./../models/restrictions/blockedUserModel');
+const BlockedUser = require('../models/restrictions/blockedUserModel');
+const BlockedPost = require('../models/restrictions/blockedPostModel');
 const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
-const filterParams = require('./../utils/filterParams');
+const filterParams = require('../utils/filterParams');
 
 exports.setRequiredIds = (req, res, next) => {
   const setIfUndefined = (field, value) => {
@@ -26,7 +27,7 @@ exports.createBugFix = catchAsync(async (req, res, next) => {
   let bugReportValue;
 
   if (bugFix_) {
-    console.log(bugFix_)
+    console.log(bugFix_);
     bugFix = await BugFixes.findById(bugFix_);
 
     if (!bugFix) {
@@ -77,9 +78,10 @@ exports.createBugFix = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.filterBlockedBugFixes = factory.blocksHandler(BlockedUser, 'bug_fix_ids');
+exports.filterBlockedUsers = factory.blocksHandler(BlockedUser, 'user_ids');
+exports.filterBlockedPosts = factory.blocksHandler(BlockedPost,'bug_fix_ids');
 
-exports.getALLBugFixes = factory.getAll(BugFixes, 'bug_fix_ids', [
+exports.getALLBugFixes = factory.getAll(BugFixes, 'user_ids', 'bug_fix_ids', [
   { path: 'image' },
   { path: 'reviews' },
   { path: 'likedBy' },

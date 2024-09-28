@@ -1,6 +1,7 @@
 const BugReport = require('./../models/bugReportModel');
 const User = require('./../models/userModel');
 const BlockedUser = require('./../models/restrictions/blockedUserModel');
+const BlockedPost = require('../models/restrictions/blockedPostModel');
 const factory = require('./handlerFactory');
 const catchAsync = require('./../utils/catchAsync');
 const appError = require('./../utils/appError');
@@ -61,9 +62,10 @@ exports.deleteBug = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.filterBlockedBugReports = factory.blocksHandler(BlockedUser, 'bug_ids');
+exports.filterBlockedUsers = factory.blocksHandler(BlockedUser, 'user_ids');
+exports.filterBlockedPosts = factory.blocksHandler(BlockedPost,'bug_report_ids');
 
-exports.getAllBugs = factory.getAll(BugReport, 'bug_ids', [
+exports.getAllBugs = factory.getAll(BugReport, 'user_ids', 'bug_report_ids', [
   { path: 'bugFixes' },
   { path: 'image' },
   { path: 'contributors' },
