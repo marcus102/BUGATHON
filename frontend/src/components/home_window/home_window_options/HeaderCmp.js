@@ -119,9 +119,27 @@ const HEADER_BUTTON_2 = [
   },
 ];
 
-function HomeHeader({ totalPosts }) {
+function HomeHeader({ totalPosts, postTitle }) {
   const { sideBarHandler, sideBar, headerTabHandler, headerTab } = useContext(ManagmentSystem);
   const { isOpen } = sideBar;
+
+  let title;
+
+  if (postTitle === 'all') {
+    title = 'All';
+  } else if (postTitle === 'saved') {
+    title = 'Saved';
+  } else if (postTitle === 'trending') {
+    title = 'Trending';
+  } else if (postTitle === 'bug_report') {
+    title = 'Bug Reports';
+  } else if (postTitle === 'bug_fix') {
+    title = 'Bug Fixes';
+  } else if (postTitle === 'reusable_code') {
+    title = 'Reusable Codes';
+  } else if (postTitle === 'blog_post') {
+    title = 'Blog Posts';
+  }
 
   return (
     <div className={classes.list_header_container}>
@@ -152,16 +170,20 @@ function HomeHeader({ totalPosts }) {
             icon={data.icon}
           />
         ))}
-        <DropdownMenu
-          dropDownMainContainerStyle={`d-block d-xxl-none`}
-          dropDownMenuStyle={`${classes.itemMenuStyle}`}
-          buttonIcon={faAngleRight}
-          menuItems={HEADER_BUTTON_2}
-        />
+
+        <ToolTip tooltipMessage={'More...'}>
+          <DropdownMenu
+            dropDownMainContainerStyle={`d-block d-xxl-none`}
+            dropDownMenuStyle={`${classes.itemMenuStyle}`}
+            buttonIcon={faAngleRight}
+            menuItems={HEADER_BUTTON_2}
+            clickManager={headerTabHandler}
+          />
+        </ToolTip>
       </div>
       <div className={`${classes.header_results_container}`}>
         <ToolTip tooltipMessage={`total posts`}>
-          <Text label14={`Result: ${totalPosts ? totalPosts : '0'} Posts`} />
+          <Text label14={`${title ? title : 'Results'}: ${totalPosts ? totalPosts : '0'} Posts`} />
         </ToolTip>
         <ToolTip tooltipMessage={'Help'}>
           <IconButton

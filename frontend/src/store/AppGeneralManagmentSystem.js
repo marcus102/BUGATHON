@@ -36,6 +36,14 @@ export const ManagmentSystem = createContext({
   currentProfileIdHandler: (parameters) => {},
   usersList: [],
   usersListHandler: (parameters) => {},
+  userBugReportsList: [],
+  userBugReportsListHandler: (parameters) => {},
+  userBugFixesList: [],
+  userBugFixesListHandler: (parameters) => {},
+  userReusableCodesList: [],
+  userReusableCodesListHandler: (parameters) => {},
+  userBlogPostsList: [],
+  userBlogPostsListHandler: (parameters) => {},
   myProfileImg: '',
   myProfileImgHandler: (parameters) => {},
   dropDownIsOpen: '',
@@ -69,6 +77,10 @@ export default function ManagmentSystemProvider({ children }) {
     currentProfileId: '',
     myProfileImg: '',
     usersList: [],
+    userBugReportsList: [],
+    userBugFixesList: [],
+    userReusableCodesList: [],
+    userBlogPostsList: [],
     dropDownIsOpen: '',
     headerOption: {
       viewMoreClick: '',
@@ -168,6 +180,26 @@ export default function ManagmentSystemProvider({ children }) {
           ...state,
           usersList: action.payload,
         };
+      case 'SET_USER_BUG_REPORTS':
+        return {
+          ...state,
+          userBugReportsList: action.payload,
+        };
+      case 'SET_USER_BUG_FIXES':
+        return {
+          ...state,
+          userBugReportsList: action.payload,
+        };
+      case 'SET_USER_REUSABLE_CODES':
+        return {
+          ...state,
+          userReusableCodesList: action.payload,
+        };
+      case 'SET_USER_BLOG_POSTS':
+        return {
+          ...state,
+          userBlogPostsList: action.payload,
+        };
       case 'SET_DROPDOWN_IS_OPEN':
         return {
           ...state,
@@ -256,6 +288,20 @@ export default function ManagmentSystemProvider({ children }) {
     dispatch({ type: 'SET_USER', payload: parameters });
   };
 
+  const userBugReportsListHandler = (parameters) => {
+    dispatch({ type: 'SET_USER_BUG_REPORTS', payload: parameters });
+  };
+
+  const userBugFixesListHandler = (parameters) => {
+    dispatch({ type: 'SET_USER_BUG_FIXES', payload: parameters });
+  };
+  const userReusableCodesListHandler = (parameters) => {
+    dispatch({ type: 'SET_USER_REUSABLE_CODES', payload: parameters });
+  };
+  const userBlogPostsListHandler = (parameters) => {
+    dispatch({ type: 'SET_USER_BLOG_POSTS', payload: parameters });
+  };
+
   const dropDownIsOpenHandler = (parameters) => {
     dispatch({ type: 'SET_DROPDOWN_IS_OPEN', payload: parameters });
   };
@@ -283,6 +329,14 @@ export default function ManagmentSystemProvider({ children }) {
     currentProfileIdHandler: currentProfileIdHandler,
     usersList: state.usersList,
     usersListHandler: usersListHandler,
+    userBugReportsList: state.userBugReportsList,
+    userBugReportsListHandler: userBugReportsListHandler,
+    userBugFixesList: state.userBugReportsList,
+    userBugFixesListHandler: userBugFixesListHandler,
+    userReusableCodesList: state.userReusableCodesList,
+    userReusableCodesListHandler: userReusableCodesListHandler,
+    userBlogPostsList: state.userBlogPostsList,
+    userBlogPostsListHandler: userBlogPostsListHandler,
     myProfileImg: state.myProfileImg,
     myProfileImgHandler: myProfileImgHandler,
     dropDownIsOpen: state.dropDownIsOpen,

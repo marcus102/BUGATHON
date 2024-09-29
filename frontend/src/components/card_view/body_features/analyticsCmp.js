@@ -155,8 +155,8 @@ export function Analytics2({
       <Line direction={'horizontal'} />
       <div className={classes.analytic_content_container}>
         <div className={classes.analytic_summaries_container_2}>
-          {ANALYTICS_DATA.map((data) => (
-            <div key={data.id} className={classes.summary_container_2}>
+          {ANALYTICS_DATA.map((data, index) => (
+            <div key={`${data.id}-${index}`} className={classes.summary_container_2}>
               <div className={classes.summary_header_container}>
                 <Text label14={data.title} />
                 <Icon icon={data.header_icon} color={data.header_icon_coler} />

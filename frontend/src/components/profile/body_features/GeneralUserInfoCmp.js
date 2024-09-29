@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classes from './GeneralUserInfoCmp.module.css';
-import Colors from '../../../constants/colors';
-import { IconTextButton, ButtonContainer } from '../../../utils/ButtonSection';
+import { IconTextButton } from '../../../utils/ButtonSection';
 import Text from '../../../utils/TextSection';
-import HomeCard from '../../card_view/HomeCardView';
 import {
   faArrowUpFromBracket,
   faAt,
@@ -29,7 +27,6 @@ import {
   DUMMY_BUG_REPORT_DATA,
   DUMMY_REUSABLE_CODE_DATA,
 } from '../../../data/Database';
-import { useSearchParams } from 'react-router-dom';
 
 const categorizeLinks = (links) => {
   const categories = {
@@ -93,117 +90,118 @@ const BioSection = ({ bio }) => {
   );
 };
 
-const PostSection = ({ postData }) => {
-  const [isExpanded, setIsExpanded] = useState(
-    postData.reduce((acc, post) => {
-      acc[post.id] = false;
-      return acc;
-    }, {})
-  );
+//PENDING const PostSection = () => {
+//   const [searchParams] = useSearchParams();
+//   const currentUsername = searchParams.get('username');
 
-  const handleToggleExpand = (id) => {
-    setIsExpanded((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  };
+//   const filterDataByUser = (data, username) => {
+//     return data.filter((item) => item.user === username);
+//   };
 
-  return (
-    <div className={classes.content_user_post_overview_main_container}>
-      {postData.map((data) => (
-        <div key={data.id}>
-          <IconTextButton
-            inconTextButtonStyle={classes.user_post_overview_container}
-            label={data.id}
-            icon_={!isExpanded[data.id] ? faChevronDown : faChevronUp}
-            onClick={() => handleToggleExpand(data.id)}
-          />
-          {isExpanded[data.id] && (
-            <>
-              {data.children.length > 0 ? (
-                data.children.map((subData) => (
-                  <div key={subData.id} className={classes.post_card_overview_main_container}>
-                    <HomeCard
-                      cardButtonState={subData.state}
-                      key={subData.id}
-                      isHeaderOption
-                      postTitle={subData.title}
-                      postDescription={subData.description.content}
-                      username={subData.user}
-                      postId={subData.id}
-                      TAGS={subData.tags}
-                      REACTIONSMETADATA={[
-                        {
-                          id: 'likes',
-                          icon: faHeart,
-                          count: subData.likeCount,
-                          activeColor: Colors.red_FF2B2B,
-                        },
-                        { id: 'comments', icon: faComment, count: subData.totalComments },
-                        { id: 'pin', icon: faThumbTack, activeColor: Colors.yellow_ },
-                        { id: 'share', icon: faArrowUpFromBracket, count: subData.shareCount },
-                        { id: 'impression', icon: faChartSimple, count: subData.viewCount },
-                      ]}
-                      contributionsArray={subData.contributions}
-                      contributionsCount={subData.totalAttempts}
-                    />
-                  </div>
-                ))
-              ) : (
-                <Text label14="No posts yet" />
-              )}
-              <ButtonContainer>
-                <Text label14="Click here for more..." />
-              </ButtonContainer>
-            </>
-          )}
-        </div>
-      ))}
-    </div>
-  );
-};
+//   const currentUserBugReports = filterDataByUser(DUMMY_BUG_REPORT_DATA, currentUsername);
+//   const currentUserBugFixes = filterDataByUser(DUMMY_BUG_FIX_DATA, currentUsername);
+//   const currentUserReusableCodes = filterDataByUser(DUMMY_REUSABLE_CODE_DATA, currentUsername);
+//   const currentUserBlogPosts = filterDataByUser(DUMMY_REUSABLE_CODE_DATA, currentUsername);
 
-const filterDataByUser = (data, username) => {
-  return data.filter((item) => item.user === username);
-};
+//   const DUMMY_POST_DATA = [
+//     { id: 'Bug Reports', children: currentUserBugReports },
+//     { id: 'Bug Fixes', children: currentUserBugFixes },
+//     { id: 'Reusable Codes', children: currentUserReusableCodes },
+//     { id: 'Blog Posts', children: currentUserBlogPosts },
+//   ];
+
+//   const [isExpanded, setIsExpanded] = useState(
+//     DUMMY_POST_DATA.reduce((acc, post) => {
+//       acc[post.id] = false;
+//       return acc;
+//     }, {})
+//   );
+
+//   const handleToggleExpand = (id) => {
+//     setIsExpanded((prev) => ({
+//       ...prev,
+//       [id]: !prev[id],
+//     }));
+//   };
+
+//   return (
+//     <div className={classes.content_user_post_overview_main_container}>
+//       {DUMMY_POST_DATA.map((data, index) => (
+//         <div key={`${data.id}-${index}`}>
+//           <IconTextButton
+//             inconTextButtonStyle={classes.user_post_overview_container}
+//             label={data.id}
+//             icon_={!isExpanded[data.id] ? faChevronDown : faChevronUp}
+//             onClick={() => handleToggleExpand(data.id)}
+//           />
+//           {isExpanded[data.id] && (
+//             <>
+//               {data.children.length > 0 ? (
+//                 data.children.map((subData) => (
+//                   <div key={subData.id} className={classes.post_card_overview_main_container}>
+//                     <HomeCard
+//                       cardButtonState={subData.state}
+//                       key={subData.id}
+//                       isHeaderOption
+//                       postTitle={subData.title}
+//                       postDescription={subData.description.content}
+//                       username={subData.user}
+//                       postId={subData.id}
+//                       TAGS={subData.tags}
+//                       REACTIONSMETADATA={[
+//                         {
+//                           id: 'likes',
+//                           icon: faHeart,
+//                           count: subData.likeCount,
+//                           activeColor: Colors.red_FF2B2B,
+//                         },
+//                         { id: 'comments', icon: faComment, count: subData.totalComments },
+//                         { id: 'pin', icon: faThumbTack, activeColor: Colors.yellow_ },
+//                         { id: 'share', icon: faArrowUpFromBracket, count: subData.shareCount },
+//                         { id: 'impression', icon: faChartSimple, count: subData.viewCount },
+//                       ]}
+//                       contributionsArray={subData.contributions}
+//                       contributionsCount={subData.totalAttempts}
+//                     />
+//                   </div>
+//                 ))
+//               ) : (
+//                 <Text label14="No posts yet" />
+//               )}
+//               {data.children.length > 0 && (
+//                     <ButtonContainer>
+//                   <Text label14="Click here for more..." />
+//                 </ButtonContainer>
+//               )}
+//             </>
+//           )}
+//         </div>
+//       ))}
+//     </div>
+//   );
+// };
 
 function GeneralUserInfo({ link1, link2, link3, link4, emails, telNumber, location, bio }) {
-  const [searchParams] = useSearchParams();
-  const currentUsername = searchParams.get('username');
-
-  const currentUserBugReports = filterDataByUser(DUMMY_BUG_REPORT_DATA, currentUsername);
-  const currentUserBugFixes = filterDataByUser(DUMMY_BUG_FIX_DATA, currentUsername);
-  const currentUserReusableCodes = filterDataByUser(DUMMY_REUSABLE_CODE_DATA, currentUsername);
-
-  const DUMMY_POST_DATA = [
-    { id: 'Trending', children: [] },
-    { id: 'Top Bug Report', children: currentUserBugReports },
-    { id: 'Top Bug Fix', children: currentUserBugFixes },
-    { id: 'Top Reusable Code', children: currentUserReusableCodes },
-  ];
-
   const categorizedUserLinks = categorizeLinks(
     [link1, link2, link3, link4].filter((link) => link !== undefined)
   );
 
-  // Define a mapping between link types and icons
   const iconMapping = {
     GitHub: faGithub,
     StackOverflow: faStackOverflow,
     LinkedIn: faLinkedin,
     Twitter: faXTwitter,
     YouTube: faYoutube,
-    Default: faLink, // Default icon for any other links
+    Default: faLink,
   };
 
   const generateSocialData = (categorizedLinks) => {
     return Object.keys(categorizedLinks).reduce((acc, key) => {
       const address = categorizedLinks[key];
       if (address) {
-        // Only include items where the address is defined and not empty
         acc.push({
           id: key,
-          icon: iconMapping[key] || iconMapping.Default, // Use default icon if no specific icon found
+          icon: iconMapping[key] || iconMapping.Default,
           address: address,
         });
       }
@@ -211,7 +209,6 @@ function GeneralUserInfo({ link1, link2, link3, link4, emails, telNumber, locati
     }, []);
   };
 
-  // Assuming categorizedUserLinks is already defined
   const SOCIAL_DATA = [
     {
       id: 'Social',
@@ -223,33 +220,9 @@ function GeneralUserInfo({ link1, link2, link3, link4, emails, telNumber, locati
         { id: 'Email Address', icon: faAt, address: emails },
         { id: 'Tel Number', icon: faPhone, address: telNumber },
         { id: 'Location', icon: faLocationDot, address: location },
-      ].filter((item) => item.address), // Only include items where the address is defined
+      ].filter((item) => item.address),
     },
   ];
-  // const SOCIAL_DATA = [
-  //   {
-  //     id: 'Social',
-  //     children: [
-  //       { id: 'GitHub', icon: faGithub, address: categorizedUserLinks.GitHub },
-  //       {
-  //         id: 'Stack Overflow',
-  //         icon: faStackOverflow,
-  //         address: categorizedUserLinks.StackOverflow,
-  //       },
-  //       { id: 'LinkedIn', icon: faLinkedin, address: categorizedUserLinks.LinkedIn },
-  //       { id: 'Twitter', icon: faXTwitter, address: categorizedUserLinks.Twitter },
-  //       { id: 'YouTube', icon: faYoutube, address: categorizedUserLinks.YouTube },
-  //     ],
-  //   },
-  //   {
-  //     id: 'Contact',
-  //     children: [
-  //       { id: 'Email Address', icon: faAt, address: emails },
-  //       { id: 'Tel Number', icon: faPhone, address: telNumber },
-  //       { id: 'Location', icon: faLocationDot, address: location },
-  //     ],
-  //   },
-  // ];
 
   return (
     <div className={classes.general_user_info_content_overview_main_container}>
@@ -257,7 +230,6 @@ function GeneralUserInfo({ link1, link2, link3, link4, emails, telNumber, locati
         <SocialSection socialData={SOCIAL_DATA} />
         <BioSection bio={bio} />
       </div>
-      <PostSection postData={DUMMY_POST_DATA} />
     </div>
   );
 }

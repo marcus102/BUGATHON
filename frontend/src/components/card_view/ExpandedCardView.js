@@ -573,7 +573,7 @@ function ExpandedCard({
           />
 
           {!isExpanded && (
-            <div className={classes.body_analytics_container}>
+            <div className={`${classes.body_analytics_container} d-xl-flex`}>
               <Analytics2
                 likesCount={likesCount}
                 commentsCount={commentsCount}
@@ -583,16 +583,15 @@ function ExpandedCard({
               />
             </div>
           )}
-          <div className={classes.body_analytics_container}>
-            <div className={`d-block d-xl d-none ${classes.analytics2_container}`}>
-              <Analytics2
-                likesCount={likesCount}
-                commentsCount={commentsCount}
-                sharesCount={sharesCount}
-                viewsCount={viewsCount}
-                contributionsCount={contributionsCount}
-              />
-            </div>
+
+          <div className={`${classes.body_analytics_container} d-xl-none`}>
+            <Analytics2
+              likesCount={likesCount}
+              commentsCount={commentsCount}
+              sharesCount={sharesCount}
+              viewsCount={viewsCount}
+              contributionsCount={contributionsCount}
+            />
           </div>
         </div>
       </div>

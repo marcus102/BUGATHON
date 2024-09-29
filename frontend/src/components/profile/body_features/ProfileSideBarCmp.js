@@ -50,13 +50,19 @@ const SIDE_BAR_DATA = [
     allowed_to: 'all',
   },
   {
-    id: 'Reusable Code',
+    id: 'Reusable Codes',
     icon_: faArrowPointer,
     is_my_profile: null,
     isColored: false,
     allowed_to: 'all',
   },
-  { id: 'Blog', icon_: faArrowPointer, is_my_profile: null, isColored: false, allowed_to: 'all' },
+  {
+    id: 'Blog Posts',
+    icon_: faArrowPointer,
+    is_my_profile: null,
+    isColored: false,
+    allowed_to: 'all',
+  },
   {
     id: 'Admin Dashboard',
     icon_: faArrowPointer,
@@ -89,8 +95,13 @@ export function ProfileSideBar({ isMyProfile, profileImg, userRole }) {
     myProfileImgHandler,
     myProfileImg,
     usersListHandler,
+    userBugReportsListHandler,
+    userBugFixesListHandler,
+    userReusableCodesListHandler,
+    userBlogPostsListHandler,
   } = useContext(ManagmentSystem);
-  const { tokenData } = useRouteLoaderData('root');
+  const { tokenData, fetchData } = useRouteLoaderData('root');
+  const currentUser = fetchData?.data;
   const navigate = useNavigate();
 
   let profile = profileImg;
@@ -107,12 +118,33 @@ export function ProfileSideBar({ isMyProfile, profileImg, userRole }) {
     profile = myProfileImg;
   };
 
+  const ClickHandler = (id) => {
+    if (id === 'Admin Dashboard') {
+      getAllUsers(id);
+    } else if (id === 'Settings') {
+      navigate(`/settings`);
+    } else if (
+      id === 'Bug Reports' ||
+      id === 'Bug Fixes' ||
+      id === 'Reusable Codes' ||
+      id === 'Blog Posts'
+    ) {
+      getUserPosts(id);
+    } else if (id === 'Logout') {
+      localStorage.removeItem('token');
+      localStorage.removeItem('expiration');
+      navigate('/auth?mode=signin');
+    } else {
+      profileSideBarButtonHandler(id);
+    }
+  };
+
   const getAllUsers = async (id) => {
     const token = getAuthToken();
 
     if (!token) {
       console.error('No token available');
-      return null;
+      return [];
     }
 
     const headers = {
@@ -129,15 +161,63 @@ export function ProfileSideBar({ isMyProfile, profileImg, userRole }) {
 
       profileSideBarButtonHandler(id);
     } catch (error) {
-      console.error('Error updating settings:', error.response.data);
-      return null;
+      console.error('Error fetching users for the admin:', error.response.data);
+      return [];
     }
   };
 
-    // Filter the sidebar data based on the user's role
-    const filteredSideBarData = SIDE_BAR_DATA.filter((item) =>
-      item.allowed_to === 'all' || item.allowed_to === userRole
-    );
+  const getUserPosts = async (id) => {
+    const token = getAuthToken();
+
+    if (!token) {
+      console.error('No token available');
+      return [];
+    }
+
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    };
+
+    let URL;
+
+    if (id === 'Bug Reports') {
+      URL = 'bug_reports';
+    } else if (id === 'Bug Fixes') {
+      URL = 'bug_fixes';
+    } else if (id === 'Reusable Codes') {
+      URL = 'reusable_codes';
+    } else if (id === 'Blog Posts') {
+      URL = 'blogs';
+    }
+
+    try {
+      const response = await axios.get(`${PORT}api/v1/${URL}?user=${currentUser.id}`, {
+        headers,
+      });
+      console.log('Success!!', response.data);
+
+      if (id === 'Bug Reports') {
+        userBugReportsListHandler(response.data);
+      } else if (id === 'Bug Fixes') {
+        userBugFixesListHandler(response.data);
+      } else if (id === 'Reusable Codes') {
+        userReusableCodesListHandler(response.data);
+      } else if (id === 'Blog Posts') {
+        userBlogPostsListHandler(response.data);
+      }
+
+      profileSideBarButtonHandler(id);
+    } catch (error) {
+      console.error('Error updating settings:', error.response.data);
+      return [];
+    }
+  };
+
+  // Filter the sidebar data based on the user's role
+  const filteredSideBarData = SIDE_BAR_DATA.filter(
+    (item) => item.allowed_to === 'all' || item.allowed_to === userRole
+  );
 
   return (
     <div className={`d-none d-xl-flex ${classes.profile_page_side_bar_main_container}`}>
@@ -169,19 +249,7 @@ export function ProfileSideBar({ isMyProfile, profileImg, userRole }) {
                 inconTextLabel16Style={data.isColored && classes.colored_text}
                 label={data.id}
                 icon_={profileSideBarButton === data.id ? data.icon_ : undefined}
-                onClick={() => {
-                  if (data.id === 'Admin Dashboard') {
-                    getAllUsers(data.id);
-                  } else if (data.id === 'Settings') {
-                    navigate(`/settings`);
-                  } else if (data.id === 'Logout') {
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('expiration');
-                    navigate('/auth?mode=signin');
-                  } else {
-                    profileSideBarButtonHandler(data.id);
-                  }
-                }}
+                onClick={() => ClickHandler(data.id)}
               />
             )
           );

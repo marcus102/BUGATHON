@@ -93,8 +93,6 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
     }
   }, [page, loading]);
 
-
-
   // Filter posts based on the current tab
   const filteredPosts = visiblePosts.filter((post) => {
     if (headerTab === 'saved') {
@@ -108,7 +106,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
     } else if (headerTab === 'blog_post') {
       return post.state === 'blog_post';
     }
-    return true; // Show all posts if no specific filter
+    return true;
   });
 
   return (
@@ -135,7 +133,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
 
       <div className={classes.home_window_list_main_container}>
         {/* HEADER */}
-        <HomeHeader totalPosts={`${filteredPosts.length}`} />
+        <HomeHeader totalPosts={`${filteredPosts.length}`} postTitle={headerTab} />
 
         {/* BODY */}
         <VerticalScrollView>
@@ -157,7 +155,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
                 role={data.user?.role}
                 profileImg={data.user.image && data.user.image[0]?.imageUrl}
                 timestamp={data?.createdAt}
-                postId={data?._id}
+                postId={data?.id}
                 TAGS={data?.tags}
                 REACTIONSMETADATA={[
                   {

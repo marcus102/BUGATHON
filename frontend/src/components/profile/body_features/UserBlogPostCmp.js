@@ -1,9 +1,16 @@
-import React from 'react';
-import classes from './UserBlogPostCmp.module.css';
-import Text from '../../../utils/TextSection';
+import React, { useContext } from 'react';
+import { ManagmentSystem } from '../../../store/AppGeneralManagmentSystem';
+import CustomBugList from '../../custom/CustomBugListCmp';
 
 function UserBlogPost() {
-  return <Text h1={'Blog Post'} />;
+  const { userBlogPostsList } = useContext(ManagmentSystem);
+  return (
+    <CustomBugList
+      DATA={userBlogPostsList.data}
+      title={'Blog Posts'}
+      count={userBlogPostsList.data.length}
+    />
+  );
 }
 
 export default UserBlogPost;

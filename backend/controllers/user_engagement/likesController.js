@@ -18,6 +18,7 @@ exports.setRequiredIds = (req, res, next) => {
   setIfUndefined('bugFix', req.params.bug_fixes_id);
   setIfUndefined('blogPost', req.params.blog_post_id);
   setIfUndefined('comment', req.params.comment_id);
+  setIfUndefined('bugReport', req.params.bug_report_id);
 
   next();
 };

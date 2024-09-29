@@ -1,24 +1,15 @@
-import React from 'react';
-// import classes from './UserBugFixCmp.module.css';
+import React, { useContext } from 'react';
+import { ManagmentSystem } from '../../../store/AppGeneralManagmentSystem';
 import CustomBugList from '../../custom/CustomBugListCmp';
-import { DUMMY_BUG_FIX_DATA } from '../../../data/Database';
-import { useSearchParams } from 'react-router-dom';
-
-const filterDataByUser = (data, username) => {
-  return data.filter((item) => item.user === username);
-};
 
 function UserBugFix() {
-  const [searchParams] = useSearchParams();
-  const currentUsername = searchParams.get('username');
-
-  const currentUserBugFixes = filterDataByUser(DUMMY_BUG_FIX_DATA, currentUsername);
+  const { userBugFixesList } = useContext(ManagmentSystem);
 
   return (
     <CustomBugList
-      DATA={currentUserBugFixes}
+      DATA={userBugFixesList.data}
       title={'Bug Fixes'}
-      count={currentUserBugFixes.length}
+      count={userBugFixesList.data.length}
     />
   );
 }

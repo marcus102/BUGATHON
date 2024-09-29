@@ -25,7 +25,11 @@ function Profile() {
 
   return (
     <div className={classes.profile_page_main_container}>
-      <ProfileSideBar isMyProfile={true} profileImg={profileImg?.imageUrl} userRole={currentUser?.role}/>
+      <ProfileSideBar
+        isMyProfile={true}
+        profileImg={profileImg?.imageUrl}
+        userRole={currentUser?.role}
+      />
       <div className={`${classes.profile_page_second_container}`}>
         <ProfileSideBar2 userRole={currentUser?.role} />
         <VerticalScrollView
@@ -54,11 +58,11 @@ function Profile() {
                 />
               )}
               {profileSideBarButton === 'Analytics' && <Analytics />}
-              {profileSideBarButton === 'Blog' && <UserBlogPost />}
+              {profileSideBarButton === 'Blog Posts' && <UserBlogPost />}
               {profileSideBarButton === 'Ranking' && <Ranking />}
               {profileSideBarButton === 'Bug Fixes' && <UserBugFix />}
               {profileSideBarButton === 'Bug Reports' && <UserBugReport />}
-              {profileSideBarButton === 'Reusable Code' && <UserReusableCode />}
+              {profileSideBarButton === 'Reusable Codes' && <UserReusableCode />}
               {profileSideBarButton === 'Admin Dashboard' && currentUser?.role === 'admin' && (
                 <AdminDashBoard />
               )}

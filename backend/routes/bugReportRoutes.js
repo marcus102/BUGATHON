@@ -28,7 +28,7 @@ const router = express.Router({ mergeParams: true });
 router.use('/:bug_id/comments', commentsRouter);
 router.use('/:bug_id/image', imageRouter);
 router.use('/:bug_id/bug_fix', bugFixRouter);
-router.use('/:bug_reports_id/likes', likesRouter);
+router.use('/:bug_report_id/likes', likesRouter);
 //filtering
 router.use('/:bug_id/category', categoriesRouter);
 router.use('/:bug_id/operating_system', operatingSystemRouter);

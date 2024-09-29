@@ -10,6 +10,7 @@ import {
   faThumbTack,
   faComment,
   faHeart,
+  faBookmark,
 } from '@fortawesome/free-solid-svg-icons';
 
 function CustomBugList({ DATA, title, count }) {
@@ -18,33 +19,73 @@ function CustomBugList({ DATA, title, count }) {
       <Text textStyle={classes.bug_fixes_header_container} h5={`${title} | ${count}`} />
       <Line direction={'horizontal'} />
       <div className={`${classes.bug_fixes_container}`}>
-        {DATA.map((data) => (
-          <HomeCard
-            homeCardStyle={classes.bug_fixes_cards}
-            cardButtonState={data.state}
-            key={data.id}
-            isHeaderOption
-            postTitle={data.title}
-            postDescription={data.description.content}
-            username={data.user}
-            postId={data.id}
-            TAGS={data.tags}
-            REACTIONSMETADATA={[
-              {
-                id: 'likes',
-                icon: faHeart,
-                count: data.likeCount,
-                activeColor: Colors.red_FF2B2B,
-              },
-              { id: 'comments', icon: faComment, count: data.totalComments },
-              { id: 'pin', icon: faThumbTack, activeColor: Colors.yellow_ },
-              { id: 'share', icon: faArrowUpFromBracket, count: data.shareCount },
-              { id: 'impression', icon: faChartSimple, count: data.viewCount },
-            ]}
-            contributionsArray={data.contributions}
-            contributionsCount={data.totalAttempts}
-          />
-        ))}
+        {DATA.length > 0 ? (
+          DATA.map((data, index) => (
+            <HomeCard
+              cardButtonState={data?.state}
+              key={`${data.id}-${index}`}
+              isHeaderOption={true}
+              postTitle={data?.title}
+              firstName={data.user?.firstName}
+              lastName={data.user?.lastName}
+              followersCount={data.user?.followersCount}
+              followingCount={data.user?.followingCount}
+              starCount={data.user?.starCount}
+              postDescription={data?.description}
+              username={data.user?.username}
+              profession={data.user?.profession}
+              role={data.user?.role}
+              profileImg={data.user.image && data.user.image[0]?.imageUrl}
+              timestamp={data?.createdAt}
+              postId={data?.id}
+              TAGS={data?.tags}
+              REACTIONSMETADATA={[
+                {
+                  id: 'likes',
+                  icon: faHeart,
+                  count: `${data?.likeCount}`,
+                  state: null,
+                  activeColor: Colors.red_FF2B2B,
+                },
+                {
+                  id: 'comments',
+                  icon: faComment,
+                  count: `${data?.comments?.length}`,
+                  state: null,
+                  activeColor: null,
+                },
+                {
+                  id: 'save',
+                  icon: faBookmark,
+                  count: null,
+                  state: data?.saveMode,
+                  activeColor: Colors.yellow_,
+                },
+                {
+                  id: 'share',
+                  icon: faArrowUpFromBracket,
+                  count: `${data?.shareCount}`,
+                  state: null,
+                  activeColor: null,
+                },
+                {
+                  id: 'impression',
+                  icon: faChartSimple,
+                  count: `${data?.viewCount}`,
+                  state: null,
+                  activeColor: null,
+                },
+              ]}
+              contributionsArray={data?.contributors}
+              contributionsCount={data?.totalAttempts}
+              likedBy={data?.likedBy}
+              saveMode={data?.saveMode}
+              commentsArray={data?.comments}
+            />
+          ))
+        ) : (
+          <Text h6={'No post found'} />
+        )}
       </div>
     </div>
   );
