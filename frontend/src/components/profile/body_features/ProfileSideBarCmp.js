@@ -13,82 +13,7 @@ import axios from 'axios';
 import { getAuthToken } from '../../../utils/authSection';
 import { PORT } from '../../../http_requests/authentication';
 
-const SIDE_BAR_DATA = [
-  {
-    id: 'General',
-    icon_: faArrowPointer,
-    is_my_profile: null,
-    isColored: false,
-    allowed_to: 'all',
-  },
-  {
-    id: 'Analytics',
-    icon_: faArrowPointer,
-    is_my_profile: null,
-    isColored: false,
-    allowed_to: 'all',
-  },
-  {
-    id: 'Ranking',
-    icon_: faArrowPointer,
-    is_my_profile: null,
-    isColored: false,
-    allowed_to: 'all',
-  },
-  {
-    id: 'Bug Reports',
-    icon_: faArrowPointer,
-    is_my_profile: null,
-    isColored: false,
-    allowed_to: 'all',
-  },
-  {
-    id: 'Bug Fixes',
-    icon_: faArrowPointer,
-    is_my_profile: null,
-    isColored: false,
-    allowed_to: 'all',
-  },
-  {
-    id: 'Reusable Codes',
-    icon_: faArrowPointer,
-    is_my_profile: null,
-    isColored: false,
-    allowed_to: 'all',
-  },
-  {
-    id: 'Blog Posts',
-    icon_: faArrowPointer,
-    is_my_profile: null,
-    isColored: false,
-    allowed_to: 'all',
-  },
-  {
-    id: 'Admin Dashboard',
-    icon_: faArrowPointer,
-    is_my_profile: null,
-    isColored: false,
-    allowed_to: 'admin',
-  },
-  {
-    id: 'Delete Account',
-    icon_: faArrowPointer,
-    is_my_profile: true,
-    isColored: true,
-    allowed_to: [],
-  },
-  { id: 'Logout', icon_: null, is_my_profile: true, isColored: true, allowed_to: 'all' },
-  { id: 'Settings', icon_: null, is_my_profile: true, isColored: false, allowed_to: 'all' },
-  {
-    id: 'Block This Account ',
-    icon_: null,
-    is_my_profile: false,
-    isColored: true,
-    allowed_to: 'all',
-  },
-];
-
-export function ProfileSideBar({ isMyProfile, profileImg, userRole }) {
+export function ProfileSideBar({ isMyProfile, profileImg, userRole, userId }) {
   const {
     profileSideBarButtonHandler,
     profileSideBarButton,
@@ -103,6 +28,93 @@ export function ProfileSideBar({ isMyProfile, profileImg, userRole }) {
   const { tokenData, fetchData } = useRouteLoaderData('root');
   const currentUser = fetchData?.data;
   const navigate = useNavigate();
+
+  const SIDE_BAR_DATA = [
+    {
+      id: 'General',
+      icon_: faArrowPointer,
+      is_my_profile: null,
+      isColored: false,
+      allowed_to: 'all',
+    },
+    {
+      id: 'Analytics',
+      icon_: faArrowPointer,
+      is_my_profile: null,
+      isColored: false,
+      allowed_to: 'all',
+    },
+    {
+      id: 'Ranking',
+      icon_: faArrowPointer,
+      is_my_profile: null,
+      isColored: false,
+      allowed_to: 'all',
+    },
+    {
+      id: 'Bug Reports',
+      icon_: faArrowPointer,
+      is_my_profile: null,
+      isColored: false,
+      allowed_to: 'all',
+    },
+    {
+      id: 'Bug Fixes',
+      icon_: faArrowPointer,
+      is_my_profile: null,
+      isColored: false,
+      allowed_to: 'all',
+    },
+    {
+      id: 'Reusable Codes',
+      icon_: faArrowPointer,
+      is_my_profile: null,
+      isColored: false,
+      allowed_to: 'all',
+    },
+    {
+      id: 'Blog Posts',
+      icon_: faArrowPointer,
+      is_my_profile: null,
+      isColored: false,
+      allowed_to: 'all',
+    },
+    {
+      id: 'Admin Dashboard',
+      icon_: faArrowPointer,
+      is_my_profile: null,
+      isColored: false,
+      allowed_to: 'admin',
+    },
+    {
+      id: 'Delete Account',
+      icon_: faArrowPointer,
+      is_my_profile: true,
+      isColored: true,
+      allowed_to: [],
+    },
+    {
+      id: 'Logout',
+      icon_: null,
+      is_my_profile: userId === currentUser.id ? true : false,
+      isColored: true,
+      allowed_to: 'all',
+    },
+    {
+      id: 'Settings',
+      icon_: null,
+      is_my_profile: userId === currentUser.id ? true : false,
+      isColored: false,
+      allowed_to: 'all',
+    },
+    {
+      id: 'Block This Account ',
+      icon_: null,
+      is_my_profile: userId === currentUser.id ? false : true,
+      isColored: true,
+      allowed_to: 'all',
+    },
+  ];
 
   let profile = profileImg;
 
@@ -192,7 +204,7 @@ export function ProfileSideBar({ isMyProfile, profileImg, userRole }) {
     }
 
     try {
-      const response = await axios.get(`${PORT}api/v1/${URL}?user=${currentUser.id}`, {
+      const response = await axios.get(`${PORT}api/v1/${URL}?user=${userId}`, {
         headers,
       });
       console.log('Success!!', response.data);
@@ -259,7 +271,95 @@ export function ProfileSideBar({ isMyProfile, profileImg, userRole }) {
   );
 }
 
-export function ProfileSideBar2({ userRole }) {
+export function ProfileSideBar2({ userRole, userId }) {
+  const { fetchData } = useRouteLoaderData('root');
+  const currentUser = fetchData?.data;
+  const SIDE_BAR_DATA = [
+    {
+      id: 'General',
+      icon_: faArrowPointer,
+      is_my_profile: null,
+      isColored: false,
+      allowed_to: 'all',
+    },
+    {
+      id: 'Analytics',
+      icon_: faArrowPointer,
+      is_my_profile: null,
+      isColored: false,
+      allowed_to: 'all',
+    },
+    {
+      id: 'Ranking',
+      icon_: faArrowPointer,
+      is_my_profile: null,
+      isColored: false,
+      allowed_to: 'all',
+    },
+    {
+      id: 'Bug Reports',
+      icon_: faArrowPointer,
+      is_my_profile: null,
+      isColored: false,
+      allowed_to: 'all',
+    },
+    {
+      id: 'Bug Fixes',
+      icon_: faArrowPointer,
+      is_my_profile: null,
+      isColored: false,
+      allowed_to: 'all',
+    },
+    {
+      id: 'Reusable Codes',
+      icon_: faArrowPointer,
+      is_my_profile: null,
+      isColored: false,
+      allowed_to: 'all',
+    },
+    {
+      id: 'Blog Posts',
+      icon_: faArrowPointer,
+      is_my_profile: null,
+      isColored: false,
+      allowed_to: 'all',
+    },
+    {
+      id: 'Admin Dashboard',
+      icon_: faArrowPointer,
+      is_my_profile: null,
+      isColored: false,
+      allowed_to: 'admin',
+    },
+    {
+      id: 'Delete Account',
+      icon_: faArrowPointer,
+      is_my_profile: true,
+      isColored: true,
+      allowed_to: [],
+    },
+    {
+      id: 'Logout',
+      icon_: null,
+      is_my_profile: userId === currentUser.id ? true : false,
+      isColored: true,
+      allowed_to: 'all',
+    },
+    {
+      id: 'Settings',
+      icon_: null,
+      is_my_profile: userId === currentUser.id ? true : false,
+      isColored: false,
+      allowed_to: 'all',
+    },
+    {
+      id: 'Block This Account ',
+      icon_: null,
+      is_my_profile: userId === currentUser.id ? false : true,
+      isColored: true,
+      allowed_to: 'all',
+    },
+  ];
   const { profileSideBarButtonHandler, profileSideBarButton } = useContext(ManagmentSystem);
   return (
     <div className={`d-flex d-xl-none`}>

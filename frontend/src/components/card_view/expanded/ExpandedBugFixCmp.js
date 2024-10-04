@@ -27,6 +27,7 @@ function ExpandedBugFix() {
 
   return (
     <ExpandedCard
+      state={data?.state}
       SUGESTION_BUTTON_META_DATA={SUGESTION_BUTTON_DATA}
       contributionsArray={data?.contributors}
       contributionsCount={data?.totalAttempts}
@@ -42,6 +43,7 @@ function ExpandedBugFix() {
       profession={data.user?.profession}
       role={data.user?.role}
       username={data.user?.username}
+      userId={data.user?.id}
       followersCount={data.user?.followersCount}
       followingCount={data.user?.followingCount}
       starCount={data.user?.starCount}

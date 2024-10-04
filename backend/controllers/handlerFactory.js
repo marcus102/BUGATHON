@@ -93,6 +93,7 @@ exports.getOne = (Model, populateOptions) =>
     });
   });
 
+
 exports.getAll = (Model, excludedUsersIdParams, excludedPostsIdParams, populateOptions) =>
   catchAsync(async (req, res, next) => {
     let filter = null;
@@ -154,7 +155,12 @@ exports.getAll = (Model, excludedUsersIdParams, excludedPostsIdParams, populateO
             path: 'bugReport',
             model: 'BugReport',
             select: '-__v'
-          }
+          },
+          {
+            path: 'reusableCode',
+            model: 'ReusableCode',
+            select: '-__v'
+          },
         ]
       });
     }
@@ -310,11 +316,11 @@ exports.deleteMany = (Model, field, setIds, UserModel) =>
 
     const deletedCount = docToDelete.length;
 
-    if (deletedCount === 0) {
+    if (!deletedCount > 0) {
       return next();
     }
 
-    if (setIds && setIds === true) {
+    if (setIds === true) {
       const bugFixIds = docToDelete.reduce((acc, doc) => {
         if (doc._id) {
           acc.push(doc._id);

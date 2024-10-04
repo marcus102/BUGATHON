@@ -58,27 +58,23 @@ export async function action({ request }) {
     userData = {
       title: data.get('reusable_code'),
       description: data.get('description'),
+      reusableCode_: data.get('reusable_code_'),
     };
   }
-
-  console.log('Here!!!', userData);
 
   const headers = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`,
   };
 
-  console.log('userData', userData);
-
   try {
     await axios.post(`${PORT}api/v1/${route}`, userData, {
       headers,
     });
     console.log('Success!!');
-
     return redirect('/');
   } catch (error) {
-    console.error('Error creating post:', error.response.data);
+    console.error('Error creating post:', error.response);
     return null;
   }
 }

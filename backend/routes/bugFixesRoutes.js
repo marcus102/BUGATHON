@@ -6,6 +6,7 @@ const likesRouter = require('./user_engagement/likeRoutes');
 const reportHubRouter = require('./restrictions/reportHubRoutes');
 const blockedPostRouter = require('./restrictions/blockedPostRoutes');
 const commentsController = require('../controllers/user_engagement/commentsControllers');
+const contributionsController = require('../controllers/user_engagement/contributorsController');
 const authenticatioController = require('../controllers/authenticatioController');
 const bugFixesController = require('../controllers/bugFixesController');
 const likesController = require('../controllers/user_engagement/likesController');
@@ -40,11 +41,11 @@ router
 
 router
   .route('/:id')
-  // .post(bugFixesController.setRequiredIds, bugFixesController.createBugFix)
   .get(bugFixesController.getBugFix)
   .patch(bugFixesController.updateBugFix)
   .delete(
     commentsController.deleteMultipleBugFixesCommentsById,
+    contributionsController.deleteMultipleBugFixesContributionsById,
     reviewsController.deleteMultiplebugFixesReviewsById,
     likesController.deleteMultiplebugFixesLikesById,
     imagesController.deletMultipleBugFixesImagesById,

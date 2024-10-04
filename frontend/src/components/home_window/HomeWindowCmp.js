@@ -151,6 +151,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
                 starCount={data.user?.starCount}
                 postDescription={data?.description}
                 username={data.user?.username}
+                userId={data.user?.id}
                 profession={data.user?.profession}
                 role={data.user?.role}
                 profileImg={data.user.image && data.user.image[0]?.imageUrl}

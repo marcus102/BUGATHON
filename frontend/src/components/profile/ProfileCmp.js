@@ -12,65 +12,69 @@ import Analytics from './body_features/AnalyticsCmp';
 import UserBlogPost from './body_features/UserBlogPostCmp';
 import AdminDashBoard from './body_features/AdminDashBoardCmp';
 import { VerticalScrollView } from '../../utils/ScrollViewsSection';
-import { useRouteLoaderData } from 'react-router-dom';
+import {useLoaderData } from 'react-router-dom';
 
 function Profile() {
   const { profileSideBarButton } = useContext(ManagmentSystem);
-  const { fetchData } = useRouteLoaderData('root');
-  const currentUser = fetchData.data;
+  const currentUser = useLoaderData();
 
-  const profileImg = currentUser.image?.find(
+  const profileImg = currentUser?.image?.find(
     (targetImg) => targetImg.username === currentUser.username
   );
 
   return (
-    <div className={classes.profile_page_main_container}>
-      <ProfileSideBar
-        isMyProfile={true}
-        profileImg={profileImg?.imageUrl}
-        userRole={currentUser?.role}
-      />
-      <div className={`${classes.profile_page_second_container}`}>
-        <ProfileSideBar2 userRole={currentUser?.role} />
-        <VerticalScrollView
-          children={
-            <>
-              <ProfileHeader
-                userFullName={`${currentUser?.firstName} ${currentUser?.lastName}`}
-                followerCount={currentUser?.followersCount}
-                followingCount={currentUser?.followingCount}
-                starCount={currentUser?.starCount}
-                username={currentUser?.username}
-                profession={currentUser?.profession}
-                profileImg={profileImg?.imageUrl}
-                role={currentUser?.role}
-              />
-              {profileSideBarButton === 'General' && (
-                <GeneralUserInfo
-                  link1={currentUser?.link1}
-                  link2={currentUser?.link2}
-                  link3={currentUser?.link3}
-                  link4={currentUser?.link4}
-                  location={currentUser?.location}
-                  telNumber={currentUser?.phone}
-                  emails={currentUser?.email?.address}
-                  bio={currentUser?.bio}
-                />
-              )}
-              {profileSideBarButton === 'Analytics' && <Analytics />}
-              {profileSideBarButton === 'Blog Posts' && <UserBlogPost />}
-              {profileSideBarButton === 'Ranking' && <Ranking />}
-              {profileSideBarButton === 'Bug Fixes' && <UserBugFix />}
-              {profileSideBarButton === 'Bug Reports' && <UserBugReport />}
-              {profileSideBarButton === 'Reusable Codes' && <UserReusableCode />}
-              {profileSideBarButton === 'Admin Dashboard' && currentUser?.role === 'admin' && (
-                <AdminDashBoard />
-              )}
-            </>
-          }
-        />
-      </div>
-    </div>
+    <>
+      {currentUser && (
+        <div className={classes.profile_page_main_container}>
+          <ProfileSideBar
+            isMyProfile={true}
+            profileImg={profileImg?.imageUrl}
+            userRole={currentUser?.role}
+            userId={currentUser?.id}
+          />
+          <div className={`${classes.profile_page_second_container}`}>
+            <ProfileSideBar2 userRole={currentUser?.role} userId={currentUser?.id} />
+            <VerticalScrollView
+              children={
+                <>
+                  <ProfileHeader
+                    userFullName={`${currentUser?.firstName} ${currentUser?.lastName}`}
+                    followerCount={currentUser?.followersCount}
+                    followingCount={currentUser?.followingCount}
+                    starCount={currentUser?.starCount}
+                    username={currentUser?.username}
+                    profession={currentUser?.profession}
+                    profileImg={profileImg?.imageUrl}
+                    role={currentUser?.role}
+                  />
+                  {profileSideBarButton === 'General' && (
+                    <GeneralUserInfo
+                      link1={currentUser?.link1}
+                      link2={currentUser?.link2}
+                      link3={currentUser?.link3}
+                      link4={currentUser?.link4}
+                      location={currentUser?.location}
+                      telNumber={currentUser?.phone}
+                      emails={currentUser?.email?.address}
+                      bio={currentUser?.bio}
+                    />
+                  )}
+                  {profileSideBarButton === 'Analytics' && <Analytics />}
+                  {profileSideBarButton === 'Blog Posts' && <UserBlogPost />}
+                  {profileSideBarButton === 'Ranking' && <Ranking />}
+                  {profileSideBarButton === 'Bug Fixes' && <UserBugFix />}
+                  {profileSideBarButton === 'Bug Reports' && <UserBugReport />}
+                  {profileSideBarButton === 'Reusable Codes' && <UserReusableCode />}
+                  {profileSideBarButton === 'Admin Dashboard' && currentUser?.role === 'admin' && (
+                    <AdminDashBoard />
+                  )}
+                </>
+              }
+            />
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

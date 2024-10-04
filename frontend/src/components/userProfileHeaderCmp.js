@@ -10,6 +10,7 @@ function UserProfileHeader({
   firstName,
   lastName,
   username,
+  userId,
   profession,
   profileImg,
   hideFollow,
@@ -49,6 +50,7 @@ function UserProfileHeader({
         profileImg={profileImg}
         profession={profession}
         userRole={role}
+        userId={userId}
         userFullName={`${firstName} ${lastName}`}
         hideFollow={currentUserUsername === username ? true : false}
       />

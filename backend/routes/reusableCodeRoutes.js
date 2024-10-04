@@ -15,6 +15,7 @@ const imagesController = require('./../controllers/imagesController');
 const likesController = require('../controllers/user_engagement/likesController');
 const authenticatioController = require('../controllers/authenticatioController');
 const commentsController = require('../controllers/user_engagement/commentsControllers');
+const contributionsController = require('../controllers/user_engagement/contributorsController');
 const reviewsController = require('../controllers/user_engagement/reviewsController');
 const categoriesController = require('./../controllers/filtering/categoriesController');
 const operatingSystemController = require('../controllers/filtering/operatingSystemController');
@@ -53,6 +54,7 @@ router
   .patch(reusableCodeController.updateReusableCode)
   .delete(
     commentsController.deleteMultipleBugReportsCommentsById,
+    contributionsController.deleteMultipleReusableCodesContributionsById,
     imagesController.deletMultipleBugReportsImagesById,
     contributorsController.deleteMultipleContributionsById,
     likesController.deleteMultiplebugFixesLikesByArraysOfIds,

@@ -235,7 +235,7 @@ function TextEditor({ META_DATA }) {
   const [editorContent, setEditorContent] = useState('');
   const [searchParams] = useSearchParams();
   const postId = searchParams.get('postId');
-  const id = searchParams.get('id');
+  const postType = searchParams.get('type');
 
   return (
     <>
@@ -275,12 +275,17 @@ function TextEditor({ META_DATA }) {
                 name={data.input_name_2}
                 value={editorContent}
               />
-              {postId && !id && (
+
+              <input type="hidden" id={`${postType}_`} name={`${postType}_`} value={postId} />
+              {/* {postId && !id && (
                 <input type="hidden" id={'bug_report_'} name={'bug_report_'} value={postId} />
               )}
               {postId && id && (
                 <input type="hidden" id={'bug_fix_'} name={'bug_fix_'} value={postId} />
               )}
+              {postType === 'reusable_code' && postId && (
+                <input type="hidden" id={`${postType}_`} name={`${postType}_`} value={postId} />
+              )} */}
             </div>
 
             {showEmojiPicker && <EmojiPicker onSelect={addEmoji(editorState, setEditorState)} />}

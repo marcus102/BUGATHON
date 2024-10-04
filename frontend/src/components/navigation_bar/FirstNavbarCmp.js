@@ -14,7 +14,7 @@ function FirstNavBar() {
   const currentUser = fetchData?.data;
   const navigate = useNavigate();
 
-  const GUEST_USER_PROFILE = [
+  const CURRENT_USER_PROFILE = [
     {
       id: '1',
       engagement: [
@@ -94,8 +94,9 @@ function FirstNavBar() {
             )}
             {tokenData && (
               <CustomUserProfilePreview
-                METADATA={GUEST_USER_PROFILE}
+                METADATA={CURRENT_USER_PROFILE}
                 username={currentUser?.username}
+                userId={currentUser?.id}
                 userFullName={`${currentUser?.firstName} ${currentUser?.lastName}`}
                 userRole={currentUser?.role}
                 profession={currentUser?.profession}

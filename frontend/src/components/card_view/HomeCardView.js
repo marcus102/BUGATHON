@@ -18,6 +18,96 @@ import { PORT } from '../../http_requests/authentication';
 import { getAuthToken } from '../../utils/authSection';
 import { useRouteLoaderData, useNavigate } from 'react-router-dom';
 
+function HomeCard({
+  homeCardStyle,
+  cardButtonState,
+  isHeaderOption,
+  username,
+  userId,
+  profession,
+  role,
+  profileImg,
+  followersCount,
+  followingCount,
+  starCount,
+  firstName,
+  lastName,
+  contributionsCount,
+  timestamp,
+  TAGS,
+  postTitle,
+  postDescription,
+  children,
+  REACTIONSMETADATA,
+  contributionsArray,
+  postId,
+  likedBy,
+  saveMode,
+  commentsArray,
+}) {
+  const navigate = useNavigate();
+
+  return (
+    <div
+      className={`${classes.home_card} ${
+        cardButtonState === 'bug_report'
+          ? classes.bug_report
+          : cardButtonState === 'bug_fix'
+          ? classes.bug_fix
+          : cardButtonState === 'reusable_code'
+          ? classes.reusable_code
+          : null
+      } ${homeCardStyle}`}
+    >
+      {/* HEADER */}
+      <HomeCardHeader
+        firstName={firstName}
+        lastName={lastName}
+        role={role}
+        followersCount={followersCount}
+        followingCount={followingCount}
+        starCount={starCount}
+        username={username}
+        userId={userId}
+        profession={profession}
+        profileImg={profileImg}
+        isHeaderOption={isHeaderOption}
+        contributionsCount={contributionsCount}
+        contributionsArray={contributionsArray}
+      />
+
+      {/* BODY */}
+      <HomeCardBody postTitle={postTitle} postDescription={postDescription}>
+        {children}
+      </HomeCardBody>
+
+      <IconTextButton
+        inconTextButtonStyle={classes.more_button}
+        label={'Click for more'}
+        icon_={faArrowUpRightFromSquare}
+        onClick={() => {
+          navigate(`/detail/?username=${username}&postId=${postId}&post=${cardButtonState}`);
+        }}
+      />
+
+      {/* FOOTER */}
+      <HomeCardFooter
+        TAGS={TAGS}
+        timestamp={timestamp}
+        reactionsData={REACTIONSMETADATA}
+        postId={postId}
+        likedBy={likedBy}
+        cardButtonState={cardButtonState}
+        saveMode={saveMode}
+        commentsArray={commentsArray}
+        username={username}
+      />
+    </div>
+  );
+}
+
+export default HomeCard;
+
 // Header component
 const HomeCardHeader = ({
   firstName,
@@ -27,13 +117,12 @@ const HomeCardHeader = ({
   followingCount,
   starCount,
   username,
+  userId,
   profession,
   profileImg,
   isHeaderOption,
   contributionsCount,
   contributionsArray,
-  postId,
-  cardButtonState,
 }) => {
   const { fetchData } = useRouteLoaderData('root');
   const currentUserUsername = fetchData?.data.username;
@@ -48,6 +137,7 @@ const HomeCardHeader = ({
         followingCount={followingCount}
         starCount={starCount}
         username={username}
+        userId={userId}
         profession={profession}
         profileImg={profileImg}
         hideFollow={currentUserUsername === username ? true : false}
@@ -67,7 +157,6 @@ const HomeCardHeader = ({
 };
 
 // Body component
-
 const HomeCardBody = ({ postTitle, postDescription, children }) => {
   return (
     <div className={classes.home_card_body_container}>
@@ -234,93 +323,3 @@ const HomeCardFooter = ({
     </div>
   );
 };
-
-function HomeCard({
-  homeCardStyle,
-  cardButtonState,
-  isHeaderOption,
-  username,
-  profession,
-  role,
-  profileImg,
-  followersCount,
-  followingCount,
-  starCount,
-  firstName,
-  lastName,
-  contributionsCount,
-  timestamp,
-  TAGS,
-  postTitle,
-  postDescription,
-  children,
-  REACTIONSMETADATA,
-  contributionsArray,
-  postId,
-  likedBy,
-  saveMode,
-  commentsArray,
-}) {
-  const navigate = useNavigate();
-
-  return (
-    <div
-      className={`${classes.home_card} ${
-        cardButtonState === 'bug_report'
-          ? classes.bug_report
-          : cardButtonState === 'bug_fix'
-          ? classes.bug_fix
-          : cardButtonState === 'reusable_code'
-          ? classes.reusable_code
-          : null
-      } ${homeCardStyle}`}
-    >
-      {/* HEADER */}
-      <HomeCardHeader
-        firstName={firstName}
-        lastName={lastName}
-        role={role}
-        followersCount={followersCount}
-        followingCount={followingCount}
-        starCount={starCount}
-        username={username}
-        profession={profession}
-        profileImg={profileImg}
-        isHeaderOption={isHeaderOption}
-        contributionsCount={contributionsCount}
-        contributionsArray={contributionsArray}
-        postId={postId}
-        cardButtonState={cardButtonState}
-      />
-
-      {/* BODY */}
-      <HomeCardBody postTitle={postTitle} postDescription={postDescription}>
-        {children}
-      </HomeCardBody>
-
-      <IconTextButton
-        inconTextButtonStyle={classes.more_button}
-        label={'Click for more'}
-        icon_={faArrowUpRightFromSquare}
-        onClick={() => {
-          navigate(`/detail/?username=${username}&postId=${postId}&post=${cardButtonState}`);
-        }}
-      />
-
-      {/* FOOTER */}
-      <HomeCardFooter
-        TAGS={TAGS}
-        timestamp={timestamp}
-        reactionsData={REACTIONSMETADATA}
-        postId={postId}
-        likedBy={likedBy}
-        cardButtonState={cardButtonState}
-        saveMode={saveMode}
-        commentsArray={commentsArray}
-        username={username}
-      />
-    </div>
-  );
-}
-
-export default HomeCard;

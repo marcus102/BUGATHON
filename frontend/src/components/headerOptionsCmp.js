@@ -5,19 +5,9 @@ import { Image } from '../utils/MediaSection';
 import userProfile from '../assets/images/general_profile.svg';
 import { DropdownMenu } from '../utils/ButtonSection';
 import CustomMenu from './custom/CustomMenuCmp';
-import {
-  CONTRIBUTION_REACTIONS_DATA,
-  CONTRIBUTION_DROP_DOWN,
-  CONTRIBUTIONS_OPTION,
-} from '../data/Database';
+import { CONTRIBUTION_DROP_DOWN, CONTRIBUTIONS_OPTION } from '../data/Database';
 
-function HeaderOptions({
-  contributionsCount,
-  img1,
-  img2,
-  img3,
-  contributionsArray,
-}) {
+function HeaderOptions({ contributionsCount, img1, img2, img3, contributionsArray }) {
   return (
     <DropdownMenu
       dropDownMenuStyle={classes.header_option_menu}
@@ -55,7 +45,6 @@ function HeaderOptions({
         dropDown={CONTRIBUTION_DROP_DOWN}
         METADATA={contributionsArray}
         option={CONTRIBUTIONS_OPTION}
-        reactionData={CONTRIBUTION_REACTIONS_DATA}
         emptyContentLabel={'No Contributions Available yet!'}
       />
     </DropdownMenu>

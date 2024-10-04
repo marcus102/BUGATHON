@@ -50,6 +50,7 @@ const Header = ({
   followingCount,
   starCount,
   username,
+  userId,
   profession,
   profileImg,
   postId,
@@ -63,17 +64,16 @@ const Header = ({
   const [deletionOverlayChildren, setDeletionOverlayChildren] = useState('');
   const [reportOverlayChildren, setReportOverlayChildren] = useState('');
   const [blockPostOverlayChildren, setBlockPostOverlayChildren] = useState('');
-  const [shouldDelete, setShouldDelete] = useState(false);
+  const shouldBeDeleted = useRef(false);
   const [shouldBlockPost, setShouldBlockPost] = useState(false);
 
   const token = getAuthToken();
 
   const handleNavigation = (id) => {
     id === 'home' && navigate('/');
-    id === 'bug_report' && navigate(`/new/?id=${postId}&type=${'bug_fix'}&postId=${postId}`);
-    id === 'bug_fix' && navigate(`/new/?id=${postId}&type=${'bug_fix'}&postId=${postId}`);
-    id === 'reusable_code' &&
-      navigate(`/new/?id=${postId}&type=${'reusable_code'}&postId=${postId}`);
+    id === 'bug_report' && navigate(`/new/?type=bug_fix&postId=${postId}`);
+    id === 'bug_fix' && navigate(`/new/?type=bug_fix&postId=${postId}`);
+    id === 'reusable_code' && navigate(`/new/?type=reusable_code&postId=${postId}`);
   };
 
   const deletePost = async () => {
@@ -91,10 +91,12 @@ const Header = ({
       : (myUrl = 'reusable_codes');
 
     try {
-      const response = await axios.delete(`${PORT}api/v1/${myUrl}/${postId}`, { headers });
-      console.log(response.data);
+      await axios.delete(`${PORT}api/v1/${myUrl}/${postId}`, { headers });
+      shouldBeDeleted.current = false;
+      console.log('Deleteted !!');
+      navigate('/');
     } catch (error) {
-      console.log(error);
+      console.error('Error deleting post:', error.response);
     }
   };
 
@@ -131,7 +133,7 @@ const Header = ({
     }
   };
 
-  if (shouldDelete) {
+  if (shouldBeDeleted.current === true) {
     deletePost();
   }
 
@@ -182,6 +184,7 @@ const Header = ({
           followingCount={followingCount}
           starCount={starCount}
           username={username}
+          userId={userId}
           profession={profession}
           profileImg={profileImg}
           hideFollow={currentUserUsername === username ? true : false}
@@ -249,14 +252,14 @@ const Header = ({
             <PlaneButton
               label16={'Yes'}
               onClick={() => {
-                setShouldDelete(true);
+                shouldBeDeleted.current = true;
                 overlayHandler('');
               }}
             />
             <PlaneButton
               label16={'No'}
               onClick={() => {
-                setShouldDelete(false);
+                shouldBeDeleted.current = false;
                 overlayHandler('');
               }}
             />
@@ -500,6 +503,7 @@ function ExpandedCard({
   followingCount,
   starCount,
   username,
+  userId,
   profession,
   profileImg,
   title,
@@ -540,6 +544,7 @@ function ExpandedCard({
           followingCount={followingCount}
           starCount={starCount}
           username={username}
+          userId={userId}
           profession={profession}
           profileImg={profileImg}
           state={state}

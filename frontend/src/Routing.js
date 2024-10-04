@@ -7,7 +7,7 @@ import Services from './pages/ServicesPage.js';
 import Blog from './pages/BlogPage.js';
 import HomePage, { loader as homeLoader, action as homeAction } from './pages/HomePage.js';
 import SettingsPage, { action as settingsAction } from './pages/SettingsPage.js';
-import ProfilePage from './pages/Profile.js';
+import ProfilePage, { loader as profileLoader } from './pages/Profile.js';
 import ExpandedCardView, { loader as expandedLoader } from './pages/ExpandedCardView.js';
 import CreatePage, { action as createAction, loader as createLoader } from './pages/CreatePage.js';
 import SecondNavBarRoot from './pages/SecondNavBarRootPage.js';
@@ -50,6 +50,7 @@ const router = createBrowserRouter([
           {
             path: 'profile',
             element: <ProfilePage />,
+            loader: profileLoader,
           },
           {
             path: 'settings',

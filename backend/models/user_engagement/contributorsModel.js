@@ -19,13 +19,17 @@ const contributorSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'BugReport'
     },
+    parentReusableCode: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'ReusableCode'
+    },
     reusableCode: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'ReusableCode'
     },
     createdAt: {
       type: Date,
-      default: Date.now
+      default: Date.now()
     }
   },
   {

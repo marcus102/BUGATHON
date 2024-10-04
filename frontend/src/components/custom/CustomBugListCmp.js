@@ -7,7 +7,6 @@ import Line from '../../utils/LineSection';
 import {
   faArrowUpFromBracket,
   faChartSimple,
-  faThumbTack,
   faComment,
   faHeart,
   faBookmark,

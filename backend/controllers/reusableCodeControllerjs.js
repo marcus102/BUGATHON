@@ -3,55 +3,42 @@ const User = require('./../models/userModel');
 const BlockedUser = require('../models/restrictions/blockedUserModel');
 const BlockedPost = require('../models/restrictions/blockedPostModel');
 const factory = require('./handlerFactory');
+const Contributor = require('../models/user_engagement/contributorsModel');
 const catchAsync = require('../utils/catchAsync');
 const appError = require('../utils/appError');
 
 exports.createReusableCode = catchAsync(async (req, res, next) => {
-  const {
-    securityInfo,
-    codeQualityMetrics,
-    deploymentInfo,
-    usageStatistics,
-    frameworkVersions,
-    repositoryLink,
-    versionControl,
-    testingInfo,
-    documentationLink,
-    license,
-    codeSnippet,
-    description,
-    title
-  } = req.body;
+  const { frameworkVersions, description, title, reusableCode_ } = req.body;
 
-  const newBlogPost = new ReusableCode({
+  const newReusableCode = await ReusableCode.create({
     title: title,
     description: description,
-    codeSnippet: codeSnippet,
-    license: license,
-    documentationLink: documentationLink,
-    testingInfo: testingInfo,
-    versionControl: versionControl,
-    repositoryLink: repositoryLink,
+    parentSolution: reusableCode_,
     frameworkVersions: frameworkVersions,
-    usageStatistics: usageStatistics,
-    deploymentInfo: deploymentInfo,
-    codeQualityMetrics: codeQualityMetrics,
-    securityInfo: securityInfo,
     user: req.user.id
   });
 
-  await newBlogPost.save();
+  if (reusableCode_) {
+    await ReusableCode.findByIdAndUpdate(reusableCode_, { $inc: { totalAttempts: 1 } });
 
+    const { _id } = newReusableCode;
+
+    await Contributor.create({
+      user: req.user.id,
+      parentReusableCode: reusableCode_,
+      reusableCode: _id
+    });
+  }
   await User.findByIdAndUpdate(req.user.id, { $inc: { reusableCodeCount: 1 } });
 
   res.status(201).json({
     status: 'success',
-    data: newBlogPost
+    data: newReusableCode
   });
 });
 
 exports.filterBlockedUsers = factory.blocksHandler(BlockedUser, 'user_ids');
-exports.filterBlockedPosts = factory.blocksHandler(BlockedPost,'reusable_code_ids');
+exports.filterBlockedPosts = factory.blocksHandler(BlockedPost, 'reusable_code_ids');
 
 exports.getAllReusableCodes = factory.getAll(ReusableCode, 'user_ids', 'reusable_code_ids', [
   { path: 'image' },

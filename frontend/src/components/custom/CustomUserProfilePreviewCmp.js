@@ -43,92 +43,121 @@ const ProfileDropdownButton = ({ username, profession, profileImg }) => (
 const GuestUserInfo = ({
   hideFollow,
   hideEdit,
-  isFollowing,
-  handleFollowToggle,
   METADATA,
-  handleNavigation,
   username,
   userFullName,
   profession,
   userRole,
   profileImg,
-}) => (
-  <div className={classes.guest_user_info_full_name_overview_main_container}>
-    <div className={classes.full_name_overview_container}>
-      <Image
-        imgContainerStyle={classes.profile_image_container}
-        imgStyle={classes.profile_image}
-        src={profileImg ? profileImg : defaultProfile}
-        alt="Profile"
-      />
-      <div className={classes.full_name_container}>
-        <div className={classes.full_name_overview_container}>
-          <Text unwrap={true} h6={userFullName?.toUpperCase()} />
-          <Image
-            imgContainerStyle={classes.verified_badge_container}
-            src={VerifiedBadge}
-            alt="Verification Badge"
-          />
-        </div>
-        <div className={classes.profession_main_container}>
-          <Text label12={profession} />
-          {userRole && (
-            <Text unwrap={true} label10Style={classes.role_label10_style} label10={userRole} />
-          )}
-          {!hideFollow && (
-            <OutlinedButton
-              buttonMainContainerStyle={classes.follow_button_container}
-              buttonStyle={classes.follow_button}
-              onClick={handleFollowToggle}
-            >
-              <Text
-                label12Style={classes.follow_label12_style}
-                label12={!isFollowing ? 'Follow' : 'Following'}
-              />
-            </OutlinedButton>
-          )}
-        </div>
-        {hideEdit ? <Text label10="Online" /> : <IconButton icon={faEdit} />}
-      </div>
-    </div>
-    {METADATA?.map((data) => (
-      <div key={data.id} className={classes.popularity_overview_main_container}>
-        <div className={classes.popularity_overview_container}>
-          {data.engagement?.map((engData) => (
-            <ButtonContainer
-              key={engData.id}
-              buttonContainerMainContainer={classes.popularity_overview_button_container}
-            >
-              <div className={classes.popularity_button_overview_container}>
-                <Text label15Style={classes.popularity_text_overview} label15={engData.title} />
-                {engData.icon && <Icon icon={engData.icon} />}
-              </div>
-              <Text label15Style={classes.popularity_text_overview} label15={`${engData.total}`} />
-            </ButtonContainer>
-          ))}
-        </div>
-        <IconTextButton
-          unwrap={true}
-          inconTextButtonStyle={classes.profile_overview_icon_text_button}
-          label={'Visit profile'}
-          icon_={faArrowUpRightFromSquare}
-          onClick={() => handleNavigation('profile', username)}
+  userId,
+}) => {
+  const { dropDownIsOpenHandler, profileSideBarButtonHandler } = useContext(ManagmentSystem);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const navigate = useNavigate();
+
+  const handleFollowToggle = () => {
+    setIsFollowing(!isFollowing);
+  };
+
+  const handleNavigation = (id, userId_) => {
+    if (id === 'logout') {
+      localStorage.removeItem('token');
+      localStorage.removeItem('expiration');
+      navigate('/auth?mode=signin');
+    } else if (id === 'profile') {
+      dropDownIsOpenHandler(false);
+      profileSideBarButtonHandler('General');
+      navigate(`/profile?userId=${userId_}`);
+    } else if (id === 'settings') {
+      navigate(`/settings`);
+      dropDownIsOpenHandler(false);
+    }
+  };
+
+  return (
+    <div className={classes.guest_user_info_full_name_overview_main_container}>
+      <div className={classes.full_name_overview_container}>
+        <Image
+          imgContainerStyle={classes.profile_image_container}
+          imgStyle={classes.profile_image}
+          src={profileImg ? profileImg : defaultProfile}
+          alt="Profile"
         />
-        {data.buttons?.map((btnData) => (
-          <IconTextButton
-            inconTextButtonStyle={classes.popularity_overview_icon_text_button}
-            unwrap
-            key={btnData.id}
-            icon={btnData.icon}
-            label={btnData.title}
-            onClick={() => handleNavigation(btnData.id)}
-          />
-        ))}
+        <div className={classes.full_name_container}>
+          <div className={classes.full_name_overview_container}>
+            <Text unwrap={true} h6={userFullName?.toUpperCase()} />
+            <Image
+              imgContainerStyle={classes.verified_badge_container}
+              src={VerifiedBadge}
+              alt="Verification Badge"
+            />
+          </div>
+          <div className={classes.profession_main_container}>
+            <Text label12={profession} />
+            {userRole && (
+              <Text unwrap={true} label10Style={classes.role_label10_style} label10={userRole} />
+            )}
+            {!hideFollow && (
+              <OutlinedButton
+                buttonMainContainerStyle={classes.follow_button_container}
+                buttonStyle={classes.follow_button}
+                onClick={handleFollowToggle}
+              >
+                <Text
+                  label12Style={classes.follow_label12_style}
+                  label12={!isFollowing ? 'Follow' : 'Following'}
+                />
+              </OutlinedButton>
+            )}
+          </div>
+          {hideEdit ? <Text label10="Online" /> : <IconButton icon={faEdit} />}
+        </div>
       </div>
-    ))}
-    {!METADATA && <Text label12="Not available" />}
-  </div>
-);
+      {METADATA.length > 0 ? (
+        METADATA.map((data, index) => (
+          <div key={`${data.id}-${index}`} className={classes.popularity_overview_main_container}>
+            <div className={classes.popularity_overview_container}>
+              {data.engagement?.map((engData, engIndex) => (
+                <ButtonContainer
+                  key={`${engData.id}-${engIndex}`}
+                  buttonContainerMainContainer={classes.popularity_overview_button_container}
+                >
+                  <div className={classes.popularity_button_overview_container}>
+                    <Text label15Style={classes.popularity_text_overview} label15={engData.title} />
+                    {engData.icon && <Icon icon={engData.icon} />}
+                  </div>
+                  <Text
+                    label15Style={classes.popularity_text_overview}
+                    label15={`${engData.total}`}
+                  />
+                </ButtonContainer>
+              ))}
+            </div>
+            <IconTextButton
+              unwrap={true}
+              inconTextButtonStyle={classes.profile_overview_icon_text_button}
+              label={'Visit profile'}
+              icon_={faArrowUpRightFromSquare}
+              onClick={() => handleNavigation('profile', userId)}
+            />
+            {data.buttons?.map((btnData) => (
+              <IconTextButton
+                inconTextButtonStyle={classes.popularity_overview_icon_text_button}
+                unwrap
+                key={btnData.id}
+                icon={btnData.icon}
+                label={btnData.title}
+                onClick={() => handleNavigation(btnData.id)}
+              />
+            ))}
+          </div>
+        ))
+      ) : (
+        <Text label12="Not available" />
+      )}
+    </div>
+  );
+};
 
 function CustomUserProfilePreview({
   METADATA,
@@ -140,29 +169,8 @@ function CustomUserProfilePreview({
   hideEdit,
   mainProfile,
   userRole,
+  userId,
 }) {
-  const { dropDownIsOpenHandler } = useContext(ManagmentSystem);
-  const [isFollowing, setIsFollowing] = useState(false);
-  const navigate = useNavigate();
-
-  const handleFollowToggle = () => {
-    setIsFollowing(!isFollowing);
-  };
-
-  const handleNavigation = (id, username) => {
-    if (id === 'logout') {
-      localStorage.removeItem('token');
-      localStorage.removeItem('expiration');
-      navigate('/auth?mode=signin');
-    } else if (id === 'profile') {
-      dropDownIsOpenHandler(false);
-      navigate(`/profile?username=${username}`);
-    } else if (id === 'settings') {
-      navigate(`/settings`);
-      dropDownIsOpenHandler(false);
-    }
-  };
-
   return (
     <DropdownMenu
       dropDownMenuStyle={
@@ -181,15 +189,13 @@ function CustomUserProfilePreview({
       <GuestUserInfo
         hideFollow={hideFollow}
         hideEdit={hideEdit}
-        isFollowing={isFollowing}
-        handleFollowToggle={handleFollowToggle}
-        handleNavigation={handleNavigation}
         METADATA={METADATA}
         username={username}
         userFullName={userFullName}
         profession={profession}
         userRole={userRole}
         profileImg={profileImg}
+        userId={userId}
       />
     </DropdownMenu>
   );

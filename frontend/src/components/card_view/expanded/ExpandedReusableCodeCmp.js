@@ -42,6 +42,7 @@ function ExpandedReusableCode() {
       profession={data.user?.profession}
       role={data.user?.role}
       username={data.user?.username}
+      userId={data.user?.id}
       followersCount={data.user?.followersCount}
       followingCount={data.user?.followingCount}
       starCount={data.user?.starCount}

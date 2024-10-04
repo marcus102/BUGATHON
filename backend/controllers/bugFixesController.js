@@ -27,7 +27,6 @@ exports.createBugFix = catchAsync(async (req, res, next) => {
   let bugReportValue;
 
   if (bugFix_) {
-    console.log(bugFix_);
     bugFix = await BugFixes.findById(bugFix_);
 
     if (!bugFix) {
@@ -57,7 +56,7 @@ exports.createBugFix = catchAsync(async (req, res, next) => {
     description: description,
     user: user,
     bugReport: bugReportValue,
-    parentSolution: bugFix_ || null,
+    parentSolution: bugFix_ ? bugFix_ : null,
     frameworkVersions: frameworkVersions
   });
 
@@ -79,7 +78,7 @@ exports.createBugFix = catchAsync(async (req, res, next) => {
 });
 
 exports.filterBlockedUsers = factory.blocksHandler(BlockedUser, 'user_ids');
-exports.filterBlockedPosts = factory.blocksHandler(BlockedPost,'bug_fix_ids');
+exports.filterBlockedPosts = factory.blocksHandler(BlockedPost, 'bug_fix_ids');
 
 exports.getALLBugFixes = factory.getAll(BugFixes, 'user_ids', 'bug_fix_ids', [
   { path: 'image' },
@@ -135,15 +134,15 @@ exports.deleteBugFix = catchAsync(async (req, res, next) => {
   }
 
   const { parentSolution, bugReport } = doc;
-  const parentSolutionValue = parentSolution.valueOf();
-  const bugReportValue = bugReport.valueOf();
+  const parentSolutionValue = parentSolution?.valueOf();
+  const bugReportValue = bugReport?.valueOf();
 
   const parrentBugFix = await BugFixes.findById(parentSolutionValue);
 
-  const { _id } = parrentBugFix;
-  const parentBugFixIdValue = _id.valueOf();
-
   if (parrentBugFix) {
+    const { _id } = parrentBugFix;
+    const parentBugFixIdValue = _id?.valueOf();
+
     await BugFixes.findByIdAndUpdate(parentBugFixIdValue, { $inc: { totalAttempts: -1 } });
   }
 
