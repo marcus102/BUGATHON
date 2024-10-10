@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import Colors from '../../constants/colors';
 import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
 import classes from './CommentSectionCmp.module.css';
@@ -31,7 +31,7 @@ import Line from '../../utils/LineSection';
 import ToolTip from '../../utils/toolTipSection';
 import { DynamicLabelDropdownMenu } from '../../utils/ButtonSection';
 import SendIcon from '../../assets/icons/send.svg';
-import { Form, useLoaderData, useNavigate } from 'react-router-dom';
+import { Form, useLoaderData, useNavigate, useRouteLoaderData } from 'react-router-dom';
 import { Collapse } from 'react-bootstrap';
 
 const COMMENT_DROPDOWN_OPTION = [
@@ -45,22 +45,101 @@ const COMMENT_DROPDOWN_OPTION = [
   { id: '9', label: 'My Replies' },
 ];
 
-const COMMENT_OPTION = [
-  { id: '1', icon: faPen, label: 'Edit comment (owner)', icon_2: null, href: null },
+const CURRENT_USER_COMMENT_OPTION = [
+  { id: '1', icon: faPen, label: 'Edit comment', icon_2: null, href: null },
   { id: '2', icon: faHeart, label: 'Like comment', icon_2: null, href: null },
   { id: '3', icon: faReply, label: 'Reply Comment', icon_2: null, href: null },
   { id: '4', icon: faThumbTack, label: 'Pin this comment', icon_2: null, href: null },
-  {
-    id: '5',
-    icon: faBan,
-    label: 'Hide comment (owner)',
-    icon_2: null,
-    href: null,
-  },
-  { id: '6', icon: faEyeSlash, label: 'I don’t want to see this', icon_2: null, href: null },
-  { id: '7', icon: faTrashCan, label: 'Delete comment (owner)', icon_2: null, href: null },
-  { id: '8', icon: faExclamation, label: 'Report', icon_2: faCaretRight, href: null },
+  { id: '6', icon: faTrashCan, label: 'Delete comment', icon_2: null, href: null },
 ];
+
+const GUEST_USER_COMMENT_OPTION = [
+  { id: '2', icon: faHeart, label: 'Like comment', icon_2: null, href: null },
+  { id: '3', icon: faReply, label: 'Reply Comment', icon_2: null, href: null },
+  { id: '4', icon: faThumbTack, label: 'Pin this comment', icon_2: null, href: null },
+  { id: '5', icon: faEyeSlash, label: 'I don’t want to see this', icon_2: null, href: null },
+  { id: '7', icon: faExclamation, label: 'Report', icon_2: faCaretRight, href: null },
+];
+
+const CommentSection = ({ likesCount, viewsCount, repliesCount }) => {
+  const navigate = useNavigate();
+  const postComments = useLoaderData();
+  const { dropDownDefault } = useContext(ManagmentSystem);
+  const { comment } = dropDownDefault;
+  const [visibleComments, setVisibleComments] = useState(1);
+  const [commentText, setCommentText] = useState('');
+
+  const handleAddComment = async () => {
+    setCommentText('');
+  };
+
+  const handleLoadMore = () => {
+    setVisibleComments((prevVisibleComments) => prevVisibleComments + 2);
+  };
+
+  return (
+    <div className={classes.comment_section}>
+      <div className={classes.comment_header_container}>
+        <IconButton icon={faArrowLeftLong} onClick={() => navigate('/')} />
+        <Text h1={'Comments'} />
+      </div>
+
+      <Line direction={'horizontal'} />
+      <div className={classes.comment_header_drop_down_container}>
+        <DynamicLabelDropdownMenu
+          menuItems={COMMENT_DROPDOWN_OPTION}
+          buttonIcon={faChevronDown}
+          buttonLabel={comment}
+          my_key={'comment'}
+        />
+      </div>
+      <div className={classes.comments_content_container}>
+        {postComments.length > 0 ? (
+          postComments
+            .slice(0, visibleComments)
+            .filter((comment) => !comment.parentComment) // Only show top-level comments
+            .map((comment) => (
+              <Comment
+                key={comment.id}
+                comment={comment}
+                likesCount={likesCount}
+                viewsCount={viewsCount}
+                repliesCount={repliesCount}
+                allComments={postComments} // Pass all comments to handle replies
+              />
+            ))
+        ) : (
+          <Text h4={'No comments yet'} />
+        )}
+        {visibleComments < postComments.length && (
+          <ButtonContainer
+            children={'Load more comments...'}
+            onClick={handleLoadMore}
+            buttonContainerMainContainer={classes.load_more_button}
+          />
+        )}
+      </div>
+      <Form method="post" onSubmit={handleAddComment} className={classes.comment_input_container}>
+        <Input
+          inputStyle={classes.comment_input}
+          id="comment"
+          type="text"
+          name="comment"
+          placeholder="Add a comment..."
+          value={commentText}
+          onChange={(e) => setCommentText(e.target.value)}
+        />
+        <ImageButton
+          imageButtonStyle={classes.comment_send_button_container}
+          src={SendIcon}
+          alt={'Send'}
+        />
+      </Form>
+    </div>
+  );
+};
+
+export default CommentSection;
 
 const Comment = ({
   comment,
@@ -111,7 +190,12 @@ const Comment = ({
     }, {})
   );
 
-  const replies = allComments.filter((c) => c.parentComment && c.parentComment === comment.id);
+  const { fetchData } = useRouteLoaderData('root');
+  const currentUser = fetchData?.data;
+
+  const replies = allComments.filter(
+    (targetComment) => targetComment.parentComment && targetComment.parentComment === comment.id
+  );
 
   const handleReply = () => {
     setIsReplying(!isReplying);
@@ -147,7 +231,7 @@ const Comment = ({
         />
         <div className={`d-flex align-items-center ${classes.comment_options_container}`}>
           <Text label12={`${comment.createdAt}`} />
-          <DropdownMenu buttonIcon={faEllipsisVertical} menuItems={COMMENT_OPTION} />
+          <DropdownMenu buttonIcon={faEllipsisVertical} menuItems={GUEST_USER_COMMENT_OPTION} />
         </div>
       </div>
 
@@ -235,7 +319,7 @@ const Comment = ({
                 />
               ))
             : replies
-                .slice(0, 0)
+                .slice(0, 1)
                 .map((reply) => (
                   <Comment
                     key={reply.id}
@@ -248,7 +332,7 @@ const Comment = ({
                   />
                 ))}
 
-          {replies.length > 2 && (
+          {replies.length > 1 && (
             <button onClick={toggleShowAllReplies} className={classes.replies_button}>
               {showAllReplies ? 'Hide replies' : `View all ${replies.length} replies`}
             </button>
@@ -258,83 +342,3 @@ const Comment = ({
     </div>
   );
 };
-
-const CommentSection = ({ likesCount, viewsCount, repliesCount }) => {
-  const navigate = useNavigate();
-  const postComments = useLoaderData();
-  const { dropDownDefault } = useContext(ManagmentSystem);
-  const { comment } = dropDownDefault;
-  const [visibleComments, setVisibleComments] = useState(1);
-  const [commentText, setCommentText] = useState('');
-
-  const handleAddComment = async () => {
-    setCommentText('');
-  };
-
-  const handleLoadMore = () => {
-    setVisibleComments((prevVisibleComments) => prevVisibleComments + 2);
-  };
-
-  return (
-    <div className={classes.comment_section}>
-      <div className={classes.comment_header_container}>
-        <IconButton icon={faArrowLeftLong} onClick={() => navigate('/')} />
-        <Text h1={'Comments'} />
-      </div>
-
-      <Line direction={'horizontal'} />
-      <div className={classes.comment_header_drop_down_container}>
-        <DynamicLabelDropdownMenu
-          menuItems={COMMENT_DROPDOWN_OPTION}
-          buttonIcon={faChevronDown}
-          buttonLabel={comment}
-          my_key={'comment'}
-        />
-      </div>
-      <div className={classes.comments_content_container}>
-        {postComments.length > 0 ? (
-          postComments
-            .slice(0, visibleComments)
-            .filter((comment) => !comment.parentComment) // Only show top-level comments
-            .map((comment) => (
-              <Comment
-                key={comment.id}
-                comment={comment}
-                likesCount={likesCount}
-                viewsCount={viewsCount}
-                repliesCount={repliesCount}
-                allComments={postComments} // Pass all comments to handle replies
-              />
-            ))
-        ) : (
-          <Text h4={'No comments yet'} />
-        )}
-        {visibleComments < postComments.length && (
-          <ButtonContainer
-            children={'Load more comments...'}
-            onClick={handleLoadMore}
-            buttonContainerMainContainer={classes.load_more_button}
-          />
-        )}
-      </div>
-      <Form method="post" onSubmit={handleAddComment} className={classes.comment_input_container}>
-        <Input
-          inputStyle={classes.comment_input}
-          id="comment"
-          type="text"
-          name="comment"
-          placeholder="Add a comment..."
-          value={commentText}
-          onChange={(e) => setCommentText(e.target.value)}
-        />
-        <ImageButton
-          imageButtonStyle={classes.comment_send_button_container}
-          src={SendIcon}
-          alt={'Send'}
-        />
-      </Form>
-    </div>
-  );
-};
-
-export default CommentSection;

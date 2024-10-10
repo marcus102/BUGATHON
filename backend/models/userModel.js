@@ -201,6 +201,19 @@ userSchema.virtual('programmingLanguages', {
   foreignField: 'username'
 });
 
+userSchema.virtual('followers', {
+  ref: 'Follower',
+  localField: '_id',
+  foreignField: 'followingId',
+});
+
+userSchema.virtual('followings', {
+  ref: 'Follower',
+  localField: '_id',
+  foreignField: 'followerId',
+  justOne: false
+});
+
 userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
 

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
 import classes from './CustomUserProfilePreviewCmp.module.css';
 import Text from '../../utils/TextSection';
@@ -41,10 +41,8 @@ const ProfileDropdownButton = ({ username, profession, profileImg }) => (
 );
 
 const GuestUserInfo = ({
-  hideFollow,
   hideEdit,
   METADATA,
-  username,
   userFullName,
   profession,
   userRole,
@@ -52,12 +50,7 @@ const GuestUserInfo = ({
   userId,
 }) => {
   const { dropDownIsOpenHandler, profileSideBarButtonHandler } = useContext(ManagmentSystem);
-  const [isFollowing, setIsFollowing] = useState(false);
   const navigate = useNavigate();
-
-  const handleFollowToggle = () => {
-    setIsFollowing(!isFollowing);
-  };
 
   const handleNavigation = (id, userId_) => {
     if (id === 'logout') {
@@ -96,18 +89,6 @@ const GuestUserInfo = ({
             <Text label12={profession} />
             {userRole && (
               <Text unwrap={true} label10Style={classes.role_label10_style} label10={userRole} />
-            )}
-            {!hideFollow && (
-              <OutlinedButton
-                buttonMainContainerStyle={classes.follow_button_container}
-                buttonStyle={classes.follow_button}
-                onClick={handleFollowToggle}
-              >
-                <Text
-                  label12Style={classes.follow_label12_style}
-                  label12={!isFollowing ? 'Follow' : 'Following'}
-                />
-              </OutlinedButton>
             )}
           </div>
           {hideEdit ? <Text label10="Online" /> : <IconButton icon={faEdit} />}
@@ -190,7 +171,6 @@ function CustomUserProfilePreview({
         hideFollow={hideFollow}
         hideEdit={hideEdit}
         METADATA={METADATA}
-        username={username}
         userFullName={userFullName}
         profession={profession}
         userRole={userRole}

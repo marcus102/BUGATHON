@@ -29,7 +29,7 @@ function FirstNavBar() {
     },
   ];
 
-  const profileImg = currentUser.image?.find(
+  const profileImg = currentUser?.image?.find(
     (targetImg) => targetImg.username === currentUser.username
   );
 
@@ -88,7 +88,7 @@ function FirstNavBar() {
                 buttonStyle={classes.auth_button_container}
                 label="Sign In"
                 onClick={() => {
-                  navigate(`/auth?mode=${'signin'}`);
+                  navigate(`/auth?mode=signin`);
                 }}
               />
             )}

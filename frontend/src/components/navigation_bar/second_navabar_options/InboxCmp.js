@@ -3,7 +3,7 @@ import React from 'react';
 import Text from '../../../utils/TextSection';
 
 function Inbox() {
-  return <Text h1={'Not Avalaible Yet!!'} />;
+  return <Text h6={'Not Avalaible Yet!!'} />;
 }
 
 export default Inbox;

@@ -215,7 +215,7 @@ const ProfileSection = ({ data }) => (
                 ? classes.low_severity_post_container
                 : null
             }`}
-            label10={data.bugReport.severity}
+            label10={data?.bugReport?.severity}
           />
         )}
       </div>

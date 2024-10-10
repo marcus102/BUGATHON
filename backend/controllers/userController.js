@@ -49,6 +49,8 @@ exports.deleteUser = factory.deleteOne(User);
 exports.updateUser = factory.updateOne(User);
 exports.getUser = factory.getOne(User, [
   { path: 'image' },
+  { path: 'followers' },
+  { path: 'followings' },
   { path: 'zoneOfInterests' },
   { path: 'categories' },
   { path: 'operatingSystem' },

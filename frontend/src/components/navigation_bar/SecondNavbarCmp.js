@@ -7,12 +7,11 @@ import {
   faBug,
   faPlus,
   faEllipsis,
-  faSliders,
   faNewspaper,
 } from '@fortawesome/free-solid-svg-icons';
 import AssignedBug from './second_navabar_options/AssignedBugCmp';
 import Notification from './second_navabar_options/NotificationCmp';
-import Adjust from './second_navabar_options/AdjustCmp';
+// import Adjust from './second_navabar_options/AdjustCmp';
 import Inbox from './second_navabar_options/InboxCmp';
 import Search from '../../utils/SearchSection';
 
@@ -20,7 +19,6 @@ const MENU_OPTIONS = [
   { id: '1', icon: faBug, label: 'Assigned Bug', icon_2: null },
   { id: '2', icon: faInbox, label: 'Inbox', icon_2: null },
   { id: '3', icon: faBell, label: 'Notifications', icon_2: null },
-  { id: '4', icon: faSliders, label: 'Adjust', icon_2: null },
 ];
 
 const CREATE_MENU = [
@@ -37,8 +35,6 @@ const renderChildComponent = (id) => {
       return <Inbox />;
     case '3':
       return <Notification />;
-    case '4':
-      return <Adjust />;
     default:
       return null;
   }

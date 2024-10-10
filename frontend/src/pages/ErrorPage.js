@@ -1,31 +1,30 @@
-import { useRouteError } from 'react-router-dom';
+import { useRouteError, redirect } from 'react-router-dom';
 import Text from '../utils/TextSection';
 
-// import PageContent from '../components/PageContent';
+import ErrorContent from '../components/error/errorContentCmp';
+import { getAuthToken } from '../utils/authSection';
 
 function Error() {
-//   const error = useRouteError();
+  const error = useRouteError();
+  const token = getAuthToken();
 
-//   let title = 'An error occurred!';
-//   let message = 'Something went wrong!';
+  let title = 'An error occurred!';
+  let message = 'Something went wrong!';
 
-//   if (error.status === 500) {
-//     message = error.data.message;
-//   }
+  if (error.status === 500) {
+    message = error.data.message;
+  }
 
-//   if (error.status === 404) {
-//     title = 'Not found!';
-//     message = 'Could not find resource or page.';
-//   }
+  if (error.status === 404) {
+    title = 'Not found!';
+    message = 'Could not find resource or page.';
+  }
 
-  return (
-    <>
-      {/* <PageContent title={title}>
-        <p>{message}</p>
-      </PageContent> */}
-      <Text h1={'hey'}/>
-    </>
-  );
+  // if (!token) {
+  //   redirect('/auth?mode=signin')
+  // }
+
+  return <ErrorContent title={title}>{message}</ErrorContent>;
 }
 
 export default Error;
