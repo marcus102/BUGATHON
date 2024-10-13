@@ -176,7 +176,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
                   {
                     id: 'save',
                     icon: faBookmark,
-                    count: null,
+                    count: `${data?.savesCount}`,
                     state: data?.saveMode,
                     activeColor: Colors.yellow_,
                   },
@@ -198,7 +198,8 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
                 contributionsArray={data?.contributors}
                 contributionsCount={data?.totalAttempts}
                 likedBy={data?.likedBy}
-                saveMode={data?.saveMode}
+                savedBy={data?.savedBy}
+                // saveMode={data?.saveMode}
                 commentsArray={data?.comments}
               />
             ))

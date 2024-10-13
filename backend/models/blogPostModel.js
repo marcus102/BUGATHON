@@ -17,12 +17,6 @@ const blogSchema = new mongoose.Schema(
       ref: 'User',
       required: [true, 'Blog post must have a user']
     },
-    // contributors: [
-    //   {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'User'
-    //   }
-    // ],
     viewCount: {
       type: Number,
       default: 0
@@ -70,8 +64,14 @@ blogSchema.virtual('reviews', {
   foreignField: 'blogPost'
 });
 
-blogSchema.virtual('likes', {
+blogSchema.virtual('likedBy', {
   ref: 'Like',
+  localField: '_id',
+  foreignField: 'blogPost'
+});
+
+blogSchema.virtual('savedBy', {
+  ref: 'Save',
   localField: '_id',
   foreignField: 'blogPost'
 });

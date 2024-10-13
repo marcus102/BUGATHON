@@ -77,6 +77,12 @@ commentSchema.virtual('likedBy', {
   foreignField: 'comment'
 });
 
+commentSchema.virtual('savedBy', {
+  ref: 'Save',
+  localField: '_id',
+  foreignField: 'comment'
+});
+
 commentSchema.virtual('images', {
   ref: 'Image',
   localField: '_id',

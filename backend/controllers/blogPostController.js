@@ -62,7 +62,8 @@ exports.getAllBlogPosts = factory.getAll(Blog, 'user_ids', 'blog_post_ids');
 
 exports.getBlogPost = factory.getOne(Blog, [
   { path: 'reviews' },
-  { path: 'likes' },
+  { path: 'likedBy' },
+  { path: 'savedBy' },
   { path: 'comments' },
   { path: 'categories' },
   { path: 'operatingSystem' },

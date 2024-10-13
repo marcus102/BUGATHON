@@ -74,10 +74,10 @@ const reusableCodeSchema = new mongoose.Schema(
       type: Date,
       default: Date.now()
     },
-    saveMode: {
-      type: Boolean,
-      default: false
-    },
+    // saveMode: {
+    //   type: Boolean,
+    //   default: false
+    // },
     updatedAt: {
       type: Date,
       default: null
@@ -116,6 +116,12 @@ reusableCodeSchema.virtual('image', {
 
 reusableCodeSchema.virtual('likedBy', {
   ref: 'Like',
+  localField: '_id',
+  foreignField: 'reusableCode'
+});
+
+reusableCodeSchema.virtual('savedBy', {
+  ref: 'Save',
   localField: '_id',
   foreignField: 'reusableCode'
 });

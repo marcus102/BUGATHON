@@ -42,6 +42,7 @@ function HomeCard({
   contributionsArray,
   postId,
   likedBy,
+  savedBy,
   saveMode,
   commentsArray,
 }) {
@@ -147,6 +148,7 @@ function HomeCard({
         reactionsData={REACTIONSMETADATA}
         postId={postId}
         likedBy={likedBy}
+        savedBy={savedBy}
         cardButtonState={cardButtonState}
         saveMode={saveMode}
         commentsArray={commentsArray}
@@ -191,7 +193,6 @@ const HomeCardHeader = ({
         profession={profession}
         profileImg={profileImg}
         hideFollow={currentUserUsername === username ? true : false}
-        
       />
       <div className={classes.header_options_container}>
         {isHeaderOption ? (
@@ -225,6 +226,7 @@ const HomeCardFooter = ({
   postId,
   username,
   likedBy,
+  savedBy,
   cardButtonState,
 }) => {
   const { fetchData } = useRouteLoaderData('root');
@@ -234,10 +236,9 @@ const HomeCardFooter = ({
   const navigate = useNavigate();
 
   const initialLikesCount = reactionsData?.find((reaction) => reaction.id === 'likes')?.count || 0;
-  const initialSaveStatus =
-    reactionsData?.find((reaction) => reaction.id === 'save')?.state || false;
+  const initialSaveCount = reactionsData?.find((reaction) => reaction.id === 'save')?.count || 0;
   const [totalLikes, setTotalLikes] = useState(initialLikesCount);
-  const [isSaved, setIsSaved] = useState(initialSaveStatus);
+  const [totalSaves, setTotalSaves] = useState(initialSaveCount);
 
   const [isActive, setIsActive] = useState(
     reactionsData &&
@@ -251,7 +252,11 @@ const HomeCardFooter = ({
     if (likedBy?.some((like) => like.user === currentUserId)) {
       setIsActive((prev) => ({ ...prev, likes: true }));
     }
-  }, [likedBy, currentUserId]);
+
+    if (savedBy?.some((save) => save.user === currentUserId)) {
+      setIsActive((prev) => ({ ...prev, save: true }));
+    }
+  }, [likedBy, savedBy, currentUserId]);
 
   const reactionsHandler = async (id) => {
     setIsActive((prev) => {
@@ -304,29 +309,17 @@ const HomeCardFooter = ({
 
     if (isActiveRef.current[id] === true && id === 'save') {
       try {
-        await axios.patch(
-          `${PORT}api/v1/${state}/${postId}`,
-          { saveMode: true },
-          {
-            headers,
-          }
-        );
-        setIsSaved(true);
-        console.log('saved');
+        await axios.post(`${PORT}api/v1/${state}/${postId}/save`, {}, { headers });
+        setTotalSaves((prevSaves) => prevSaves + 1);
+        console.log('saved 👌');
       } catch (error) {
         console.error('Error saving post:', error.response.data);
       }
     } else if (isActiveRef.current[id] === false && id === 'save') {
       try {
-        await axios.patch(
-          `${PORT}api/v1/${state}/${postId}`,
-          { saveMode: false },
-          {
-            headers,
-          }
-        );
-        setIsSaved(false);
-        console.log('unsaved');
+        await axios.post(`${PORT}api/v1/${state}/${postId}/save`, {}, { headers });
+        setTotalSaves((prevLikes) => prevLikes - 1);
+        console.log('unsaved 🤷‍♂️');
       } catch (error) {
         console.error('Error unsaving post:', error.response.data);
       }
@@ -356,7 +349,7 @@ const HomeCardFooter = ({
                 inconTextButtonStyle={classes.reaction_icon_text_button_container}
                 colorOnMouseUp={
                   (data.id === 'likes' && likedBy.some((like) => like.user.id === currentUserId)) ||
-                  (data.id === 'save' && isSaved === true) ||
+                  (data.id === 'save' && savedBy.some((save) => save.user.id === currentUserId)) ||
                   isActive[data.id]
                     ? data.activeColor
                     : undefined
@@ -365,7 +358,13 @@ const HomeCardFooter = ({
               >
                 <Text
                   label12Style={classes.reaction_label12_style}
-                  label12={data.id === 'likes' ? `${totalLikes}` : data.count}
+                  label12={
+                    data.id === 'likes'
+                      ? `${totalLikes}`
+                      : data.id === 'save'
+                      ? `${totalSaves}`
+                      : data.count
+                  }
                 />
               </IconTextButton>
             </ToolTip>

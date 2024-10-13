@@ -82,10 +82,10 @@ const bugReportSchema = new mongoose.Schema(
       type: Date,
       default: Date.now()
     },
-    saveMode: {
-      type: Boolean,
-      default: false
-    },
+    // saveMode: {
+    //   type: Boolean,
+    //   default: false
+    // },
     updatedAt: {
       type: Date,
       default: null
@@ -130,6 +130,12 @@ bugReportSchema.virtual('image', {
 
 bugReportSchema.virtual('likedBy', {
   ref: 'Like',
+  localField: '_id',
+  foreignField: 'bugReport'
+});
+
+bugReportSchema.virtual('savedBy', {
+  ref: 'Save',
   localField: '_id',
   foreignField: 'bugReport'
 });

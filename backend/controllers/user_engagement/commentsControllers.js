@@ -80,8 +80,8 @@ exports.createComment = catchAsync(async (req, res, next) => {
 });
 
 exports.filterBlockedComments = factory.blocksHandler(BlockedPost, 'blog_post_ids');
-exports.getAllComments = factory.getAll(Comment, null, [({ path: 'likedBy' }, { path: 'images' })]);
-exports.getComment = factory.getOne(Comment, [{ path: 'likedBy' }, { path: 'images' }]);
+exports.getAllComments = factory.getAll(Comment, null, [({ path: 'likedBy' }, { path: 'savedBy' }, { path: 'images' })]);
+exports.getComment = factory.getOne(Comment, [{ path: 'likedBy' }, { path: 'savedBy' }, { path: 'images' }]);
 
 exports.getPostComment = catchAsync(async (req, res, next) => {});
 

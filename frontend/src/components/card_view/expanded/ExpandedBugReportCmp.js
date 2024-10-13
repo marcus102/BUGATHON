@@ -61,7 +61,8 @@ function ExpandedBugReport() {
       post={post}
       parentPosts={[]}
       likedBy={data?.likedBy}
-      saveMode={data?.saveMode}
+      savedBy={data?.savedBy}
+      // saveMode={data?.saveMode}
       REACTIONS_META_DATA={[
         {
           id: 'likes',
@@ -80,7 +81,7 @@ function ExpandedBugReport() {
         {
           id: 'save',
           icon: faBookmark,
-          count: null,
+          count: `${data?.savesCount}`,
           state: data?.saveMode,
           activeColor: Colors.yellow_,
         },

@@ -74,7 +74,8 @@ const Header = ({
     id === 'home' && navigate('/');
     id === 'bug_report' && navigate(`/new/?type=bug_fix&postId=${postId}&source=bug_report`);
     id === 'bug_fix' && navigate(`/new/?type=bug_fix&postId=${postId}&source=bug_fix`);
-    id === 'reusable_code' && navigate(`/new/?type=reusable_code&postId=${postId}&source=reusablecode`);
+    id === 'reusable_code' &&
+      navigate(`/new/?type=reusable_code&postId=${postId}&source=reusablecode`);
   };
 
   const deletePost = async () => {
@@ -285,7 +286,14 @@ const Header = ({
   );
 };
 
-const Reactions = ({ REACTIONS_META_DATA, likedBy, cardButtonState, postId, username }) => {
+const Reactions = ({
+  REACTIONS_META_DATA,
+  likedBy,
+  savedBy,
+  cardButtonState,
+  postId,
+  username,
+}) => {
   const { fetchData } = useRouteLoaderData('root');
   const currentUserId = fetchData?.data.id;
   const isActiveRef = useRef({});
@@ -293,10 +301,10 @@ const Reactions = ({ REACTIONS_META_DATA, likedBy, cardButtonState, postId, user
   const navigate = useNavigate();
   const initialLikesCount =
     REACTIONS_META_DATA?.find((reaction) => reaction.id === 'likes')?.count || 0;
-  const initialSaveStatus =
-    REACTIONS_META_DATA?.find((reaction) => reaction.id === 'save')?.state || false;
+  const initialSaveCount =
+    REACTIONS_META_DATA?.find((reaction) => reaction.id === 'save')?.count || 0;
   const [totalLikes, setTotalLikes] = useState(initialLikesCount);
-  const [isSaved, setIsSaved] = useState(initialSaveStatus);
+  const [totalSaves, setTotalSaves] = useState(initialSaveCount);
 
   const [isActive, setIsActive] = useState(
     REACTIONS_META_DATA.reduce((acc, reaction) => {
@@ -310,10 +318,10 @@ const Reactions = ({ REACTIONS_META_DATA, likedBy, cardButtonState, postId, user
       setIsActive((prev) => ({ ...prev, likes: true }));
     }
 
-    if (isSaved) {
+    if (savedBy?.some((savedBy) => savedBy.user === currentUserId)) {
       setIsActive((prev) => ({ ...prev, save: true }));
     }
-  }, [likedBy, currentUserId, isSaved]);
+  }, [likedBy, savedBy, currentUserId]);
 
   const reactionsHandler = async (id) => {
     setIsActive((prev) => {
@@ -366,29 +374,17 @@ const Reactions = ({ REACTIONS_META_DATA, likedBy, cardButtonState, postId, user
 
     if (isActiveRef.current[id] === true && id === 'save') {
       try {
-        await axios.patch(
-          `${PORT}api/v1/${state}/${postId}`,
-          { saveMode: true },
-          {
-            headers,
-          }
-        );
-        setIsSaved(true);
-        console.log('saved');
+        await axios.post(`${PORT}api/v1/${state}/${postId}/save`, {}, { headers });
+        setTotalSaves((prevSaves) => prevSaves + 1);
+        console.log('saved 👌');
       } catch (error) {
         console.error('Error saving post:', error.response.data);
       }
     } else if (isActiveRef.current[id] === false && id === 'save') {
       try {
-        await axios.patch(
-          `${PORT}api/v1/${state}/${postId}`,
-          { saveMode: false },
-          {
-            headers,
-          }
-        );
-        setIsSaved(false);
-        console.log('unsaved');
+        await axios.post(`${PORT}api/v1/${state}/${postId}/save`, {}, { headers });
+        setTotalSaves((prevLikes) => prevLikes - 1);
+        console.log('unsaved 🤷‍♂️');
       } catch (error) {
         console.error('Error unsaving post:', error.response.data);
       }
@@ -408,10 +404,16 @@ const Reactions = ({ REACTIONS_META_DATA, likedBy, cardButtonState, postId, user
             <IconTextButton
               inconTextButtonStyle={classes.list_icon_text_container}
               icon={data.icon}
-              label={data.id === 'likes' ? `${totalLikes}` : data.count}
+              label={
+                data.id === 'likes'
+                  ? `${totalLikes}`
+                  : data.id === 'save'
+                  ? `${totalSaves}`
+                  : data.count
+              }
               colorOnMouseUp={
                 (data.id === 'likes' && likedBy.some((like) => like.user.id === currentUserId)) ||
-                (data.id === 'save' && isSaved === true) ||
+                (data.id === 'save' && savedBy.some((save) => save.user.id === currentUserId)) ||
                 isActive[data.id]
                   ? data.activeColor
                   : undefined
@@ -520,7 +522,7 @@ function ExpandedCard({
   post,
   parentPosts,
   likedBy,
-  saveMode,
+  savedBy,
   state,
 }) {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -557,10 +559,10 @@ function ExpandedCard({
             REACTIONS_META_DATA={REACTIONS_META_DATA}
             commentSectionsRef={commentSectionsRef}
             likedBy={likedBy}
-            saveMode={saveMode}
             cardButtonState={post}
             postId={postId}
             username={username}
+            savedBy={savedBy}
           />
           <Line direction={'horizontal'} />
           <ImplementationSection

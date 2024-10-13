@@ -9,6 +9,7 @@ import {
   faComment,
   faHeart,
 } from '@fortawesome/free-solid-svg-icons';
+import Text from '../../../utils/TextSection';
 
 const SUGESTION_BUTTON_DATA = [
   { id: '1', label: 'View People Contributions', children: null },
@@ -21,7 +22,7 @@ function ExpandedReusableCode() {
   const data = useLoaderData();
 
   if (!data) {
-    return <div>No data found</div>;
+    return <Text h4={'No data found'} />;
   }
 
   return (
@@ -51,7 +52,8 @@ function ExpandedReusableCode() {
       parentPosts={[data?.parentSolution?.title]}
       post={post}
       likedBy={data?.likedBy}
-      saveMode={data?.saveMode}
+      savedBy={data?.savedBy}
+      // saveMode={data?.saveMode}
       REACTIONS_META_DATA={[
         {
           id: 'likes',
@@ -70,7 +72,7 @@ function ExpandedReusableCode() {
         {
           id: 'save',
           icon: faBookmark,
-          count: null,
+          count: `${data?.savesCount}`,
           state: data?.saveMode,
           activeColor: Colors.yellow_,
         },

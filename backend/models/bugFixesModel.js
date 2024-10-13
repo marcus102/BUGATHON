@@ -80,10 +80,10 @@ const bugFixSchema = new mongoose.Schema(
       type: Date,
       default: Date.now()
     },
-    saveMode: {
-      type: Boolean,
-      default: false
-    },
+    // saveMode: {
+    //   type: Boolean,
+    //   default: false
+    // },
     updatedAt: {
       type: Date,
       default: null
@@ -179,6 +179,12 @@ bugFixSchema.virtual('zoneOfInterests', {
 
 bugFixSchema.virtual('likedBy', {
   ref: 'Like',
+  localField: '_id',
+  foreignField: 'bugFix'
+});
+
+bugFixSchema.virtual('savedBy', {
+  ref: 'Save',
   localField: '_id',
   foreignField: 'bugFix'
 });

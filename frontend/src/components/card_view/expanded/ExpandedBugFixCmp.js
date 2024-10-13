@@ -52,7 +52,8 @@ function ExpandedBugFix() {
       parentPosts={[data?.bugReport?.title, data?.parentSolution?.title]}
       post={post}
       likedBy={data?.likedBy}
-      saveMode={data?.saveMode}
+      savedBy={data?.savedBy}
+      // saveMode={data?.saveMode}
       REACTIONS_META_DATA={[
         {
           id: 'likes',
@@ -71,7 +72,7 @@ function ExpandedBugFix() {
         {
           id: 'save',
           icon: faBookmark,
-          count: null,
+          count: `${data?.savesCount}`,
           state: data?.saveMode,
           activeColor: Colors.yellow_,
         },

@@ -59,7 +59,7 @@ exports.toggleSave = catchAsync(async (req, res, next) => {
     });
   } else {
     const saveData = { user: user, [dataField]: req.body[dataField] };
-    const newSave = new Like(saveData);
+    const newSave = new Save(saveData);
     await newSave.save();
     await DB.findByIdAndUpdate(req.body[dataField], { $inc: { savesCount: 1 } });
   }
