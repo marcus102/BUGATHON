@@ -3,6 +3,7 @@ const commentsRouter = require('./user_engagement/commentsRoutes');
 const reviewRouter = require('./user_engagement/reviewsRoutes');
 const imageRouter = require('./imagesRoutes');
 const likesRouter = require('./user_engagement/likeRoutes');
+const savesRouter = require('./user_engagement/savesRoutes');
 const operatingSystemRouter = require('./filtering/operatingSystemRoutes');
 const programmingLanguagesRouter = require('./filtering/programmingLanguagesRoutes');
 const zoneOfInterestRouter = require('./filtering/zoneOfInterestRoutes');
@@ -27,6 +28,7 @@ router.use('/:blog_post_id/comments', commentsRouter);
 router.use('/:blog_post_id/reviews', reviewRouter);
 router.use('/:blog_post_id/image', imageRouter);
 router.use('/:blog_post_id/likes', likesRouter);
+router.use('/:blog_post_id/save', savesRouter);
 //filtering
 router.use('/:blog_post_id/category', categoriesRouter);
 router.use('/:blog_post_id/operating_system', operatingSystemRouter);

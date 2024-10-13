@@ -1,5 +1,8 @@
 const BugReport = require('./../models/bugReportModel');
 const User = require('./../models/userModel');
+const Category = require('./../models/filtering/categoriesModel');
+const OperatingSystem = require('./../models/filtering/operatingSystemModel');
+const Language = require('./../models/filtering/programmingLanguagesModel');
 const BlockedUser = require('./../models/restrictions/blockedUserModel');
 const BlockedPost = require('../models/restrictions/blockedPostModel');
 const factory = require('./handlerFactory');
@@ -17,9 +20,10 @@ exports.createBug = catchAsync(async (req, res, next) => {
     expectedBehavior,
     actualBehavior,
     codeSnippet,
-    browser,
-    device,
-    severity
+    severity,
+    category,
+    language,
+    operatingSystem
   } = req.body;
 
   const newBugReport = new BugReport({
@@ -29,13 +33,40 @@ exports.createBug = catchAsync(async (req, res, next) => {
     expectedBehavior: expectedBehavior,
     actualBehavior: actualBehavior,
     codeSnippet: codeSnippet,
-    browser: browser,
-    device: device,
     severity: severity,
     user: req.user.id
   });
 
   await newBugReport.save();
+
+  const { _id } = newBugReport;
+
+  if (category) {
+    await Category.create({
+      category: category,
+      user: req.user.id,
+      username: req.user.username,
+      bugReport: _id
+    });
+  }
+
+  if (language) {
+    await Language.create({
+      language: language,
+      user: req.user.id,
+      username: req.user.username,
+      bugReport: _id
+    });
+  }
+
+  if (operatingSystem) {
+    await OperatingSystem.create({
+      operatingSystem: operatingSystem,
+      user: req.user.id,
+      username: req.user.username,
+      bugReport: _id
+    });
+  }
 
   await User.findByIdAndUpdate(req.user.id, { $inc: { bugReportCount: 1 } });
 
@@ -63,7 +94,7 @@ exports.deleteBug = catchAsync(async (req, res, next) => {
 });
 
 exports.filterBlockedUsers = factory.blocksHandler(BlockedUser, 'user_ids');
-exports.filterBlockedPosts = factory.blocksHandler(BlockedPost,'bug_report_ids');
+exports.filterBlockedPosts = factory.blocksHandler(BlockedPost, 'bug_report_ids');
 
 exports.getAllBugs = factory.getAll(BugReport, 'user_ids', 'bug_report_ids', [
   { path: 'bugFixes' },

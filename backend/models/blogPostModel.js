@@ -31,6 +31,10 @@ const blogSchema = new mongoose.Schema(
       type: Number,
       default: 0
     },
+    savesCount: {
+      type: Number,
+      default: 0
+    },
     reportCount: {
       type: Number,
       default: 0

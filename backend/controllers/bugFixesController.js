@@ -3,6 +3,9 @@ const appError = require('../utils/appError');
 const BugFixes = require('../models/bugFixesModel');
 const BugReport = require('../models/bugReportModel');
 const Contributor = require('../models/user_engagement/contributorsModel');
+const Category = require('./../models/filtering/categoriesModel');
+const OperatingSystem = require('./../models/filtering/operatingSystemModel');
+const Language = require('./../models/filtering/programmingLanguagesModel');
 const User = require('./../models/userModel');
 const BlockedUser = require('../models/restrictions/blockedUserModel');
 const BlockedPost = require('../models/restrictions/blockedPostModel');
@@ -21,7 +24,17 @@ exports.setRequiredIds = (req, res, next) => {
 };
 
 exports.createBugFix = catchAsync(async (req, res, next) => {
-  const { title, description, user, bugReport_, bugFix_, frameworkVersions } = req.body;
+  const {
+    title,
+    description,
+    user,
+    bugReport_,
+    bugFix_,
+    frameworkVersions,
+    category,
+    language,
+    operatingSystem
+  } = req.body;
 
   let bugFix;
   let bugReportValue;
@@ -68,6 +81,33 @@ exports.createBugFix = catchAsync(async (req, res, next) => {
     parentBugFix: bugFix_,
     bugReport: bugReportValue
   });
+
+  if (category) {
+    await Category.create({
+      category: category,
+      user: req.user.id,
+      username: req.user.username,
+      bugReport: _id
+    });
+  }
+
+  if (language) {
+    await Language.create({
+      language: language,
+      user: req.user.id,
+      username: req.user.username,
+      bugReport: _id
+    });
+  }
+
+  if (operatingSystem) {
+    await OperatingSystem.create({
+      operatingSystem: operatingSystem,
+      user: req.user.id,
+      username: req.user.username,
+      bugReport: _id
+    });
+  }
 
   await User.findByIdAndUpdate(bugFix_, { $inc: { bugFixesCount: 1 } });
 

@@ -3,6 +3,7 @@ const commentsRouter = require('./user_engagement/commentsRoutes');
 const reviewRouter = require('./user_engagement/reviewsRoutes');
 const imageRouter = require('./imagesRoutes');
 const likesRouter = require('./user_engagement/likeRoutes');
+const savesRouter = require('./user_engagement/savesRoutes');
 const reportHubRouter = require('./restrictions/reportHubRoutes');
 const blockedPostRouter = require('./restrictions/blockedPostRoutes');
 const commentsController = require('../controllers/user_engagement/commentsControllers');
@@ -20,6 +21,7 @@ router.use('/:bug_fixes_id/comments', commentsRouter);
 router.use('/:bug_fixes_id/reviews', reviewRouter);
 router.use('/:bug_fixes_id/image', imageRouter);
 router.use('/:bug_fixes_id/likes', likesRouter);
+router.use('/:bug_fixes_id/save', savesRouter);
 //restricitions
 router.use('/:bug_fixes_id/report_bug_fix', reportHubRouter);
 router.use('/:bug_fixes_id/blocked_bug_fix', blockedPostRouter);

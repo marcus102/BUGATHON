@@ -14,10 +14,16 @@ export const ManagmentSystem = createContext({
   settingSideBarButton: '',
   settingSideBarButtonHandler: (parameters) => {},
   dropDownDefault: {
-    assigned_bug: 'All',
-    notification: 'All',
-    comment: 'All',
-    create_new: 'Bug Report',
+    assigned_bug: '',
+    notification: '',
+    comment: '',
+    create_new: '',
+    browser: '',
+    device: '',
+    programming_language: '',
+    category: '',
+    topic: '',
+    severity: '',
     email_visibility: '',
     email_type: '',
   },
@@ -69,7 +75,9 @@ export default function ManagmentSystemProvider({ children }) {
       comment: 'All',
       create_new: 'Bug Report',
       browser: 'Chrome',
-      device: 'Desktop',
+      device: 'all',
+      programming_language: 'all',
+      category: 'all',
       severity: 'Low',
       email_visibility: '',
       email_type: '',
@@ -162,6 +170,12 @@ export default function ManagmentSystemProvider({ children }) {
             }),
             ...(action.payload.email_type !== undefined && {
               email_type: action.payload.email_type,
+            }),
+            ...(action.payload.category !== undefined && {
+              category: action.payload.category,
+            }),
+            ...(action.payload.programming_language !== undefined && {
+              programming_language: action.payload.programming_language,
             }),
           },
         };
@@ -259,6 +273,8 @@ export default function ManagmentSystemProvider({ children }) {
     severity,
     email_visibility,
     email_type,
+    category,
+    programming_language,
   }) => {
     dispatch({
       type: 'SET_DROPDOWN_DEFAULT',
@@ -272,6 +288,8 @@ export default function ManagmentSystemProvider({ children }) {
         severity,
         email_visibility,
         email_type,
+        category,
+        programming_language,
       },
     });
   };

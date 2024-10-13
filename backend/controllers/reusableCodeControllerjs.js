@@ -2,13 +2,16 @@ const ReusableCode = require('../models/reusableCodeModel');
 const User = require('./../models/userModel');
 const BlockedUser = require('../models/restrictions/blockedUserModel');
 const BlockedPost = require('../models/restrictions/blockedPostModel');
+const Category = require('./../models/filtering/categoriesModel');
+const OperatingSystem = require('./../models/filtering/operatingSystemModel');
+const Language = require('./../models/filtering/programmingLanguagesModel');
 const factory = require('./handlerFactory');
 const Contributor = require('../models/user_engagement/contributorsModel');
 const catchAsync = require('../utils/catchAsync');
 const appError = require('../utils/appError');
 
 exports.createReusableCode = catchAsync(async (req, res, next) => {
-  const { frameworkVersions, description, title, reusableCode_ } = req.body;
+  const { frameworkVersions, description, title, reusableCode_, category, language, operatingSystem } = req.body;
 
   const newReusableCode = await ReusableCode.create({
     title: title,
@@ -29,6 +32,34 @@ exports.createReusableCode = catchAsync(async (req, res, next) => {
       reusableCode: _id
     });
   }
+
+  if (category) {
+    await Category.create({
+      category: category,
+      user: req.user.id,
+      username: req.user.username,
+      bugReport: _id
+    });
+  }
+
+  if (language) {
+    await Language.create({
+      language: language,
+      user: req.user.id,
+      username: req.user.username,
+      bugReport: _id
+    });
+  }
+
+  if (operatingSystem) {
+    await OperatingSystem.create({
+      operatingSystem: operatingSystem,
+      user: req.user.id,
+      username: req.user.username,
+      bugReport: _id
+    });
+  }
+
   await User.findByIdAndUpdate(req.user.id, { $inc: { reusableCodeCount: 1 } });
 
   res.status(201).json({
@@ -44,13 +75,21 @@ exports.getAllReusableCodes = factory.getAll(ReusableCode, 'user_ids', 'reusable
   { path: 'image' },
   { path: 'contributors' },
   { path: 'likedBy' },
-  { path: 'comments' }
+  { path: 'comments' },
+  { path: 'categories' },
+  { path: 'operatingSystem' },
+  { path: 'programmingLanguages' },
+  { path: 'zoneOfInterests' }
 ]);
 exports.getReusableCode = factory.getOne(ReusableCode, [
   { path: 'image' },
   { path: 'contributors' },
   { path: 'likedBy' },
-  { path: 'comments' }
+  { path: 'comments' },
+  { path: 'categories' },
+  { path: 'operatingSystem' },
+  { path: 'programmingLanguages' },
+  { path: 'zoneOfInterests' }
 ]);
 exports.updateReusableCode = factory.updateOne(ReusableCode);
 

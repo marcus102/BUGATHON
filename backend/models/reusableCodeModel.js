@@ -31,6 +31,10 @@ const reusableCodeSchema = new mongoose.Schema(
       type: Number,
       default: 0
     },
+    savesCount: {
+      type: Number,
+      default: 0
+    },
     commentCount: {
       type: Number,
       default: 0
@@ -126,6 +130,30 @@ reusableCodeSchema.pre('findOneAndUpdate', function(next) {
   this.getUpdate().updatedAt = Date.now();
 
   next();
+});
+
+reusableCodeSchema.virtual('categories', {
+  ref: 'Category',
+  localField: '_id',
+  foreignField: 'reusableCode'
+});
+
+reusableCodeSchema.virtual('operatingSystem', {
+  ref: 'OperatingSystem',
+  localField: '_id',
+  foreignField: 'reusableCode'
+});
+
+reusableCodeSchema.virtual('programmingLanguages', {
+  ref: 'Language',
+  localField: '_id',
+  foreignField: 'reusableCode'
+});
+
+reusableCodeSchema.virtual('zoneOfInterests', {
+  ref: 'ZoneOfInterest',
+  localField: '_id',
+  foreignField: 'reusableCode'
 });
 
 const ReusableCode = mongoose.model('ReusableCode', reusableCodeSchema);

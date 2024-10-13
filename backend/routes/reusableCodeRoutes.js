@@ -3,6 +3,7 @@ const imageRouter = require('./imagesRoutes');
 const commentRouter = require('./user_engagement/commentsRoutes');
 const reviewRouter = require('./../routes/user_engagement/reviewsRoutes');
 const likesRouter = require('./user_engagement/likeRoutes');
+const savesRouter = require('./user_engagement/savesRoutes');
 const categoriesRouter = require('./filtering/categoriesRoutes');
 const operatingSystemRouter = require('./filtering/operatingSystemRoutes');
 const programmingLanguagesRouter = require('./filtering/programmingLanguagesRoutes');
@@ -28,6 +29,7 @@ const router = express.Router({ mergeParams: true });
 router.use('/:reusable_code_id/image', imageRouter);
 router.use('/:reusable_code_id/comments', commentRouter);
 router.use('/:reusable_code_id/likes', likesRouter);
+router.use('/:reusable_code_id/save', savesRouter);
 router.use('/:reusable_code_id/review', reviewRouter);
 //filtering
 router.use('/:reusable_code_id/category', categoriesRouter);

@@ -7,7 +7,6 @@ import {
   DropdownMenu,
   OutlinedButton,
   ButtonContainer,
-  IconButton,
   IconTextButton,
 } from '../../utils/ButtonSection';
 import { Image } from '../../utils/MediaSection';

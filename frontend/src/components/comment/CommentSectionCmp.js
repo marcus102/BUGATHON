@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Colors from '../../constants/colors';
 import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
 import classes from './CommentSectionCmp.module.css';
@@ -47,18 +47,12 @@ const COMMENT_DROPDOWN_OPTION = [
 
 const CURRENT_USER_COMMENT_OPTION = [
   { id: '1', icon: faPen, label: 'Edit comment', icon_2: null, href: null },
-  { id: '2', icon: faHeart, label: 'Like comment', icon_2: null, href: null },
-  { id: '3', icon: faReply, label: 'Reply Comment', icon_2: null, href: null },
-  { id: '4', icon: faThumbTack, label: 'Pin this comment', icon_2: null, href: null },
-  { id: '6', icon: faTrashCan, label: 'Delete comment', icon_2: null, href: null },
+  { id: '2', icon: faTrashCan, label: 'Delete comment', icon_2: null, href: null },
 ];
 
 const GUEST_USER_COMMENT_OPTION = [
-  { id: '2', icon: faHeart, label: 'Like comment', icon_2: null, href: null },
-  { id: '3', icon: faReply, label: 'Reply Comment', icon_2: null, href: null },
-  { id: '4', icon: faThumbTack, label: 'Pin this comment', icon_2: null, href: null },
-  { id: '5', icon: faEyeSlash, label: 'I don’t want to see this', icon_2: null, href: null },
-  { id: '7', icon: faExclamation, label: 'Report', icon_2: faCaretRight, href: null },
+  { id: '3', icon: faEyeSlash, label: 'I don’t want to see this', icon_2: null, href: null },
+  { id: '4', icon: faExclamation, label: 'Report User', icon_2: faCaretRight, href: null },
 ];
 
 const CommentSection = ({ likesCount, viewsCount, repliesCount }) => {
@@ -141,6 +135,45 @@ const CommentSection = ({ likesCount, viewsCount, repliesCount }) => {
 
 export default CommentSection;
 
+const timeAgo = (timestamp) => {
+  const now = new Date(); // Current local time
+  const commentTime = new Date(timestamp); // Time of comment in UTC
+
+  // Calculate the difference in seconds between current time and comment time
+  const seconds = Math.floor((now.getTime() - commentTime.getTime()) / 1000);
+
+  if (seconds < 60) {
+    return seconds === 1 ? '1 second ago' : `${seconds} seconds ago`;
+  }
+
+  if (seconds < 3600) {
+    // Less than 1 hour
+    const minutes = Math.floor(seconds / 60);
+    return minutes === 1 ? '1 minute ago' : `${minutes * 60} seconds ago`;
+  }
+
+  if (seconds < 86400) {
+    // Less than 1 day
+    const hours = Math.floor(seconds / 3600);
+    return hours === 1 ? '1 hour ago' : `${hours * 3600} seconds ago`;
+  }
+
+  if (seconds < 2592000) {
+    // Less than 30 days
+    const days = Math.floor(seconds / 86400);
+    return days === 1 ? '1 day ago' : `${days * 86400} seconds ago`;
+  }
+
+  if (seconds < 31536000) {
+    // Less than 12 months
+    const months = Math.floor(seconds / 2592000);
+    return months === 1 ? '1 month ago' : `${months * 2592000} seconds ago`;
+  }
+
+  const years = Math.floor(seconds / 31536000); // 1 year = 31536000 seconds
+  return years === 1 ? '1 year ago' : `${years * 31536000} seconds ago`;
+};
+
 const Comment = ({
   comment,
   isReply = false,
@@ -197,6 +230,8 @@ const Comment = ({
     (targetComment) => targetComment.parentComment && targetComment.parentComment === comment.id
   );
 
+  const isCurrentUserComment = comment.user.id === currentUser?.id;
+
   const handleReply = () => {
     setIsReplying(!isReplying);
   };
@@ -214,6 +249,17 @@ const Comment = ({
     setIsReplying(false);
   };
 
+  const [relativeTime, setRelativeTime] = useState('');
+
+  useEffect(() => {
+    setRelativeTime(timeAgo(comment.createdAt));
+    const interval = setInterval(() => {
+      setRelativeTime(timeAgo(comment.createdAt));
+    }, 60000);
+
+    return () => clearInterval(interval);
+  }, [comment.createdAt]);
+
   return (
     <div className={`${isReply ? classes.reply : classes.comment}`}>
       {/* Comment Header */}
@@ -230,8 +276,13 @@ const Comment = ({
           profession={comment.user.profession}
         />
         <div className={`d-flex align-items-center ${classes.comment_options_container}`}>
-          <Text label12={`${comment.createdAt}`} />
-          <DropdownMenu buttonIcon={faEllipsisVertical} menuItems={GUEST_USER_COMMENT_OPTION} />
+          <Text label12={`${relativeTime}`} />
+          <DropdownMenu
+            buttonIcon={faEllipsisVertical}
+            menuItems={
+              isCurrentUserComment ? CURRENT_USER_COMMENT_OPTION : GUEST_USER_COMMENT_OPTION
+            }
+          />
         </div>
       </div>
 

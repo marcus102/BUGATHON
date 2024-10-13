@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { ManagmentSystem } from '../../../store/AppGeneralManagmentSystem';
-import Colors from '../../../constants/colors';
 import classes from './emailCmp.module.css';
-import { faChevronDown, faEdit, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { IconButton, SolidButton, DynamicLabelDropdownMenu } from '../../../utils/ButtonSection';
 import Text from '../../../utils/TextSection';
 import Link from '../../../utils/LinkSection';
@@ -38,15 +37,6 @@ const RenderEmail = ({ email, editEmail }) => (
         <ToolTip tooltipMessage={'Edit email address'}>
           <IconButton icon={faEdit} onClick={editEmail} />
         </ToolTip>
-
-        {/* <ToolTip tooltipMessage={'Delete email address'}>
-          <IconButton
-            colorOnMouseUp={Colors.red_FF2B2B}
-            colorOnMouseDown={Colors.red_FF2B2B}
-            icon={faTrashCan}
-            onClick={deleteEmail}
-          />
-        </ToolTip> */}
       </div>
     </div>
   </>

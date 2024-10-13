@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { ManagmentSystem } from '../../../store/AppGeneralManagmentSystem';
 import classes from './formCmp.module.css';
 import Colors from '../../../constants/colors';
 import Link from '../../../utils/LinkSection';
-import { IconButton, SolidButton } from '../../../utils/ButtonSection';
+import { IconButton, SolidButton, DynamicLabelDropdownMenu } from '../../../utils/ButtonSection';
 import { HorizontalScrollView } from '../../../utils/ScrollViewsSection';
 import { Editor, EditorState, RichUtils, Modifier } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
@@ -28,6 +29,9 @@ import {
   faPaperclip,
   faListOl,
   faLink,
+  faCaretDown,
+  faChevronDown,
+  faMapMarked,
 } from '@fortawesome/free-solid-svg-icons';
 import { File } from '../../../utils/MediaSection';
 import DOMPurify from 'dompurify';
@@ -229,13 +233,189 @@ function addEmoji(editorState, setEditorState) {
   };
 }
 
+const CATEGORIES_METADATA = [
+  { id: 'all', label: 'All' },
+  { id: 'aiethics', label: 'AI-ethics' },
+  { id: 'fpgadesign', label: 'FPGA-design' },
+  { id: 'nfts', label: 'NFTs' },
+  { id: 'nosql', label: 'NoSQL' },
+  { id: 'orm', label: 'ORM' },
+  { id: 'plcprogramming', label: 'PLC-programming' },
+  { id: 'restfularchitecture', label: 'RESTful-architecture' },
+  { id: 'sql', label: 'SQL' },
+  { id: 'solidprinciples', label: 'SOLID-principles' },
+  { id: 'agreement', label: 'Agreement' },
+  { id: 'algorithm', label: 'Algorithm' },
+  { id: 'authentication', label: 'Authentication' },
+  { id: 'backend', label: 'Backend' },
+  { id: 'bigdata', label: 'Big-data' },
+  { id: 'blockchain', label: 'Blockchain' },
+  { id: 'blockchainplatforms', label: 'Blockchain-platforms' },
+  { id: 'cloudcomputing', label: 'Cloud-computing' },
+  { id: 'cloudarchitecture', label: 'Cloud-architecture' },
+  { id: 'cloudsecurity', label: 'Cloud-security' },
+  { id: 'computervision', label: 'Computer-vision' },
+  { id: 'concurrency', label: 'Concurrency' },
+  { id: 'containerorchestration', label: 'Container-orchestration' },
+  { id: 'continuousdeployment', label: 'Continuous-deployment' },
+  { id: 'continuousintegration', label: 'Continuous-integration' },
+  { id: 'cryptocurrency', label: 'Cryptocurrency' },
+  { id: 'crossplatform', label: 'Cross-platform' },
+  { id: 'crossplatformdevelopment', label: 'Cross-platform-development' },
+  { id: 'cybersecurity', label: 'Cybersecurity' },
+  { id: 'dataanalytics', label: 'Data-analytics' },
+  { id: 'datacleaning', label: 'Data-cleaning' },
+  { id: 'dataengineering', label: 'Data-engineering' },
+  { id: 'datapreprocessing', label: 'Data-preprocessing' },
+  { id: 'datascience', label: 'Data-science' },
+  { id: 'datastructures', label: 'Data-structures' },
+  { id: 'database', label: 'Database' },
+  { id: 'databasedesign', label: 'Database-design' },
+  { id: 'declarativeprogramming', label: 'Declarative-programming' },
+  { id: 'deeplearning', label: 'Deep-learning' },
+  { id: 'designpatterns', label: 'Design-patterns' },
+  { id: 'designprinciples', label: 'Design-principles' },
+  { id: 'desktop', label: 'Desktop' },
+  { id: 'devops', label: 'DevOps' },
+  { id: 'distributedsystems', label: 'Distributed-systems' },
+  { id: 'encryption', label: 'Encryption' },
+  { id: 'embeddedfirmware', label: 'Embedded-firmware' },
+  { id: 'embeddedsystems', label: 'Embedded-systems' },
+  { id: 'endtoendtesting', label: 'End-to-end-testing' },
+  { id: 'errorhandling', label: 'Error-handling' },
+  { id: 'eventdrivenarchitecture', label: 'Event-driven-architecture' },
+  { id: 'featureengineering', label: 'Feature-engineering' },
+  { id: 'frontend', label: 'Frontend' },
+  { id: 'frameworks', label: 'Frameworks' },
+  { id: 'fullstack', label: 'Full-stack' },
+  { id: 'functionalprogramming', label: 'Functional-programming' },
+  { id: 'gamedevelopment', label: 'Game-development' },
+  { id: 'gameengine', label: 'Game-engine' },
+  { id: 'graphicsprogramming', label: 'Graphics-programming' },
+  { id: 'hardware', label: 'Hardware' },
+  { id: 'hardwaredesign', label: 'Hardware-design' },
+  { id: 'imperativeprogramming', label: 'Imperative-programming' },
+  { id: 'integrationtesting', label: 'Integration-testing' },
+  { id: 'internetofthings', label: 'Internet-of-things' },
+  { id: 'iot', label: 'IoT' },
+  { id: 'libraries', label: 'Libraries' },
+  { id: 'logging', label: 'Logging' },
+  { id: 'machinelearning', label: 'Machine-learning' },
+  { id: 'microcontrollerprogramming', label: 'Microcontroller-programming' },
+  { id: 'microservices', label: 'Microservices' },
+  { id: 'mobile', label: 'Mobile' },
+  { id: 'mobiledevelopment', label: 'Mobile-development' },
+  { id: 'mobileframeworks', label: 'Mobile-frameworks' },
+  { id: 'modeldeployment', label: 'Model-deployment' },
+  { id: 'modelevaluation', label: 'Model-evaluation' },
+  { id: 'modeltraining', label: 'Model-training' },
+  { id: 'monitoring', label: 'Monitoring' },
+  { id: 'nativeapps', label: 'Native-apps' },
+  { id: 'naturallanguageprocessing', label: 'Natural-language-processing' },
+  { id: 'networking', label: 'Networking' },
+  { id: 'operatingsystems', label: 'Operating-systems' },
+  { id: 'parallelcomputing', label: 'Parallel-computing' },
+  { id: 'performancetesting', label: 'Performance-testing' },
+  { id: 'progressivewebapps', label: 'Progressive-web-apps' },
+  { id: 'rating', label: 'Rating' },
+  { id: 'reactiveprogramming', label: 'Reactive-programming' },
+  { id: 'realtime', label: 'Real-time' },
+  { id: 'responsivedesign', label: 'Responsive-design' },
+  { id: 'robotics', label: 'Robotics' },
+  { id: 'scripting', label: 'Scripting' },
+  { id: 'searchalgorithms', label: 'Search-algorithms' },
+  { id: 'securecoding', label: 'Secure-coding' },
+  { id: 'security', label: 'Security' },
+  { id: 'serverless', label: 'Serverless' },
+  { id: 'software', label: 'Software' },
+  { id: 'softwarearchitecture', label: 'Software-architecture' },
+  { id: 'sortingalgorithms', label: 'Sorting-algorithms' },
+  { id: 'smartcontracts', label: 'Smart-contracts' },
+  { id: 'testautomation', label: 'Test-automation' },
+  { id: 'testing', label: 'Testing' },
+  { id: 'tools', label: 'Tools' },
+  { id: 'uiuxdesign', label: 'UI/UX-design' },
+  { id: 'unittesting', label: 'Unit-testing' },
+  { id: 'userexperience', label: 'User-experience' },
+  { id: 'userinterface', label: 'User-interface' },
+  { id: 'virtualreality', label: 'Virtual-reality' },
+  { id: 'virtualization', label: 'Virtualization' },
+  { id: 'web', label: 'Web' },
+  { id: 'webdevelopment', label: 'Web-development' },
+  { id: 'webframeworks', label: 'Web-frameworks' },
+  { id: 'web3', label: 'Web3' },
+  { id: 'other', label: 'Other' },
+];
+
+const LANGUAGES_METADATA = [
+  { id: 'all', label: 'All' },
+  { id: 'angular', label: 'Angular' },
+  { id: 'assembly', label: 'Assembly' },
+  { id: 'c', label: 'C' },
+  { id: 'csharp', label: 'C#' },
+  { id: 'cpp', label: 'C++' },
+  { id: 'cobol', label: 'Cobol' },
+  { id: 'css', label: 'CSS' },
+  { id: 'dart', label: 'Dart' },
+  { id: 'elixir', label: 'Elixir' },
+  { id: 'erlang', label: 'Erlang' },
+  { id: 'fortran', label: 'Fortran' },
+  { id: 'go', label: 'Go' },
+  { id: 'graphql', label: 'GraphQL' },
+  { id: 'groovy', label: 'Groovy' },
+  { id: 'haskell', label: 'Haskell' },
+  { id: 'html', label: 'HTML' },
+  { id: 'java', label: 'Java' },
+  { id: 'javascript', label: 'JavaScript' },
+  { id: 'julia', label: 'Julia' },
+  { id: 'kotlin', label: 'Kotlin' },
+  { id: 'lisp', label: 'Lisp' },
+  { id: 'lua', label: 'Lua' },
+  { id: 'matlab', label: 'MATLAB' },
+  { id: 'objectivec', label: 'Objective-C' },
+  { id: 'perl', label: 'Perl' },
+  { id: 'php', label: 'PHP' },
+  { id: 'powershell', label: 'PowerShell' },
+  { id: 'python', label: 'Python' },
+  { id: 'r', label: 'R' },
+  { id: 'ruby', label: 'Ruby' },
+  { id: 'rust', label: 'Rust' },
+  { id: 'scala', label: 'Scala' },
+  { id: 'shell', label: 'Shell' },
+  { id: 'solidity', label: 'Solidity' },
+  { id: 'sql', label: 'SQL' },
+  { id: 'swift', label: 'Swift' },
+  { id: 'typescript', label: 'TypeScript' },
+  { id: 'vhdl', label: 'VHDL' },
+  { id: 'visualbasic', label: 'Visual Basic' },
+  { id: 'xml', label: 'XML' },
+  { id: 'yaml', label: 'YAML' },
+  { id: 'other', label: 'Other' },
+];
+
+const OS_METADATA = [
+  { id: 'all', label: 'All' },
+  { id: 'android', label: 'Android' },
+  { id: 'crossplatform', label: 'Cross-platform' },
+  { id: 'ios', label: 'IOS' },
+  { id: 'linux', label: 'Linux' },
+  { id: 'macos', label: 'MacOS' },
+  { id: 'windows', label: 'Windows' },
+  { id: 'other', label: 'Other' },
+];
+
 function TextEditor({ META_DATA }) {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [editorContent, setEditorContent] = useState('');
+  const [categories, setCategories] = useState('');
+  const [os, setOs] = useState('');
+  const [programingLanguage, setProgramingLanguage] = useState('');
   const [searchParams] = useSearchParams();
   const postId = searchParams.get('postId');
-  const postType = searchParams.get('type');
+  const postType = searchParams.get('source');
+
+  const { dropDownDefault } = useContext(ManagmentSystem);
 
   return (
     <>
@@ -276,16 +456,60 @@ function TextEditor({ META_DATA }) {
                 value={editorContent}
               />
 
-              <input type="hidden" id={`${postType}_`} name={`${postType}_`} value={postId} />
-              {/* {postId && !id && (
-                <input type="hidden" id={'bug_report_'} name={'bug_report_'} value={postId} />
-              )}
-              {postId && id && (
-                <input type="hidden" id={'bug_fix_'} name={'bug_fix_'} value={postId} />
-              )}
-              {postType === 'reusable_code' && postId && (
-                <input type="hidden" id={`${postType}_`} name={`${postType}_`} value={postId} />
-              )} */}
+              <input
+                type="hidden"
+                id={`${postType}_`}
+                name={`${postType}_`}
+                value={postId ? postId : ''}
+              />
+            </div>
+
+            <div className={classes.dropdonw_main_container}>
+              <div className={classes.dropdonw_container}>
+                <Text label12={'Category:'} />
+                <DynamicLabelDropdownMenu
+                  dropDownIconTextStyle={classes.drop_dow_label}
+                  dropDownMenuStyle={classes.drop_down_menu}
+                  buttonLabel={dropDownDefault.category}
+                  buttonIcon={faChevronDown}
+                  menuItems={CATEGORIES_METADATA}
+                  my_key={'category'}
+                  onChange={(value) => setCategories(value)}
+                />
+              </div>
+              <input type="hidden" id="category" name="category" defaultValue={categories} />
+
+              <div className={classes.dropdonw_container}>
+                <Text label12={'Programming Language:'} />
+                <DynamicLabelDropdownMenu
+                  dropDownIconTextStyle={classes.drop_dow_label}
+                  dropDownMenuStyle={classes.drop_down_menu}
+                  buttonLabel={dropDownDefault.programming_language}
+                  buttonIcon={faChevronDown}
+                  menuItems={LANGUAGES_METADATA}
+                  my_key={'programming_language'}
+                  onChange={(value) => setProgramingLanguage(value)}
+                />
+              </div>
+              <input
+                type="hidden"
+                id="programing_language"
+                name="programing_language"
+                defaultValue={programingLanguage}
+              />
+              <div className={classes.dropdonw_container}>
+                <Text label12={'Operating System:'} />
+                <DynamicLabelDropdownMenu
+                  dropDownIconTextStyle={classes.drop_dow_label}
+                  dropDownMenuStyle={classes.drop_down_menu}
+                  buttonLabel={dropDownDefault.device}
+                  buttonIcon={faChevronDown}
+                  menuItems={OS_METADATA}
+                  my_key={'device'}
+                  onChange={(value) => setOs(value)}
+                />
+              </div>
+              <input type="hidden" id="device" name="device" defaultValue={os} />
             </div>
 
             {showEmojiPicker && <EmojiPicker onSelect={addEmoji(editorState, setEditorState)} />}

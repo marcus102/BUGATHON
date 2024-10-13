@@ -18,22 +18,19 @@ function Tag({
   labelStyle,
 }) {
   return (
-    <ToolTip
-      children={
-        <div
-          className={`${classes.tag_main_container} ${
-            tagContainerStyle ? tagContainerStyle : classes.tag_default_background
-          }`}
-        >
-          {icon && <Icon iconContainerStyle={iconContainerStyle} icon={icon} />}
-          {src && (
-            <Image imgContainerStyle={imgContainerStyle} imgStyle={imgStyle} src={src} alt={alt} />
-          )}
-          {label && <Text unwrap={true} label12Style={labelStyle} label12={label} />}
-        </div>
-      }
-      tooltipMessage={tooltipMessage}
-    />
+    <ToolTip tooltipMessage={tooltipMessage}>
+      <div
+        className={`${classes.tag_main_container} ${
+          tagContainerStyle ? tagContainerStyle : classes.tag_default_background
+        }`}
+      >
+        {icon && <Icon iconContainerStyle={iconContainerStyle} icon={icon} />}
+        {src && (
+          <Image imgContainerStyle={imgContainerStyle} imgStyle={imgStyle} src={src} alt={alt} />
+        )}
+        {label && <Text unwrap={true} label12Style={labelStyle} label12={label} />}
+      </div>
+    </ToolTip>
   );
 }
 

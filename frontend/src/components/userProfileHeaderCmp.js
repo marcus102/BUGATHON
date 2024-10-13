@@ -27,14 +27,12 @@ function UserProfileHeader({
   starCount,
   role,
 }) {
-  const [isFollowing, setIsFollowing] = useState(false);
   const { fetchData } = useRouteLoaderData('root');
-  const followingsArray = fetchData?.data?.followings;
-  const followersId = followingsArray.map((data) => data.followerId);
   const currentUserUsername = fetchData?.data.username;
-  const currentUserId = fetchData?.data.id;
+  const followingsArray = fetchData?.data?.followings;
+  const isFollower = followingsArray.some((data) => data.followingId === userId);
+  const [isFollowing, setIsFollowing] = useState(isFollower);
 
-  const isFollower = followersId.includes(currentUserId);
 
   useEffect(() => {
     setIsFollowing(isFollower);

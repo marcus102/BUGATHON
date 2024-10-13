@@ -1,35 +1,19 @@
 const mongoose = require('mongoose');
 
-const zoneOfInterestSchema = new mongoose.Schema(
+const savesSchema = new mongoose.Schema(
   {
-    zoneOfInterest: {
-      type: String,
-      enum: [
-        'Education',
-        'Technology',
-        'Programming',
-        'Networking',
-        'Data Science',
-        'Security',
-        'Artificial Intelligence',
-        'Web Development',
-        'All'
-      ],
-      default: 'all'
-    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true
     },
-    username: String,
     bugReport: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'BugReport'
     },
     bugFix: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'UserAttempt'
+      ref: 'BugFixes'
     },
     reusableCode: {
       type: mongoose.Schema.Types.ObjectId,
@@ -38,6 +22,10 @@ const zoneOfInterestSchema = new mongoose.Schema(
     blogPost: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Blog'
+    },
+    comment: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Comment'
     },
     timestamp: {
       type: Date,
@@ -50,6 +38,6 @@ const zoneOfInterestSchema = new mongoose.Schema(
   }
 );
 
-const ZoneOfInterest = mongoose.model('ZoneOfInterest', zoneOfInterestSchema);
+const Save = mongoose.model('Save', savesSchema);
 
-module.exports = ZoneOfInterest;
+module.exports = Save;

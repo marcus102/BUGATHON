@@ -15,16 +15,16 @@ const bugReportSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Description is required for user undersdanding']
     },
-    browser: {
-      type: String,
-      enum: ['Chrome', 'Firefox', 'Safari', 'Edge', 'Internet Explorer', 'Opera', 'Brave', 'Other'],
-      default: 'Other'
-    },
-    device: {
-      type: String,
-      enum: ['Desktop', 'Laptop', 'Tablet', 'Mobile', 'Smartphone', 'Smartwatch', 'Other'],
-      default: 'Other'
-    },
+    // browser: {
+    //   type: String,
+    //   enum: ['Chrome', 'Firefox', 'Safari', 'Edge', 'Internet Explorer', 'Opera', 'Brave', 'Other'],
+    //   default: 'Other'
+    // },
+    // device: {
+    //   type: String,
+    //   enum: ['Desktop', 'Laptop', 'Tablet', 'Mobile', 'Smartphone', 'Smartwatch', 'Other'],
+    //   default: 'Other'
+    // },
     severity: {
       type: String,
       enum: ['low', 'medium', 'high', 'critical'],
@@ -47,6 +47,10 @@ const bugReportSchema = new mongoose.Schema(
       }
     ],
     likeCount: {
+      type: Number,
+      default: 0
+    },
+    savesCount: {
       type: Number,
       default: 0
     },

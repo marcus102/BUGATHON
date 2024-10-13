@@ -4,7 +4,7 @@ const operatingSystemSchema = new mongoose.Schema(
   {
     operatingSystem: {
       type: String,
-      enum: ['android', 'cross-platform', 'ios', 'linux', 'macOS', 'windows', 'other', 'all'],
+      enum: ['Android', 'Cross-platform', 'IOS', 'Linux', 'MacOS', 'Windows', 'Other', 'All'],
       default: 'all'
     },
     user: {

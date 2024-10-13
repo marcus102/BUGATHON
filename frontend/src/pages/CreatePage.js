@@ -44,6 +44,9 @@ export async function action({ request }) {
     userData = {
       title: data.get('bug_report'),
       description: data.get('description'),
+      category: data.get('category'),
+      language: data.get('programing_language'),
+      operatingSystem: data.get('device'),
     };
   } else if (type === 'bug_fix') {
     route = 'bug_fixes';
@@ -52,6 +55,9 @@ export async function action({ request }) {
       bugReport_: data.get('bug_report_'),
       bugFix_: data.get('bug_fix_'),
       description: data.get('solution'),
+      category: data.get('category'),
+      language: data.get('programing_language'),
+      operatingSystem: data.get('device'),
     };
   } else if (type === 'reusable_code') {
     route = 'reusable_codes';
@@ -59,6 +65,9 @@ export async function action({ request }) {
       title: data.get('reusable_code'),
       description: data.get('description'),
       reusableCode_: data.get('reusable_code_'),
+      category: data.get('category'),
+      language: data.get('programing_language'),
+      operatingSystem: data.get('device'),
     };
   }
 

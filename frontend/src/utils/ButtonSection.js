@@ -293,6 +293,7 @@ export function DropdownMenu({
   post,
   profileId,
   clickManager,
+  onChange,
 }) {
   const { dropDownIsOpen, dropDownIsOpenHandler } = useContext(ManagmentSystem);
   const [isOpen, setIsOpen] = useState(false);
@@ -350,6 +351,10 @@ export function DropdownMenu({
               icon={data.icon}
               colorOnMouseUp={data.color}
               onClick={() => {
+                if (onChange) {
+                  onChange(data.label);
+                }
+                ////////////////////////////////
                 post && navigate(`/${post}/?type=${data.id}`);
                 !post && clickManager(data.id);
                 setIsOpen(false);

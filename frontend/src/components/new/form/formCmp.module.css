@@ -64,8 +64,8 @@
 
 .editorContainer {
     color: var(--white_ffffff);
-    border-radius: 0 0 5px 5px;
-    padding: 5px 10px;
+    border-radius: 5px;
+    padding: 10px;
     background: var(--black_ffffff0d);
 }
 
@@ -106,8 +106,32 @@
     padding: 10px;
     font-family: 'Courier New', Courier, monospace;
     border-radius: 5px;
-  }
+}
 
 .highlight {
     background-color: var(--gray_50505066);
+}
+
+.dropdonw_main_container {
+    display: flex;
+    gap: 15px;
+}
+
+.dropdonw_container {
+    display: flex;
+    gap: 7px;
+    align-items:flex-end;
+}
+
+.drop_dow_label {
+    border: 1px solid var(--gray_50505066);
+    margin-top: 1.6rem;
+    width: 12rem;
+    padding: 5px 15px;
+    border-radius: 5px;
+}
+
+.drop_down_menu {
+    left: 0;
+    width: 12rem;
 }

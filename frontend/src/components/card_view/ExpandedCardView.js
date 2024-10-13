@@ -48,6 +48,7 @@ const Header = ({
   role,
   followersCount,
   followingCount,
+  followingsArray,
   starCount,
   username,
   userId,
@@ -71,9 +72,9 @@ const Header = ({
 
   const handleNavigation = (id) => {
     id === 'home' && navigate('/');
-    id === 'bug_report' && navigate(`/new/?type=bug_fix&postId=${postId}`);
-    id === 'bug_fix' && navigate(`/new/?type=bug_fix&postId=${postId}`);
-    id === 'reusable_code' && navigate(`/new/?type=reusable_code&postId=${postId}`);
+    id === 'bug_report' && navigate(`/new/?type=bug_fix&postId=${postId}&source=bug_report`);
+    id === 'bug_fix' && navigate(`/new/?type=bug_fix&postId=${postId}&source=bug_fix`);
+    id === 'reusable_code' && navigate(`/new/?type=reusable_code&postId=${postId}&source=reusablecode`);
   };
 
   const deletePost = async () => {
@@ -182,6 +183,7 @@ const Header = ({
           role={role}
           followersCount={followersCount}
           followingCount={followingCount}
+          followingsArray={followingsArray}
           starCount={starCount}
           username={username}
           userId={userId}

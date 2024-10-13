@@ -8,7 +8,6 @@ import {
   ButtonContainer,
   IconTextButton,
   DropdownMenu,
-  OutlinedButton,
 } from '../../utils/ButtonSection';
 import Icon from '../../utils/IconSection';
 import defaultProfile from '../../assets/images/general_profile.svg';
