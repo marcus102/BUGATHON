@@ -372,6 +372,7 @@ const LANGUAGES_METADATA = [
   { id: 'lisp', label: 'Lisp' },
   { id: 'lua', label: 'Lua' },
   { id: 'matlab', label: 'MATLAB' },
+  { id: 'node', label: 'Node' },
   { id: 'objectivec', label: 'Objective-C' },
   { id: 'perl', label: 'Perl' },
   { id: 'php', label: 'PHP' },

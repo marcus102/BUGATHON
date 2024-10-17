@@ -13,7 +13,7 @@ import {
   faComment,
   faHeart,
 } from '@fortawesome/free-solid-svg-icons';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useRouteLoaderData } from 'react-router-dom';
 import axios from 'axios';
 import { PORT } from '../../http_requests/authentication';
 import { getAuthToken } from '../../utils/authSection';
@@ -26,6 +26,10 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
   const [visiblePosts, setVisiblePosts] = useState(initialPosts);
   const [page, setPage] = useState(2);
   const [loading, setLoading] = useState(false);
+  const [sideBarTab, setSideBarTab] = useState({
+    filter: { category: '', os: '', language: '' },
+    sort: { name: '', date: '' },
+  });
 
   const loadMorePosts = useCallback(async () => {
     if (loading) return;
@@ -94,9 +98,26 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
   }, [page, loading]);
 
   // Filter posts based on the current tab
+  const { fetchData } = useRouteLoaderData('root');
+  const currentUserId = fetchData?.data?.id;
+
+  const sideBarHandler = (id, data) => {
+    if (id === 'category') {
+      setSideBarTab({ ...sideBarTab, filter: { ...sideBarTab.filter, category: data } });
+    } else if (id === 'operating_system') {
+      setSideBarTab({ ...sideBarTab, filter: { ...sideBarTab.filter, os: data } });
+    } else if (id === 'programming_language') {
+      setSideBarTab({ ...sideBarTab, filter: { ...sideBarTab.filter, language: data } });
+    } else if (id === 'name') {
+      setSideBarTab({ ...sideBarTab, sort: { ...sideBarTab.sort, name: data } });
+    } else if (id === 'date') {
+      setSideBarTab({ ...sideBarTab, sort: { ...sideBarTab.sort, date: data } });
+    }
+  };
+
   const filteredPosts = visiblePosts.filter((post) => {
     if (headerTab === 'saved') {
-      return post.saveMode === true;
+      return post?.savedBy?.some((item) => item.user === currentUserId);
     } else if (headerTab === 'bug_fix') {
       return post.state === 'bug_fix';
     } else if (headerTab === 'bug_report') {
@@ -108,6 +129,8 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
     }
     return true;
   });
+
+  const sideBarPostsFiltering = () => {};
 
   return (
     <div className={`${classes.home_window_main_container} ${homeWindowMainContainerStyle}`}>
@@ -127,7 +150,17 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
 
       {sideBar.isOpen && (
         <div className={`d-none d-xl-flex col-lg-2 ${classes.home_window_side_bar_main_container}`}>
-          <VerticalScrollView children={<HomeExpandedSideBar />} />
+          <VerticalScrollView
+            children={
+              <HomeExpandedSideBar
+                handleCategoryFiltering={sideBarHandler}
+                handleOperatingSystemFiltering={sideBarHandler}
+                handleProgrammingLanguageFiltering={sideBarHandler}
+                handleSortingByName={sideBarHandler}
+                handleSortingByDate={sideBarHandler}
+              />
+            }
+          />
         </div>
       )}
 
@@ -199,12 +232,11 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
                 contributionsCount={data?.totalAttempts}
                 likedBy={data?.likedBy}
                 savedBy={data?.savedBy}
-                // saveMode={data?.saveMode}
                 commentsArray={data?.comments}
               />
             ))
           ) : (
-            <Text h4={'No posts found'} />
+            <Text h4={'No post found'} />
           )}
           {filteredPosts.length > 20 && (
             <PlaneButton

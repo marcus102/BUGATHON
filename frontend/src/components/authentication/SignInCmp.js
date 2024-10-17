@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
+import React from 'react';
 import classes from './SignInCmp.module.css';
 import { Input } from '../../utils/InputSection';
 import { SolidButton, PlaneButton } from '../../utils/ButtonSection';
@@ -7,7 +6,6 @@ import Text from '../../utils/TextSection';
 import { Form } from 'react-router-dom';
 
 function SignIn() {
-  // const { overlayHandler } = useContext(ManagmentSystem);
   return (
     <Form method="post" className={classes.signInForm}>
       <Text textStyle={classes.sign_in_title_container} h1={'Sign In'} />

@@ -16,8 +16,9 @@ import {
   faAngleDown,
 } from '@fortawesome/free-solid-svg-icons';
 import Text from '../../../utils/TextSection';
-import { useNavigate, redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Line from '../../../utils/LineSection';
+import { useLoaderData } from 'react-router-dom';
 
 const THEME_DATA = [
   { id: '1', icon: faSun, active: 'light', tool_tip: 'Light Mode' },
@@ -25,76 +26,102 @@ const THEME_DATA = [
   { id: '3', icon: faDesktop, active: 'system', tool_tip: 'System Mode' },
 ];
 
-const FILTERING_DATA = [
-  {
-    id: 'category',
-    tag: 'Category',
-    data: [
-      { id: '1', data: 'Lorem' },
-      { id: '2', data: 'Lorem' },
-      { id: '3', data: 'Lorem' },
-      { id: '4', data: 'Lorem' },
-      { id: '5', data: 'Lorem' },
-    ],
-  },
-  {
-    id: 'programming_language',
-    tag: 'Programming Language',
-    data: [
-      { id: '1', data: 'Lorem' },
-      { id: '2', data: 'Lorem' },
-      { id: '3', data: 'Lorem' },
-      { id: '4', data: 'Lorem' },
-      { id: '5', data: 'Lorem' },
-    ],
-  },
-  {
-    id: 'operating_system',
-    tag: 'Operating System',
-    data: [
-      { id: '1', data: 'Lorem' },
-      { id: '2', data: 'Lorem' },
-      { id: '3', data: 'Lorem' },
-      { id: '4', data: 'Lorem' },
-      { id: '5', data: 'Lorem' },
-    ],
-  },
-];
+export function HomeExpandedSideBar({
+  handleCategoryFiltering,
+  handleProgrammingLanguageFiltering,
+  handleOperatingSystemFiltering,
+  handleSortingByName,
+  handleSortingByDate,
+}) {
+  const categories = [];
+  const operatingSystems = [];
+  const programmingLanguages = [];
 
-const SORTING_DATA = [
-  {
-    id: 'name',
-    tag: 'Name',
-    data: [
-      { id: '1', data: 'A-Z' },
-      { id: '2', data: 'Z-A' },
-    ],
-  },
-  {
-    id: 'date',
-    tag: 'Date',
-    data: [
-      { id: '1', data: 'Newest' },
-      { id: '2', data: 'Oldest' },
-    ],
-  },
-];
+  const initialPosts = useLoaderData();
 
-export function HomeExpandedSideBar() {
+  initialPosts.forEach((post) => {
+    // Extract categories
+    post.categories.forEach((category) => {
+      if (!categories.includes(category.category)) {
+        categories.push(category.category);
+      }
+    });
+
+    // Extract operating systems
+    post.operatingSystem.forEach((os) => {
+      if (!operatingSystems.includes(os.operatingSystem)) {
+        operatingSystems.push(os.operatingSystem);
+      }
+    });
+
+    // Extract programming languages
+    post.programmingLanguages.forEach((language) => {
+      if (!programmingLanguages.includes(language.language)) {
+        programmingLanguages.push(language.language);
+      }
+    });
+  });
+
+  const FILTERING_DATA = [
+    {
+      id: 'category',
+      tag: 'Category',
+      data: categories,
+    },
+    {
+      id: 'programming_language',
+      tag: 'Programming Language',
+      data: programmingLanguages,
+    },
+    {
+      id: 'operating_system',
+      tag: 'Operating System',
+      data: operatingSystems,
+    },
+  ];
+
+  const SORTING_DATA = [
+    {
+      id: 'name',
+      tag: 'Name',
+      data: ['A-Z', 'Z-A'],
+    },
+    {
+      id: 'date',
+      tag: 'Date',
+      data: ['Newest', 'Oldest'],
+    },
+  ];
+
   const [isFiltering, setIsFiltering] = useState(true);
-  const [expand, setExpand] = useState(
-    FILTERING_DATA.reduce((acc, reaction) => {
-      acc[reaction.id] = false;
-      return acc;
-    }, {})
-  );
+
   const [isSettingsExpanded, setIsSettingsExpanded] = useState(true);
   const [isThemeExpanded, setIsThemeExpanded] = useState(true);
   const { sideBarHandler, sideBar } = useContext(ManagmentSystem);
   const { theme } = sideBar;
   const navigate = useNavigate();
-
   const CURRENT_DATA = isFiltering ? FILTERING_DATA : SORTING_DATA;
+
+  const [expand, setExpand] = useState(
+    CURRENT_DATA.reduce((acc, items) => {
+      acc[items.id] = false;
+      return acc;
+    }, {})
+  );
+
+  const handleClick = (id, subData) => {
+    if (id === 'category') {
+      handleCategoryFiltering(subData, id);
+    } else if (id === 'programming_language') {
+      handleProgrammingLanguageFiltering(subData, id);
+    } else if (id === 'operating_system') {
+      handleOperatingSystemFiltering(subData, id);
+    } else if (id === 'name') {
+      handleSortingByName(subData, id);
+    } else if (id === 'date') {
+      handleSortingByDate(subData, id);
+    }
+  };
 
   return (
     <>
@@ -123,8 +150,8 @@ export function HomeExpandedSideBar() {
           />
         </div>
         <>
-          {CURRENT_DATA.map((data) => (
-            <div key={data.id} className={classes.filterig_main_container}>
+          {CURRENT_DATA.map((data, index) => (
+            <div key={`${data.id}-${index}`} className={classes.filterig_main_container}>
               <IconTextButton
                 onClick={() => {
                   setExpand((prev) => ({
@@ -138,15 +165,20 @@ export function HomeExpandedSideBar() {
               />
               {expand[data.id] && (
                 <div className={classes.filterig_container}>
-                  {data.data.map((subData) => (
-                    <SolidButton
-                      key={subData.id}
-                      buttonMainContainerStyle={classes.tag_button_main_container}
-                      buttonStyle={classes.tag_button}
-                    >
-                      <Text label12Style={classes.filter_tag_text} label12={subData.data} />
-                    </SolidButton>
-                  ))}
+                  {data ? (
+                    data.data.map((subData, subIndex) => (
+                      <SolidButton
+                        key={`${subData}-${subIndex}`}
+                        buttonMainContainerStyle={classes.tag_button_main_container}
+                        buttonStyle={classes.tag_button}
+                        onClick={() => handleClick(data.id, subData)}
+                      >
+                        <Text label12Style={classes.filter_tag_text} label12={subData} />
+                      </SolidButton>
+                    ))
+                  ) : (
+                    <Text h5={'Empty'} />
+                  )}
                 </div>
               )}
             </div>

@@ -12,7 +12,6 @@ import {
   faChevronLeft,
   faChevronRight,
   faFire,
-  faThumbTack,
 } from '@fortawesome/free-solid-svg-icons';
 
 const HEADER_BUTTON = [

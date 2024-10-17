@@ -26,7 +26,7 @@ exports.createBlogPost = catchAsync(async (req, res, next) => {
       category: category,
       user: req.user.id,
       username: req.user.username,
-      bugReport: _id
+      blogPost: _id
     });
   }
 
@@ -35,7 +35,7 @@ exports.createBlogPost = catchAsync(async (req, res, next) => {
       language: language,
       user: req.user.id,
       username: req.user.username,
-      bugReport: _id
+      blogPost: _id
     });
   }
 
@@ -44,7 +44,7 @@ exports.createBlogPost = catchAsync(async (req, res, next) => {
       operatingSystem: operatingSystem,
       user: req.user.id,
       username: req.user.username,
-      bugReport: _id
+      blogPost: _id
     });
   }
 

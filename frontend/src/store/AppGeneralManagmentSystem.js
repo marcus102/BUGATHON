@@ -7,7 +7,7 @@ export const ManagmentSystem = createContext({
   currentAuthStatusHandler: (parameters) => {},
   headerTab: '',
   headerTabHandler: (parameters) => {},
-  sideBar: { theme: 'dark', isOpen: true },
+  sideBar: { theme: '', isOpen: true },
   sideBarHandler: ({ theme, isOpen }) => {},
   profileSideBarButton: '',
   profileSideBarButtonHandler: (parameters) => {},
@@ -313,9 +313,11 @@ export default function ManagmentSystemProvider({ children }) {
   const userBugFixesListHandler = (parameters) => {
     dispatch({ type: 'SET_USER_BUG_FIXES', payload: parameters });
   };
+
   const userReusableCodesListHandler = (parameters) => {
     dispatch({ type: 'SET_USER_REUSABLE_CODES', payload: parameters });
   };
+  
   const userBlogPostsListHandler = (parameters) => {
     dispatch({ type: 'SET_USER_BLOG_POSTS', payload: parameters });
   };

@@ -21,10 +21,10 @@ exports.createReusableCode = catchAsync(async (req, res, next) => {
     user: req.user.id
   });
 
+  const { _id } = newReusableCode;
+
   if (reusableCode_) {
     await ReusableCode.findByIdAndUpdate(reusableCode_, { $inc: { totalAttempts: 1 } });
-
-    const { _id } = newReusableCode;
 
     await Contributor.create({
       user: req.user.id,
@@ -38,7 +38,7 @@ exports.createReusableCode = catchAsync(async (req, res, next) => {
       category: category,
       user: req.user.id,
       username: req.user.username,
-      bugReport: _id
+      reusableCode: _id
     });
   }
 
@@ -47,7 +47,7 @@ exports.createReusableCode = catchAsync(async (req, res, next) => {
       language: language,
       user: req.user.id,
       username: req.user.username,
-      bugReport: _id
+      reusableCode: _id
     });
   }
 
@@ -56,7 +56,7 @@ exports.createReusableCode = catchAsync(async (req, res, next) => {
       operatingSystem: operatingSystem,
       user: req.user.id,
       username: req.user.username,
-      bugReport: _id
+      reusableCode: _id
     });
   }
 

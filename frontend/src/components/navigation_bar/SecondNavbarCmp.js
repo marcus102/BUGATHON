@@ -76,28 +76,22 @@ function SecondNavbar() {
       </div>
 
       <div className="col-1 d-lg-none d-flex justify-content-end">
-        <DropdownMenu
-          dropDownMenuStyle={classes.dorp_down_menu}
-          buttonIcon={faEllipsis}
-          children={
-            <>
-              {MENU_OPTIONS.map((data) => (
-                <DropdownMenu
-                  key={data.id}
-                  dropDownMenuStyle={`${classes.header_option_menu} ${
-                    data.id === '1' && classes.assigned_bug_menu
-                  } ${data.id === '2' && classes.inbox_menu} ${
-                    data.id === '3' && classes.notification_menu
-                  } ${data.id === '4' && classes.adjust_menu}`}
-                  dropDownIconTextStyle={classes.header_option_button}
-                  buttonIcon={data.icon}
-                  buttonLabel={data.label}
-                  children={renderChildComponent(data.id)}
-                />
-              ))}
-            </>
-          }
-        />
+        <DropdownMenu dropDownMenuStyle={classes.dorp_down_menu} buttonIcon={faEllipsis}>
+          {MENU_OPTIONS.map((data) => (
+            <DropdownMenu
+              key={data.id}
+              dropDownMenuStyle={`${classes.header_option_menu} ${
+                data.id === '1' && classes.assigned_bug_menu
+              } ${data.id === '2' && classes.inbox_menu} ${
+                data.id === '3' && classes.notification_menu
+              } ${data.id === '4' && classes.adjust_menu}`}
+              dropDownIconTextStyle={classes.header_option_button}
+              buttonIcon={data.icon}
+              buttonLabel={data.label}
+              children={renderChildComponent(data.id)}
+            />
+          ))}
+        </DropdownMenu>
       </div>
     </div>
   );

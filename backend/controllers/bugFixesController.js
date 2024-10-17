@@ -87,7 +87,7 @@ exports.createBugFix = catchAsync(async (req, res, next) => {
       category: category,
       user: req.user.id,
       username: req.user.username,
-      bugReport: _id
+      bugFix: _id
     });
   }
 
@@ -96,7 +96,7 @@ exports.createBugFix = catchAsync(async (req, res, next) => {
       language: language,
       user: req.user.id,
       username: req.user.username,
-      bugReport: _id
+      bugFix: _id
     });
   }
 
@@ -105,7 +105,7 @@ exports.createBugFix = catchAsync(async (req, res, next) => {
       operatingSystem: operatingSystem,
       user: req.user.id,
       username: req.user.username,
-      bugReport: _id
+      bugFix: _id
     });
   }
 

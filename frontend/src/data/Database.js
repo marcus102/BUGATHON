@@ -589,6 +589,202 @@ export const DUMMY_BUG_REPORT_DATA = [
     totalComments: '8',
     severity: 'high',
   },
+  {
+    id: '16',
+    title: 'Button click does not trigger action',
+    state: 'bug_report',
+    description: {
+      title: 'Description',
+      content: 'Clicking on a specific button in the app does not trigger the expected action.',
+    },
+    bug_report: {
+      title: 'Bug Report',
+      content:
+        'When users click the "Submit" button, no action occurs. This issue is persistent across multiple devices.',
+    },
+    steps_to_reproduce: {
+      title: 'Steps to Reproduce',
+      content:
+        '1. Open the app. 2. Navigate to the form page. 3. Click the "Submit" button. 4. Observe no response.',
+    },
+    expected_behavior: {
+      title: 'Expected Behavior',
+      content: 'The form should be submitted, and the user should receive a confirmation message.',
+    },
+    actual_behavior: {
+      title: 'Actual Behavior',
+      content: 'The button does nothing, and no submission occurs.',
+    },
+    tags: [DUMMY_TAG_DATA[1], DUMMY_TAG_DATA[3]],
+    contributions: [
+      {
+        id: '16',
+        user: {
+          username: 'janedoe',
+          profile: profile6,
+        },
+        date: '2024-08-01T12:00:00Z',
+        notification: 'Reported the issue with the button not functioning properly.',
+        type: 'user',
+      },
+      {
+        id: '17',
+        user: {
+          username: 'bobwilliams',
+          profile: profile4,
+        },
+        date: '2024-08-01T12:05:00Z',
+        notification: 'Investigated the issue and found a missing event listener on the button.',
+        type: 'user',
+      },
+    ],
+    assignedTo: [{ username: 'janedoe', profile: profile6 }],
+    user: { username: 'janedoe', profile: profile6 },
+    status: 'open',
+    createdAt: '2024-08-01T11:30:00Z',
+    totalRatings: 3,
+    shareCount: 5,
+    likeCount: 10,
+    viewCount: 50,
+    totalAttempts: 3,
+    pinMode: true,
+    updatedAt: '2024-08-02T10:00:00Z',
+    downloadCount: 15,
+    totalComments: '6',
+    severity: 'medium',
+  },
+  {
+    id: '17',
+    title: 'Dark mode text not visible',
+    state: 'bug_report',
+    description: {
+      title: 'Description',
+      content: 'Text becomes invisible when the app is switched to dark mode on certain pages.',
+    },
+    bug_report: {
+      title: 'Bug Report',
+      content:
+        'Switching to dark mode causes the text color to match the background, making it unreadable.',
+    },
+    steps_to_reproduce: {
+      title: 'Steps to Reproduce',
+      content:
+        '1. Open the app. 2. Switch to dark mode. 3. Navigate to the profile page. 4. Observe invisible text.',
+    },
+    expected_behavior: {
+      title: 'Expected Behavior',
+      content: 'Text should be clearly visible even in dark mode.',
+    },
+    actual_behavior: {
+      title: 'Actual Behavior',
+      content: 'Text blends with the background, making it hard to read.',
+    },
+    tags: [DUMMY_TAG_DATA[0], DUMMY_TAG_DATA[2]],
+    contributions: [
+      {
+        id: '18',
+        user: {
+          username: 'alicejohnson',
+          profile: profile3,
+        },
+        date: '2024-08-03T13:20:00Z',
+        notification: 'Reported the issue with text visibility in dark mode.',
+        type: 'user',
+      },
+      {
+        id: '19',
+        user: {
+          username: 'janesmith',
+          profile: profile2,
+        },
+        date: '2024-08-03T13:30:00Z',
+        notification: 'Suggested changing the text color to ensure readability in dark mode.',
+        type: 'user',
+      },
+    ],
+    assignedTo: [
+      { username: 'alicejohnson', profile: profile3 },
+      { username: 'janesmith', profile: profile2 },
+    ],
+    user: { username: 'alicejohnson', profile: profile3 },
+    status: 'open',
+    createdAt: '2024-08-03T13:15:00Z',
+    totalRatings: 4,
+    shareCount: 8,
+    likeCount: 15,
+    viewCount: 60,
+    totalAttempts: 5,
+    pinMode: false,
+    updatedAt: '2024-08-04T14:00:00Z',
+    downloadCount: 20,
+    totalComments: '10',
+    severity: 'high',
+  },
+  {
+    id: '18',
+    title: 'Notifications not appearing',
+    state: 'bug_report',
+    description: {
+      title: 'Description',
+      content:
+        'Users are not receiving notifications even though they are enabled in the app settings.',
+    },
+    bug_report: {
+      title: 'Bug Report',
+      content:
+        'Push notifications fail to appear on both Android and iOS devices despite being enabled.',
+    },
+    steps_to_reproduce: {
+      title: 'Steps to Reproduce',
+      content:
+        '1. Enable notifications in the app. 2. Perform an action that triggers a notification. 3. Observe that no notification is received.',
+    },
+    expected_behavior: {
+      title: 'Expected Behavior',
+      content: 'Notifications should appear when triggered, based on app settings.',
+    },
+    actual_behavior: {
+      title: 'Actual Behavior',
+      content: 'No notification is received even when actions trigger them.',
+    },
+    tags: [DUMMY_TAG_DATA[1], DUMMY_TAG_DATA[3]],
+    contributions: [
+      {
+        id: '20',
+        user: {
+          username: 'bobwilliams',
+          profile: profile4,
+        },
+        date: '2024-08-05T15:40:00Z',
+        notification: 'Noticed that push notifications were not received on any devices.',
+        type: 'user',
+      },
+      {
+        id: '21',
+        user: {
+          username: 'alicejohnson',
+          profile: profile3,
+        },
+        date: '2024-08-05T15:50:00Z',
+        notification: 'Found an issue with the notification service configuration.',
+        type: 'user',
+      },
+    ],
+    assignedTo: [{ username: 'bobwilliams', profile: profile4 }],
+    user: { username: 'bobwilliams', profile: profile4 },
+    status: 'open',
+    createdAt: '2024-08-05T15:30:00Z',
+    totalRatings: 6,
+    shareCount: 12,
+    likeCount: 20,
+    viewCount: 90,
+    totalAttempts: 7,
+    pinMode: false,
+    updatedAt: '2024-08-06T15:00:00Z',
+    downloadCount: 25,
+    totalComments: '8',
+    severity: 'critical',
+  },
 ];
 
 export const DUMMY_BUG_FIX_DATA = [
