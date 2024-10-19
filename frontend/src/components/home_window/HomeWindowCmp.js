@@ -101,7 +101,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
   const { fetchData } = useRouteLoaderData('root');
   const currentUserId = fetchData?.data?.id;
 
-  const sideBarHandler = (id, data) => {
+  const sideBarHandler = (data, id) => {
     if (id === 'category') {
       setSideBarTab({ ...sideBarTab, filter: { ...sideBarTab.filter, category: data } });
     } else if (id === 'operating_system') {
@@ -115,7 +115,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
     }
   };
 
-  const filteredPosts = visiblePosts.filter((post) => {
+  const headerFilteredPosts = visiblePosts.filter((post) => {
     if (headerTab === 'saved') {
       return post?.savedBy?.some((item) => item.user === currentUserId);
     } else if (headerTab === 'bug_fix') {
@@ -130,7 +130,41 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
     return true;
   });
 
-  const sideBarPostsFiltering = () => {};
+  const sideBarFilteredPosts = () => {
+    const { filter, sort } = sideBarTab;
+    const { category, os, language } = filter;
+    const { name, date } = sort;
+
+    let filtered = [...headerFilteredPosts];
+
+    if (category) {
+      filtered = filtered.filter((post) => post?.categories[0]?.category === category);
+    }
+
+    if (os) {
+      filtered = filtered.filter((post) => post?.operatingSystem[0]?.operatingSystem === os);
+    }
+
+    if (language) {
+      filtered = filtered.filter((post) => post?.programmingLanguages[0]?.language === language);
+    }
+
+    if (name === 'A-Z') {
+      filtered = filtered.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (sort.name === 'Z-A') {
+      filtered = filtered.sort((a, b) => b.title.localeCompare(a.title));
+    }
+
+    if (date === 'Newest') {
+      filtered = filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    } else if (sort.date === 'Oldest') {
+      filtered = filtered.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+    }
+
+    return filtered;
+  };
+
+  const filteredPosts = sideBarFilteredPosts();
 
   return (
     <div className={`${classes.home_window_main_container} ${homeWindowMainContainerStyle}`}>
@@ -191,43 +225,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
                 timestamp={data?.createdAt}
                 postId={data?.id}
                 TAGS={data?.tags}
-                REACTIONSMETADATA={[
-                  {
-                    id: 'likes',
-                    icon: faHeart,
-                    count: `${data?.likeCount}`,
-                    state: null,
-                    activeColor: Colors.red_FF2B2B,
-                  },
-                  {
-                    id: 'comments',
-                    icon: faComment,
-                    count: `${data?.comments?.length}`,
-                    state: null,
-                    activeColor: null,
-                  },
-                  {
-                    id: 'save',
-                    icon: faBookmark,
-                    count: `${data?.savesCount}`,
-                    state: data?.saveMode,
-                    activeColor: Colors.yellow_,
-                  },
-                  {
-                    id: 'share',
-                    icon: faArrowUpFromBracket,
-                    count: `${data?.shareCount}`,
-                    state: null,
-                    activeColor: null,
-                  },
-                  {
-                    id: 'impression',
-                    icon: faChartSimple,
-                    count: `${data?.viewCount}`,
-                    state: null,
-                    activeColor: null,
-                  },
-                ]}
+                REACTIONSMETADATA={reactionData(data)}
                 contributionsArray={data?.contributors}
                 contributionsCount={data?.totalAttempts}
                 likedBy={data?.likedBy}
@@ -251,3 +249,41 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
 }
 
 export default HomeWindow;
+
+const reactionData = (data) => [
+  {
+    id: 'likes',
+    icon: faHeart,
+    count: `${data?.likeCount}`,
+    state: null,
+    activeColor: Colors.red_FF2B2B,
+  },
+  {
+    id: 'comments',
+    icon: faComment,
+    count: `${data?.comments?.length}`,
+    state: null,
+    activeColor: null,
+  },
+  {
+    id: 'save',
+    icon: faBookmark,
+    count: `${data?.savesCount}`,
+    state: data?.saveMode,
+    activeColor: Colors.yellow_,
+  },
+  {
+    id: 'share',
+    icon: faArrowUpFromBracket,
+    count: `${data?.shareCount}`,
+    state: null,
+    activeColor: null,
+  },
+  {
+    id: 'impression',
+    icon: faChartSimple,
+    count: `${data?.viewCount}`,
+    state: null,
+    activeColor: null,
+  },
+];
