@@ -1,17 +1,15 @@
-import { useRouteError, redirect } from 'react-router-dom';
-import Text from '../utils/TextSection';
+import { useRouteError } from 'react-router-dom';
 
 import ErrorContent from '../components/error/errorContentCmp';
-import { getAuthToken } from '../utils/authSection';
 
 function Error() {
   const error = useRouteError();
-  const token = getAuthToken();
 
   let title = 'An error occurred!';
   let message = 'Something went wrong!';
 
   if (error.status === 500) {
+    title = 'Internal server error!';
     message = error.data.message;
   }
 
@@ -20,9 +18,10 @@ function Error() {
     message = 'Could not find resource or page.';
   }
 
-  // if (!token) {
-  //   redirect('/auth?mode=signin')
-  // }
+  if (error.status === 401) {
+    title = 'Unauthorized!';
+    message = 'You are not authorized to access this resource.';
+  }
 
   return <ErrorContent title={title}>{message}</ErrorContent>;
 }

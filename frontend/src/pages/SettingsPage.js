@@ -68,6 +68,9 @@ export async function action({ request }) {
       },
     };
     route = 'updateMe';
+  } else {
+    userData = {};
+    route = 'deleteMe';
   }
 
   try {
@@ -77,6 +80,8 @@ export async function action({ request }) {
     console.log('Success!!');
     if (route === 'updateMyPassword') {
       return redirect('/auth?mode=signin');
+    } else if (route === 'deleteMe') {
+      return redirect('/auth?mode=signup');
     }
     return response.data;
   } catch (error) {

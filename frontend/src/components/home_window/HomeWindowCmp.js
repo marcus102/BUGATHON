@@ -184,17 +184,15 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
 
       {sideBar.isOpen && (
         <div className={`d-none d-xl-flex col-lg-2 ${classes.home_window_side_bar_main_container}`}>
-          <VerticalScrollView
-            children={
-              <HomeExpandedSideBar
-                handleCategoryFiltering={sideBarHandler}
-                handleOperatingSystemFiltering={sideBarHandler}
-                handleProgrammingLanguageFiltering={sideBarHandler}
-                handleSortingByName={sideBarHandler}
-                handleSortingByDate={sideBarHandler}
-              />
-            }
-          />
+          <VerticalScrollView>
+            <HomeExpandedSideBar
+              handleCategoryFiltering={sideBarHandler}
+              handleOperatingSystemFiltering={sideBarHandler}
+              handleProgrammingLanguageFiltering={sideBarHandler}
+              handleSortingByName={sideBarHandler}
+              handleSortingByDate={sideBarHandler}
+            />
+          </VerticalScrollView>
         </div>
       )}
 

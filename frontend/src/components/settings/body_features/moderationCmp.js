@@ -34,7 +34,7 @@ const MODERATION_DATA = [
       },
     ],
     label: 'Search and block user',
-    placeholder: 'search by email, full name, username ...',
+    placeholder: 'search by email or username',
     button: 'Block User',
   },
   {

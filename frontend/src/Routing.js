@@ -93,6 +93,7 @@ const router = createBrowserRouter([
   {
     path: '/auth',
     element: <AuthenticationPage />,
+    errorElement: <Error />,
     action: authAction,
   },
 ]);

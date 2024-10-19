@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ManagmentSystem } from '../../../store/AppGeneralManagmentSystem';
 import classes from './accountSettingsCmp.module.css';
 import { SolidButton } from '../../../utils/ButtonSection';
 import Link from '../../../utils/LinkSection';
 import Text from '../../../utils/TextSection';
 import { Input } from '../../../utils/InputSection';
+import { Form } from 'react-router-dom';
+import { Overlay } from '../../../utils/OverlaySection';
 
 const ACCOUNT_SETTINGS_DATA = [
   {
@@ -35,7 +38,7 @@ const ACCOUNT_SETTINGS_DATA = [
       'The Account gradian feature allows you to designate a trusted individual who can take over management of your account in the event of an emergency or unforeseen circumstance. This ensures that your digital presence and access to the platform can be safely transferred to someone you trust if you are unable to manage it yourself. ',
     description_link: 'Learn more about account guardian',
     label: 'Search and add a guardian',
-    placeholder: 'search by email, full name, username ...',
+    placeholder: 'search by email or username ',
     link: null,
     button: 'Add guardian',
   },
@@ -53,11 +56,18 @@ const ACCOUNT_SETTINGS_DATA = [
 ];
 
 function AccountSettings() {
+  const { overlayHandler } = useContext(ManagmentSystem);
+
+  const clickHandler = (id) => {
+    if (id === '4') {
+      overlayHandler('delete_my_account');
+    }
+  };
   return (
     <>
-      {ACCOUNT_SETTINGS_DATA.map((data) => (
+      {ACCOUNT_SETTINGS_DATA.map((data, index) => (
         <div
-          key={data.id}
+          key={`${data.id}-${index}`}
           className={`${classes.account_settings_main_container} ${
             data.id === '4' ? classes.account_delete_main_container : undefined
           }`}
@@ -68,14 +78,44 @@ function AccountSettings() {
             <Link underline={true} children12={data.description_link} />
           </div>
           {data.label && <Input label={data.label} placeholder={data.placeholder} />}
+
           <SolidButton
             buttonStyle={`${classes.solid_button_container} ${
-              data.id === '4' ? classes.solid_delete_button_container : undefined
+              data.id === '4' && classes.solid_delete_button_container
             }`}
             label={data.button}
+            onClick={() => clickHandler(data.id)}
           />
         </div>
       ))}
+
+      <Overlay
+        overlayStyle={classes.overlay_root_container}
+        overlayChildStyle={classes.overlay_main_container}
+        keyId={'delete_my_account'}
+      >
+        <div className={classes.overlay_content_container}>
+          <Text h5="Are you sure you want to delete your account?" />
+          <div className={classes.overlay_button_container}>
+            <SolidButton
+              buttonStyle={classes.cancel_button_container}
+              label="Cancel"
+              onClick={() => overlayHandler()}
+            />
+            <Form
+              method="patch"
+              action="/settings"
+              onSubmit={() => {
+                overlayHandler();
+                localStorage.removeItem('token');
+                localStorage.removeItem('expiration');
+              }}
+            >
+              <SolidButton buttonStyle={classes.delete_button_container} label="Yes I Am" />
+            </Form>
+          </div>
+        </div>
+      </Overlay>
     </>
   );
 }

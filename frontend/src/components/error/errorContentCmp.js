@@ -11,7 +11,7 @@ function ErrorContent({ title, children }) {
       <Text h2={title} />
       <Text p16={children} />
       <div className={classes.button_container}>
-        <SolidButton label={'Go Back'} />
+        <SolidButton label={'Go Back'} onClick={() => window.history.back()} />
         <SolidButton label={'Report Issue'} />
       </div>
     </div>

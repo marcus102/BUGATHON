@@ -25,3 +25,26 @@
 .solid_delete_button_container:hover {
   background-color: var(--red_FF2B2B);
 }
+
+/* OVERLAY */
+
+.overlay_root_container {
+  min-width: 40% !important;
+  min-height: 30% !important;
+}
+
+.overlay_main_container {
+  align-items: center;
+  justify-content: center;
+}
+.overlay_content_container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.overlay_button_container {
+  display: flex;
+  justify-content: center;
+  gap: 7rem;
+}

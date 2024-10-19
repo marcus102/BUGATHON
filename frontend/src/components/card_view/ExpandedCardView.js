@@ -441,7 +441,7 @@ const ImplementationSection = ({ isCopied, setIsCopied, description, parentPosts
             />
           </ToolTip>
         </div>
-        <hr className={classes.body_horizontal_line_container} />
+        <Line direction={'horizontal'} />
 
         {postType === 'bug_fix' && parentPosts[0] !== undefined && (
           <IconTextButton label={`Main Post: ${parentPosts[0]}`} />
