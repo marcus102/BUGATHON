@@ -38,7 +38,7 @@ router.get(
 
 router
   .route('/')
-  .get(bugFixesController.getALLBugFixes)
+  .get(bugFixesController.filterBlockedPosts, bugFixesController.filterBlockedUsers, bugFixesController.getALLBugFixes)
   .post(bugFixesController.setRequiredIds, bugFixesController.createBugFix);
 
 router

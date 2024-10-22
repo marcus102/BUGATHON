@@ -170,3 +170,21 @@
   gap: 10px;
   min-width: fit-content;
 }
+
+/* OVERLAY */
+
+.overlay_root_container {
+  min-width: 40% !important;
+  min-height: 30% !important;
+}
+
+.overlay_main_container {
+  align-items: center;
+  justify-content: center;
+}
+
+.text_area_container{
+  min-width: 30rem !important;
+  height: 10rem !important;
+  margin-bottom: 15px;
+}

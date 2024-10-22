@@ -122,6 +122,7 @@ export function OutlinedButton({
   color,
   size,
   disabled,
+  type,
   unwrap,
 }) {
   return (
@@ -129,7 +130,7 @@ export function OutlinedButton({
       <button
         className={`${classes.outlined_button} ${buttonStyle}`}
         disabled={disabled}
-        type="button"
+        type={type}
         onClick={onClick}
       >
         {label && (

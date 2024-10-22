@@ -3,11 +3,11 @@ import ExpandedCard from '../ExpandedCardView';
 import Colors from '../../../constants/colors';
 import { useSearchParams, useLoaderData } from 'react-router-dom';
 import {
-  faArrowUpFromBracket,
   faBookmark,
   faChartSimple,
   faComment,
   faHeart,
+  faShareFromSquare,
 } from '@fortawesome/free-solid-svg-icons';
 import Text from '../../../utils/TextSection';
 
@@ -53,46 +53,47 @@ function ExpandedReusableCode() {
       post={post}
       likedBy={data?.likedBy}
       savedBy={data?.savedBy}
-      // saveMode={data?.saveMode}
-      REACTIONS_META_DATA={[
-        {
-          id: 'likes',
-          icon: faHeart,
-          count: `${data?.likeCount}`,
-          state: null,
-          activeColor: Colors.red_FF2B2B,
-        },
-        {
-          id: 'comments',
-          icon: faComment,
-          count: `${data?.comments.length}`,
-          state: null,
-          activeColor: null,
-        },
-        {
-          id: 'save',
-          icon: faBookmark,
-          count: `${data?.savesCount}`,
-          state: data?.saveMode,
-          activeColor: Colors.yellow_,
-        },
-        {
-          id: 'share',
-          icon: faArrowUpFromBracket,
-          count: `${data?.shareCount}`,
-          state: null,
-          activeColor: null,
-        },
-        {
-          id: 'impression',
-          icon: faChartSimple,
-          count: `${data?.viewCount}`,
-          state: null,
-          activeColor: null,
-        },
-      ]}
+      REACTIONS_META_DATA={reactionsData(data)}
     />
   );
 }
 
 export default ExpandedReusableCode;
+
+const reactionsData = (data) => [
+  {
+    id: 'likes',
+    icon: faHeart,
+    count: `${data?.likeCount}`,
+    state: null,
+    activeColor: Colors.red_FF2B2B,
+  },
+  {
+    id: 'comments',
+    icon: faComment,
+    count: `${data?.comments.length}`,
+    state: null,
+    activeColor: null,
+  },
+  {
+    id: 'save',
+    icon: faBookmark,
+    count: `${data?.savesCount}`,
+    state: data?.saveMode,
+    activeColor: Colors.yellow_,
+  },
+  {
+    id: 'share',
+    icon: faShareFromSquare,
+    count: `${data?.shareCount}`,
+    state: null,
+    activeColor: null,
+  },
+  {
+    id: 'impression',
+    icon: faChartSimple,
+    count: `${data?.viewCount}`,
+    state: null,
+    activeColor: null,
+  },
+];

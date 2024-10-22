@@ -43,6 +43,7 @@
 .moderation_container_2 {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   background-color: var(--red_ff2b2b57);
   padding: 10px 20px;
@@ -52,8 +53,6 @@
   gap: 10px;
 }
 
-.moderation_description_container_2 {
-}
 
 .outlined_button_container {
   border: 1px solid var(--gray_50505066);

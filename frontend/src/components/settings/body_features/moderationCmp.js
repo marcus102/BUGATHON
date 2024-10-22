@@ -2,91 +2,66 @@ import React from 'react';
 import classes from './moderationCmp.module.css';
 import Text from '../../../utils/TextSection';
 import Link from '../../../utils/LinkSection';
-import { SolidButton, OutlinedButton } from '../../../utils/ButtonSection';
-import { Input } from '../../../utils/InputSection';
-
-const MODERATION_DATA = [
-  {
-    id: '1',
-    title: 'Block a user',
-    children: [
-      {
-        id: '1.1',
-        title: 'Blocking a user prevents the following on all your activities like',
-        lists: [
-          {
-            id: '1.1.1',
-            label: 'Seeing your bug reports, gub fixes, reusable code, and blog post',
-          },
-          { id: '1.1.2', label: 'Commenting' },
-          { id: '1.1.3', label: 'Starring on user’s account' },
-        ],
-        link: 'learn more ...',
-      },
-      {
-        id: '1.2',
-        title: 'Additionally, blocked users are not able to',
-        lists: [
-          { id: '1.2.1', label: 'Assign bug report' },
-          { id: '1.2.2', label: 'Be a collaborator' },
-        ],
-        link: 'learn more ...',
-      },
-    ],
-    label: 'Search and block user',
-    placeholder: 'search by email or username',
-    button: 'Block User',
-  },
-  {
-    id: '2',
-    title: 'Blocked users',
-    children: [
-      {
-        id: '2.1',
-        username: 'Username: @user1',
-        reason: 'Reason: Reason why user has been blocked',
-        date: 'Date: 10/06/2024',
-        button: 'Unblock User',
-      },
-      {
-        id: '2.2',
-        username: 'Username: @user2',
-        reason: 'Reason: Reason why user has been blocked',
-        date: 'Date: 11/06/2024',
-        button: 'Unblock User',
-      },
-    ],
-    label: null,
-    placeholder: null,
-    button: null,
-  },
-];
+import { OutlinedButton } from '../../../utils/ButtonSection';
+import { useLoaderData, Form } from 'react-router-dom';
 
 const Moderation = () => {
+  const data = useLoaderData();
+
+  const MODERATION_DATA = [
+    {
+      id: '1',
+      title: 'Blocked users',
+      children: [
+        {
+          id: '1.1',
+          title: 'Blocking a user prevents the following on all your activities like',
+          lists: [
+            {
+              id: '1.1.1',
+              label: 'Seeing your bug reports, gub fixes, reusable code, and blog post',
+            },
+            { id: '1.1.2', label: 'Commenting' },
+            { id: '1.1.3', label: 'Starring on user’s account' },
+          ],
+          link: null,
+        },
+        {
+          id: '1.2',
+          title: 'Additionally, blocked users are not able to',
+          lists: [
+            { id: '1.2.1', label: 'Assign bug report' },
+            { id: '1.2.2', label: 'Be a collaborator' },
+          ],
+          link: 'learn more ...',
+        },
+      ],
+    },
+    {
+      id: '2',
+      title: null,
+      children: data.data,
+    },
+  ];
+
   return (
     <>
-      {MODERATION_DATA.map((data) => (
-        <div key={data.id} className={classes.moderation_main_container}>
+      {MODERATION_DATA.map((data, index) => (
+        <div key={`${data.id}-${index}`} className={classes.moderation_main_container}>
           <Text h5={data.title} />
           {data.id === '1' && renderBlockUser(data.children)}
           {data.id === '2' && renderBlockedUsers(data.children)}
-          {data.id === '1' && (
-            <div className={classes.moderation_input_container}>
-              {data.label && <Input label={data.label} placeholder={data.placeholder} />}
-              {data.button && (
-                <SolidButton buttonStyle={classes.solid_button_container} label={data.button} />
-              )}
-            </div>
-          )}
         </div>
       ))}
     </>
   );
 };
 
+export default Moderation;
+
 const renderBlockUser = (children) => {
-  return children.map((sub_data) => (
-    <div key={sub_data.id} className={classes.moderation_container}>
+  return children.map((sub_data, sub_index) => (
+    <div key={`${sub_data.id}-${sub_index}`} className={classes.moderation_container}>
       <Text h6={sub_data.title} />
       <div className={classes.moderation_description_container}>
         {sub_data.lists.map((list) => (
@@ -99,20 +74,29 @@ const renderBlockUser = (children) => {
 };
 
 const renderBlockedUsers = (children) => {
-  return children.map((sub_data) => (
-    <div key={sub_data.id} className={classes.moderation_container_2}>
-      <div className={classes.moderation_description_container_2}>
-        <Text label12={sub_data.username} />
-        <Text label12={sub_data.reason} />
-        <Text label12={sub_data.date} />
-      </div>
-      <OutlinedButton
-        unwrap={true}
-        buttonStyle={classes.outlined_button_container}
-        label={sub_data.button}
-      />
-    </div>
-  ));
-};
+  return children.length > 0 ? (
+    children.map((sub_data, sub_index) => (
+      <div key={`${sub_data.id}-${sub_index}`} className={classes.moderation_container_2}>
+        <div className={classes.moderation_description_container_2}>
+          <Text label12={`Username: ${sub_data.blockedUser.username}`} />
+          <Text
+            label12={`Full Name:  ${sub_data.blockedUser.firstName} ${sub_data.blockedUser.lastName}`}
+          />
 
-export default Moderation;
+          <Text label12={`Reason: ${sub_data.reason}`} />
+          <Text label12={`Date: ${sub_data.createdAt}`} />
+        </div>
+        <Form method="delete">
+          <input type="hidden" id="block_id" name="block_id" value={sub_data._id} />
+          <OutlinedButton
+            unwrap={true}
+            buttonStyle={classes.outlined_button_container}
+            label={'Unblock User'}
+          />
+        </Form>
+      </div>
+    ))
+  ) : (
+    <Text h4={'No Blocked Users'} />
+  );
+};

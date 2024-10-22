@@ -155,26 +155,26 @@ bugFixSchema.virtual('image', {
 
 bugFixSchema.virtual('categories', {
   ref: 'Category',
-  localField: 'bugReport',
-  foreignField: 'bugReport'
+  localField: '_id',
+  foreignField: 'bugFix'
 });
 
 bugFixSchema.virtual('operatingSystem', {
   ref: 'OperatingSystem',
-  localField: 'bugReport',
-  foreignField: 'bugReport'
+  localField: '_id',
+  foreignField: 'bugFix'
 });
 
 bugFixSchema.virtual('programmingLanguages', {
   ref: 'Language',
-  localField: 'bugReport',
-  foreignField: 'bugReport'
+  localField: '_id',
+  foreignField: 'bugFix'
 });
 
 bugFixSchema.virtual('zoneOfInterests', {
   ref: 'ZoneOfInterest',
-  localField: 'bugReport',
-  foreignField: 'bugReport'
+  localField: '_id',
+  foreignField: 'bugFix'
 });
 
 bugFixSchema.virtual('likedBy', {

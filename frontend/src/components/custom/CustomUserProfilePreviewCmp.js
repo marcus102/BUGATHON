@@ -8,12 +8,22 @@ import {
   ButtonContainer,
   IconTextButton,
   DropdownMenu,
+  SolidButton,
 } from '../../utils/ButtonSection';
 import Icon from '../../utils/IconSection';
 import defaultProfile from '../../assets/images/general_profile.svg';
 import VerifiedBadge from '../../assets/icons/verified_badge.svg';
 import { faArrowUpRightFromSquare, faChevronDown, faEdit } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Form } from 'react-router-dom';
+import { Overlay } from '../../utils/OverlaySection';
+import { TextArea } from '../../utils/InputSection';
+
+const BLOCKINGSUGGESTIONSMETADATA = [
+  { id: '1', reason: 'User is spamming me' },
+  { id: '2', reason: 'User is flooding me' },
+  { id: '3', reason: 'User is censoring me' },
+  { id: '4', reason: 'User is abusing me' },
+];
 
 const ProfileDropdownButton = ({ username, profession, profileImg }) => (
   <>
@@ -48,7 +58,8 @@ const GuestUserInfo = ({
   profileImg,
   userId,
 }) => {
-  const { dropDownIsOpenHandler, profileSideBarButtonHandler } = useContext(ManagmentSystem);
+  const { dropDownIsOpenHandler, profileSideBarButtonHandler, overlayHandler } =
+    useContext(ManagmentSystem);
   const navigate = useNavigate();
 
   const handleNavigation = (id, userId_) => {
@@ -63,6 +74,10 @@ const GuestUserInfo = ({
     } else if (id === 'settings') {
       navigate(`/settings`);
       dropDownIsOpenHandler(false);
+    } else if (id === 'blockAccount') {
+      overlayHandler('block_guest_user');
+    } else if (id === 'reportAccount') {
+      overlayHandler('report_guest_user');
     }
   };
 
@@ -120,11 +135,11 @@ const GuestUserInfo = ({
               icon_={faArrowUpRightFromSquare}
               onClick={() => handleNavigation('profile', userId)}
             />
-            {data.buttons?.map((btnData) => (
+            {data.buttons?.map((btnData, btnIndex) => (
               <IconTextButton
                 inconTextButtonStyle={classes.popularity_overview_icon_text_button}
                 unwrap
-                key={btnData.id}
+                key={`${btnData.id}-${btnIndex}`}
                 icon={btnData.icon}
                 label={btnData.title}
                 onClick={() => handleNavigation(btnData.id)}
@@ -135,6 +150,56 @@ const GuestUserInfo = ({
       ) : (
         <Text label12="Not available" />
       )}
+
+      <Overlay
+        overlayStyle={classes.overlay_root_container}
+        overlayChildStyle={classes.overlay_main_container}
+        keyId={'block_guest_user'}
+      >
+        <Text h5="Why do you want to block this user?" />
+        <Form
+          method="post"
+          onSubmit={() => {
+            overlayHandler();
+            window.location.reload();
+          }}
+        >
+          <TextArea
+            textAreaStyle={classes.text_area_container}
+            id="block_reason"
+            type="block_reason"
+            name="block_reason"
+            placeholder={'Input your reason here ...'}
+            label={'Reason(optional)'}
+          />
+          <input id="user_id" type="hidden" name="user_id" value={userId} />
+          <SolidButton buttonStyle={classes.solid_button_container} label="Block User" />
+        </Form>
+      </Overlay>
+      <Overlay
+        overlayStyle={classes.overlay_root_container}
+        overlayChildStyle={classes.overlay_main_container}
+        keyId={'report_guest_user'}
+      >
+        <Text h5="Why do you want to report this user?" />
+        <Form
+          method="post"
+          onSubmit={() => {
+            overlayHandler();
+          }}
+        >
+          <TextArea
+            textAreaStyle={classes.text_area_container}
+            id="report_reason"
+            type="report_reason"
+            name="report_reason"
+            placeholder={'Input your reason here ...'}
+            label={'Reason(optional)'}
+          />
+          <input id="user_id" type="hidden" name="user_id" value={userId} />
+          <SolidButton buttonStyle={classes.solid_button_container} label="Report User" />
+        </Form>
+      </Overlay>
     </div>
   );
 };

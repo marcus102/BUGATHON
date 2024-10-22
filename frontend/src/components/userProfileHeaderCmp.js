@@ -33,7 +33,6 @@ function UserProfileHeader({
   const isFollower = followingsArray.some((data) => data.followingId === userId);
   const [isFollowing, setIsFollowing] = useState(isFollower);
 
-
   useEffect(() => {
     setIsFollowing(isFollower);
   }, [isFollower]);
@@ -71,13 +70,13 @@ function UserProfileHeader({
     {
       id: username,
       engagement: [
-        { id: '1.1', title: 'Followers', total: followersCount, icon: null },
-        { id: '1.2', title: 'Followings', total: followingCount, icon: null },
-        { id: '1.3', title: 'Star', total: starCount, icon: faStar },
+        { id: '1', title: 'Followers', total: followersCount, icon: null },
+        { id: '2', title: 'Followings', total: followingCount, icon: null },
+        { id: '3', title: 'Star', total: starCount, icon: faStar },
       ],
       buttons: [
-        { id: '1.4', title: 'Report This Account', icon: faExclamationCircle },
-        { id: '1.5', title: 'Block This Account', icon: faUserLock },
+        { id: 'reportAccount', title: 'Report This Account', icon: faExclamationCircle },
+        { id: 'blockAccount', title: 'Block This Account', icon: faUserLock },
       ],
     },
   ];
@@ -86,13 +85,13 @@ function UserProfileHeader({
     {
       id: username,
       engagement: [
-        { id: '1.1', title: 'Followers', total: followersCount, icon: null },
-        { id: '1.2', title: 'Followings', total: followingCount, icon: null },
-        { id: '1.3', title: 'Star', total: starCount, icon: faStar },
+        { id: '1', title: 'Followers', total: followersCount, icon: null },
+        { id: '2', title: 'Followings', total: followingCount, icon: null },
+        { id: '3', title: 'Star', total: starCount, icon: faStar },
       ],
       buttons: [
-        { id: '1.4', title: 'Settings', icon: faGear },
-        { id: '1.5', title: 'Logout', icon: faArrowRightFromBracket },
+        { id: 'settings', title: 'Settings', icon: faGear },
+        { id: 'logout', title: 'Logout', icon: faArrowRightFromBracket },
       ],
     },
   ];

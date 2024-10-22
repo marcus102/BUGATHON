@@ -68,15 +68,30 @@ export async function action({ request }) {
       },
     };
     route = 'updateMe';
+  } else if (data.get('block_id')) {
+    route = 'unblock';
+    userData = {};
   } else {
     userData = {};
     route = 'deleteMe';
   }
 
   try {
-    const response = await axios.patch(`${PORT}api/v1/users/${route}`, userData, {
-      headers,
-    });
+    let response;
+
+    if (route === 'unblock') {
+      response = await axios.delete(
+        `${PORT}api/v1/blocked_users/${data.get('block_id')}/${route}`,
+        {
+          headers,
+        }
+      );
+    } else {
+      response = await axios.patch(`${PORT}api/v1/users/${route}`, userData, {
+        headers,
+      });
+    }
+
     console.log('Success!!');
     if (route === 'updateMyPassword') {
       return redirect('/auth?mode=signin');
@@ -86,6 +101,26 @@ export async function action({ request }) {
     return response.data;
   } catch (error) {
     console.error('Error updating settings:', error.response.data);
+    return null;
+  }
+}
+
+export async function loader() {
+  const token = getAuthToken();
+  if (!token) {
+    console.error('No token available');
+    return null;
+  }
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  };
+  try {
+    const response = await axios.get(`${PORT}api/v1/blocked_users`, { headers });
+    console.log('Success!!');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching data:', error.response.data);
     return null;
   }
 }

@@ -38,7 +38,6 @@ export function HomeExpandedSideBar({
   const programmingLanguages = [];
 
   const initialPosts = useLoaderData();
-
   initialPosts.forEach((post) => {
     // Extract categories
     post.categories.forEach((category) => {

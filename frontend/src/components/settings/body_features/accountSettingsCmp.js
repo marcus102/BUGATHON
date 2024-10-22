@@ -63,6 +63,7 @@ function AccountSettings() {
       overlayHandler('delete_my_account');
     }
   };
+
   return (
     <>
       {ACCOUNT_SETTINGS_DATA.map((data, index) => (

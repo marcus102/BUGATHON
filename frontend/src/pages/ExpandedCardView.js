@@ -55,6 +55,40 @@ export async function loader({ request }) {
 }
 
 export async function action({ request }) {
-  const formData = await request.formData();
-  console.log(formData);
+  const token = getAuthToken();
+  const data = await request.formData();
+
+  if (!token) {
+    console.error('No token available');
+    return [];
+  }
+
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  };
+
+  let userData = {};
+  let route = '';
+
+  if (data.get('block_reason')) {
+    userData = { reason: data.get('block_reason') };
+    route = 'block';
+  } else if (data.get('report_reason')) {
+    userData = { reason: data.get('report_reason') };
+    route = 'report';
+  }
+
+  try {
+    await axios.post(
+      `${PORT}api/v1/users/${data.get('user_id')}/${route}`,
+      { userData },
+      { headers }
+    );
+
+    console.log('Success');
+    window.location.reload();
+  } catch (error) {
+    console.error('Error performing this action on user:', error.response?.data || error.message);
+  }
 }

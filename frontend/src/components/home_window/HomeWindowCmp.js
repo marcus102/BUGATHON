@@ -7,11 +7,11 @@ import { HomeCollapsedSideBar, HomeExpandedSideBar } from './home_window_options
 import HomeHeader from './home_window_options/HeaderCmp';
 import { VerticalScrollView } from '../../utils/ScrollViewsSection';
 import {
-  faArrowUpFromBracket,
   faBookmark,
   faChartSimple,
   faComment,
   faHeart,
+  faShareFromSquare,
 } from '@fortawesome/free-solid-svg-icons';
 import { useLoaderData, useRouteLoaderData } from 'react-router-dom';
 import axios from 'axios';
@@ -272,7 +272,7 @@ const reactionData = (data) => [
   },
   {
     id: 'share',
-    icon: faArrowUpFromBracket,
+    icon: faShareFromSquare,
     count: `${data?.shareCount}`,
     state: null,
     activeColor: null,
