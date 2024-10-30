@@ -35,6 +35,10 @@ const commentSchema = new mongoose.Schema(
       type: Number,
       default: 0
     },
+    viewCount: {
+      type: Number,
+      default: 0
+    },
     likeCount: {
       type: Number,
       default: 0
@@ -97,23 +101,23 @@ commentSchema.pre(/^find/, function(next) {
       path: 'image',
       select: 'imageUrl'
     }
-  })
-    // .populate({
-    //   path: 'bugReport',
-    //   select: 'title description'
-    // })
-    // .populate({
-    //   path: 'bugFix',
-    //   select: 'title description'
-    // })
-    // .populate({
-    //   path: 'parentComment',
-    //   select: 'comment'
-    // })
-    // .populate({
-    //   path: 'reusableCode',
-    //   select: 'title description'
-    // });
+  });
+  // .populate({
+  //   path: 'bugReport',
+  //   select: 'title description'
+  // })
+  // .populate({
+  //   path: 'bugFix',
+  //   select: 'title description'
+  // })
+  // .populate({
+  //   path: 'parentComment',
+  //   select: 'comment'
+  // })
+  // .populate({
+  //   path: 'reusableCode',
+  //   select: 'title description'
+  // });
 
   next();
 });

@@ -10,6 +10,7 @@ const zoneOfInterestRouter = require('./filtering/zoneOfInterestRoutes');
 const categoriesRouter = require('./../routes/filtering/categoriesRoutes');
 const reportHubRouter = require('./restrictions/reportHubRoutes');
 const blockedPostRouter = require('./restrictions/blockedPostRoutes');
+const viewersRouter = require('./user_engagement/viewersRoutes');
 const commentsController = require('../controllers/user_engagement/commentsControllers');
 const authenticatioController = require('../controllers/authenticatioController');
 const likesController = require('../controllers/user_engagement/likesController');
@@ -19,7 +20,7 @@ const blogPostController = require('../controllers/blogPostController');
 const categoriesController = require('./../controllers/filtering/categoriesController');
 const operatingSystemController = require('../controllers/filtering/operatingSystemController');
 const programmingLanguagesController = require('./../controllers/filtering/programmingLanguagesController');
-const zoneOfInterestController = require('./../controllers/filtering/zoneOfInterestController');
+const zoneOfInterestController = require('../controllers/filtering/zoneOfInterestController');
 
 const router = express.Router({ mergeParams: true });
 
@@ -29,6 +30,7 @@ router.use('/:blog_post_id/reviews', reviewRouter);
 router.use('/:blog_post_id/image', imageRouter);
 router.use('/:blog_post_id/likes', likesRouter);
 router.use('/:blog_post_id/save', savesRouter);
+router.use('/:blog_post_id/viewers', viewersRouter);
 //filtering
 router.use('/:blog_post_id/category', categoriesRouter);
 router.use('/:blog_post_id/operating_system', operatingSystemRouter);

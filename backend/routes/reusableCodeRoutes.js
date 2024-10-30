@@ -10,6 +10,7 @@ const programmingLanguagesRouter = require('./filtering/programmingLanguagesRout
 const zoneOfInterestRouter = require('./filtering/zoneOfInterestRoutes');
 const reportHubRouter = require('./restrictions/reportHubRoutes');
 const blockedPostRouter = require('./restrictions/blockedPostRoutes');
+const viewersRouter = require('./user_engagement/viewersRoutes');
 const reusableCodeController = require('./../controllers/reusableCodeControllerjs');
 const contributorsController = require('../controllers/user_engagement/contributorsController');
 const imagesController = require('./../controllers/imagesController');
@@ -31,6 +32,7 @@ router.use('/:reusable_code_id/comments', commentRouter);
 router.use('/:reusable_code_id/likes', likesRouter);
 router.use('/:reusable_code_id/save', savesRouter);
 router.use('/:reusable_code_id/review', reviewRouter);
+router.use('/:reusable_code_id/viewers', viewersRouter);
 //filtering
 router.use('/:reusable_code_id/category', categoriesRouter);
 router.use('/:reusable_code_id/platform', operatingSystemRouter);

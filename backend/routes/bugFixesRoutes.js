@@ -5,6 +5,7 @@ const imageRouter = require('./imagesRoutes');
 const likesRouter = require('./user_engagement/likeRoutes');
 const savesRouter = require('./user_engagement/savesRoutes');
 const reportHubRouter = require('./restrictions/reportHubRoutes');
+const viewersRouter = require('./user_engagement/viewersRoutes');
 const blockedPostRouter = require('./restrictions/blockedPostRoutes');
 const commentsController = require('../controllers/user_engagement/commentsControllers');
 const contributionsController = require('../controllers/user_engagement/contributorsController');
@@ -22,6 +23,7 @@ router.use('/:bug_fixes_id/reviews', reviewRouter);
 router.use('/:bug_fixes_id/image', imageRouter);
 router.use('/:bug_fixes_id/likes', likesRouter);
 router.use('/:bug_fixes_id/save', savesRouter);
+router.use('/:bug_fixes_id/viewers', viewersRouter);
 //restricitions
 router.use('/:bug_fixes_id/report_bug_fix', reportHubRouter);
 router.use('/:bug_fixes_id/blocked_bug_fix', blockedPostRouter);

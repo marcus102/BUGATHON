@@ -305,6 +305,8 @@ const Reactions = ({
     REACTIONS_META_DATA?.find((reaction) => reaction.id === 'save')?.count || 0;
   const [totalLikes, setTotalLikes] = useState(initialLikesCount);
   const [totalSaves, setTotalSaves] = useState(initialSaveCount);
+  const [isLinkCopied, setIsLinkCopied] = useState(false);
+  const { overlayHandler } = useContext(ManagmentSystem);
 
   const [isActive, setIsActive] = useState(
     REACTIONS_META_DATA.reduce((acc, reaction) => {
@@ -393,6 +395,16 @@ const Reactions = ({
     if (id === 'comments') {
       navigate(`/comments/?username=${username}&postId=${postId}&post=${cardButtonState}`);
     }
+
+    if (id === 'share') {
+      overlayHandler('share_post');
+    }
+  };
+
+  const copyToClipboard = (Url) => {
+    // Copy the link to the clipboard
+    navigator.clipboard.writeText(Url);
+    setIsLinkCopied(true);
   };
 
   return (
@@ -423,6 +435,38 @@ const Reactions = ({
           </ToolTip>
         ))}
       </div>
+
+      <Overlay
+        keyId={'share_post'}
+        overlayStyle={classes.overlay}
+        overlayChildStyle={classes.overlay_child}
+      >
+        <Text textStyle={classes.share_text} h5={'Share Post'} />
+        <div className={classes.share_container}>
+          <Text
+            label14={`${window.location.origin}/detail/?username=${username}&postId=${postId}&post=${cardButtonState}`}
+          />
+          <ToolTip tooltipMessage={!isLinkCopied ? 'Copy link' : 'Copied!'}>
+            <IconButton
+              icon={!isLinkCopied ? faCopy : faCheck}
+              onClick={() =>
+                copyToClipboard(
+                  `${window.location.origin}/detail/?username=${username}&postId=${postId}&post=${cardButtonState}`
+                )
+              }
+            />
+          </ToolTip>
+        </div>
+        <SolidButton
+          buttonMainContainerStyle={classes.close_button_container}
+          buttonStyle={classes.close_button}
+          label={'Close'}
+          onClick={() => {
+            overlayHandler();
+            setIsLinkCopied(false);
+          }}
+        />
+      </Overlay>
     </div>
   );
 };

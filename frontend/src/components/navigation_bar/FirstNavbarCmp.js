@@ -35,7 +35,7 @@ function FirstNavBar() {
 
   return (
     <Navbar expand="lg" className={classes.fixedNavbar}>
-      <Container>
+      <Container className={classes.container}>
         <Navbar.Toggle
           className={classes.toggle}
           aria-controls="basic-navbar-nav"
@@ -52,7 +52,7 @@ function FirstNavBar() {
               setActiveKey(selectedKey);
             }}
           >
-            <Nav.Item>
+            <Nav.Item className={classes.nav_item}>
               <NavLink
                 className={classes.nav_link}
                 to="/chronobug"
@@ -61,7 +61,7 @@ function FirstNavBar() {
                 <Text label14Style={classes.label14Style} label14={'ChronoBug'} />
               </NavLink>
             </Nav.Item>
-            <Nav.Item>
+            <Nav.Item className={classes.nav_item}>
               <NavLink
                 className={classes.nav_link}
                 to="/services"
@@ -70,7 +70,7 @@ function FirstNavBar() {
                 <Text label14Style={classes.label14Style} label14={'Services'} />
               </NavLink>
             </Nav.Item>
-            <Nav.Item>
+            <Nav.Item className={classes.nav_item}>
               <NavLink
                 className={classes.nav_link}
                 to="/blog"

@@ -1,7 +1,7 @@
 .nav_main_container {
   border-radius: 10px;
   background-color: var(--black_ffffff0d);
-  margin: 10px;
+  margin: 0 10px;
   padding: 10px 20px;
 }
 

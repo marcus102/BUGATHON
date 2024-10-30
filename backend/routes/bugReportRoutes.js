@@ -8,6 +8,7 @@ const programmingLanguagesRouter = require('./filtering/programmingLanguagesRout
 const zoneOfInterestRouter = require('./filtering/zoneOfInterestRoutes');
 const reportHubRouter = require('./restrictions/reportHubRoutes');
 const blockedPostRouter = require('./restrictions/blockedPostRoutes');
+const viewersRouter = require('./user_engagement/viewersRoutes');
 const bugFixesController = require('../controllers/bugFixesController');
 const contributorsController = require('../controllers/user_engagement/contributorsController');
 const imagesController = require('./../controllers/imagesController');
@@ -31,6 +32,7 @@ router.use('/:bug_id/image', imageRouter);
 router.use('/:bug_id/bug_fix', bugFixRouter);
 router.use('/:bug_report_id/likes', likesRouter);
 router.use('/:bug_report_id/save', savesRouter);
+router.use('/:bug_report_id/viewers', viewersRouter);
 //filtering
 router.use('/:bug_id/category', categoriesRouter);
 router.use('/:bug_id/operating_system', operatingSystemRouter);

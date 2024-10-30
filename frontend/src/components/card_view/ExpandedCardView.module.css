@@ -174,3 +174,30 @@
   align-items: center;
   margin: 5rem 0;
 }
+
+/* Reactions */
+
+.share_text {
+  width: 100%;
+  justify-content: center;
+}
+
+.close_button_container {
+  width: 100%;
+  justify-content: center;
+}
+
+.close_button {
+  width: 10rem;
+}
+
+.share_container{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px;
+  width: 100%;
+  border: 0.5px solid #4e4e4e;
+  border-radius: 5px;
+  gap: 10px;
+}

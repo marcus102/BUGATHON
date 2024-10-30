@@ -4,11 +4,13 @@ const authenticatioController = require('../../controllers/authenticatioControll
 const reportHubRouter = require('./../restrictions/reportHubRoutes');
 const blockedPostRouter = require('./../restrictions/blockedPostRoutes');
 const likesRouter = require('./../user_engagement/likeRoutes');
+const viewersRouter = require('./viewersRoutes');
 
 const router = express.Router({ mergeParams: true });
 
 //user engagement
 router.use('/:comment_id/likes', likesRouter);
+router.use('/:comment_id/viewers', viewersRouter);
 //restrictions
 router.use('/:comment_id/report_comment', reportHubRouter);
 router.use('/:comment_id/blocked_comment', blockedPostRouter);

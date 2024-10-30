@@ -137,6 +137,7 @@ function HomeCard({
         label={'Click for more'}
         icon_={faArrowUpRightFromSquare}
         onClick={() => {
+          window.scrollTo(0, 0);
           navigate(`/detail/?username=${username}&postId=${postId}&post=${cardButtonState}`);
         }}
       />
@@ -348,7 +349,8 @@ const HomeCardFooter = ({
                 onClick={() => reactionsHandler(data.id)}
                 inconTextButtonStyle={classes.reaction_icon_text_button_container}
                 colorOnMouseUp={
-                  (data.id === 'likes' && likedBy?.some((like) => like.user.id === currentUserId)) ||
+                  (data.id === 'likes' &&
+                    likedBy?.some((like) => like.user.id === currentUserId)) ||
                   (data.id === 'save' && savedBy?.some((save) => save.user.id === currentUserId)) ||
                   isActive[data.id]
                     ? data.activeColor

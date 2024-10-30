@@ -270,13 +270,13 @@ const reactionData = (data) => [
     state: data?.saveMode,
     activeColor: Colors.yellow_,
   },
-  {
-    id: 'share',
-    icon: faShareFromSquare,
-    count: `${data?.shareCount}`,
-    state: null,
-    activeColor: null,
-  },
+  // {
+  //   id: 'share',
+  //   icon: faShareFromSquare,
+  //   count: `${data?.shareCount}`,
+  //   state: null,
+  //   activeColor: null,
+  // },
   {
     id: 'impression',
     icon: faChartSimple,
