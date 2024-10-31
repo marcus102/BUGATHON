@@ -319,7 +319,7 @@ export function DropdownMenu({
       setIsOpen(false);
       dropDownIsOpenHandler(true);
     }
-  }, [dropDownIsOpen]);
+  }, [dropDownIsOpen, dropDownIsOpenHandler]);
 
   const { currentProfileIdHandler } = useContext(ManagmentSystem);
 

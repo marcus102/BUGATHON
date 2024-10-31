@@ -24,7 +24,6 @@ import {
   faEyeSlash,
   faTrashCan,
   faExclamation,
-  faBan,
   faArrowLeftLong,
 } from '@fortawesome/free-solid-svg-icons';
 import Line from '../../utils/LineSection';
@@ -135,43 +134,38 @@ const CommentSection = ({ likesCount, viewsCount, repliesCount }) => {
 
 export default CommentSection;
 
-const timeAgo = (timestamp) => {
-  const now = new Date(); // Current local time
-  const commentTime = new Date(timestamp); // Time of comment in UTC
+const timeAgo = (timestamp_) => {
+  const now = new Date();
+  const postTime = new Date(timestamp_);
 
-  // Calculate the difference in seconds between current time and comment time
-  const seconds = Math.floor((now.getTime() - commentTime.getTime()) / 1000);
+  const seconds = Math.floor((now.getTime() - postTime.getTime()) / 1000);
 
   if (seconds < 60) {
     return seconds === 1 ? '1 second ago' : `${seconds} seconds ago`;
   }
 
-  if (seconds < 3600) {
-    // Less than 1 hour
-    const minutes = Math.floor(seconds / 60);
-    return minutes === 1 ? '1 minute ago' : `${minutes * 60} seconds ago`;
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) {
+    return minutes === 1 ? '1 minute ago' : `${minutes} minutes ago`;
   }
 
-  if (seconds < 86400) {
-    // Less than 1 day
-    const hours = Math.floor(seconds / 3600);
-    return hours === 1 ? '1 hour ago' : `${hours * 3600} seconds ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) {
+    return hours === 1 ? '1 hour ago' : `${hours} hours ago`;
   }
 
-  if (seconds < 2592000) {
-    // Less than 30 days
-    const days = Math.floor(seconds / 86400);
-    return days === 1 ? '1 day ago' : `${days * 86400} seconds ago`;
+  const days = Math.floor(hours / 24);
+  if (days < 30) {
+    return days === 1 ? '1 day ago' : `${days} days ago`;
   }
 
-  if (seconds < 31536000) {
-    // Less than 12 months
-    const months = Math.floor(seconds / 2592000);
-    return months === 1 ? '1 month ago' : `${months * 2592000} seconds ago`;
+  const months = Math.floor(days / 30);
+  if (months < 12) {
+    return months === 1 ? '1 month ago' : `${months} months ago`;
   }
 
-  const years = Math.floor(seconds / 31536000); // 1 year = 31536000 seconds
-  return years === 1 ? '1 year ago' : `${years * 31536000} seconds ago`;
+  const years = Math.floor(months / 12);
+  return years === 1 ? '1 year ago' : `${years} years ago`;
 };
 
 const Comment = ({
@@ -179,7 +173,6 @@ const Comment = ({
   isReply = false,
   likesCount,
   viewsCount,
-  repliesCount,
   allComments,
 }) => {
   const COMMENT_REACTIONS_DATA = [

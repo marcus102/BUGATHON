@@ -2,14 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import classes from './HomeCardView.module.css';
 import { IconTextButton, IconButton, PlaneButton } from '../../utils/ButtonSection';
 import Text from '../../utils/TextSection';
-import {
-  faArrowUpRightFromSquare,
-  faClipboard,
-  faComment,
-  faEllipsis,
-  faEllipsisVertical,
-  faPen,
-} from '@fortawesome/free-solid-svg-icons';
+import { faArrowUpRightFromSquare, faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import UserProfileHeader from '../userProfileHeaderCmp';
 import HeaderOptions from '../headerOptionsCmp';
 import ToolTip from '../../utils/toolTipSection';
@@ -47,56 +40,86 @@ function HomeCard({
   commentsArray,
 }) {
   const navigate = useNavigate();
+  const { fetchData } = useRouteLoaderData('root');
+  const currentUserId = fetchData?.data.id;
 
-  // const [relativeTime, setRelativeTime] = useState('');
+  const [relativeTime, setRelativeTime] = useState('');
 
-  // const timeAgo = (timestamp_) => {
-  //   const now = new Date(); // Current local time
-  //   const postTime = new Date(timestamp_); // Time of comment in UTC
+  const timeAgo = (timestamp_) => {
+    const now = new Date();
+    const postTime = new Date(timestamp_);
 
-  //   // Calculate the difference in seconds between current time and comment time
-  //   const seconds = Math.floor((now.getTime() - postTime.getTime()) / 1000);
+    const seconds = Math.floor((now.getTime() - postTime.getTime()) / 1000);
 
-  //   if (seconds < 60) {
-  //     return seconds === 1 ? '1 second ago' : `${seconds} seconds ago`;
-  //   }
+    if (seconds < 60) {
+      return seconds === 1 ? '1 second ago' : `${seconds} seconds ago`;
+    }
 
-  //   if (seconds < 3600) {
-  //     // Less than 1 hour
-  //     const minutes = Math.floor(seconds / 60);
-  //     return minutes === 1 ? '1 minute ago' : `${minutes * 60} seconds ago`;
-  //   }
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) {
+      return minutes === 1 ? '1 minute ago' : `${minutes} minutes ago`;
+    }
 
-  //   if (seconds < 86400) {
-  //     // Less than 1 day
-  //     const hours = Math.floor(seconds / 3600);
-  //     return hours === 1 ? '1 hour ago' : `${hours * 3600} seconds ago`;
-  //   }
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) {
+      return hours === 1 ? '1 hour ago' : `${hours} hours ago`;
+    }
 
-  //   if (seconds < 2592000) {
-  //     // Less than 30 days
-  //     const days = Math.floor(seconds / 86400);
-  //     return days === 1 ? '1 day ago' : `${days * 86400} seconds ago`;
-  //   }
+    const days = Math.floor(hours / 24);
+    if (days < 30) {
+      return days === 1 ? '1 day ago' : `${days} days ago`;
+    }
 
-  //   if (seconds < 31536000) {
-  //     // Less than 12 months
-  //     const months = Math.floor(seconds / 2592000);
-  //     return months === 1 ? '1 month ago' : `${months * 2592000} seconds ago`;
-  //   }
+    const months = Math.floor(days / 30);
+    if (months < 12) {
+      return months === 1 ? '1 month ago' : `${months} months ago`;
+    }
 
-  //   const years = Math.floor(seconds / 31536000); // 1 year = 31536000 seconds
-  //   return years === 1 ? '1 year ago' : `${years * 31536000} seconds ago`;
-  // };
+    const years = Math.floor(months / 12);
+    return years === 1 ? '1 year ago' : `${years} years ago`;
+  };
 
-  // useEffect(() => {
-  //   setRelativeTime(timeAgo(timestamp));
-  //   const interval = setInterval(() => {
-  //     setRelativeTime(timeAgo(timestamp));
-  //   }, 60000);
+  useEffect(() => {
+    setRelativeTime(timeAgo(timestamp));
+    const interval = setInterval(() => {
+      setRelativeTime(timeAgo(timestamp));
+    }, 60000);
 
-  //   return () => clearInterval(interval);
-  // }, [timestamp]);
+    return () => clearInterval(interval);
+  }, [timestamp]);
+
+  const addViews = async () => {
+    const token = getAuthToken();
+
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    };
+
+    let url;
+
+    if (cardButtonState === 'bug_report') {
+      url = 'bug_reports';
+    } else if (cardButtonState === 'bug_fix') {
+      url = 'bug_fixes';
+    } else if (cardButtonState === 'reusable_code') {
+      url = 'reusable_codes';
+    }
+
+    try {
+      await axios.post(`${PORT}api/v1/${url}/${postId}/viewers`, {}, { headers });
+    } catch (error) {
+      console.error('Error viewing the post:', error.response);
+      return null;
+    }
+  };
+  const clickHandler = () => {
+    window.scrollTo(0, 0);
+    navigate(`/detail/?username=${username}&postId=${postId}&post=${cardButtonState}`);
+    if (userId !== currentUserId) {
+      addViews();
+    }
+  };
 
   return (
     <div
@@ -136,16 +159,13 @@ function HomeCard({
         inconTextButtonStyle={classes.more_button}
         label={'Click for more'}
         icon_={faArrowUpRightFromSquare}
-        onClick={() => {
-          window.scrollTo(0, 0);
-          navigate(`/detail/?username=${username}&postId=${postId}&post=${cardButtonState}`);
-        }}
+        onClick={clickHandler}
       />
 
       {/* FOOTER */}
       <HomeCardFooter
         TAGS={TAGS}
-        timestamp={timestamp}
+        timestamp={relativeTime}
         reactionsData={REACTIONSMETADATA}
         postId={postId}
         likedBy={likedBy}

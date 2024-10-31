@@ -6,13 +6,7 @@ import HomeCard from '../card_view/HomeCardView';
 import { HomeCollapsedSideBar, HomeExpandedSideBar } from './home_window_options/SideBarCmp';
 import HomeHeader from './home_window_options/HeaderCmp';
 import { VerticalScrollView } from '../../utils/ScrollViewsSection';
-import {
-  faBookmark,
-  faChartSimple,
-  faComment,
-  faHeart,
-  faShareFromSquare,
-} from '@fortawesome/free-solid-svg-icons';
+import { faBookmark, faChartSimple, faComment, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { useLoaderData, useRouteLoaderData } from 'react-router-dom';
 import axios from 'axios';
 import { PORT } from '../../http_requests/authentication';
@@ -270,13 +264,6 @@ const reactionData = (data) => [
     state: data?.saveMode,
     activeColor: Colors.yellow_,
   },
-  // {
-  //   id: 'share',
-  //   icon: faShareFromSquare,
-  //   count: `${data?.shareCount}`,
-  //   state: null,
-  //   activeColor: null,
-  // },
   {
     id: 'impression',
     icon: faChartSimple,

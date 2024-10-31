@@ -7,17 +7,12 @@ import {
   faPen,
   faCaretRight,
   faClipboard,
-  faUser,
   faShareNodes,
-  faFaceGrinStars,
   faEyeSlash,
   faTrashCan,
   faExclamation,
   faExclamationCircle,
   faCaretDown,
-  faChartSimple,
-  faCaretUp,
-  faPeopleGroup,
 } from '@fortawesome/free-solid-svg-icons';
 import profile1 from '../assets/images/dev1.svg';
 import profile2 from '../assets/images/dev2.svg';
@@ -1254,8 +1249,6 @@ export const DUMMY_BUG_FIX_DATA = [
     totalComments: '90',
   },
 ];
-
-
 
 export const DUMMY_REUSABLE_CODE_DATA = [
   {

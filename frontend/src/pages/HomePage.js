@@ -4,7 +4,6 @@ import HomeWindow from '../components/home_window/HomeWindowCmp';
 import { getAuthToken } from '../utils/authSection';
 import axios from 'axios';
 import { PORT } from '../http_requests/authentication';
-import { redirect } from 'react-router-dom';
 
 function HomePage() {
   return (

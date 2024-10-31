@@ -29,9 +29,7 @@ import {
   faPaperclip,
   faListOl,
   faLink,
-  faCaretDown,
   faChevronDown,
-  faMapMarked,
 } from '@fortawesome/free-solid-svg-icons';
 import { File } from '../../../utils/MediaSection';
 import DOMPurify from 'dompurify';

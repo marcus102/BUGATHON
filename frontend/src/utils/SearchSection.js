@@ -12,9 +12,7 @@ import {
   faFile,
   faUser,
   faHandshake,
-  faIcicles,
 } from '@fortawesome/free-solid-svg-icons';
-import Icon from './IconSection';
 import Text from './TextSection';
 import { Input } from './InputSection';
 import { DropdownMenu, IconTextButton, IconButton } from './ButtonSection';

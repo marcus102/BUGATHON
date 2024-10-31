@@ -18,12 +18,12 @@ import { useNavigate, Form } from 'react-router-dom';
 import { Overlay } from '../../utils/OverlaySection';
 import { TextArea } from '../../utils/InputSection';
 
-const BLOCKINGSUGGESTIONSMETADATA = [
-  { id: '1', reason: 'User is spamming me' },
-  { id: '2', reason: 'User is flooding me' },
-  { id: '3', reason: 'User is censoring me' },
-  { id: '4', reason: 'User is abusing me' },
-];
+// const BLOCKINGSUGGESTIONSMETADATA = [
+//   { id: '1', reason: 'User is spamming me' },
+//   { id: '2', reason: 'User is flooding me' },
+//   { id: '3', reason: 'User is censoring me' },
+//   { id: '4', reason: 'User is abusing me' },
+// ];
 
 const ProfileDropdownButton = ({ username, profession, profileImg }) => (
   <>
