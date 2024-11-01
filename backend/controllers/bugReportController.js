@@ -106,7 +106,8 @@ exports.getAllBugs = factory.getAll(BugReport, 'user_ids', 'bug_report_ids', [
   { path: 'categories' },
   { path: 'operatingSystem' },
   { path: 'programmingLanguages' },
-  { path: 'zoneOfInterests' }
+  { path: 'zoneOfInterests' },
+  { path: 'viewers' }
 ]);
 exports.getBug = factory.getOne(BugReport, [
   { path: 'bugFixes' },
@@ -118,5 +119,6 @@ exports.getBug = factory.getOne(BugReport, [
   { path: 'categories' },
   { path: 'operatingSystem' },
   { path: 'programmingLanguages' },
-  { path: 'zoneOfInterests' }
+  { path: 'zoneOfInterests' },
+  { path: 'viewers' }
 ]);

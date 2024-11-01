@@ -6,13 +6,15 @@ const router = express.Router({ mergeParams: true });
 
 router.use(authenticatioController.protect);
 
-router.route('/').post(viewersController.createViews);
-// .get(authenticatioController.restrictTo('admin', 'user'), viewersController.getAllViewers);
+router
+  .route('/')
+  .post(viewersController.createViews)
+  .get(authenticatioController.restrictTo('admin', 'user'), viewersController.getAllViewers);
 
-// router
-//   .route('/:id')
-//   .get(authenticatioController.restrictTo('admin', 'user'), viewersController.getViewer)
-//   .delete(viewersController.deleteViewer)
-//   .patch(viewersController.updateViewer);
+router
+  .route('/:id')
+  .get(authenticatioController.restrictTo('admin', 'user'), viewersController.getViewer)
+  .delete(viewersController.deleteViewer)
+  .patch(viewersController.updateViewer);
 
 module.exports = router;

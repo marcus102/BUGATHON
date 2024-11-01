@@ -7,7 +7,7 @@ function UserReusableCode() {
 
   return (
     <CustomBugList
-      DATA={userReusableCodesList.data}
+      DATA={userReusableCodesList.data ? userReusableCodesList.data : []}
       title={'Reusable Code'}
       count={userReusableCodesList.data.length}
     />

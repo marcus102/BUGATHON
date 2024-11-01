@@ -69,11 +69,18 @@ commentSchema.post('save', function(doc, next) {
   next();
 });
 
-// commentSchema.virtual('childComments', {
-//   ref: 'Comment',
-//   localField: '_id',
-//   foreignField: 'parentComment'
-// });
+commentSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'user',
+    select: 'username profession role firstName lastName followersCount followingCount starCount',
+    populate: {
+      path: 'image',
+      select: 'imageUrl'
+    }
+  });
+
+  next();
+});
 
 commentSchema.virtual('likedBy', {
   ref: 'Like',
@@ -93,33 +100,10 @@ commentSchema.virtual('images', {
   foreignField: 'comment'
 });
 
-commentSchema.pre(/^find/, function(next) {
-  this.populate({
-    path: 'user',
-    select: 'username profession role firstName lastName followersCount followingCount starCount',
-    populate: {
-      path: 'image',
-      select: 'imageUrl'
-    }
-  });
-  // .populate({
-  //   path: 'bugReport',
-  //   select: 'title description'
-  // })
-  // .populate({
-  //   path: 'bugFix',
-  //   select: 'title description'
-  // })
-  // .populate({
-  //   path: 'parentComment',
-  //   select: 'comment'
-  // })
-  // .populate({
-  //   path: 'reusableCode',
-  //   select: 'title description'
-  // });
-
-  next();
+commentSchema.virtual('viewers', {
+  ref: 'Viewer',
+  localField: '_id',
+  foreignField: 'comment'
 });
 
 commentSchema.pre('findOneAndUpdate', function(next) {

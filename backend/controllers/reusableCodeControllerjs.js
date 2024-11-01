@@ -80,7 +80,8 @@ exports.getAllReusableCodes = factory.getAll(ReusableCode, 'user_ids', 'reusable
   { path: 'categories' },
   { path: 'operatingSystem' },
   { path: 'programmingLanguages' },
-  { path: 'zoneOfInterests' }
+  { path: 'zoneOfInterests' },
+  { path: 'viewers' }
 ]);
 exports.getReusableCode = factory.getOne(ReusableCode, [
   { path: 'image' },
@@ -91,7 +92,8 @@ exports.getReusableCode = factory.getOne(ReusableCode, [
   { path: 'categories' },
   { path: 'operatingSystem' },
   { path: 'programmingLanguages' },
-  { path: 'zoneOfInterests' }
+  { path: 'zoneOfInterests' },
+  { path: 'viewers' }
 ]);
 exports.updateReusableCode = factory.updateOne(ReusableCode);
 

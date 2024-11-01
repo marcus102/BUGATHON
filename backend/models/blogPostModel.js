@@ -88,13 +88,6 @@ blogSchema.virtual('comments', {
   foreignField: 'blogPost'
 });
 
-// blogSchema.virtual('shares', {
-//   ref: 'Share',
-//   localField: '_id',
-//   foreignField: 'post',
-//   count: true
-// });
-
 blogSchema.virtual('categories', {
   ref: 'Category',
   localField: '_id',
@@ -115,6 +108,12 @@ blogSchema.virtual('programmingLanguages', {
 
 blogSchema.virtual('zoneOfInterests', {
   ref: 'ZoneOfInterest',
+  localField: '_id',
+  foreignField: 'blogPost'
+});
+
+blogSchema.virtual('viewers', {
+  ref: 'Viewer',
   localField: '_id',
   foreignField: 'blogPost'
 });

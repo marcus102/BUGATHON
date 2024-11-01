@@ -98,6 +98,26 @@ const bugReportSchema = new mongoose.Schema(
   }
 );
 
+bugReportSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'user',
+    select: 'username profession role firstName lastName followersCount followingCount starCount',
+    populate: {
+      path: 'image',
+      select: 'imageUrl'
+    }
+  }).populate({
+    path: 'assignedTo',
+    select: 'username profession role firstName lastName followersCount followingCount starCount',
+    populate: {
+      path: 'image',
+      select: 'imageUrl'
+    }
+  });
+
+  next();
+});
+
 bugReportSchema.virtual('image', {
   ref: 'Image',
   localField: 'user',
@@ -170,25 +190,13 @@ bugReportSchema.virtual('zoneOfInterests', {
   foreignField: 'bugReport'
 });
 
-bugReportSchema.pre(/^find/, function(next) {
-  this.populate({
-    path: 'user',
-    select: 'username profession role firstName lastName followersCount followingCount starCount',
-    populate: {
-      path: 'image',
-      select: 'imageUrl'
-    }
-  }).populate({
-    path: 'assignedTo',
-    select: 'username profession role firstName lastName followersCount followingCount starCount',
-    populate: {
-      path: 'image',
-      select: 'imageUrl'
-    }
-  });
-
-  next();
+bugReportSchema.virtual('viewers', {
+  ref: 'Viewer',
+  localField: '_id',
+  foreignField: 'bugReport'
 });
+
+
 
 const BugReport = mongoose.model('BugReport', bugReportSchema);
 

@@ -223,6 +223,7 @@ function HomeWindow({ homeWindowMainContainerStyle }) {
                 likedBy={data?.likedBy}
                 savedBy={data?.savedBy}
                 commentsArray={data?.comments}
+                viewersArray={data?.viewers}
               />
             ))
           ) : (

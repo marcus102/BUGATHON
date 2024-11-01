@@ -201,6 +201,12 @@ bugFixSchema.virtual('childSolutions', {
   foreignField: 'parentSolution'
 });
 
+bugFixSchema.virtual('viewers', {
+  ref: 'Viewer',
+  localField: '_id',
+  foreignField: 'bugFix'
+});
+
 const BugFixes = mongoose.model('BugFixes', bugFixSchema);
 
 module.exports = BugFixes;

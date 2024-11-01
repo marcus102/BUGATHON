@@ -38,6 +38,7 @@ function HomeCard({
   savedBy,
   saveMode,
   commentsArray,
+  viewersArray,
 }) {
   const navigate = useNavigate();
   const { fetchData } = useRouteLoaderData('root');
@@ -116,7 +117,11 @@ function HomeCard({
   const clickHandler = () => {
     window.scrollTo(0, 0);
     navigate(`/detail/?username=${username}&postId=${postId}&post=${cardButtonState}`);
-    if (userId !== currentUserId) {
+    const hasViewed = viewersArray.some(
+      (viewer) => viewer.user === currentUserId && viewer.bugReport === postId
+    );
+
+    if (!hasViewed && userId !== currentUserId) {
       addViews();
     }
   };

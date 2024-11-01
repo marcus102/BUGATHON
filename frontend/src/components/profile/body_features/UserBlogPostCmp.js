@@ -6,7 +6,7 @@ function UserBlogPost() {
   const { userBlogPostsList } = useContext(ManagmentSystem);
   return (
     <CustomBugList
-      DATA={userBlogPostsList.data}
+      DATA={userBlogPostsList.data? userBlogPostsList.data : []}
       title={'Blog Posts'}
       count={userBlogPostsList.data.length}
     />

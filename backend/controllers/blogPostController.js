@@ -58,7 +58,17 @@ exports.createBlogPost = catchAsync(async (req, res, next) => {
 
 exports.filterBlockedUsers = factory.blocksHandler(BlockedUser, 'user_ids');
 exports.filterBlockedPosts = factory.blocksHandler(BlockedPost, 'blog_post_ids');
-exports.getAllBlogPosts = factory.getAll(Blog, 'user_ids', 'blog_post_ids');
+exports.getAllBlogPosts = factory.getAll(Blog, 'user_ids', 'blog_post_ids', [
+  { path: 'reviews' },
+  { path: 'likedBy' },
+  { path: 'savedBy' },
+  { path: 'comments' },
+  { path: 'categories' },
+  { path: 'operatingSystem' },
+  { path: 'programmingLanguages' },
+  { path: 'zoneOfInterests' },
+  { path: 'viewers' }
+]);
 
 exports.getBlogPost = factory.getOne(Blog, [
   { path: 'reviews' },
@@ -68,7 +78,8 @@ exports.getBlogPost = factory.getOne(Blog, [
   { path: 'categories' },
   { path: 'operatingSystem' },
   { path: 'programmingLanguages' },
-  { path: 'zoneOfInterests' }
+  { path: 'zoneOfInterests' },
+  { path: 'viewers' }
 ]);
 
 exports.updateBolgPost = factory.updateOne(Blog);

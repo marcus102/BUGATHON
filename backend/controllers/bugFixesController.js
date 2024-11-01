@@ -131,7 +131,8 @@ exports.getALLBugFixes = factory.getAll(BugFixes, 'user_ids', 'bug_fix_ids', [
   { path: 'categories' },
   { path: 'operatingSystem' },
   { path: 'programmingLanguages' },
-  { path: 'zoneOfInterests' }
+  { path: 'zoneOfInterests' },
+  { path: 'viewers' }
 ]);
 
 exports.getBugFix = factory.getOne(BugFixes, [
@@ -145,7 +146,8 @@ exports.getBugFix = factory.getOne(BugFixes, [
   { path: 'categories' },
   { path: 'operatingSystem' },
   { path: 'programmingLanguages' },
-  { path: 'zoneOfInterests' }
+  { path: 'zoneOfInterests' },
+  { path: 'viewers' }
 ]);
 
 exports.updateBugFix = catchAsync(async (req, res, next) => {

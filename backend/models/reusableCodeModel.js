@@ -74,10 +74,6 @@ const reusableCodeSchema = new mongoose.Schema(
       type: Date,
       default: Date.now()
     },
-    // saveMode: {
-    //   type: Boolean,
-    //   default: false
-    // },
     updatedAt: {
       type: Date,
       default: null
@@ -158,6 +154,12 @@ reusableCodeSchema.virtual('programmingLanguages', {
 
 reusableCodeSchema.virtual('zoneOfInterests', {
   ref: 'ZoneOfInterest',
+  localField: '_id',
+  foreignField: 'reusableCode'
+});
+
+reusableCodeSchema.virtual('viewers', {
+  ref: 'Viewer',
   localField: '_id',
   foreignField: 'reusableCode'
 });

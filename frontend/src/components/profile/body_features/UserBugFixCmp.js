@@ -7,7 +7,7 @@ function UserBugFix() {
 
   return (
     <CustomBugList
-      DATA={userBugFixesList.data}
+      DATA={userBugFixesList.data ? userBugFixesList.data : []}
       title={'Bug Fixes'}
       count={userBugFixesList.data.length}
     />
