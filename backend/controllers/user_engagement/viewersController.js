@@ -57,7 +57,7 @@ exports.createViews = catchAsync(async (req, res, next) => {
     [idField]: idValue
   });
 
-  await model.findByIdAndUpdate(id, { $inc: { viewCount: 1 } });
+  await model.findByIdAndUpdate(idValue, { $inc: { viewCount: 1 } });
 
   return res.status(200).json({
     status: 'success',

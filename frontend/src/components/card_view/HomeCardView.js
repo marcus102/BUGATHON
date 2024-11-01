@@ -114,12 +114,11 @@ function HomeCard({
       return null;
     }
   };
+
   const clickHandler = () => {
     window.scrollTo(0, 0);
     navigate(`/detail/?username=${username}&postId=${postId}&post=${cardButtonState}`);
-    const hasViewed = viewersArray.some(
-      (viewer) => viewer.user === currentUserId && viewer.bugReport === postId
-    );
+    const hasViewed = viewersArray.some((viewer) => viewer.user === currentUserId);
 
     if (!hasViewed && userId !== currentUserId) {
       addViews();
