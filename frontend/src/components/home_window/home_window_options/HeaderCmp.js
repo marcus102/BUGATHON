@@ -3,7 +3,7 @@ import { ManagmentSystem } from '../../../store/AppGeneralManagmentSystem';
 import classes from './HeaderCmp.module.css';
 import Colors from '../../../constants/colors';
 import ToolTip from '../../../utils/toolTipSection';
-import { IconButton, SolidButton, DropdownMenu } from '../../../utils/ButtonSection';
+import { IconButton, SolidButton, DropdownMenu, PlaneButton } from '../../../utils/ButtonSection';
 import Text from '../../../utils/TextSection';
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -13,6 +13,7 @@ import {
   faChevronRight,
   faFire,
 } from '@fortawesome/free-solid-svg-icons';
+import Icon from '../../../utils/IconSection';
 
 const HEADER_BUTTON = [
   {
@@ -143,31 +144,37 @@ function HomeHeader({ totalPosts, postTitle }) {
   return (
     <div className={classes.list_header_container}>
       <ToolTip tooltipMessage={isOpen ? 'Close sidebar' : 'Open sidebar'}>
-        <IconButton
-          inconButtonStyle={'d-none d-xl-block col-lg-2'}
-          onClick={() => {
-            sideBarHandler({ isOpen: !isOpen });
-          }}
-          icon={isOpen ? faChevronLeft : faChevronRight}
-        />
+        {isOpen && (
+          <IconButton
+            inconButtonStyle={'d-none d-xl-block col-lg-2'}
+            onClick={() => {
+              sideBarHandler({ isOpen: !isOpen });
+            }}
+            icon={faChevronLeft}
+          />
+        )}
       </ToolTip>
 
       <div className={`${classes.header_buttons_container}`}>
         {HEADER_BUTTON.map((data, index) => (
-          <SolidButton
+          <PlaneButton
             key={`${data.id}-${index}`}
-            unwrap={true}
-            buttonMainContainerStyle={`${classes.buttons_main_container} ${data.style}`}
-            buttonStyle={
-              headerTab === data.id ? classes.active_buttons_container : classes.buttons_style
-            }
+            buttonContainerMainContainer={`${classes.buttons_main_container} ${data.style}`}
             onClick={() => {
               headerTabHandler(data.id);
             }}
-            color={data.color}
-            label={data.label}
-            icon={data.icon}
-          />
+          >
+            <div
+              className={`${
+                headerTab === data.id
+                  ? classes.active_buttons_container
+                  : classes.children_container
+              }`}
+            >
+              {data.icon && <Icon icon={data.icon} color={data.color} />}
+              <Text unwrap={true} label15={data.label} />
+            </div>
+          </PlaneButton>
         ))}
 
         <ToolTip tooltipMessage={'More...'}>

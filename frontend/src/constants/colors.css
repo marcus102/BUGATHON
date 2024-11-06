@@ -3,6 +3,8 @@
   --black_232526: #232526;
   --black_333333e0: #333333e0;
   --black_333333f1: #333333f1;
+  --black_background: #414141f1;
+  /* --black_background: #838383f1; */
   --black_ffffff0d: #ffffff0d;
   --black_9696960d: #9696960d;
   --black_3333: #3333;
@@ -52,7 +54,7 @@
   --lightYellow_: #ffcd62;
   --lightYellow_2: #fff1db;
   --darkModeText_: #c5c5c5;
-  --blue_11323C: #11323c;
+  --blue_11323C: #359edf;
   --semi_transparent_blue_11323C: #11323c1d;
   --blue_163641: #163641;
   --blue_00789C80: #00789c80;

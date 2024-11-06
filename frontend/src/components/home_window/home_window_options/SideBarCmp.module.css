@@ -49,12 +49,12 @@
   justify-content: center;
   height: 2.5rem;
   width: 50%;
-  background-color: var(--black_ffffff0d);
+  background-color: #a1a1a13d;
 }
 
 .active_button:hover {
   border-radius: 10px;
-  background-color: var(--black_ffffff0d);
+  background-color: #8484843d;
 }
 
 .filterig_main_container {
@@ -141,7 +141,7 @@
 .active_icon_button {
   flex-direction: row-reverse;
   border-radius: 5px;
-  background-color: var(--black_ffffff0d);
+  background-color: #c1c0c058;
 }
 
 .more_settings_container {

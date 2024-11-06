@@ -14,13 +14,18 @@
 }
 
 .buttons_main_container {
+  display: flex;
+  flex-direction: row;
   padding: 0;
   width: fit-content;
 }
 
+.children_container {
+  display: flex;
+}
+
 .buttons_style {
-  flex-direction: row-reverse;
-  background-color: transparent;
+  padding: 10px;
   border-radius: 10px;
 }
 
@@ -54,11 +59,12 @@
 /* ACTIVE BUTTON */
 
 .active_buttons_container {
-    flex-direction: row-reverse;
-    border-radius: 10px;
-    background-color: var(--black_ffffff0d);
-  }
-  
-  .active_buttons_container:hover {
-    background-color: var(--black_ffffff0d);
-  }
+  display: flex;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #8484843d;
+}
+
+.active_buttons_container:hover {
+  background-color: #6868683d;
+}

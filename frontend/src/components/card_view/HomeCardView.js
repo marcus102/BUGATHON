@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
+import { ManagmentSystem } from '../../store/AppGeneralManagmentSystem';
 import classes from './HomeCardView.module.css';
 import { IconTextButton, IconButton, PlaneButton } from '../../utils/ButtonSection';
 import Text from '../../utils/TextSection';
@@ -45,6 +46,7 @@ function HomeCard({
   const currentUserId = fetchData?.data.id;
 
   const [relativeTime, setRelativeTime] = useState('');
+  const { systemTheme } = useContext(ManagmentSystem);
 
   const timeAgo = (timestamp_) => {
     const now = new Date();
@@ -127,7 +129,7 @@ function HomeCard({
 
   return (
     <div
-      className={`${classes.home_card} ${
+      className={`${systemTheme === 'dark_mode' ? classes.home_card : classes.home_card_} ${
         cardButtonState === 'bug_report'
           ? classes.bug_report
           : cardButtonState === 'bug_fix'

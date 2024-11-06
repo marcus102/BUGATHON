@@ -2,6 +2,7 @@ import React from 'react';
 import classes from './footerCmp.module.css';
 import Text from '../../utils/TextSection';
 import Link from '../../utils/LinkSection';
+import { PlaneButton } from '../../utils/ButtonSection';
 import {
   faYoutube,
   faXTwitter,
@@ -13,6 +14,7 @@ import {
   faTiktok,
 } from '@fortawesome/free-brands-svg-icons';
 import ToolTip from '../../utils/toolTipSection';
+import Line from '../../utils/LineSection';
 
 const LINK_DATA = [
   { id: '1', link_name: 'About', link: '' },
@@ -43,19 +45,18 @@ const ICON_LINK_DATA = [
 function Footer() {
   return (
     <div className={classes.footer_main_container}>
-      <hr className={classes.horizontal_line} />
-      <Link
-        children16={'BUGATHON'}
-        linkContainer={classes.footer_header_container}
-        linkStyle={classes.footer_header}
+      <Line direction={'horizontal'} />
+      <PlaneButton
+        buttonContainerMainContainer={classes.footer_header_container}
+        label16={'BUGATHON'}
       />
+
       <div className={classes.footer_links_container}>
-        {LINK_DATA.map((data) => (
-          <Link
-            key={data.id}
-            children14={data.link_name}
-            href={data.link}
-            linkStyle={classes.footer_link}
+        {LINK_DATA.map((data, index) => (
+          <PlaneButton
+            key={`${data.id}-${index}`}
+            buttonContainerMainContainer={classes.footer_link}
+            label14={data.link_name}
           />
         ))}
       </div>

@@ -9,7 +9,7 @@
 
 /* TEXT AREA */
 
-.input_main_container textarea {
+/* .input_main_container textarea {
   height: 15rem;
   width: 100%;
   padding: 10px;
@@ -17,6 +17,27 @@
   border: 0.5px solid var(--gray_50505066);
   background: var(--black_ffffff0d);
   color: var(--white_ffffff);
+  outline: none;
+} */
+
+.text_area {
+  height: 15rem;
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 0.5px solid var(--gray_50505066);
+  background: var(--black_ffffff0d);
+  color: var(--white_ffffff);
+  outline: none;
+}
+.text_area_ {
+  height: 15rem;
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 0.5px solid var(--gray_50505066);
+  background: var(--black_ffffff0d);
+  color: var(--black_background);
   outline: none;
 }
 
@@ -32,6 +53,7 @@
   margin-left: 7px;
 }
 
+
 /* INPUT */
 
 .input_container {
@@ -46,7 +68,7 @@
   outline: none;
 }
 
-.input_container input {
+.input_area {
   height: auto;
   width: 100%;
   padding: 5px 10px;
@@ -55,6 +77,18 @@
   color: var(--white_ffffff);
   outline: none;
 }
+
+.input_area_ {
+  height: auto;
+  width: 100%;
+  padding: 5px 10px;
+  border: transparent;
+  background: transparent;
+  color: var(--black_background);
+  outline: none;
+}
+
+
 
 /* ROW SQUARES */
 
@@ -155,11 +189,10 @@
   transition: transform 0.3s;
 }
 
-.switch input:checked + label {
+.switch input:checked+label {
   background-color: #2196f3;
 }
 
-.switch input:checked + label:before {
+.switch input:checked+label:before {
   transform: translateX(20px);
 }
-

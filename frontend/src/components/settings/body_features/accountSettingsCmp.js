@@ -20,17 +20,17 @@ const ACCOUNT_SETTINGS_DATA = [
     link: null,
     button: 'Export Your Data',
   },
-  {
-    id: '2',
-    title: 'Data Permissions',
-    description:
-      'Data Export allows you to retrieve a copy of all your information stored on our platform in a format that you can easily access and use outside of our system. This includes your profile details, activity history, messages, and any other data associated with your account. ',
-    description_link: 'Learn more about data permissions',
-    label: null,
-    placeholder: null,
-    link: null,
-    button: 'Save Changes',
-  },
+  // {
+  //   id: '2',
+  //   title: 'Data Permissions',
+  //   description:
+  //     'Data Export allows you to retrieve a copy of all your information stored on our platform in a format that you can easily access and use outside of our system. This includes your profile details, activity history, messages, and any other data associated with your account. ',
+  //   description_link: 'Learn more about data permissions',
+  //   label: null,
+  //   placeholder: null,
+  //   link: null,
+  //   button: 'Save Changes',
+  // },
   {
     id: '3',
     title: 'Account Guardian',

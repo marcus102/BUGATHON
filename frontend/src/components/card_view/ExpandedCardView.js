@@ -471,39 +471,46 @@ const Reactions = ({
   );
 };
 
-const ImplementationSection = ({ isCopied, setIsCopied, description, parentPosts, postType }) => (
-  <div className={classes.body_solution_container}>
-    <div>
-      <Text inconTextButtonStyle={classes.body_solution_title_container} h5={'Description'} />
+const ImplementationSection = ({ isCopied, setIsCopied, description, parentPosts, postType }) => {
+  const { systemTheme } = useContext(ManagmentSystem);
+  return (
+    <div className={classes.body_solution_container}>
+      <div>
+        <Text inconTextButtonStyle={classes.body_solution_title_container} h5={'Description'} />
 
-      <div className={classes.body_solution_content_container}>
-        <div className={classes.body_solution_icon_button}>
-          <ToolTip tooltipMessage={!isCopied ? 'Copy' : 'Copied'}>
-            <IconButton
-              icon={!isCopied ? faCopy : faCheck}
-              onClick={() => setIsCopied((prev) => !prev)}
+        <div className={classes.body_solution_content_container}>
+          <div className={classes.body_solution_icon_button}>
+            <ToolTip tooltipMessage={!isCopied ? 'Copy' : 'Copied'}>
+              <IconButton
+                icon={!isCopied ? faCopy : faCheck}
+                onClick={() => setIsCopied((prev) => !prev)}
+              />
+            </ToolTip>
+          </div>
+          <Line direction={'horizontal'} />
+
+          {postType === 'bug_fix' && parentPosts[0] !== undefined && (
+            <IconTextButton label={`Main Post: ${parentPosts[0]}`} />
+          )}
+          {postType === ('bug_fix' || 'reusable_code') && parentPosts[1] !== undefined && (
+            <IconTextButton label={`Parent Post: ${parentPosts[1]}`} />
+          )}
+
+          {description && (
+            <div
+              className={
+                systemTheme === 'dark_mode'
+                  ? classes.body_solution_text_content_container
+                  : classes.body_solution_text_content_container_
+              }
+              dangerouslySetInnerHTML={{ __html: description }}
             />
-          </ToolTip>
+          )}
         </div>
-        <Line direction={'horizontal'} />
-
-        {postType === 'bug_fix' && parentPosts[0] !== undefined && (
-          <IconTextButton label={`Main Post: ${parentPosts[0]}`} />
-        )}
-        {postType === ('bug_fix' || 'reusable_code') && parentPosts[1] !== undefined && (
-          <IconTextButton label={`Parent Post: ${parentPosts[1]}`} />
-        )}
-
-        {description && (
-          <div
-            className={classes.body_solution_text_content_container}
-            dangerouslySetInnerHTML={{ __html: description }}
-          />
-        )}
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const FooterButtons = ({ SUGESTION_BUTTON_META_DATA }) => (
   <div className={classes.body_suggestion_container}>

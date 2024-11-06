@@ -3,16 +3,9 @@ import classes from './GeneralUserInfoCmp.module.css';
 import { IconTextButton } from '../../../utils/ButtonSection';
 import Text from '../../../utils/TextSection';
 import {
-  faArrowUpFromBracket,
   faAt,
-  faChartSimple,
-  faChevronDown,
-  faChevronUp,
   faLocationDot,
   faPhone,
-  faThumbTack,
-  faComment,
-  faHeart,
   faLink,
 } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -22,11 +15,6 @@ import {
   faXTwitter,
   faYoutube,
 } from '@fortawesome/free-brands-svg-icons';
-import {
-  DUMMY_BUG_FIX_DATA,
-  DUMMY_BUG_REPORT_DATA,
-  DUMMY_REUSABLE_CODE_DATA,
-} from '../../../data/Database';
 
 const categorizeLinks = (links) => {
   const categories = {
@@ -35,7 +23,7 @@ const categorizeLinks = (links) => {
     LinkedIn: '',
     Twitter: '',
     YouTube: '',
-    Default: '', // Add a default category
+    Default: '',
   };
 
   links?.forEach((link) => {
@@ -89,97 +77,6 @@ const BioSection = ({ bio }) => {
     )
   );
 };
-
-//PENDING const PostSection = () => {
-//   const [searchParams] = useSearchParams();
-//   const currentUsername = searchParams.get('username');
-
-//   const filterDataByUser = (data, username) => {
-//     return data.filter((item) => item.user === username);
-//   };
-
-//   const currentUserBugReports = filterDataByUser(DUMMY_BUG_REPORT_DATA, currentUsername);
-//   const currentUserBugFixes = filterDataByUser(DUMMY_BUG_FIX_DATA, currentUsername);
-//   const currentUserReusableCodes = filterDataByUser(DUMMY_REUSABLE_CODE_DATA, currentUsername);
-//   const currentUserBlogPosts = filterDataByUser(DUMMY_REUSABLE_CODE_DATA, currentUsername);
-
-//   const DUMMY_POST_DATA = [
-//     { id: 'Bug Reports', children: currentUserBugReports },
-//     { id: 'Bug Fixes', children: currentUserBugFixes },
-//     { id: 'Reusable Codes', children: currentUserReusableCodes },
-//     { id: 'Blog Posts', children: currentUserBlogPosts },
-//   ];
-
-//   const [isExpanded, setIsExpanded] = useState(
-//     DUMMY_POST_DATA.reduce((acc, post) => {
-//       acc[post.id] = false;
-//       return acc;
-//     }, {})
-//   );
-
-//   const handleToggleExpand = (id) => {
-//     setIsExpanded((prev) => ({
-//       ...prev,
-//       [id]: !prev[id],
-//     }));
-//   };
-
-//   return (
-//     <div className={classes.content_user_post_overview_main_container}>
-//       {DUMMY_POST_DATA.map((data, index) => (
-//         <div key={`${data.id}-${index}`}>
-//           <IconTextButton
-//             inconTextButtonStyle={classes.user_post_overview_container}
-//             label={data.id}
-//             icon_={!isExpanded[data.id] ? faChevronDown : faChevronUp}
-//             onClick={() => handleToggleExpand(data.id)}
-//           />
-//           {isExpanded[data.id] && (
-//             <>
-//               {data.children.length > 0 ? (
-//                 data.children.map((subData) => (
-//                   <div key={subData.id} className={classes.post_card_overview_main_container}>
-//                     <HomeCard
-//                       cardButtonState={subData.state}
-//                       key={subData.id}
-//                       isHeaderOption
-//                       postTitle={subData.title}
-//                       postDescription={subData.description.content}
-//                       username={subData.user}
-//                       postId={subData.id}
-//                       TAGS={subData.tags}
-//                       REACTIONSMETADATA={[
-//                         {
-//                           id: 'likes',
-//                           icon: faHeart,
-//                           count: subData.likeCount,
-//                           activeColor: Colors.red_FF2B2B,
-//                         },
-//                         { id: 'comments', icon: faComment, count: subData.totalComments },
-//                         { id: 'pin', icon: faThumbTack, activeColor: Colors.yellow_ },
-//                         { id: 'share', icon: faArrowUpFromBracket, count: subData.shareCount },
-//                         { id: 'impression', icon: faChartSimple, count: subData.viewCount },
-//                       ]}
-//                       contributionsArray={subData.contributions}
-//                       contributionsCount={subData.totalAttempts}
-//                     />
-//                   </div>
-//                 ))
-//               ) : (
-//                 <Text label14="No posts yet" />
-//               )}
-//               {data.children.length > 0 && (
-//                     <ButtonContainer>
-//                   <Text label14="Click here for more..." />
-//                 </ButtonContainer>
-//               )}
-//             </>
-//           )}
-//         </div>
-//       ))}
-//     </div>
-//   );
-// };
 
 function GeneralUserInfo({ link1, link2, link3, link4, emails, telNumber, location, bio }) {
   const categorizedUserLinks = categorizeLinks(

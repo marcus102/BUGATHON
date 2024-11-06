@@ -6,14 +6,13 @@ import { IconButton, PlaneButton, SolidButton, IconTextButton } from '../../../u
 import ToolTip from '../../../utils/toolTipSection';
 import {
   faArrowRightFromBracket,
-  faArrowUpWideShort,
   faDesktop,
-  faFilter,
   faMoon,
   faSun,
   faGears,
   faAngleUp,
   faAngleDown,
+  faEllipsisVertical,
 } from '@fortawesome/free-solid-svg-icons';
 import Text from '../../../utils/TextSection';
 import { useNavigate } from 'react-router-dom';
@@ -21,9 +20,9 @@ import Line from '../../../utils/LineSection';
 import { useLoaderData } from 'react-router-dom';
 
 const THEME_DATA = [
-  { id: '1', icon: faSun, active: 'light', tool_tip: 'Light Mode' },
-  { id: '2', icon: faMoon, active: 'dark', tool_tip: 'Night Mode' },
-  { id: '3', icon: faDesktop, active: 'system', tool_tip: 'System Mode' },
+  { id: 'light_mode', icon: faSun, active: 'light', tool_tip: 'Light Mode' },
+  { id: 'dark_mode', icon: faMoon, active: 'dark', tool_tip: 'Night Mode' },
+  { id: 'system_mode', icon: faDesktop, active: 'system', tool_tip: 'System Mode' },
 ];
 
 export function HomeExpandedSideBar({
@@ -96,8 +95,7 @@ export function HomeExpandedSideBar({
 
   const [isSettingsExpanded, setIsSettingsExpanded] = useState(true);
   const [isThemeExpanded, setIsThemeExpanded] = useState(true);
-  const { sideBarHandler, sideBar } = useContext(ManagmentSystem);
-  const { theme } = sideBar;
+  const { systemThemeHandler, systemTheme } = useContext(ManagmentSystem);
   const navigate = useNavigate();
   const CURRENT_DATA = isFiltering ? FILTERING_DATA : SORTING_DATA;
 
@@ -207,12 +205,16 @@ export function HomeExpandedSideBar({
               />
               {isThemeExpanded && (
                 <div className={classes.theme_icon_container}>
-                  {THEME_DATA.map((data) => (
-                    <ToolTip key={data.id} tooltipMessage={data.tool_tip}>
+                  {THEME_DATA.map((data, index) => (
+                    <ToolTip key={`${data.id}-${index}`} tooltipMessage={data.tool_tip}>
                       <IconButton
                         icon={data.icon}
-                        inconButtonStyle={theme === data.active && classes.active_icon_button}
-                        onClick={() => sideBarHandler({ theme: data.active })}
+                        inconButtonStyle={systemTheme === data.id && classes.active_icon_button}
+                        onClick={() => {
+                          systemThemeHandler(data.id);
+                          localStorage.setItem('theme', data.id);
+                          // sideBarHandler({ theme: data.active });
+                        }}
                       />
                     </ToolTip>
                   ))}
@@ -248,28 +250,27 @@ export function HomeExpandedSideBar({
 }
 
 export function HomeCollapsedSideBar() {
-  const { sideBarHandler, sideBar } = useContext(ManagmentSystem);
-  const { theme } = sideBar;
+  const { systemTheme, systemThemeHandler, sideBarHandler } = useContext(ManagmentSystem);
   const navigate = useNavigate();
 
   return (
     <>
-      <ToolTip toolTipStyle={classes.side_bar_tool_tip_container} tooltipMessage={'Filtering'}>
-        <IconButton icon={faFilter} />
+      <ToolTip toolTipStyle={classes.side_bar_tool_tip_container} tooltipMessage={'Expand sidebar'}>
+        <IconButton icon={faEllipsisVertical} onClick={() => sideBarHandler({ isOpen: true })} />
       </ToolTip>
-      <ToolTip toolTipStyle={classes.side_bar_tool_tip_container} tooltipMessage={'Sorting'}>
-        <IconButton icon={faArrowUpWideShort} />
-      </ToolTip>
-      {THEME_DATA.map((data) => (
+      {THEME_DATA.map((data, index) => (
         <ToolTip
-          key={data.id}
+          key={`${data.id}-${index}`}
           toolTipStyle={classes.side_bar_tool_tip_container}
           tooltipMessage={data.tool_tip}
         >
           <IconButton
             icon={data.icon}
-            inconButtonStyle={theme === data.active && classes.active_icon_button}
-            onClick={() => sideBarHandler({ theme: data.active })}
+            inconButtonStyle={systemTheme === data.id && classes.active_icon_button}
+            onClick={() => {
+              systemThemeHandler(data.id);
+              localStorage.setItem('theme', data.id);
+            }}
           />
         </ToolTip>
       ))}

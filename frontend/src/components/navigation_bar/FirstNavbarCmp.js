@@ -42,7 +42,8 @@ function FirstNavBar() {
           onClick={() => setShowOverlay(!showOverlay)}
         />
         <Navbar.Brand className={classes.brand_style} as={NavLink} to="/">
-          BUGATHON
+        <Text h5={'BUGATHON'}/>
+          
         </Navbar.Brand>
         <Navbar.Collapse className={`${classes.navbar_collapse_container}`}>
           <Nav

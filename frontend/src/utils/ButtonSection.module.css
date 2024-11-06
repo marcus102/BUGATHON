@@ -14,9 +14,9 @@
   margin: 10px 5px;
 }
 
-.button_text {
+/* .button_text {
   cursor: pointer;
-}
+} */
 
 /* BUTTON CONTAINER */
 
@@ -64,6 +64,10 @@
 
 .solid_button:active {
   background-color: var(--blue_11323C);
+}
+
+.solid_button_text {
+  color: #fff !important;
 }
 
 /* OUTLINED BUTTON */
@@ -155,13 +159,11 @@
   height: 15px;
 }
 
-.image_text {
-}
+.image_text {}
 
 /* DROP DOWN */
 
-.drop_down_button_main_container {
-}
+.drop_down_button_main_container {}
 
 .drop_down_button {
   background-color: transparent;
@@ -206,6 +208,22 @@
   right: 0;
   top: 100%;
   background-color: var(--black_333333f1);
+  box-shadow: 0 2px 5px #00000083;
+  border-radius: 10px;
+  z-index: 1;
+  list-style: none;
+  margin: 0;
+  padding: 10px;
+  width: 16rem;
+  max-height: 20rem;
+  overflow-y: auto;
+}
+
+.dropdown_menu_ {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: var(--white_ffffff);
   box-shadow: 0 2px 5px #00000083;
   border-radius: 10px;
   z-index: 1;

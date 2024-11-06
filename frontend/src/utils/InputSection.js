@@ -1,10 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
+import { ManagmentSystem } from '../store/AppGeneralManagmentSystem';
 import classes from './InputSection.module.css';
 import Text from './TextSection';
 import { IconButton } from './ButtonSection';
 import Icon from './IconSection';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-
 
 export function RowOfSquares({ rowOfSquaresStyle }) {
   const numSquares = 6;
@@ -48,10 +48,12 @@ export function TextArea({
   name,
   type,
 }) {
+  const { systemTheme } = useContext(ManagmentSystem);
   return (
     <div className={`${classes.input_main_container} ${textAreaStyle}`}>
       {label && <Text label16={label} />}
       <textarea
+        className={systemTheme === 'dark_mode' ? classes.text_area : classes.text_area_}
         id={id}
         name={name}
         type={type}
@@ -93,6 +95,7 @@ export function Input({
   unwrap_,
 }) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const { systemTheme } = useContext(ManagmentSystem);
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
@@ -104,6 +107,7 @@ export function Input({
       <div className={[classes.input_second_container, inputSecondContainerStyle].join(' ')}>
         <div className={`${classes.input_container} ${inputStyle}`}>
           <input
+            className={systemTheme === 'dark_mode' ? classes.input_area : classes.input_area_}
             type={type === 'password' && !isPasswordVisible ? 'password' : 'text'}
             id={id}
             name={name}
@@ -181,5 +185,3 @@ export function Switch({ label, switchStyle, checked }) {
     </div>
   );
 }
-
-

@@ -59,6 +59,8 @@ export const ManagmentSystem = createContext({
     clickedButton: '',
   },
   headerOptionHandler: (parameters) => {},
+  systemTheme: 'system_mode',
+  systemThemeHandler: (parameters) => {},
 });
 
 export default function ManagmentSystemProvider({ children }) {
@@ -94,6 +96,7 @@ export default function ManagmentSystemProvider({ children }) {
       viewMoreClick: '',
       clickedButton: '',
     },
+    systemTheme: 'dark_mode',
   };
 
   function reducer(state, action) {
@@ -232,6 +235,11 @@ export default function ManagmentSystemProvider({ children }) {
             }),
           },
         };
+      case 'SET_SYSTHEM_THEME':
+        return {
+          ...state,
+          systemTheme: action.payload,
+        };
       default:
         return state;
     }
@@ -317,7 +325,7 @@ export default function ManagmentSystemProvider({ children }) {
   const userReusableCodesListHandler = (parameters) => {
     dispatch({ type: 'SET_USER_REUSABLE_CODES', payload: parameters });
   };
-  
+
   const userBlogPostsListHandler = (parameters) => {
     dispatch({ type: 'SET_USER_BLOG_POSTS', payload: parameters });
   };
@@ -328,6 +336,13 @@ export default function ManagmentSystemProvider({ children }) {
 
   const headerOptionHandler = ({ viewMoreClick, clickedButton }) => {
     dispatch({ type: 'SET_HEADER_OPTION', payload: { viewMoreClick, clickedButton } });
+  };
+
+  const systemThemeHandler = (parameters) => {
+    dispatch({
+      type: 'SET_SYSTHEM_THEME',
+      payload: parameters,
+    });
   };
 
   const value = {
@@ -363,6 +378,8 @@ export default function ManagmentSystemProvider({ children }) {
     dropDownIsOpenHandler: dropDownIsOpenHandler,
     headerOption: state.headerOption,
     headerOptionHandler: headerOptionHandler,
+    systemTheme: state.systemTheme,
+    systemThemeHandler: systemThemeHandler,
   };
 
   return <ManagmentSystem.Provider value={value}>{children}</ManagmentSystem.Provider>;

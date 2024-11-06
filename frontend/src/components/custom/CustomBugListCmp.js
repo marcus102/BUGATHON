@@ -5,7 +5,6 @@ import Text from '../../utils/TextSection';
 import HomeCard from '../card_view/HomeCardView';
 import Line from '../../utils/LineSection';
 import {
-  faArrowUpFromBracket,
   faChartSimple,
   faComment,
   faHeart,
@@ -44,6 +43,7 @@ function CustomBugList({ DATA, title, count }) {
               likedBy={data?.likedBy}
               saveMode={data?.saveMode}
               commentsArray={data?.comments}
+              viewersArray={data?.viewers}
             />
           ))
         ) : (
@@ -77,13 +77,6 @@ const reactionsData = (data) => [
     count: null,
     state: data?.saveMode,
     activeColor: Colors.yellow_,
-  },
-  {
-    id: 'share',
-    icon: faArrowUpFromBracket,
-    count: `${data?.shareCount}`,
-    state: null,
-    activeColor: null,
   },
   {
     id: 'impression',

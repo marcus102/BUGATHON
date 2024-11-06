@@ -1,7 +1,8 @@
 const Colors = {
   black_000000: '#000000',
-  blue_0075FF:'#0075FF',
-  blue_57a3fb:'#57a3fb',
+  black_background: '#6c6c6cf1',
+  blue_0075FF: '#0075FF',
+  blue_57a3fb: '#57a3fb',
   transparentBlack_: '#0000001a',
   white_: '#ffffff',
   white_afafaf: '#afafaf',

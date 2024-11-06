@@ -15,16 +15,23 @@
   border-radius: 7px;
 }
 
+.home_card_ {
+  /* width: 100%; */
+  background-color: #e3e3e3;
+  padding: 15px;
+  border-radius: 7px;
+}
+
 .bug_report {
-  border-bottom: 1px solid var(--lightRed_);
+  border-bottom: 3px solid var(--lightRed_);
 }
 
 .bug_fix {
-  border-bottom: 1px solid var(--green_026c00);
+  border-bottom: 3px solid var(--green_026c00);
 }
 
 .reusable_code {
-  border-bottom: 1px solid var(--orange_ff7811);
+  border-bottom: 3px solid var(--orange_ff7811);
 }
 
 .overlay {

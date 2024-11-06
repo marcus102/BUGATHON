@@ -7,13 +7,6 @@
   padding: 20px 30px;
 }
 
-.horizontal_line {
-  border: none;
-  height: 2px;
-  background-color: var(--gray_50505066);
-  width: 95%;
-}
-
 .footer_header_container {
     width: 100%;
     justify-content: flex-start;

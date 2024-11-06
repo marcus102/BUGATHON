@@ -1,3 +1,4 @@
+/* DARK MODE */
 .text_container {
   display: flex;
   white-space: wrap;
@@ -66,4 +67,76 @@
 .unwrap_text_container h6,
 .unwrap_text_container p {
   color: var(--white_ffffff);
+}
+
+/* LIGHT MODE */
+
+.text_container_ {
+  display: flex;
+  white-space: wrap;
+  text-align: start;
+  height: fit-content;
+}
+
+.unwrap_text_container_ {
+  display: flex;
+  white-space: nowrap;
+  text-align: start;
+  height: fit-content;
+}
+
+.label16_ {
+  font-weight: 500;
+  color: var(--black_background);
+}
+
+.label15_ {
+  display: flex;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--black_background);
+}
+
+.label14_ {
+  display: flex;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--black_background);
+}
+
+.label12_ {
+  display: flex;
+  font-size: 12px;
+  color: var(--black_background);
+}
+
+.label10_ {
+  display: flex;
+  font-size: 10px;
+  color: var(--black_background);
+}
+
+.p12_ {
+  display: flex;
+  font-size: 12px;
+}
+
+.text_container_ h1,
+.text_container_ h2,
+.text_container_ h3,
+.text_container_ h4,
+.text_container_ h5,
+.text_container_ h6,
+.text_container_ p {
+  color: var(--black_background);
+}
+
+.unwrap_text_container_ h1,
+.unwrap_text_container_ h2,
+.unwrap_text_container_ h3,
+.unwrap_text_container_ h4,
+.unwrap_text_container_ h5,
+.unwrap_text_container_ h6,
+.unwrap_text_container_ p {
+  color: var(--black_background);
 }

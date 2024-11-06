@@ -100,7 +100,7 @@ export function SolidButton({
             unwrap={unwrap}
             textStyle={buttonTextContainerStyle}
             label14={label}
-            label14Style={`${classes.button_text} ${buttonTextStyle}`}
+            label14Style={`${classes.button_text} ${classes.solid_button_text} ${buttonTextStyle}`}
           />
         )}
         {icon && <Icon icon={icon} color={color} size={size} />}
@@ -321,7 +321,7 @@ export function DropdownMenu({
     }
   }, [dropDownIsOpen, dropDownIsOpenHandler]);
 
-  const { currentProfileIdHandler } = useContext(ManagmentSystem);
+  const { currentProfileIdHandler, systemTheme } = useContext(ManagmentSystem);
 
   return (
     <div
@@ -340,7 +340,11 @@ export function DropdownMenu({
       />
 
       {isOpen && (
-        <div className={`${classes.dropdown_menu} ${dropDownMenuStyle}`}>
+        <div
+          className={`${
+            systemTheme === 'dark_mode' ? classes.dropdown_menu : classes.dropdown_menu_
+          } ${dropDownMenuStyle}`}
+        >
           {menuItems?.map((data, index) => (
             <IconTextButton
               key={`${data.id}${index}`}
@@ -380,7 +384,7 @@ export function DynamicLabelDropdownMenu({
   onChange,
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const { dropDownDefaultHandler } = useContext(ManagmentSystem);
+  const { dropDownDefaultHandler, systemTheme } = useContext(ManagmentSystem);
   const dropdownRef = useRef(null);
 
   const handleClickOutside = (event) => {
@@ -406,7 +410,11 @@ export function DynamicLabelDropdownMenu({
         onClick={() => setIsOpen(!isOpen)}
       />
       {isOpen && (
-        <div className={`${classes.dropdown_menu} ${dropDownMenuStyle}`}>
+        <div
+          className={`${
+            systemTheme === 'dark_mode' ? classes.dropdown_menu : classes.dropdown_menu_
+          } ${dropDownMenuStyle}`}
+        >
           {menuItems?.map((data) => (
             <IconTextButton
               key={data.id}

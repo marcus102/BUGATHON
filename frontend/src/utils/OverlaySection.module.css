@@ -24,6 +24,18 @@
   background-color: #3a3a3acd;
 }
 
+.overlay_second_container_ {
+  display: flex;
+  flex-direction: column;
+  min-width: 60%;
+  max-width: 90%;
+  min-height: 90%;
+  max-height: 90%;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: #b0b0b0cd;
+}
+
 .overlay_cancel_button_container {
   display: flex;
   width: 100%;

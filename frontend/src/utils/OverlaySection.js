@@ -15,13 +15,19 @@ export function Overlay({
   overlayStyle,
   overlayChildStyle,
 }) {
-  const { overlay, overlayHandler } = useContext(ManagmentSystem);
+  const { overlay, overlayHandler, systemTheme } = useContext(ManagmentSystem);
 
   return (
     <>
       {overlay.open && overlay.keyId === keyId && (
         <div className={classes.overlay_container}>
-          <div className={`${classes.overlay_second_container} ${overlayStyle}`}>
+          <div
+            className={`${
+              systemTheme === 'dark_mode'
+                ? classes.overlay_second_container
+                : classes.overlay_second_container_
+            } ${overlayStyle}`}
+          >
             {!header ? (
               <div className={classes.overlay_cancel_button_container}>
                 <IconButton
