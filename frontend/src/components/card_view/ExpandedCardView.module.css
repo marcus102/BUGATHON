@@ -115,7 +115,7 @@
   border-radius: 5px;
   padding: 10px;
   border: 1px solid var(--withe_ffffff08);
-  background: var(--withe_ffffff08);
+  background: #9090903d;
 }
 
 .body_solution_icon_button {
