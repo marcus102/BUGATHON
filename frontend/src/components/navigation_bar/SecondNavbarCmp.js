@@ -1,4 +1,5 @@
 import React from 'react';
+import Colors from '../../constants/colors';
 import { DropdownMenu } from '../../utils/ButtonSection';
 import classes from './SecondNavbarCmp.module.css';
 import {
@@ -49,8 +50,11 @@ function SecondNavbar() {
         <DropdownMenu
           dropDownMenuStyle={classes.create_drop_down_menu}
           dropDownIconTextStyle={classes.new_button_container}
+          buttonTextLabelStyle={classes.new_button_text}
           buttonLabel={'New'}
           buttonIcon={faPlus}
+          iconColorOnMouseUp={Colors.white_}
+          iconColorOnMouseDown={Colors.white_}
           menuItems={CREATE_MENU}
           post={'new'}
         />

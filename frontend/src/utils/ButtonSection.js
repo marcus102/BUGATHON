@@ -287,7 +287,10 @@ export function DropdownMenu({
   dropDownMenuStyle,
   dropDownIconTextStyle,
   buttonLabel,
+  buttonTextLabelStyle,
   buttonIcon,
+  iconColorOnMouseUp,
+  iconColorOnMouseDown,
   menuItems,
   children,
   buttonChildren,
@@ -333,6 +336,9 @@ export function DropdownMenu({
         icon={buttonIcon}
         label={buttonLabel}
         children={buttonChildren}
+        colorOnMouseUp={iconColorOnMouseUp}
+        colorOnMouseDown={iconColorOnMouseDown}
+        inconTextLabel16Style={buttonTextLabelStyle}
         onClick={() => {
           setIsOpen(!isOpen);
           profileId && currentProfileIdHandler(profileId);

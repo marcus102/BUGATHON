@@ -25,7 +25,7 @@
   gap: 10px;
   padding: 20px;
   border-radius: 5px;
-  background: var(--black_ffffff0d);
+  background: #9090903d;
 }
 
 .social_container {
@@ -40,16 +40,10 @@
   gap: 5px;
 }
 
-.contact_tel_container {
-}
-
-.tel_container {
-}
-
 .bio_container {
   padding: 20px;
   border-radius: 5px;
-  background: var(--black_ffffff0d);
+  background: #9090903d;
 }
 
 /* TREND - BUG REPORT - BUG FIX - REUSABLE CODE */

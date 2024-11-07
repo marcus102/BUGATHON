@@ -13,10 +13,13 @@
 }
 
 .new_button_container {
-  /* width: 100%; */
-  background-color: var(--blue_00789C80);
+  background-color: var(--blue_11323C);
   border-radius: 5px;
   padding: 6px 25px;
+}
+
+.new_button_text {
+  color: var(--white_ffffff);
 }
 
 .create_drop_down_menu {

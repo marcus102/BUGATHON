@@ -1,7 +1,6 @@
 /* COMMENT SECTION */
 .comment_section {
   width: 100%;
-  background-color: var(--black_232526);
   padding: 10px;
 }
 
@@ -100,9 +99,9 @@
 
 .reply_icon_text_custom_container {
   flex-direction: row;
-  background-color: var(--gray_50505066);
+  background-color: #70707038;
   padding: 2px 5px;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .more_button,

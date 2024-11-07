@@ -1,7 +1,7 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { ManagmentSystem } from '../../../store/AppGeneralManagmentSystem';
 import classes from './appearanceCmp.module.css';
-import { faCircleCheck, faDesktop } from '@fortawesome/free-solid-svg-icons';
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { faCircle, faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
 import Text from '../../../utils/TextSection';
 import Icon from '../../../utils/IconSection';
@@ -17,7 +17,6 @@ const APPEARANCE_DATA = [
     description_link: 'Learn more about UI customization',
     sub_title: 'Theme Mode',
     children: [
-      { id: 'system_mode', label: 'System Mode', icon: faDesktop },
       { id: 'light_mode', label: 'Light Mode', icon: faSun },
       { id: 'dark_mode', label: 'Dark Mode', icon: faMoon },
     ],
@@ -73,7 +72,6 @@ const Appearance = () => {
           {renderDescription(data)}
           {data.sub_title && <Text h6={data.sub_title} />}
           {data.id === '1' && <RenderThemeMode children={data.children} />}
-          {/* {data.id === '2' && renderNavigation(data.children)} */}
         </div>
       ))}
     </>

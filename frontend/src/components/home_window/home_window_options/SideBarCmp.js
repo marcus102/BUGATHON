@@ -22,7 +22,7 @@ import { useLoaderData } from 'react-router-dom';
 const THEME_DATA = [
   { id: 'light_mode', icon: faSun, active: 'light', tool_tip: 'Light Mode' },
   { id: 'dark_mode', icon: faMoon, active: 'dark', tool_tip: 'Night Mode' },
-  { id: 'system_mode', icon: faDesktop, active: 'system', tool_tip: 'System Mode' },
+  // { id: 'system_mode', icon: faDesktop, active: 'system', tool_tip: 'System Mode' },
 ];
 
 export function HomeExpandedSideBar({
