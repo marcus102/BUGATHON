@@ -7,7 +7,7 @@
 .moderation_input_container {
   display: flex;
   flex-direction: column;
-  background-color: var(--red_ff2b2b57);
+  background-color: #ff00001d;
   padding: 10px 20px;
   border: 1px solid var(--gray_50505066);
   border-radius: 10px;

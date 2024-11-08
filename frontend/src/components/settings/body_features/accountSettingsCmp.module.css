@@ -7,7 +7,7 @@
 .account_delete_main_container {
   border: 2px solid var(--gray_50505066);
   border-radius: 10px;
-  background-color: var(--red_ff2b2b57);
+  background-color: #ff00001d;
   padding: 20px;
 }
 

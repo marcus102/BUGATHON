@@ -28,7 +28,7 @@ const getBadgeStyles = (id) => {
     Intermediate: classes.intermediate_bg,
     Expert: classes.expert_bg,
   };
-  return badgeStyles[id] || '';
+  return badgeStyles[id] || classes.default_bg;
 };
 
 // Component for user badges

@@ -105,6 +105,10 @@
   background-color: #c83737;
 }
 
+.default_bg {
+  background-color: #6f6f6f61;
+}
+
 /* END ///////////////////////////////// */
 
 .full_info_popularity_overview_main_container {

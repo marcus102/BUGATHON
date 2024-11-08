@@ -96,7 +96,7 @@
 }
 
 .tag_button:hover {
-  background-color: var(--black_ffffff0d);
+  background-color: #9090903d;
 }
 
 .tag_button:active {

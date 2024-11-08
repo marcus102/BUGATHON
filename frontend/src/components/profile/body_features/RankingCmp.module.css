@@ -35,7 +35,7 @@
 }
 
 .level_main_container:hover {
-  background-color: var(--black_333333f1);
+  background-color: #9090903d;
 }
 
 .blue_color {
@@ -95,7 +95,7 @@
 }
 
 .badges_main_container:hover {
-  background-color: var(--black_333333f1);
+  background-color: #9090903d;
 }
 
 .bronze_color {

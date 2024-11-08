@@ -15,42 +15,6 @@ import { faChevronDown, faEllipsisVertical } from '@fortawesome/free-solid-svg-i
 import Line from '../../utils/LineSection';
 import { useNavigate } from 'react-router-dom';
 
-function CustomMenu({
-  title,
-  dropDown,
-  METADATA,
-  option,
-  button,
-  solidButtonDataType,
-  emptyContentLabel,
-  headerOption,
-  buttonLabel,
-  my_key,
-}) {
-  return (
-    <div className={classes.header_option_main_container}>
-      <OptionHeader
-        title={title}
-        dropDown={dropDown}
-        headerOption={headerOption}
-        buttonLabel={buttonLabel}
-        my_key={my_key}
-      />
-      <div className={classes.header_option_content_root_container}>
-        <OptionContent
-          contributions={METADATA}
-          option={option}
-          button={button}
-          solidButtonDataType={solidButtonDataType}
-          emptyContentLabel={emptyContentLabel}
-        />
-      </div>
-    </div>
-  );
-}
-
-export default CustomMenu;
-
 const OptionHeader = ({ title, dropDown, headerOption, buttonLabel, my_key }) => (
   <div className={classes.option_header_container}>
     {title && <Text h5={title} />}
@@ -221,3 +185,39 @@ const ProfileSection = ({ data }) => (
     )}
   </div>
 );
+
+function CustomMenu({
+  title,
+  dropDown,
+  METADATA,
+  option,
+  button,
+  solidButtonDataType,
+  emptyContentLabel,
+  headerOption,
+  buttonLabel,
+  my_key,
+}) {
+  return (
+    <div className={classes.header_option_main_container}>
+      <OptionHeader
+        title={title}
+        dropDown={dropDown}
+        headerOption={headerOption}
+        buttonLabel={buttonLabel}
+        my_key={my_key}
+      />
+      <div className={classes.header_option_content_root_container}>
+        <OptionContent
+          contributions={METADATA}
+          option={option}
+          button={button}
+          solidButtonDataType={solidButtonDataType}
+          emptyContentLabel={emptyContentLabel}
+        />
+      </div>
+    </div>
+  );
+}
+
+export default CustomMenu;

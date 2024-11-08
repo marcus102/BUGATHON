@@ -67,9 +67,9 @@ function SecondNavbar() {
       {/* DROP DOWN OPTIONS */}
 
       <div className="col-lg-5 d-none d-lg-flex justify-content-end gap-3 ">
-        {MENU_OPTIONS.map((data) => (
+        {MENU_OPTIONS.map((data, index) => (
           <DropdownMenu
-            key={data.id}
+            key={`${data.id}-${index}`}
             dropDownMenuStyle={classes.header_option_menu2}
             dropDownIconTextStyle={classes.header_option_button}
             buttonIcon={data.icon}
@@ -81,9 +81,9 @@ function SecondNavbar() {
 
       <div className="col-1 d-lg-none d-flex justify-content-end">
         <DropdownMenu dropDownMenuStyle={classes.dorp_down_menu} buttonIcon={faEllipsis}>
-          {MENU_OPTIONS.map((data) => (
+          {MENU_OPTIONS.map((data, index) => (
             <DropdownMenu
-              key={data.id}
+              key={`${data.id}-${index}`}
               dropDownMenuStyle={`${classes.header_option_menu} ${
                 data.id === '1' && classes.assigned_bug_menu
               } ${data.id === '2' && classes.inbox_menu} ${

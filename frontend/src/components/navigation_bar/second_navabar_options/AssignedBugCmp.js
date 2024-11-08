@@ -10,43 +10,43 @@ import {
   faCaretRight,
   faHeart,
 } from '@fortawesome/free-solid-svg-icons';
-import profile_1 from '../../../assets/images/study.jpg';
-import profile_2 from '../../../assets/images/people.jpg';
+// import profile_1 from '../../../assets/images/study.jpg';
+// import profile_2 from '../../../assets/images/people.jpg';
 import CustomMenu from '../../custom/CustomMenuCmp';
 import { DUMMY_BUG_REPORT_DATA, DUMMY_USERS } from '../../../data/Database';
 
-const DUMMY_ASSIGNED_BUG = [
-  {
-    id: '1',
-    profile: profile_1,
-    profile_2: profile_2,
-    title: 'Bug report assigned to you by @leyla 1mn ago',
-    notification:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat. Mauris eleifend eros id metus volutpat',
-    tag: 'Critical',
-    type: 'submited',
-  },
-  {
-    id: '2',
-    profile: profile_2,
-    profile_2: profile_1,
-    title: 'Bug report assigned to you by @ben 1mn ago',
-    notification:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat',
-    tag: 'Pending',
-    type: 'received',
-  },
-  {
-    id: '3',
-    profile: profile_1,
-    profile_2: profile_2,
-    title: 'Bug report assigned to you by @leyla 1mn ago',
-    notification:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat',
-    tag: 'Stable',
-    type: 'received',
-  },
-];
+// const DUMMY_ASSIGNED_BUG = [
+//   {
+//     id: '1',
+//     profile: profile_1,
+//     profile_2: profile_2,
+//     title: 'Bug report assigned to you by @leyla 1mn ago',
+//     notification:
+//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat. Mauris eleifend eros id metus volutpat',
+//     tag: 'Critical',
+//     type: 'submited',
+//   },
+//   {
+//     id: '2',
+//     profile: profile_2,
+//     profile_2: profile_1,
+//     title: 'Bug report assigned to you by @ben 1mn ago',
+//     notification:
+//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat',
+//     tag: 'Pending',
+//     type: 'received',
+//   },
+//   {
+//     id: '3',
+//     profile: profile_1,
+//     profile_2: profile_2,
+//     title: 'Bug report assigned to you by @leyla 1mn ago',
+//     notification:
+//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend eros id metus volutpat',
+//     tag: 'Stable',
+//     type: 'received',
+//   },
+// ];
 
 const ASSIGNMENT_BUG_BUTTON = [
   { id: '1', button_label: 'Yes I Will' },
